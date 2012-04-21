@@ -1,3 +1,4 @@
+package app;
 
 public class Location {
 	private double x;

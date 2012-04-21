@@ -7,6 +7,7 @@ import player.Player;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
+import com.golden.gamedev.object.PlayField;
 
 
 public class RPGame extends GameObject {

@@ -1,6 +1,5 @@
 package inventory;
 
-import com.golden.gamedev.object.AnimatedSprite;
 import app.RPGame;
 
 
@@ -53,18 +52,18 @@ public class Weapon extends Item {
 
 
     public void equip () {
-        game.getPlayer().setEquipped(this);
+        game.getPlayer().getCharacter().getInventory().setEquipped(this);
     }
 
 
     public void unequip () {
-        if (game.getPlayer().getEquipped() == this) game.getPlayer()
-                                                        .setEquipped(null);
+        if (game.getPlayer().getCharacter().getInventory().getEquipped() == this) game.getPlayer()
+                                                        .getCharacter().getInventory().setEquipped(null);
     }
 
 
     public boolean isEquipped () {
-        return game.getPlayer().getEquipped() == this;
+        return game.getPlayer().getCharacter().getInventory().getEquipped() == this;
     }
 
 
@@ -115,12 +114,22 @@ public class Weapon extends Item {
     public String getWeaponType () {
         return weaponType;
     }
+    public boolean canBeEquipped(){
+        return true;
+    }
 
 
     @Override
     public void drop () {
         // TODO Auto-generated method stub
 
+    }
+
+
+    @Override
+    public void initResources () {
+        // TODO Auto-generated method stub
+        
     }
 
 }

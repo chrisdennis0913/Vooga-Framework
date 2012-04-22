@@ -36,8 +36,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
 
     public void add (Item itm, int quantity) {
-        if (equippedItem==null & itm.canBeEquipped())
-            equippedItem=itm;
+        if (equippedItem == null & itm.canBeEquipped()) equippedItem = itm;
         if (itm.getCategory().equalsIgnoreCase("accessory")) {
             Accessory acc = (Accessory) itm;
             acc.equip();
@@ -75,23 +74,57 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
     }
 
 
+    public Item getEquipped () {
+        return equippedItem;
+    }
+
+
+    public void setEquipped (Item itm) {
+        if (contains(itm)) {
+            equippedItem = itm;
+        }
+    }
+    public boolean isEquipped(Item itm){
+        return equippedItem == itm;
+    }
+
+
+    public void equipAcc (Accessory acc) {
+        if (!accessoryList.contains(acc)) {
+            accessoryList.add(acc);
+        }
+    }
+
+
+    public void unEquipAcc (Accessory acc) {
+        if (accessoryList.contains(acc)) accessoryList.remove(acc);
+    }
+
+
+    public boolean hasAccessory (Accessory accessory) {
+        return accessoryList.contains(accessory);
+    }
+
+
     @Override
     public void initResources () {
         list = new HashMap<String, Item>();
+//        menu = new InventoryMenu(this);
     }
 
 
     @Override
     public void render (Graphics2D g) {
-        // TODO Auto-generated method stub
         // inventory menu?
-
+        for (Accessory acc : accessoryList) {
+            acc.render(g);
+        }
+//        menu.render(g);
     }
 
 
     @Override
     public void update (long elapsed) {
-        // TODO Auto-generated method stub
-
+//        menu.update(elapsed);
     }
 }

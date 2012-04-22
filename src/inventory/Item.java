@@ -33,8 +33,6 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
     protected Item () {
         super();
     }
-    
-    // if empty send not to wrapper to remove
 
     public Item (RPGame game2, String name, String gifName, String categ) {
         Item.game = game2;
@@ -148,12 +146,10 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
         return compareTo(it) == 0;
     }
 
-
     public abstract boolean isThisKindOfItem (String toParse);
 
-
     public abstract Item parseItem (RPGame game2, String toParse);
-
+    
 
     public String parseName (String toParse) {
         String[] parseArray = toParse.split(",");

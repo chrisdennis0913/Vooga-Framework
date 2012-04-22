@@ -43,5 +43,9 @@ public class CharacterDecorator implements CharacterInterface{
 		character.stop();
 	}
 	
+	public GameCharacter getCharacter(){
+	    return character;
+	}
+	
 	
 }

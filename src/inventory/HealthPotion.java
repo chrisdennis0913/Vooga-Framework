@@ -15,6 +15,7 @@ public class HealthPotion extends Item {
     private int healthChange;
 
 
+    // do I need to change the wrapper when added to a different inventory?
     private HealthPotion () {
 
     }
@@ -57,8 +58,11 @@ public class HealthPotion extends Item {
 
     @Override
     public void use () {
-        game.getPlayer().getPCs().getHealth().decrease(1);
-        game.getPlayer().getPCs().getHealth().increase(healthChange + 1);
+        wrapper.getCharacter().getCounters().get("health").decrease(1); // might break
+        wrapper.getCharacter()
+               .getCounters()
+               .get("health")
+               .increase(healthChange + 1);
     }
 
 
@@ -85,13 +89,20 @@ public class HealthPotion extends Item {
 
 
     public void unequip () {
-        if (game.getPlayer().getEquipped() == this) game.getPlayer()
-                                                        .setEquipped(null);
+        if (wrapper.getCharacter().getInventory().getEquipped() == this) game.getPlayer()
+                                                                             .getCharacter()
+                                                                             .getInventory()
+                                                                             .setEquipped(null);
     }
 
 
     public boolean isEquipped () {
-        return game.getPlayer().getEquipped() == this;
+        return wrapper.getCharacter().getInventory().getEquipped() == this;
+    }
+
+
+    public boolean canBeEquipped () {
+        return false;
     }
 
 
@@ -104,20 +115,20 @@ public class HealthPotion extends Item {
     @Override
     public void initResources () {
         // TODO Auto-generated method stub
-        
+
     }
 
 
     @Override
     public void render (Graphics2D g) {
         // TODO Auto-generated method stub
-        
+
     }
 
 
     @Override
     public void update (long elapsed) {
         // TODO Auto-generated method stub
-        
+
     }
 }

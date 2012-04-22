@@ -20,6 +20,7 @@ public class Player extends CharacterDecorator {
 		String json = JsonUtil.getJSON(configURL);
 		constructActions(json);
 		// eventually have constructInventory(inventoryJson)
+		// currently constructed in GameCharacter
 		
 	}
 

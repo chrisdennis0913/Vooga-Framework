@@ -6,16 +6,19 @@ import java.util.Comparator;
 
 import level.Level;
 import player.Player;
+import utils.JsonUtil;
+
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
+import com.google.gson.Gson;
 
 
 public class RPGame extends GameObject {
     private PlayField field;
-    private Background bg;
+    //private Background bg;
     private Player player;
     //private Dialog dialog;
     private Level level;
@@ -38,6 +41,9 @@ public class RPGame extends GameObject {
 			}
 		} );
     	
+    	//parse JSON files and set up player and npcs
+    	Gson gson = new Gson();
+    		JsonUtil.JSONLevel peeps = gson.fromJSON(json, JsonUtil.JSONLevel.class);
     	
     	
     }

@@ -73,8 +73,6 @@ public class JsonUtil {
 		 public String imageURL;
 		 public int layer;
 	 }
-	 
-	public class JSONPlayerActions {
 
 	public class JSONPlayerActions implements Jsonable {
 		public JSONPlayerWalking walking;

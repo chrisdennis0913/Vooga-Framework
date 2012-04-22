@@ -10,6 +10,8 @@ import com.golden.gamedev.object.Sprite;
  */
 
 public abstract class EventedItem<T extends EventedItem<T>> extends Sprite implements Evented{
+	private static final long serialVersionUID = 1L;
+
 
 	protected EventedWrapper<T> wrapper;
 	

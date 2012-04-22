@@ -29,11 +29,13 @@ public class Player extends CharacterDecorator {
 		JsonUtil.JSONPlayerActions actions = gson.fromJson(json,
 				JsonUtil.JSONPlayerActions.class);
 
-		if (actions.walking != null)
-			character.getActions().add("walking",
-					new Walking(character.getActions(), actions.walking));
-		else
-			throw new RuntimeException("Walking action undefined for player");
+		if (actions.walking != null || actions.attacking != null)
+			throw new RuntimeException("Action undefined for player");
+
+		character.getActions().add("walking",
+				new Walking(character.getActions(), actions.walking));
+		character.getActions().add("attacking",
+				new Attacking(character.getActions(), actions.attacking));
 	}
 
 }

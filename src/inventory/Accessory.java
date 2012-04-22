@@ -4,20 +4,22 @@ import java.awt.Graphics2D;
 import app.RPGame;
 
 
-/**
- * Class for items that attach to the hero and contribute to his stats.
- * Accessories are of the form
- * "Name, gifName, accessory, statToChange, valueOfChange" for example
- * "Charismatic Chainmail, chainmail, accessory, health, 8"
- * 
- * @author Chris Dennis
- */
+
 public class Accessory extends Item {
+    /**
+     * Class for items that attach to the hero and contribute to his stats.
+     * Accessories are of the form
+     * "Name, gifName, accessory, statToChange, valueOfChange" for example
+     * "Charismatic Chainmail, chainmail, accessory, health, 8"
+     * 
+     * @author Chris Dennis
+     */
+    private static final long serialVersionUID = 2922032752026818259L;
     private boolean showsOnScreen = true;
     private int statChange;
     private int relX;
     private int relY;
-    private String statistic;
+    private String statisticalCategory;
 
 
     private Accessory () {
@@ -35,7 +37,7 @@ public class Accessory extends Item {
         super(game2, name, gifName);
         category = "Accessory";
         game2.addItems(this);
-        statistic = stat;
+        statisticalCategory = stat;
         statChange = value;
         relX = relativeX;
         relY = relativeY;
@@ -88,6 +90,10 @@ public class Accessory extends Item {
     public static ItemFactory getFactory () {
         return new ItemFactory(new Accessory());
     }
+    
+    public boolean canBeEquipped(){
+        return false;
+    }
 
 
     @Override
@@ -106,7 +112,7 @@ public class Accessory extends Item {
 
 
     public int compareTo (Accessory ac) {
-        if (statistic != ac.getStatistic()) return statistic.compareTo(ac.getStatistic());
+        if (statisticalCategory != ac.getStatistic()) return statisticalCategory.compareTo(ac.getStatistic());
         if (statChange != ac.getStatChange()) return statChange -
                                                      ac.getStatChange();
         if (myName != ac.getName()) return myName.compareTo(ac.getName());
@@ -115,7 +121,7 @@ public class Accessory extends Item {
 
 
     public String getStatistic () {
-        return statistic;
+        return statisticalCategory;
     }
 
 
@@ -130,27 +136,41 @@ public class Accessory extends Item {
 
 
     public void equip () {
-        game.getPlayer().getInventory().equipAcc(this);
-        game.getPlayer().getPCs().getHealth().boostTotal(statChange);
-        game.getPlayer().getPCs().getHealth().decrease(1);
-        game.getPlayer().getPCs().getHealth().increase(statChange + 1);
+        wrapper.getCharacter().getInventory().equipAcc(this);
+        wrapper.getCharacter().getCounters().get(statisticalCategory).boostTotal(statChange);
+        wrapper.getCharacter().getCounters().get(statisticalCategory).decrease(1);
+        wrapper.getCharacter().getCounters().get(statisticalCategory).increase(statChange + 1);
     }
 
 
     public void unequip () {
-        game.getPlayer().getInventory().unEquipAcc(this);
-        game.getPlayer().getPCs().getHealth().boostTotal(-statChange);
-        game.getPlayer().getPCs().getHealth().decrease(statChange);
+        wrapper.getCharacter().getInventory().unEquipAcc(this);
+        wrapper.getCharacter().getCounters().get(statisticalCategory).boostTotal(-statChange);
+        wrapper.getCharacter().getCounters().get("health").decrease(statChange);
     }
 
 
     public boolean isEquipped () {
-        return game.getPlayer().getEquipped() == this;
+        return wrapper.getCharacter().getInventory().isEquipped(this);
     }
 
 
     @Override
     public void drop () {
         // TODO Auto-generated method stub   
+    }
+
+
+    @Override
+    public void initResources () {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void update (long elapsed) {
+        // TODO Auto-generated method stub
+        
     }
 }

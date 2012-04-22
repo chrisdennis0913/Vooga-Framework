@@ -1,18 +1,17 @@
 package inventory;
 
-import com.golden.gamedev.object.AnimatedSprite;
 import app.RPGame;
 
-
-/**
- * Class for items that do damage. Has instance variable myDamage to represent
- * base damage value Weapons are in the form of
- * "Name, weapon, boolean forSale, int Price, int Damage" for example:
- * "Dagger, Weapon, true, 100, 55" or "Sword, Weapon, false, 85"
- * 
- * @author Chris Dennis
- */
 public class Weapon extends Item {
+    /**
+     * Class for items that do damage. Has instance variable myDamage to represent
+     * base damage value Weapons are in the form of
+     * "Name, weapon, boolean forSale, int Price, int Damage" for example:
+     * "Dagger, Weapon, true, 100, 55" or "Sword, Weapon, false, 85"
+     * 
+     * @author Chris Dennis
+     */
+    private static final long serialVersionUID = 8597606086588448982L;
     private int myDamage;
     protected String weaponType;
 
@@ -53,18 +52,18 @@ public class Weapon extends Item {
 
 
     public void equip () {
-        game.getPlayer().setEquipped(this);
+        game.getPlayer().getCharacter().getInventory().setEquipped(this);
     }
 
 
     public void unequip () {
-        if (game.getPlayer().getEquipped() == this) game.getPlayer()
-                                                        .setEquipped(null);
+        if (game.getPlayer().getCharacter().getInventory().getEquipped() == this) game.getPlayer()
+                                                        .getCharacter().getInventory().setEquipped(null);
     }
 
 
     public boolean isEquipped () {
-        return game.getPlayer().getEquipped() == this;
+        return game.getPlayer().getCharacter().getInventory().getEquipped() == this;
     }
 
 
@@ -115,12 +114,22 @@ public class Weapon extends Item {
     public String getWeaponType () {
         return weaponType;
     }
+    public boolean canBeEquipped(){
+        return true;
+    }
 
 
     @Override
     public void drop () {
         // TODO Auto-generated method stub
 
+    }
+
+
+    @Override
+    public void initResources () {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -4,6 +4,14 @@ import app.RPGame;
 
 
 public class Sword extends Weapon {
+    /**
+     * Sword Attack style will depend on this 
+     * Has category = weapon and
+     * weaponType = sword
+     */
+    private static final long serialVersionUID = -3081446463048996331L;
+
+
     private Sword () {
         super();
     }

@@ -2,13 +2,18 @@ package gameCharacter;
 
 import java.awt.Graphics2D;
 
+import com.golden.gamedev.object.AnimatedSprite;
+
 /**
  * Decorator class for GameCharacter;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
  * 
  * @author Kirill Klimuk
  */
 
-public class CharacterDecorator implements CharacterInterface{
+public class CharacterDecorator extends AnimatedSprite implements CharacterInterface{
+	
+	private static final long serialVersionUID = 1L;
+	
 	protected GameCharacter character;
 
 	public CharacterDecorator(GameCharacter character) {
@@ -41,6 +46,10 @@ public class CharacterDecorator implements CharacterInterface{
 
 	public void stop() {
 		character.stop();
+	}
+	
+	public GameCharacter getCharacter(){
+	    return character;
 	}
 	
 	

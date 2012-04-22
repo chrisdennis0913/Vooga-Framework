@@ -1,19 +1,22 @@
 package inventory;
 
+import java.awt.Graphics2D;
 import app.RPGame;
 
-
-/**
- * Class for items that affect the hero's counters. Health potions are of the
- * form "Name, gif name, healthpotion, value of change" for example
- * "Super Potion, potion, healthpotion, 4"
- * 
- * @author Chris Dennis
- */
-public class HealthPotion extends Item {
+public class HealthPotion extends Item implements Sellable {
+    /**
+     * Class for items that affect the hero's counters. Health potions are of the
+     * form "Name, gif name, healthpotion, value of change" for example
+     * "Super Potion, potion, healthpotion, 4"
+     * 
+     * @author Chris Dennis
+     */
+    private static final long serialVersionUID = 2489280342490018746L;
     private int healthChange;
+    private int price = 0;
 
-
+    // do I need to change the wrapper when added to a different inventory?
+    // yes, yes i do. and will do
     private HealthPotion () {
 
     }
@@ -56,8 +59,12 @@ public class HealthPotion extends Item {
 
     @Override
     public void use () {
-        game.getPlayer().getPCs().getHealth().decrease(1);
-        game.getPlayer().getPCs().getHealth().increase(healthChange + 1);
+        wrapper.getCharacter().getCounters().get("health").decrease(1); // might break
+        wrapper.getCharacter()
+               .getCounters()
+               .get("health")
+               .increase(healthChange + 1);
+        remove(1);
     }
 
 
@@ -84,13 +91,20 @@ public class HealthPotion extends Item {
 
 
     public void unequip () {
-        if (game.getPlayer().getEquipped() == this) game.getPlayer()
-                                                        .setEquipped(null);
+        if (wrapper.getCharacter().getInventory().getEquipped() == this) game.getPlayer()
+                                                                             .getCharacter()
+                                                                             .getInventory()
+                                                                             .setEquipped(null);
     }
 
 
     public boolean isEquipped () {
-        return game.getPlayer().getEquipped() == this;
+        return wrapper.getCharacter().getInventory().getEquipped() == this;
+    }
+
+
+    public boolean canBeEquipped () {
+        return false;
     }
 
 
@@ -98,4 +112,54 @@ public class HealthPotion extends Item {
     public void drop () {
         // TODO Auto-generated method stub   
     }
+
+
+
+	@Override
+	public void setPrice() {
+		price = 100;
+		
+	}
+
+
+	@Override
+	public int getPrice() {
+		return price;
+	}
+
+
+	@Override
+	public void adjustPrice() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean isSellable() {
+		if(price == 0)
+            return false;
+        return true;
+	}
+
+    @Override
+    public void initResources () {
+        // TODO Auto-generated method stub
+
+    }
+
+
+    @Override
+    public void render (Graphics2D g) {
+        // TODO Auto-generated method stub
+
+    }
+
+
+    @Override
+    public void update (long elapsed) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

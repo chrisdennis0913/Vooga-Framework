@@ -2,31 +2,54 @@ package app;
 import inventory.Inventory;
 import inventory.Item;
 import java.awt.Graphics2D;
+import java.util.Comparator;
+
 import level.Level;
-import level.Map;
 import player.Player;
+import utils.JsonUtil;
+
+import com.golden.gamedev.Game;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.PlayField;
+import com.golden.gamedev.object.Sprite;
+import com.google.gson.Gson;
 
 
 public class RPGame extends GameObject {
     private PlayField field;
-    public Map map;
-    private Background bg;
+    //private Background bg;
     private Player player;
-    private Dialog dialog;
+    //private Dialog dialog;
     private Level level;
     private Inventory myInventory;
-
-
-    public RPGame (GameEngine arg0) {
-        super(arg0);
+    String levelFileName;
+    String lower, upper;
+    boolean pausedForInventory = false;
+    
+    public RPGame (GameEngine parent) {
+        super(parent);
     }
 
 
-    public void initResources () {}
+    public void initResources () {
+    	
+    	
+    	
+    	level = new Level(bsLoader, bsIO, this, levelFileName);
+    	field = new PlayField(level);
+    	field.setComparator(new Comparator() {
+			public int compare(Object o1, Object o2) {
+				// sort based on y-order
+				return (int) (((Sprite) o1).getY()-((Sprite) o2).getY());
+			}
+		} );
+    	
+    	
+    	
+    	
+    }
 
 
     public void render (Graphics2D g) {}
@@ -41,6 +64,18 @@ public class RPGame extends GameObject {
     
     public void addItems(Item itm){
         myInventory.add(itm);
+    }
+    
+    public PlayField getField(){
+    	return field;
+    }
+
+
+    public void pauseGameForInventory(){
+        pausedForInventory = true;
+    }
+    public void unPauseGameForInventory(){
+        pausedForInventory = false;
     }
 
 }

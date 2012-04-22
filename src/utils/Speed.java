@@ -18,11 +18,16 @@ public class Speed {
 		this.y = speed;
 	}
 	
-	private double getX() {
+	public Speed(Speed speed) {
+		this.x = speed.getX();
+		this.y = speed.getY();
+	}
+	
+	public double getX() {
 		return x;
 	}
 	
-	private double getY() {
+	public double getY() {
 		return y;
 	}
 	

@@ -4,7 +4,8 @@ import utils.Location;
 
 import app.RPGame;
 
-//import dialogue.AbstractDialogue;
+import dialogue.AbstractDialogue;
+import dialogue.AbstractDialogue.DialogueObject;
 
 /**
  * Character that is non-playable and has movements
@@ -39,7 +40,12 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	
 	public void update(long elapsedTime){
 		movAI.update(elapsedTime);
-		dialogue.update(elapsedTime);	
+	}
+	
+	public String respondToTalk(DialogueObject choice){
+		if (choice != null)
+			dialogue.goToNextLine(choice);
+		return dialogue.getCurrentLine();
 	}
 	
 }

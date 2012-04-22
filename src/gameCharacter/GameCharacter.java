@@ -4,11 +4,9 @@ import inventory.Inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
-import attacks.AbstractBehaviorModifier;
+import attacks.BehaviorModifierContainer;
 
 import utils.Direction;
 import utils.JsonUtil;
@@ -48,12 +46,16 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	private int curDirection = 0;
 	private List<Direction> directions;
 	private Speed speed = new Speed(0);
+<<<<<<< HEAD
 	protected Inventory inventory;
+=======
+	private Inventory inventory;
+>>>>>>> james
 	private String configURL;
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<Action> actions = new EventedWrapper<Action>(this);
-	private LinkedList<AbstractBehaviorModifier> behaviorModifiers = new LinkedList<AbstractBehaviorModifier>();
+	private	BehaviorModifierContainer behaviorModifiers = new BehaviorModifierContainer();
 
 	public static final int DIR_DOWN = 0;
 	public static final int DIR_UP = 1;
@@ -72,7 +74,11 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		String json = JsonUtil.getJSON(configURL);
 		constructDirections(json);
 		stop();
+<<<<<<< HEAD
 		inventory = new Inventory(this);
+=======
+		inventory = new Inventory();
+>>>>>>> james
 	}
 
 	public void render(Graphics2D g) {	
@@ -81,21 +87,16 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		actions.render(g);
 	}
 		
-	public void update(long elapsed) {
-		for (AbstractBehaviorModifier bm : behaviorModifiers)
-			bm.setUp(elapsed);
+	public void update(long elapsedTime) {
+		behaviorModifiers.setUpAll(elapsedTime);
 				
 		double[] curSpeed = speed.get(getCurrentDirection());
 		setSpeed(curSpeed[0], curSpeed[1]);
-		super.update(elapsed);
-		counters.update(elapsed);
-		actions.update(elapsed);
+		super.update(elapsedTime);
+		counters.update(elapsedTime);
+		actions.update(elapsedTime);
 		
-		Iterator<AbstractBehaviorModifier> bmReverse = behaviorModifiers
-				.descendingIterator();
-		while (bmReverse.hasNext())
-			if (bmReverse.next().unsetUp(elapsed))
-				bmReverse.remove();
+		behaviorModifiers.unsetUpAll(elapsedTime);
 	}
 
 	public void setSpeed(double speed) {
@@ -168,4 +169,10 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	    return inventory;
 	}
 	
+<<<<<<< HEAD
+=======
+	public BehaviorModifierContainer getBehaviorModifiers(){
+		return behaviorModifiers;
+	}
+>>>>>>> james
 }

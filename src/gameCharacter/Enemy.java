@@ -10,11 +10,11 @@ import attacks.AbstractAttack;
 
 public class Enemy extends AutomatedCharacter implements Attackable{
 
+	private HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
+	
 	public Enemy(Game game, Location loc, String configURL) {
 		super(game, loc, configURL);
 	}
-
-	private HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
 	
 	public void initAttacks() {
 		//TODO: JSON magic

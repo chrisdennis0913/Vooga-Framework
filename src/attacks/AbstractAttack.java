@@ -67,5 +67,6 @@ public abstract class AbstractAttack {
 	
 	public abstract void performAttack(long elapsedTime);
 		
+	public abstract int calculateDamage(long elapsedTime);
 
 }

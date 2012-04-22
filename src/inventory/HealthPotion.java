@@ -10,9 +10,9 @@ import app.RPGame;
  * 
  * @author Chris Dennis
  */
-public class HealthPotion extends Item {
+public class HealthPotion extends Item implements Sellable{
     private int healthChange;
-
+    private int price = 0;
 
     private HealthPotion () {
 
@@ -98,4 +98,32 @@ public class HealthPotion extends Item {
     public void drop () {
         // TODO Auto-generated method stub   
     }
+
+
+	@Override
+	public void setPrice() {
+		price = 100;
+		
+	}
+
+
+	@Override
+	public int getPrice() {
+		return price;
+	}
+
+
+	@Override
+	public void adjustPrice() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean isSellable() {
+		if(price == 0)
+            return false;
+        return true;
+	}
 }

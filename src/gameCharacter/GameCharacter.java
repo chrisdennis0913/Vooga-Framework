@@ -46,11 +46,8 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	private int curDirection = 0;
 	private List<Direction> directions;
 	private Speed speed = new Speed(0);
-<<<<<<< HEAD
 	protected Inventory inventory;
-=======
-	private Inventory inventory;
->>>>>>> james
+
 	private String configURL;
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
@@ -74,11 +71,8 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		String json = JsonUtil.getJSON(configURL);
 		constructDirections(json);
 		stop();
-<<<<<<< HEAD
 		inventory = new Inventory(this);
-=======
-		inventory = new Inventory();
->>>>>>> james
+
 	}
 
 	public void render(Graphics2D g) {	
@@ -169,10 +163,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	    return inventory;
 	}
 	
-<<<<<<< HEAD
-=======
 	public BehaviorModifierContainer getBehaviorModifiers(){
 		return behaviorModifiers;
 	}
->>>>>>> james
 }

@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 
-import attacks.AbstractBehaviorModifier;
 import attacks.BehaviorModifierContainer;
 
 import utils.Direction;

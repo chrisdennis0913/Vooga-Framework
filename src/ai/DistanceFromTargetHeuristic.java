@@ -1,5 +1,6 @@
 package ai;
 
+import gameCharacter.GameCharacter;
 import app.RPGame;
 
 public class DistanceFromTargetHeuristic extends AbstractGameHeuristic {
@@ -18,7 +19,7 @@ public class DistanceFromTargetHeuristic extends AbstractGameHeuristic {
 
 	@Override
 	public boolean getHeuristicBool() {
-		double dist = enemy.getSprite().getDistance(game.getPlayer().getSprite());
+		double dist = attacker.getDistance(game.getPlayer());
 		return (dist > threshold);
 	}
 

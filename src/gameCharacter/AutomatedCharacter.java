@@ -1,9 +1,10 @@
 package gameCharacter;
 
+import utils.Location;
+
 import com.golden.gamedev.Game;
 
-import app.Location;
-import dialogue.AbstractDialogue;
+//import dialogue.AbstractDialogue;
 
 public abstract class AutomatedCharacter extends GameCharacter{
 	
@@ -11,11 +12,11 @@ public abstract class AutomatedCharacter extends GameCharacter{
 
 	//--- CONTROL FIELDS --------------------------------------
 //	private AbstractMovementAI movAI;
-	private AbstractDialogue dialogue;
+//	private AbstractDialogue dialogue;
 	
 	//--- STATE FIELDS ----------------------------------------
-	private boolean alive;
-	private boolean canDie;
+//	private boolean alive;
+//	private boolean canDie;
 	
 	public abstract void setAlive(boolean alive);
 	public abstract boolean isAlive();

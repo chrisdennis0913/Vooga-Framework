@@ -1,6 +1,6 @@
 {
 	"frames": 7,
-	"delay": 150,
+	"delay": 75,
 	"directions": [
 	{
 		"direction": "DIR_DOWN",
@@ -8,7 +8,7 @@
 	},
 	{
 		"direction": "DIR_UP",
-		"image": "rsc/player/walk_down.png"
+		"image": "rsc/player/walk_up.png"
 	},
 	{
 		"direction": "DIR_RIGHT",

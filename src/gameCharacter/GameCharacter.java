@@ -2,16 +2,18 @@ package gameCharacter;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import utils.Direction;
+import utils.JsonUtil;
+import utils.Location;
+import utils.Speed;
+
 import actions.Action;
-import app.Location;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.AnimatedSprite;
-import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
@@ -20,14 +22,14 @@ import evented.EventedWrapper;
 
 /**
  * Basic class for all character game objects: enemies, automated characters,
- * and players
+ * and players.
  * 
  * Allows the developer to load directions from a JSON file (see Direction for
  * more info).
  * 
  * Contains a common current direction to be shared between the actions.
  * 
- * Contains Actions and Counters wrappers to execute the actions
+ * Contains Actions and Counters wrappers to execute the actions.
  * 
  * @author Kirill Klimuk
  */
@@ -40,6 +42,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 
 	private int curDirection = 0;
 	private List<Direction> directions;
+	private Speed speed = new Speed(0);
 
 	private String configURL;
 
@@ -59,46 +62,47 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	}
 
 	public void initResources() {
-		String json = loadJSON(configURL);
+		String json = JsonUtil.getJSON(configURL);
 		constructDirections(json);
 		stop();
 	}
-	
-	public void render(Graphics2D g) {
+
+	public void render(Graphics2D g) {	
 		super.render(g);
 		counters.render(g);
 		actions.render(g);
 	}
-
+		
 	public void update(long elapsed) {
+		double[] curSpeed = speed.get(getCurrentDirection());
+		setSpeed(curSpeed[0], curSpeed[1]);
 		super.update(elapsed);
 		counters.update(elapsed);
 		actions.update(elapsed);
 	}
 
-	private String loadJSON(String configURL) {
-		String[] jsonPacked = FileUtil.fileRead(new File(configURL));
-
-		StringBuilder jsonBuilder = new StringBuilder();
-		for (String line : jsonPacked) {
-			jsonBuilder.append(line);
-		}
-
-		return jsonBuilder.toString();
+	public void setSpeed(double speed) {
+		this.speed.set(speed);
 	}
 
+	public Game getGame() {
+		return game;
+	}
+	
 	private void constructDirections(String json) {
 		Gson gson = new Gson();
-		JSONDirections dirs = gson.fromJson(json, JSONDirections.class);
+		JsonUtil.JSONDirections dirs = gson.fromJson(json,
+				JsonUtil.JSONDirections.class);
 
 		Direction[] tempDirections = new Direction[4];
 
-		for (JSONDirection direction : dirs.directions) {
+		for (JsonUtil.JSONDirection direction : dirs.directions) {
 			BufferedImage image = game.getImage(direction.image);
-			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames, 1);
+			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames,
+					1);
 
 			int intepretedDirection = 0;
-			
+
 			if (direction.direction.equals("DIR_DOWN"))
 				intepretedDirection = GameCharacter.DIR_DOWN;
 			else if (direction.direction.equals("DIR_UP"))
@@ -109,7 +113,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 				intepretedDirection = GameCharacter.DIR_RIGHT;
 			else
 				throw new RuntimeException("Invalid direction specified");
-			
+
 			tempDirections[intepretedDirection] = new Direction(this, images,
 					intepretedDirection, dirs.delay);
 		}
@@ -117,31 +121,29 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		directions = Arrays.asList(tempDirections);
 	}
 
-	private class JSONDirections {
-		public int frames;
-		public int delay;
-		public JSONDirection[] directions;
+	public EventedWrapper<Action> getActions() {
+		return actions;
 	}
 	
-	private class JSONDirection {
-		public String direction;
-		public String image;
+	public EventedWrapper<Counter> getCounters() {
+		return counters;
 	}
-
+	
 	public boolean isCurrentDirection(int direction) {
 		return direction == curDirection;
 	}
 
-	public Direction getCurrentDirection() {
-		return directions.get(curDirection);
+	public int getCurrentDirection() {
+		return curDirection;
 	}
 
-	public void setCurrentDirection(int direction, boolean animate) {
+	public void setActiveDirection(int direction) {
 		curDirection = direction;
-		directions.get(direction).changeCharacter(animate);
+		directions.get(direction).changeCharacter(true);
 	}
-	
+
 	public void stop() {
+		speed.set(0);
 		directions.get(curDirection).changeCharacter(false);
 	}
 }

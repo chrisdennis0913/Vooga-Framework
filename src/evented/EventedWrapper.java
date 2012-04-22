@@ -3,14 +3,21 @@ package evented;
 import gameCharacter.GameCharacter;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+
+/**
+ * The evented wrapper is the connection between the item
+ * like a counter or action and the character it is used on.
+ * It executes common evented tasks on the items it contains
+ * and can be used to retrieve internal items.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+ * 
+ * @author Kirill Klimuk
+ */
 
 public class EventedWrapper<T extends EventedItem<T>> implements
 		Evented {
 
-	private List<T> list = new ArrayList<T>();
+	private HashMap<String, T> list = new HashMap<String, T>();
 	private GameCharacter character;
 
 	public EventedWrapper(GameCharacter character) {
@@ -20,20 +27,25 @@ public class EventedWrapper<T extends EventedItem<T>> implements
 	public GameCharacter getCharacter() {
 		return character;
 	}
-
-	public List<T> getList() {
-		return Collections.unmodifiableList(list);
+	
+	public void add(String itemName, T item) {
+		list.put(itemName, item);
+	}
+	
+	public T get(String itemName) {
+		itemName = itemName.toLowerCase();
+		return list.get(itemName);
 	}
 
 	public void render(Graphics2D g) {
 		if (!list.isEmpty())
-			for (T item : list)
+			for (T item : list.values())
 				item.render(g);
 	}
 
 	public void update(long elapsed) {
 		if (!list.isEmpty())
-			for (T item : list)
+			for (T item : list.values())
 				item.update(elapsed);
 	}
 

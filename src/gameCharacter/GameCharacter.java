@@ -4,7 +4,11 @@ import inventory.Inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+
+import attacks.AbstractBehaviorModifier;
 
 import utils.Direction;
 import utils.JsonUtil;
@@ -49,6 +53,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<Action> actions = new EventedWrapper<Action>(this);
+	private LinkedList<AbstractBehaviorModifier> behaviorModifiers = new LinkedList<AbstractBehaviorModifier>();
 
 	public static final int DIR_DOWN = 0;
 	public static final int DIR_UP = 1;
@@ -76,11 +81,20 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	}
 		
 	public void update(long elapsed) {
+		for (AbstractBehaviorModifier bm : behaviorModifiers)
+			bm.setUp(elapsed);
+				
 		double[] curSpeed = speed.get(getCurrentDirection());
 		setSpeed(curSpeed[0], curSpeed[1]);
 		super.update(elapsed);
 		counters.update(elapsed);
 		actions.update(elapsed);
+		
+		Iterator<AbstractBehaviorModifier> bmReverse = behaviorModifiers
+				.descendingIterator();
+		while (bmReverse.hasNext())
+			if (bmReverse.next().unsetUp(elapsed))
+				bmReverse.remove();
 	}
 
 	public void setSpeed(double speed) {

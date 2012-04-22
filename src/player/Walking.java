@@ -4,55 +4,38 @@ import java.awt.Graphics2D;
 import java.util.HashMap;
 
 import utils.JsonUtil;
-
+import utils.KeyHandler;
 import actions.Action;
 import evented.EventedWrapper;
 import gameCharacter.GameCharacter;
 
 public class Walking extends Action {
 
-	private JsonUtil.JSONPlayerWalking walking;
-	private double speed = 0.07;
-	private HashMap<Integer, int[]> keys = new HashMap<Integer, int[]>();
+	private static final long serialVersionUID = 1L;
 
-	public Walking(EventedWrapper<Action> wrapper, JsonUtil.JSONPlayerWalking walking) {
-		super(wrapper);
-		this.walking = walking;
-		initResources();
+	private KeyHandler keys = new KeyHandler(getWrapper().getCharacter()
+			.getGame());
+	private double speed = 0.07;
+
+	public Walking(EventedWrapper<Action> wrapper,
+			JsonUtil.JSONPlayerWalking walking) {
+		super(wrapper, walking);
 	}
 
 	public void initResources() {
+		JsonUtil.JSONPlayerWalking walking = (JsonUtil.JSONPlayerWalking) getJsonable();
 		if (walking.down == null || walking.right == null
 				|| walking.left == null || walking.right == null)
 			new RuntimeException("Directional keys undefined");
 
-		keys.put(GameCharacter.DIR_DOWN, walking.down);
-		keys.put(GameCharacter.DIR_UP, walking.up);
-		keys.put(GameCharacter.DIR_RIGHT, walking.right);
-		keys.put(GameCharacter.DIR_LEFT, walking.left);
-	}
-
-	private int checkKeys() {
-		boolean isDirection = false;
-
-		for (Integer direction : keys.keySet()) {
-			for (int key : keys.get(direction)) {
-				if (!getWrapper().getCharacter().getGame().keyDown(key)) {
-					isDirection = false;
-					continue;
-				}
-				isDirection = true;
-			}
-
-			if (isDirection)
-				return direction;
-		}
-
-		return -1;
+		keys.add(GameCharacter.DIR_DOWN, walking.down);
+		keys.add(GameCharacter.DIR_UP, walking.up);
+		keys.add(GameCharacter.DIR_RIGHT, walking.right);
+		keys.add(GameCharacter.DIR_LEFT, walking.left);
 	}
 
 	public void update(long elapsed) {
-		int status = checkKeys();
+		int status = keys.checkKeys();
 		GameCharacter character = getWrapper().getCharacter();
 
 		if (status != -1) {

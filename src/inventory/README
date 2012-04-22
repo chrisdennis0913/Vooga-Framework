@@ -1,0 +1,23 @@
+Inventory README
+
+Decided to use the factory design pattern to allow the Items to practically create themselves.
+Use the MakeItems class if you need Items made. ;)
+
+The top of each class should have an example of how to do it.
+
+It currently looks like
+        ItemSub sword =
+            MI.parseExpression("Golden Sword, sword, sword, 55");
+        int[] loc =
+            new int[] {
+                    game.getBG().getWidth() / 2 - 10,
+                    game.getBG().getHeight() / 4 * 3 };
+        sword.add(loc, 0);
+        items.put("sword", sword);
+
+where MI is a MakeItems object instantiated in the Level super class.
+
+"o" opens the full inventory menu
+	use this with the "enter key"
+	to equip a proper weapon
+while "i" toggles the limited menu

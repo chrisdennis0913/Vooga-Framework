@@ -3,6 +3,10 @@ package inventory;
 import app.RPGame;
 
 public class BowAndArrows extends Weapon {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -9018291996580125601L;
     private BowAndArrows(){
         super();
     }

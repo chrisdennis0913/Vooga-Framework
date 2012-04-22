@@ -12,10 +12,15 @@ import app.RPGame;
  * @author Chris Dennis
  */
 public class HealthPotion extends Item {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2489280342490018746L;
     private int healthChange;
 
 
     // do I need to change the wrapper when added to a different inventory?
+    // yes, yes i do. and will do
     private HealthPotion () {
 
     }

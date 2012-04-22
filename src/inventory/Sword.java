@@ -4,6 +4,12 @@ import app.RPGame;
 
 
 public class Sword extends Weapon {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3081446463048996331L;
+
+
     private Sword () {
         super();
     }

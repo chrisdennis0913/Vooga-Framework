@@ -15,7 +15,10 @@ public abstract class EventedItem<T extends EventedItem<T>> implements Evented{
 		this.wrapper = wrapper;
 	}
 	
-	public EventedWrapper<T> getWrapper() {
+	protected EventedItem () {
+    }
+
+    public EventedWrapper<T> getWrapper() {
 		return wrapper;
 	}
 	

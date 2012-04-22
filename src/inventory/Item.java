@@ -4,9 +4,16 @@ import java.awt.image.BufferedImage;
 import app.RPGame;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
+import evented.EventedItem;
+import evented.EventedWrapper;
 
-
-public abstract class Item implements EquipItemInterface{
+/**
+ * Can subclass to create other instance variables
+ * such as weight, damage, price
+ * @author chrisdennis0913
+ *
+ */
+public abstract class Item extends EventedItem<Item> implements EquipItemInterface{
 
     protected static RPGame game;
     protected String myName;
@@ -14,11 +21,16 @@ public abstract class Item implements EquipItemInterface{
     protected SpriteGroup myGroup;
     protected BufferedImage image;
     protected Sprite mySprite;
-
+    
+    public Item(EventedWrapper<Item> wrapper){
+        super(wrapper);
+    }
 
     // Can subclass to create other instance variables
     // such as weight
-    protected Item () {}
+    protected Item () {
+        super();
+    }
 
 
     public Item (RPGame game2, String name, String gifName, String categ) {

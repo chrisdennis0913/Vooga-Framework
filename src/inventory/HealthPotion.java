@@ -1,5 +1,6 @@
 package inventory;
 
+import java.awt.Graphics2D;
 import app.RPGame;
 
 
@@ -97,5 +98,26 @@ public class HealthPotion extends Item {
     @Override
     public void drop () {
         // TODO Auto-generated method stub   
+    }
+
+
+    @Override
+    public void initResources () {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void render (Graphics2D g) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void update (long elapsed) {
+        // TODO Auto-generated method stub
+        
     }
 }

@@ -24,7 +24,7 @@ public class EventedWrapper<T extends EventedItem<T>> implements
 		this.character = character;
 	}
 
-	public GameCharacter getCharacter() {
+    public GameCharacter getCharacter() {
 		return character;
 	}
 	

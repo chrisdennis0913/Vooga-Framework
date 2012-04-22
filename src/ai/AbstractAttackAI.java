@@ -1,7 +1,7 @@
 package ai;
 
 import gameCharacter.AttackController;
-import gameCharacter.AutomatedCharacter;
+import gameCharacter.Enemy;
 import app.RPGame;
 import attacks.AbstractAttack;
 
@@ -9,20 +9,24 @@ import attacks.AbstractAttack;
 public abstract class AbstractAttackAI extends AttackController{
 
 	protected RPGame game;
-	protected AutomatedCharacter character;
+	protected Enemy character;
 
-	public AbstractAttackAI(RPGame game, AutomatedCharacter character){
+	public AbstractAttackAI(RPGame game, Enemy character){
 		super(game,character);
 	}
 
 	public AbstractAttack chooseAttack(){
-		return pickBestSpontaneousAttack();
+		return pickBestAttack();
 	}
 	
 	public abstract void update(long elapsedTime);
 	public abstract boolean shouldAttack();
-	public abstract AbstractAttack pickBestSpontaneousAttack();
-	public abstract AbstractAttack pickBestReactiveAttack();
+
+	/**
+	 * Chooses the best attack for the current situation.
+	 * Returns null if no attacks are available.
+	 */
+	public abstract AbstractAttack pickBestAttack();
 	public abstract void onCollision();
 	
 }

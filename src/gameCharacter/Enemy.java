@@ -1,31 +1,34 @@
 package gameCharacter;
 
+import java.util.HashMap;
+
+import attacks.AbstractAttack;
+
 public class Enemy extends AutomatedCharacter implements Attackable{
 
-	private RPGame game;
-
-	@Override
-	public void setAlive(boolean alive) {
-		// TODO Auto-generated method stub
-
+	private HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
+	
+	public void initAttacks() {
+		//TODO: JSON magic
+		throw new RuntimeException("Enemy initAttacks() undefined");
+	}
+	
+	public HashMap<String, AbstractAttack> getAttacks() {
+		return attacks;
 	}
 
-	@Override
-	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return false;
+	public void attack(AbstractAttack at, long elapsedTime){
+		//TODO
+		throw new RuntimeException("Enemy attack() undefined");
 	}
-
 	@Override
 	public int getHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getCounters().get("health").getCount();
 	}
 
 	@Override
-	public void addToHealth() {
-		// TODO Auto-generated method stub
-		
+	public void addToHealth(int delta) {
+		getCounters().get("health").increase(delta);
 	}
 
 }

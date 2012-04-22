@@ -4,11 +4,10 @@ import inventory.Inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import attacks.AbstractBehaviorModifier;
+import attacks.BehaviorModifierContainer;
 
 import utils.Direction;
 import utils.JsonUtil;
@@ -53,7 +52,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<Action> actions = new EventedWrapper<Action>(this);
-	private LinkedList<AbstractBehaviorModifier> behaviorModifiers = new LinkedList<AbstractBehaviorModifier>();
+	private	BehaviorModifierContainer behaviorModifiers = new BehaviorModifierContainer();
 
 	public static final int DIR_DOWN = 0;
 	public static final int DIR_UP = 1;
@@ -80,21 +79,16 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		actions.render(g);
 	}
 		
-	public void update(long elapsed) {
-		for (AbstractBehaviorModifier bm : behaviorModifiers)
-			bm.setUp(elapsed);
+	public void update(long elapsedTime) {
+		behaviorModifiers.setUpAll(elapsedTime);
 				
 		double[] curSpeed = speed.get(getCurrentDirection());
 		setSpeed(curSpeed[0], curSpeed[1]);
-		super.update(elapsed);
-		counters.update(elapsed);
-		actions.update(elapsed);
+		super.update(elapsedTime);
+		counters.update(elapsedTime);
+		actions.update(elapsedTime);
 		
-		Iterator<AbstractBehaviorModifier> bmReverse = behaviorModifiers
-				.descendingIterator();
-		while (bmReverse.hasNext())
-			if (bmReverse.next().unsetUp(elapsed))
-				bmReverse.remove();
+		behaviorModifiers.unsetUpAll(elapsedTime);
 	}
 
 	public void setSpeed(double speed) {
@@ -167,4 +161,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	    return inventory;
 	}
 	
+	public BehaviorModifierContainer getBehaviorModifiers(){
+		return behaviorModifiers;
+	}
 }

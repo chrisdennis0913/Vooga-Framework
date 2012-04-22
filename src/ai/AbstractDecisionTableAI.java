@@ -3,7 +3,7 @@ package ai;
 import app.RPGame;
 import attacks.AbstractAttack;
 
-import gameCharacter.AutomatedCharacter;
+import gameCharacter.Enemy;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -13,15 +13,16 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 
 	HashMap<String,HashMap<AbstractGameHeuristic,Integer>> decisionTable;
 	
-	public AbstractDecisionTableAI(RPGame game, AutomatedCharacter character) {
+	public AbstractDecisionTableAI(RPGame game, Enemy character) {
 		super(game, character);
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		if(character.isAlive()){
-			if (shouldAttack())
-				character.attack(pickBestSpontaneousAttack(),elapsedTime);
+			AbstractAttack choice = pickBestAttack();
+			if(choice != null)
+				character.attack(pickBestAttack(),elapsedTime);
 		}
 	}
 
@@ -32,17 +33,17 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 	}
 
 	public AbstractAttack pickBestAttack(){
+		HashMap<String, AbstractAttack> attackMap = character.getAttacks();
 		PriorityQueue<AbstractAttack> attackQ = new PriorityQueue<AbstractAttack>(10,new AttackComparator(this));
 		for(String attackName : decisionTable.keySet()){
 			if(attackMap.containsKey(attackName))
 				attackQ.add(attackMap.get(attackName));
 		}
-		return attackQ.poll();
-	}
-
-	@Override
-	public void onCollision() {
-		pickBestReactiveAttack().performAttack(0);
+		AbstractAttack choice;
+		while((choice = attackQ.poll()) != null)
+			if(choice.isActive() && choice.isAvailable(elapsedTime))
+				return choice;
+		return null;
 	}
 	
 	public static class AttackComparator implements Comparator<AbstractAttack>{

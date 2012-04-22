@@ -6,12 +6,12 @@ import app.RPGame;
 public abstract class AbstractGameHeuristic {
 
 	RPGame game;
-	GameCharacter character;
+	GameCharacter attacker;
 	String conditionName;
 	
 	public AbstractGameHeuristic(RPGame game, GameCharacter character, String conditionName){
 		this.game = game;
-		this.character = character;
+		this.attacker = character;
 		this.conditionName = conditionName;
 	}
 	

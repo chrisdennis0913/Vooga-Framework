@@ -33,5 +33,5 @@ public abstract class AbstractRecurrentTimeBehaviorModifier extends AbstractBeha
 			return true;
 		return false;
 	}
-
+	
 }

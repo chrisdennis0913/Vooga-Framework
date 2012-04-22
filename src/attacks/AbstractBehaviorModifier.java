@@ -14,9 +14,10 @@ public abstract class AbstractBehaviorModifier{
 	}
 	
 	public void deregister(){
-		target.deregisterBehaviorModifier(this);
+		target.getBehaviorModifiers().removeFirstOccurrence(this);
 	}
 
 	public abstract void setUp(long elapsedTime);
 	public abstract boolean unsetUp(long elapsedTime);
+
 }

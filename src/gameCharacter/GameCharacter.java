@@ -89,13 +89,13 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 
 	private void constructDirections(String json) {
 		Gson gson = new Gson();
-		JSONDirection[] dirs = gson.fromJson(json, JSONDirection[].class);
+		JSONDirections dirs = gson.fromJson(json, JSONDirections.class);
 
 		Direction[] tempDirections = new Direction[4];
 
-		for (JSONDirection direction : dirs) {
+		for (JSONDirection direction : dirs.directions) {
 			BufferedImage image = game.getImage(direction.image);
-			BufferedImage[] images = ImageUtil.splitImages(image, 7, 1);
+			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames, 1);
 
 			int intepretedDirection = 0;
 			
@@ -111,15 +111,20 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 				throw new RuntimeException("Invalid direction specified");
 			
 			tempDirections[intepretedDirection] = new Direction(this, images,
-					intepretedDirection, direction.delay);
+					intepretedDirection, dirs.delay);
 		}
 
 		directions = Arrays.asList(tempDirections);
 	}
 
+	private class JSONDirections {
+		public int frames;
+		public int delay;
+		public JSONDirection[] directions;
+	}
+	
 	private class JSONDirection {
 		public String direction;
-		public int delay;
 		public String image;
 	}
 
@@ -137,6 +142,6 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	}
 	
 	public void stop() {
-		directions.get(curDirection).changeCharacter(true);
+		directions.get(curDirection).changeCharacter(false);
 	}
 }

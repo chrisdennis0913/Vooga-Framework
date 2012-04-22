@@ -1,5 +1,6 @@
 package app;
 import inventory.Inventory;
+import inventory.Item;
 import java.awt.Graphics2D;
 import level.Level;
 import level.Map;
@@ -36,6 +37,10 @@ public class RPGame extends GameObject {
 
     public Player getPlayer () {
         return player;
+    }
+    
+    public void addItems(Item itm){
+        myInventory.add(itm);
     }
 
 }

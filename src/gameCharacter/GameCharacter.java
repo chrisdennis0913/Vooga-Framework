@@ -1,92 +1,156 @@
 package gameCharacter;
 
+import inventory.Inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import app.Location;
-import app.RPGame;
+import utils.Direction;
+import utils.JsonUtil;
+import utils.Location;
+import utils.Speed;
 
+import actions.Action;
+
+import com.golden.gamedev.Game;
 import com.golden.gamedev.object.AnimatedSprite;
-import com.golden.gamedev.util.FileUtil;
+import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
-public abstract class GameCharacter extends AnimatedSprite {
-	
+import counters.Counter;
+import evented.EventedWrapper;
+
+/**
+ * Basic class for all character game objects: enemies, automated characters,
+ * and players.
+ * 
+ * Allows the developer to load directions from a JSON file (see Direction for
+ * more info).
+ * 
+ * Contains a common current direction to be shared between the actions.
+ * 
+ * Contains Actions and Counters wrappers to execute the actions.
+ * 
+ * @author Kirill Klimuk
+ */
+
+public class GameCharacter extends AnimatedSprite implements CharacterInterface {
+
 	private static final long serialVersionUID = 1L;
 
-	private RPGame game;
+	private Game game;
 
 	private int curDirection = 0;
 	private List<Direction> directions;
+	private Speed speed = new Speed(0);
+	private Inventory inventory;
+	private String configURL;
+
+	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
+	private EventedWrapper<Action> actions = new EventedWrapper<Action>(this);
 
 	public static final int DIR_DOWN = 0;
 	public static final int DIR_UP = 1;
 	public static final int DIR_LEFT = 2;
 	public static final int DIR_RIGHT = 3;
 
-	public GameCharacter(RPGame game, Location loc, String configURL) {
+	public GameCharacter(Game game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
-		initResources(configURL);
+		this.configURL = configURL;
+		initResources();
 	}
 
-	private void initResources(String configURL) {
-		String json = loadJSON(configURL);
+	public void initResources() {
+		String json = JsonUtil.getJSON(configURL);
 		constructDirections(json);
+		stop();
+		inventory = new Inventory();
 	}
 
-	private String loadJSON(String configURL) {
-		String[] jsonPacked = FileUtil.fileRead(new File(configURL));
-
-		StringBuilder jsonBuilder = new StringBuilder();
-		for (String line : jsonPacked) {
-			jsonBuilder.append(line);
-		}
-
-		return jsonBuilder.toString();
+	public void render(Graphics2D g) {	
+		super.render(g);
+		counters.render(g);
+		actions.render(g);
+	}
+		
+	public void update(long elapsed) {
+		double[] curSpeed = speed.get(getCurrentDirection());
+		setSpeed(curSpeed[0], curSpeed[1]);
+		super.update(elapsed);
+		counters.update(elapsed);
+		actions.update(elapsed);
 	}
 
+	public void setSpeed(double speed) {
+		this.speed.set(speed);
+	}
+
+	public Game getGame() {
+		return game;
+	}
+	
 	private void constructDirections(String json) {
 		Gson gson = new Gson();
-		JSONDirection[] dirs = gson.fromJson(json, JSONDirection[].class);
+		JsonUtil.JSONDirections dirs = gson.fromJson(json,
+				JsonUtil.JSONDirections.class);
 
 		Direction[] tempDirections = new Direction[4];
 
-		for (JSONDirection direction : dirs) {
-			BufferedImage[] images = new BufferedImage[direction.images.length];
-			for (int i = 0; i < images.length; i++)
-				images[i] = game.getImage(direction.images[i]);
+		for (JsonUtil.JSONDirection direction : dirs.directions) {
+			BufferedImage image = game.getImage(direction.image);
+			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames,
+					1);
 
-			tempDirections[direction.direction] = new Direction(this, images,
-					direction.direction, direction.delay);
+			int intepretedDirection = 0;
+
+			if (direction.direction.equals("DIR_DOWN"))
+				intepretedDirection = GameCharacter.DIR_DOWN;
+			else if (direction.direction.equals("DIR_UP"))
+				intepretedDirection = GameCharacter.DIR_UP;
+			else if (direction.direction.equals("DIR_LEFT"))
+				intepretedDirection = GameCharacter.DIR_LEFT;
+			else if (direction.direction.equals("DIR_RIGHT"))
+				intepretedDirection = GameCharacter.DIR_RIGHT;
+			else
+				throw new RuntimeException("Invalid direction specified");
+
+			tempDirections[intepretedDirection] = new Direction(this, images,
+					intepretedDirection, dirs.delay);
 		}
 
 		directions = Arrays.asList(tempDirections);
 	}
 
-	private class JSONDirection {
-		public int direction;
-		public int delay;
-		public String[] images;
+	public EventedWrapper<Action> getActions() {
+		return actions;
 	}
-
-	public abstract void render(Graphics2D g);
-
-	protected abstract void update();
-
+	
+	public EventedWrapper<Counter> getCounters() {
+		return counters;
+	}
+	
 	public boolean isCurrentDirection(int direction) {
 		return direction == curDirection;
 	}
-	
-	public Direction getCurrentDirection() {
-		return directions.get(curDirection);
+
+	public int getCurrentDirection() {
+		return curDirection;
 	}
 
-	public void setDirection(int direction, boolean animate) {
-		this.curDirection = direction;
-		directions.get(direction).changeCharacter(animate);
+	public void setActiveDirection(int direction) {
+		curDirection = direction;
+		directions.get(direction).changeCharacter(true);
 	}
+
+	public void stop() {
+		speed.set(0);
+		directions.get(curDirection).changeCharacter(false);
+	}
+	
+	public Inventory getInventory(){
+	    return inventory;
+	}
+	
 }

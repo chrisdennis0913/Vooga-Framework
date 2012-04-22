@@ -1,5 +1,6 @@
 package gameCharacter;
 
+import inventory.Inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	private int curDirection = 0;
 	private List<Direction> directions;
 	private Speed speed = new Speed(0);
-
+	private Inventory inventory;
 	private String configURL;
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
@@ -65,6 +66,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		String json = JsonUtil.getJSON(configURL);
 		constructDirections(json);
 		stop();
+		inventory = new Inventory();
 	}
 
 	public void render(Graphics2D g) {	
@@ -146,4 +148,9 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		speed.set(0);
 		directions.get(curDirection).changeCharacter(false);
 	}
+	
+	public Inventory getInventory(){
+	    return inventory;
+	}
+	
 }

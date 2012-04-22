@@ -169,10 +169,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	    return inventory;
 	}
 	
-<<<<<<< HEAD
-=======
 	public BehaviorModifierContainer getBehaviorModifiers(){
 		return behaviorModifiers;
 	}
->>>>>>> james
 }

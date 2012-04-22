@@ -4,5 +4,30 @@
 		"down": [40],
 		"left": [37],
 		"right": [39]
+	},
+	"attacking": {
+		"keys": [17],
+		"directions": {
+			"frames": 6,
+			"delay": 100,
+			"directions": [
+				{
+					"direction": "DIR_DOWN",
+					"image": "rsc/player/attack_down.png"
+				},
+				{
+					"direction": "DIR_UP",
+					"image": "rsc/player/attack_up.png"
+				},
+				{
+					"direction": "DIR_RIGHT",
+					"image": "rsc/player/attack_right.png"
+				},
+				{
+					"direction": "DIR_LEFT",
+					"image": "rsc/player/attack_left.png"
+				}
+				]
+			}
 	}
 }

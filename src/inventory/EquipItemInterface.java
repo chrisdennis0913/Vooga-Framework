@@ -7,4 +7,5 @@ public interface EquipItemInterface
     void unequip();
     void drop();
     boolean isEquipped();
+    boolean canBeEquipped();
 }

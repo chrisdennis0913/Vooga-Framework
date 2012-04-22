@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 
 public class Player extends CharacterDecorator {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String configURL;
 
 	public Player(GameCharacter character, String configURL) {

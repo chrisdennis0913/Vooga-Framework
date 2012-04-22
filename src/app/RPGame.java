@@ -43,7 +43,7 @@ public class RPGame extends GameObject {
     	
     	//parse JSON files and set up player and npcs
     	Gson gson = new Gson();
-    		JsonUtil.JSONLevel peeps = gson.fromJSON(json, JsonUtil.JSONLevel.class);
+    		JsonUtil.JSONLevel peeps = gson.fromJson(json, JsonUtil.JSONLevel.class);
     	
     	
     }

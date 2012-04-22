@@ -24,7 +24,7 @@ public class Main extends GameEngine {
 	
 	public static void main(String[] args) {
 		GameLoader game = new GameLoader();
-		game.setup(new Main(), new Dimension(400, 400), false);
+		game.setup(new Main(), new Dimension(640, 480), false);
 		game.start();
 	}
 }

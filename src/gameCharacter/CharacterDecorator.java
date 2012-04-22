@@ -48,5 +48,9 @@ public class CharacterDecorator extends AnimatedSprite implements CharacterInter
 		character.stop();
 	}
 	
+	public GameCharacter getCharacter(){
+	    return character;
+	}
+	
 	
 }

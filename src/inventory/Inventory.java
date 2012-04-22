@@ -1,110 +1,130 @@
 package inventory;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.HashMap;
+import evented.EventedWrapper;
+import gameCharacter.GameCharacter;
 
-public class Inventory implements Iterable<Item>{
-    protected Map<Item, Integer> myItemMap;
 
-    public Inventory() {
-        myItemMap = new TreeMap<Item, Integer>();
+/**
+ * Keeps track of quantity of Items Given to every game character
+ * 
+ * @author chrisdennis0913
+ */
+
+public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
+//  private InventoryMenu menu;
+    private Item equippedItem;
+    private ArrayList<Accessory> accessoryList;
+
+
+    public Inventory (GameCharacter character) {
+        super(character);
+        accessoryList = new ArrayList<Accessory>();
+        equippedItem = null;
     }
 
-    public void add(Item itm) {
-        if (!myItemMap.containsKey(itm))
-            myItemMap.put(itm, 1);
-        // implicitly calls compareTo
-        // sorts items by category alphabetically, then by name, then by price
-        // done automatically within the TreeMap
-    }
 
-    public void add(Item itm, int quantity) {
-        int quant = 0;
-        if (myItemMap.containsKey(itm)) {
-            quant = myItemMap.get(itm);
+    public void add (Item itm) {
+        if (itm.getCategory().equalsIgnoreCase("accessory")) {
+            Accessory acc = (Accessory) itm;
+            acc.equip();
         }
-        myItemMap.put(itm, quant + quantity);
+        if (!contains(itm)) add(itm.myName, itm);
     }
 
-    public void remove(Item itm) {
-        if (myItemMap.containsKey(itm))
-            myItemMap.remove(itm);
-        else
-            System.out.println("Inventory does not contain " + itm.getName()
-                    + ".");
+
+    public void add (Item itm, int quantity) {
+        if (equippedItem == null & itm.canBeEquipped()) equippedItem = itm;
+        if (itm.getCategory().equalsIgnoreCase("accessory")) {
+            Accessory acc = (Accessory) itm;
+            acc.equip();
+        }
+        add(itm);
+        itm.add(quantity);
     }
 
-    public void remove(Item itm, int quantity) {
-        int quant = 0;
-        if (myItemMap.containsKey(itm)) {
-            quant = myItemMap.get(itm);
+
+    public void remove (Item itm) {
+        if (itm.getCategory().equalsIgnoreCase("accessory")) {
+            Accessory acc = (Accessory) itm;
+            acc.unequip();
         }
-        quant -= quantity;
-        if (quant < 0) {
-            System.out.println("That is " + quant * -1 + " too many of "
-                    + itm.getName() + ".");
-            return;
+        if (equippedItem == itm) {
+            equippedItem = null;
         }
-          if (quant == 0) {
-                System.out.println("That is the last of the"
-                        + itm.getName() + "s.");
-                myItemMap.remove(itm);
-                return;
-            }
-        myItemMap.put(itm, quant);
-        System.out.println("There are now " + quant+" left of the "
-                + itm.getName() + "s.");
+        remove(itm.myName);
+        itm.removeAll();
     }
 
-    public boolean contains(Item itm) {
-        return myItemMap.containsKey(itm);
+
+    public void remove (Item itm, int quantity) {
+        itm.remove(quantity);
     }
-    public boolean contains(String itmName){
-        for (Item itm: myItemMap.keySet()){
-            if (itm.getName().equalsIgnoreCase(itmName))
-                    return true;
+
+
+    public boolean contains (Item itm) {
+        return contains(itm.myName);
+    }
+
+
+    public Integer getCount (Item itm) {
+        return itm.getQuantity();
+    }
+
+
+    public Item getEquipped () {
+        return equippedItem;
+    }
+
+
+    public void setEquipped (Item itm) {
+        if (contains(itm)) {
+            equippedItem = itm;
         }
-        return false;
     }
-    
-    public Integer getCount(Item itm)
-    {
-        return myItemMap.get(itm);
+    public boolean isEquipped(Item itm){
+        return equippedItem == itm;
     }
+
+
+    public void equipAcc (Accessory acc) {
+        if (!accessoryList.contains(acc)) {
+            accessoryList.add(acc);
+        }
+    }
+
+
+    public void unEquipAcc (Accessory acc) {
+        if (accessoryList.contains(acc)) accessoryList.remove(acc);
+    }
+
+
+    public boolean hasAccessory (Accessory accessory) {
+        return accessoryList.contains(accessory);
+    }
+
 
     @Override
-    public Iterator<Item> iterator() {
-        return new MyIterator(this);
+    public void initResources () {
+        list = new HashMap<String, Item>();
+//        menu = new InventoryMenu(this);
     }
 
-    private static class MyIterator implements Iterator<Item> {
 
-        int index;
-        private ArrayList<Item> data;
-
-        public MyIterator(Inventory source) {
-            index = 0;
-            data = new ArrayList<Item>();
-            data.addAll(source.myItemMap.keySet());
+    @Override
+    public void render (Graphics2D g) {
+        // inventory menu?
+        for (Accessory acc : accessoryList) {
+            acc.render(g);
         }
+//        menu.render(g);
+    }
 
-        public boolean hasNext() {
-            if (index >= data.size())
-                return false;
-            return true;
-        }
 
-        public Item next() {
-            Item output = data.get(index);
-            index++;
-            return output;
-        }
-
-        public void remove() {
-            //
-        }
-
+    @Override
+    public void update (long elapsed) {
+//        menu.update(elapsed);
     }
 }

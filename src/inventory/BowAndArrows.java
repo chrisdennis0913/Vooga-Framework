@@ -2,10 +2,12 @@ package inventory;
 
 import app.RPGame;
 
-public class BowAndArrows extends Weapon {
+public class BowAndArrows extends Weapon implements Sellable{
     private BowAndArrows(){
         super();
     }
+    
+    private int price = 0;
     
     private BowAndArrows (RPGame game2, String name,
                     String gifName,
@@ -32,6 +34,31 @@ public class BowAndArrows extends Weapon {
                           super.parseGifName(toParse),
                           parseDamage(toParse));
     }
+
+	@Override
+	public void setPrice() {
+		price = 500;
+		
+	}
+
+	@Override
+	public int getPrice() {
+		return price;
+		
+	}
+
+	@Override
+	public boolean isSellable() {
+		if(price == 0)
+            return false;
+        return true;
+	}
+
+	@Override
+	public void adjustPrice() {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

@@ -1,17 +1,26 @@
 package level;
 
 
+import gameCharacter.GameCharacter;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import player.Player;
+
+import utils.JsonUtil;
+import utils.Location;
+
 import com.golden.gamedev.engine.BaseIO;
 import com.golden.gamedev.engine.BaseLoader;
 import com.golden.gamedev.engine.timer.SystemTimer;
+import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
+import com.google.gson.Gson;
 
 //import enemy.Enemy;
 //import enemy.IEnemy;
@@ -43,19 +52,30 @@ public class Level extends AbstractTileBackground{
 	protected long levelStartTime;
 	protected String nextLevelName;
 	protected String startText;
+	protected PlayField field;
 	
-	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game2, String levelFileName, String lower, String upper) {
+	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game, String levelFileName) {
 		super(0, 0, TILE_WIDTH, TILE_HEIGHT);
 		
-		this.game = game2;
+		this.game = game;
 		//MI = new MakeItems(game);
 		//addNPCs(); addItems(); addEnemies();
 		
 		layer1 = new int[40][25];
 		layer2 = new int[40][25];
 		
-		String[] lowerTile = FileUtil.fileRead(bsIO.getStream(lower));
-		String[] upperTile = FileUtil.fileRead(bsIO.getStream(upper));
+		//parse JSON files and set up player and npcs
+    	Gson gson = new Gson();
+    	JsonUtil.JSONLevel jsonLevel = gson.fromJson(levelFileName, JsonUtil.JSONLevel.class);
+    	field = game.getField();
+    	
+    	JsonUtil.JSONPlayer jPlayer = jsonLevel.player;
+    	Location playerLoc = new Location(jsonLevel.player.location[0], jsonLevel.player.location[1]);
+    	Player player = new Player(new GameCharacter(game, location, )));
+    	
+		
+		String[] lowerTile = FileUtil.fileRead(bsIO.getStream(jsonLevel.lowerFilename));
+		String[] upperTile = FileUtil.fileRead(bsIO.getStream(jsonLevel.upperFilename));
 		for (int j=0;j < layer1[0].length;j++) {
 			StringTokenizer lowerToken = new StringTokenizer(lowerTile[j]);
 			StringTokenizer upperToken = new StringTokenizer(upperTile[j]);

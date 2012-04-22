@@ -32,7 +32,10 @@ public class RPGame extends GameObject {
 
 
     public void initResources () {
-    	level = new Level(bsLoader, bsIO, this, levelFileName, lower, upper);
+    	
+    	
+    	
+    	level = new Level(bsLoader, bsIO, this, levelFileName);
     	field = new PlayField(level);
     	field.setComparator(new Comparator() {
 			public int compare(Object o1, Object o2) {
@@ -41,9 +44,7 @@ public class RPGame extends GameObject {
 			}
 		} );
     	
-    	//parse JSON files and set up player and npcs
-    	Gson gson = new Gson();
-    		JsonUtil.JSONLevel peeps = gson.fromJSON(json, JsonUtil.JSONLevel.class);
+    	
     	
     	
     }
@@ -61,6 +62,10 @@ public class RPGame extends GameObject {
     
     public void addItems(Item itm){
         myInventory.add(itm);
+    }
+    
+    public PlayField getField(){
+    	return field;
     }
 
 }

@@ -26,7 +26,8 @@ public class RPGame extends GameObject {
     private Inventory myInventory;
     String levelFileName;
     String lower, upper;
-
+    boolean pausedForInventory = false;
+    
     public RPGame (GameEngine parent) {
         super(parent);
     }
@@ -67,6 +68,14 @@ public class RPGame extends GameObject {
     
     public PlayField getField(){
     	return field;
+    }
+
+
+    public void pauseGameForInventory(){
+        pausedForInventory = true;
+    }
+    public void unPauseGameForInventory(){
+        pausedForInventory = false;
     }
 
 }

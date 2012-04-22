@@ -2,16 +2,16 @@ package inventory;
 
 import app.RPGame;
 
-
-/**
- * Class for items that do damage. Has instance variable myDamage to represent
- * base damage value Weapons are in the form of
- * "Name, weapon, boolean forSale, int Price, int Damage" for example:
- * "Dagger, Weapon, true, 100, 55" or "Sword, Weapon, false, 85"
- * 
- * @author Chris Dennis
- */
 public class Weapon extends Item {
+    /**
+     * Class for items that do damage. Has instance variable myDamage to represent
+     * base damage value Weapons are in the form of
+     * "Name, weapon, boolean forSale, int Price, int Damage" for example:
+     * "Dagger, Weapon, true, 100, 55" or "Sword, Weapon, false, 85"
+     * 
+     * @author Chris Dennis
+     */
+    private static final long serialVersionUID = 8597606086588448982L;
     private int myDamage;
     protected String weaponType;
 

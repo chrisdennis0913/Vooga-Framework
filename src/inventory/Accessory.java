@@ -4,15 +4,17 @@ import java.awt.Graphics2D;
 import app.RPGame;
 
 
-/**
- * Class for items that attach to the hero and contribute to his stats.
- * Accessories are of the form
- * "Name, gifName, accessory, statToChange, valueOfChange" for example
- * "Charismatic Chainmail, chainmail, accessory, health, 8"
- * 
- * @author Chris Dennis
- */
+
 public class Accessory extends Item {
+    /**
+     * Class for items that attach to the hero and contribute to his stats.
+     * Accessories are of the form
+     * "Name, gifName, accessory, statToChange, valueOfChange" for example
+     * "Charismatic Chainmail, chainmail, accessory, health, 8"
+     * 
+     * @author Chris Dennis
+     */
+    private static final long serialVersionUID = 2922032752026818259L;
     private boolean showsOnScreen = true;
     private int statChange;
     private int relX;

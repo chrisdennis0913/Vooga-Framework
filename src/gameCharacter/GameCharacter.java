@@ -14,7 +14,6 @@ import utils.Speed;
 import actions.Action;
 import app.RPGame;
 
-import com.golden.gamedev.Game;
 import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
@@ -57,9 +56,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	public static final int DIR_RIGHT = 3;
 
 
-
-	public GameCharacter(RPGame game, Location loc, String directionsURL) {
-		// TODO Auto-generated constructor stub
+	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
 		this.configURL = configURL;

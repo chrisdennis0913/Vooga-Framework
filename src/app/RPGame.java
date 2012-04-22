@@ -44,10 +44,7 @@ public class RPGame extends GameObject {
 				// sort based on y-order
 				return (int) (((Sprite) o1).getY()-((Sprite) o2).getY());
 			}
-		} );
-    	
-    	
-    	
+		} );   	
     	
     }
 

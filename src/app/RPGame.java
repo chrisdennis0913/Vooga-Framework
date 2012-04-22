@@ -17,7 +17,7 @@ import com.golden.gamedev.object.Sprite;
 import com.google.gson.Gson;
 
 
-public class RPGame extends Game {
+public class RPGame extends GameObject {
     private PlayField field;
     //private Background bg;
     private Player player;
@@ -28,7 +28,7 @@ public class RPGame extends Game {
     String lower, upper;
 
     public RPGame (GameEngine parent) {
-        //super(parent);
+        super(parent);
     }
 
 

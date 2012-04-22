@@ -11,6 +11,7 @@ import utils.Location;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.GameObject;
 
 public class PlayerTest extends Game {
 

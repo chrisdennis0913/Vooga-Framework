@@ -4,5 +4,8 @@
 		"down": [40],
 		"left": [37],
 		"right": [39]
+	},
+	"attacking": {
+		"key": [17]
 	}
 }

@@ -4,6 +4,7 @@ import gameCharacter.GameCharacter;
 
 import java.awt.Graphics2D;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * The evented wrapper is the connection between the item
@@ -15,7 +16,7 @@ import java.util.HashMap;
  */
 
 public class EventedWrapper<T extends EventedItem<T>> implements
-		Evented {
+		Evented, Iterable<T> {
 
 	private HashMap<String, T> list = new HashMap<String, T>();
 	private GameCharacter character;
@@ -28,14 +29,34 @@ public class EventedWrapper<T extends EventedItem<T>> implements
 		return character;
 	}
 	
+	/* storage methods */
+	
 	public void add(String itemName, T item) {
 		list.put(itemName, item);
+	}
+	
+	public void remove(String itemName) {
+		list.remove(itemName);
 	}
 	
 	public T get(String itemName) {
 		itemName = itemName.toLowerCase();
 		return list.get(itemName);
 	}
+	
+	public boolean contains(String itemName) {
+		return list.containsKey(itemName);
+	}
+	
+	public boolean containsType(T item) {
+		return list.containsValue(item);
+	}
+	
+	public Iterator<T> iterator() {
+		return list.values().iterator();
+	}
+	
+	/* evented methods */
 
 	public void render(Graphics2D g) {
 		if (!list.isEmpty())

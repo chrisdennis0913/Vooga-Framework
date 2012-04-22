@@ -48,7 +48,6 @@ public class JsonUtil {
 	}
 
 	public class JSONLevel implements Jsonable{
-		public String background;
 		public String nextLevel;
 		public String lowerFilename;
 		public String upperFilename;
@@ -59,8 +58,8 @@ public class JsonUtil {
 	
 	 public class JSONPlayer implements Jsonable{
 		 public int[] location;
-		 public String directions;
-		 public String actions;		 
+		 public String directionsURL;
+		 public String actionsURL;		 
 	 }
 	 
 	 public class JSONEnemy implements Jsonable{

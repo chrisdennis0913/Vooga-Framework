@@ -8,6 +8,7 @@ import level.Level;
 import player.Player;
 import utils.JsonUtil;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
@@ -16,7 +17,7 @@ import com.golden.gamedev.object.Sprite;
 import com.google.gson.Gson;
 
 
-public class RPGame extends GameObject {
+public class RPGame extends Game {
     private PlayField field;
     //private Background bg;
     private Player player;
@@ -27,7 +28,7 @@ public class RPGame extends GameObject {
     String lower, upper;
 
     public RPGame (GameEngine parent) {
-        super(parent);
+        //super(parent);
     }
 
 

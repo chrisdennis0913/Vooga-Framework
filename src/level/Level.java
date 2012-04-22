@@ -12,6 +12,7 @@ import player.Player;
 
 import utils.JsonUtil;
 import utils.Location;
+import utils.JsonUtil.JSONPlayer;
 
 import com.golden.gamedev.engine.BaseIO;
 import com.golden.gamedev.engine.BaseLoader;
@@ -64,14 +65,15 @@ public class Level extends AbstractTileBackground{
 		layer1 = new int[40][25];
 		layer2 = new int[40][25];
 		
+    	field = game.getField();
+    	
 		//parse JSON files and set up player and npcs
     	Gson gson = new Gson();
     	JsonUtil.JSONLevel jsonLevel = gson.fromJson(levelFileName, JsonUtil.JSONLevel.class);
-    	field = game.getField();
-    	
-    	JsonUtil.JSONPlayer jPlayer = jsonLevel.player;
-    	Location playerLoc = new Location(jsonLevel.player.location[0], jsonLevel.player.location[1]);
-    	Player player = new Player(new GameCharacter(game, location, )));
+    	JSONPlayer jPlayer = jsonLevel.player;
+    	Location playerLoc = new Location(jPlayer.location);
+    	Player player = new Player(new GameCharacter(game, playerLoc, jPlayer.directionsURL), jPlayer.actionsURL);
+    	field.add(player);
     	
 		
 		String[] lowerTile = FileUtil.fileRead(bsIO.getStream(jsonLevel.lowerFilename));

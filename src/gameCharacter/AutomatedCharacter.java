@@ -22,7 +22,7 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	public abstract boolean isAlive();
 	
 	public AutomatedCharacter(Game game, Location loc, String configURL){
-		super(game, null, configURL);
+		super(game, loc, configURL);
 	}
 	
 	public void update(long elapsedTime){

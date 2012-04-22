@@ -1,8 +1,0 @@
-[
-{
-	"direction": "DIR_DOWN",
-	"delay": 150,
-	"frames": 7,
-	"image": "rsc/player/walk_down.png"
-}
-]

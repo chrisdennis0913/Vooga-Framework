@@ -1,6 +1,12 @@
 package inventory;
 
 import app.RPGame;
+/**
+ * Class for allowing items to create and parse themselves.
+ * Only used by the MakeItems class
+ * 
+ * @author Chris Dennis
+ */
 
 public class ItemFactory
 {

@@ -61,6 +61,13 @@ public class Inventory implements Iterable<Item>{
     public boolean contains(Item itm) {
         return myItemMap.containsKey(itm);
     }
+    public boolean contains(String itmName){
+        for (Item itm: myItemMap.keySet()){
+            if (itm.getName().equalsIgnoreCase(itmName))
+                    return true;
+        }
+        return false;
+    }
     
     public Integer getCount(Item itm)
     {

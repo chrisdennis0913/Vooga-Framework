@@ -6,4 +6,5 @@ interface CharacterInterface extends Evented{
 	public boolean isCurrentDirection(int direction);
 	public Direction getCurrentDirection();
 	public void setCurrentDirection(int direction, boolean animate);
+	public void stop();
 }

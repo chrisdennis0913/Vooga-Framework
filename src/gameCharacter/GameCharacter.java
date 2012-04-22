@@ -8,10 +8,11 @@ import java.util.List;
 
 import actions.Action;
 import app.Location;
-import app.RPGame;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.FileUtil;
+import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
 import counters.Counter;
@@ -35,22 +36,22 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 
 	private static final long serialVersionUID = 1L;
 
-	private RPGame game;
+	private Game game;
 
 	private int curDirection = 0;
 	private List<Direction> directions;
 
 	private String configURL;
 
-	private EventedWrapper<Counter> counters;
-	private EventedWrapper<Action> actions;
+	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
+	private EventedWrapper<Action> actions = new EventedWrapper<Action>(this);
 
 	public static final int DIR_DOWN = 0;
 	public static final int DIR_UP = 1;
 	public static final int DIR_LEFT = 2;
 	public static final int DIR_RIGHT = 3;
 
-	public GameCharacter(RPGame game, Location loc, String configURL) {
+	public GameCharacter(Game game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
 		this.configURL = configURL;
@@ -60,15 +61,17 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	public void initResources() {
 		String json = loadJSON(configURL);
 		constructDirections(json);
-		this.setCurrentDirection(0, false);
+		stop();
 	}
 	
 	public void render(Graphics2D g) {
+		super.render(g);
 		counters.render(g);
 		actions.render(g);
 	}
 
 	public void update(long elapsed) {
+		super.update(elapsed);
 		counters.update(elapsed);
 		actions.update(elapsed);
 	}
@@ -91,21 +94,33 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		Direction[] tempDirections = new Direction[4];
 
 		for (JSONDirection direction : dirs) {
-			BufferedImage[] images = new BufferedImage[direction.images.length];
-			for (int i = 0; i < images.length; i++)
-				images[i] = game.getImage(direction.images[i]);
+			BufferedImage image = game.getImage(direction.image);
+			BufferedImage[] images = ImageUtil.splitImages(image, 7, 1);
 
-			tempDirections[direction.direction] = new Direction(this, images,
-					direction.direction, direction.delay);
+			int intepretedDirection = 0;
+			
+			if (direction.direction.equals("DIR_DOWN"))
+				intepretedDirection = GameCharacter.DIR_DOWN;
+			else if (direction.direction.equals("DIR_UP"))
+				intepretedDirection = GameCharacter.DIR_UP;
+			else if (direction.direction.equals("DIR_LEFT"))
+				intepretedDirection = GameCharacter.DIR_LEFT;
+			else if (direction.direction.equals("DIR_RIGHT"))
+				intepretedDirection = GameCharacter.DIR_RIGHT;
+			else
+				throw new RuntimeException("Invalid direction specified");
+			
+			tempDirections[intepretedDirection] = new Direction(this, images,
+					intepretedDirection, direction.delay);
 		}
 
 		directions = Arrays.asList(tempDirections);
 	}
 
 	private class JSONDirection {
-		public int direction;
+		public String direction;
 		public int delay;
-		public String[] images;
+		public String image;
 	}
 
 	public boolean isCurrentDirection(int direction) {
@@ -117,7 +132,11 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	}
 
 	public void setCurrentDirection(int direction, boolean animate) {
-		this.curDirection = direction;
+		curDirection = direction;
 		directions.get(direction).changeCharacter(animate);
+	}
+	
+	public void stop() {
+		directions.get(curDirection).changeCharacter(true);
 	}
 }

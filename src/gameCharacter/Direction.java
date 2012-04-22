@@ -20,29 +20,26 @@ public class Direction {
 		return direction;
 	}
 
-	public BufferedImage[] getImages() {
-		return images;
-	}
-
 	public int frameCount() {
 		return images.length;
 	}
 
 	public void changeCharacter(boolean animate) {
-		if (animate) {
-			character.setImages(getImages());
-			if (frameCount() == 1) {
-				character.setLoopAnim(false);
-				character.setAnimate(false);
-			} else {
-				character.getAnimationTimer().setDelay(delay);
-				character.setLoopAnim(true);
-				character.setAnimate(true);
-				character.setAnimationFrame(0, frameCount() - 1);
-			}
+		character.setImages(images);
+		if (frameCount() == 1 || !animate) {
+			character.setLoopAnim(false);
+			character.setAnimate(false);
+			if (frameCount() > 2)
+				character.setFrame(3);
+			else character.setFrame(0);
+		} else {
+			character.getAnimationTimer().setDelay(delay);
+			character.setLoopAnim(true);
+			character.setAnimate(true);
+			character.setAnimationFrame(0, frameCount() - 1);
 		}
 	}
-	
+
 	public String toString() {
 		if (direction == GameCharacter.DIR_DOWN)
 			return "DIR_DOWN";

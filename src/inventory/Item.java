@@ -16,6 +16,10 @@ import evented.EventedWrapper;
  */
 public abstract class Item extends EventedItem<Item> implements EquipItemInterface{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6760280693009697161L;
     protected static RPGame game;
     protected BufferedImage image;
     protected Sprite mySprite;

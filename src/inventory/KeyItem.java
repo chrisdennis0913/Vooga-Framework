@@ -11,7 +11,11 @@ import app.RPGame;
  * @author Chris Dennis
  */
 public class KeyItem extends Item {
-    private int price = 45;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7099515374848295302L;
+//    private int price = 45;
 
     private KeyItem () {
 

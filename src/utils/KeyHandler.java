@@ -3,14 +3,16 @@ package utils;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import app.RPGame;
+
 import com.golden.gamedev.Game;
 
 public class KeyHandler implements Iterable<Integer> {
 	
 	private HashMap<Integer, int[]> keyMap = new HashMap<Integer, int[]>();
-	private Game game;
+	private RPGame game;
 	
-	public KeyHandler(Game game) {
+	public KeyHandler(RPGame game) {
 		this.game = game;
 	}
 

@@ -3,19 +3,20 @@ package inventory;
 import java.awt.Graphics2D;
 import app.RPGame;
 
-
-/**
- * Class for items that affect the hero's counters. Health potions are of the
- * form "Name, gif name, healthpotion, value of change" for example
- * "Super Potion, potion, healthpotion, 4"
- * 
- * @author Chris Dennis
- */
-public class HealthPotion extends Item implements Sellable{
+public class HealthPotion extends Item implements Sellable {
+    /**
+     * Class for items that affect the hero's counters. Health potions are of the
+     * form "Name, gif name, healthpotion, value of change" for example
+     * "Super Potion, potion, healthpotion, 4"
+     * 
+     * @author Chris Dennis
+     */
+    private static final long serialVersionUID = 2489280342490018746L;
     private int healthChange;
     private int price = 0;
 
     // do I need to change the wrapper when added to a different inventory?
+    // yes, yes i do. and will do
     private HealthPotion () {
 
     }
@@ -63,6 +64,7 @@ public class HealthPotion extends Item implements Sellable{
                .getCounters()
                .get("health")
                .increase(healthChange + 1);
+        remove(1);
     }
 
 

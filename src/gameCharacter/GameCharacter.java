@@ -12,8 +12,8 @@ import utils.Location;
 import utils.Speed;
 
 import actions.Action;
+import app.RPGame;
 
-import com.golden.gamedev.Game;
 import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
@@ -39,7 +39,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 
 	private static final long serialVersionUID = 1L;
 
-	private Game game;
+	private RPGame game;
 
 	private int curDirection = 0;
 	private List<Direction> directions;
@@ -55,7 +55,8 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	public static final int DIR_LEFT = 2;
 	public static final int DIR_RIGHT = 3;
 
-	public GameCharacter(Game game, Location loc, String configURL) {
+
+	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
 		this.configURL = configURL;
@@ -87,7 +88,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		this.speed.set(speed);
 	}
 
-	public Game getGame() {
+	public RPGame getGame() {
 		return game;
 	}
 	

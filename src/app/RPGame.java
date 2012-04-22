@@ -8,6 +8,7 @@ import level.Level;
 import player.Player;
 import utils.JsonUtil;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.Background;
@@ -25,26 +26,25 @@ public class RPGame extends GameObject {
     private Inventory myInventory;
     String levelFileName;
     String lower, upper;
-
+    boolean pausedForInventory = false;
+    
     public RPGame (GameEngine parent) {
         super(parent);
     }
 
 
     public void initResources () {
-    	level = new Level(bsLoader, bsIO, this, levelFileName, lower, upper);
+    	
+    	
+    	
+    	level = new Level(bsLoader, bsIO, this, levelFileName);
     	field = new PlayField(level);
     	field.setComparator(new Comparator() {
 			public int compare(Object o1, Object o2) {
 				// sort based on y-order
 				return (int) (((Sprite) o1).getY()-((Sprite) o2).getY());
 			}
-		} );
-    	
-    	//parse JSON files and set up player and npcs
-    	Gson gson = new Gson();
-    		JsonUtil.JSONLevel peeps = gson.fromJson(json, JsonUtil.JSONLevel.class);
-    	
+		} );   	
     	
     }
 
@@ -61,6 +61,18 @@ public class RPGame extends GameObject {
     
     public void addItems(Item itm){
         myInventory.add(itm);
+    }
+    
+    public PlayField getField(){
+    	return field;
+    }
+
+
+    public void pauseGameForInventory(){
+        pausedForInventory = true;
+    }
+    public void unPauseGameForInventory(){
+        pausedForInventory = false;
     }
 
 }

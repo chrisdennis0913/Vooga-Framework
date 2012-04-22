@@ -10,17 +10,19 @@ import evented.EventedWrapper;
 /**
  * Can subclass to create other instance variables
  * such as weight, damage, price
+ * ItemNames should be lowerCase
+ * 
  * @author chrisdennis0913
- *
  */
 public abstract class Item extends EventedItem<Item> implements EquipItemInterface{
 
     protected static RPGame game;
-    protected String myName;
-    protected String category;
-    protected SpriteGroup myGroup;
     protected BufferedImage image;
     protected Sprite mySprite;
+    protected SpriteGroup myGroup;
+    protected String myName;
+    protected String category;
+    protected int quantity=1; // make sure this gets instantiated properly
     
     public Item(EventedWrapper<Item> wrapper){
         super(wrapper);
@@ -31,7 +33,8 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
     protected Item () {
         super();
     }
-
+    
+    // if empty send not to wrapper to remove
 
     public Item (RPGame game2, String name, String gifName, String categ) {
         Item.game = game2;
@@ -59,19 +62,19 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
     }
 
 
-    public void generate () {
-        game.getField().addGroup(myGroup);
-        setCollision();
-    }
-
-
-    public void setCollision () {
-        ItemCollision collision =
-            new ItemCollision(game, myName, this, mySprite);
-        game.getField().addCollisionGroup(game.getPlayer().getGroup(),
-                                          getGroup(),
-                                          collision);
-    }
+//    public void generate () {
+//        game.getField().addGroup(myGroup);
+//        setCollision();
+//    }
+//
+//
+//    public void setCollision () {
+//        ItemCollision collision =
+//            new ItemCollision(game, myName, this, mySprite);
+//        game.getField().addCollisionGroup(game.getPlayer().getGroup(),
+//                                          getGroup(),
+//                                          collision);
+//    }
 
 
     public SpriteGroup getGroup () {
@@ -92,7 +95,24 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
     public String getCategory () {
         return category;
     }
-
+    public void add(int quant){
+        quantity+=quant;
+    }
+    public void remove(int quant){
+        quantity -= quant;
+        if (quantity<=0){
+            wrapper.remove(this.myName);
+        }
+        //needs to tell wrapper if quantity falls below zero
+    }
+    public void removeAll(){
+        quantity = 0;
+            wrapper.remove(this.myName);
+    }
+    
+    public int getQuantity(){
+        return quantity;
+    }
 
     /**
      * @return string representation of item

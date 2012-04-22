@@ -22,22 +22,27 @@ public class JsonUtil {
 		return jsonBuilder.toString();
 	}
 	
-	public class JSONDirections {
+	public class JSONDirections implements Jsonable {
 		public int frames;
 		public int delay;
 		public JSONDirection[] directions;
 	}
 	
-	public class JSONDirection {
+	public class JSONDirection implements Jsonable {
 		public String direction;
 		public String image;
-	}
+	} 
 
-	public class JSONPlayerWalking {
+	public class JSONPlayerWalking implements Jsonable {
 		public int[] up;
 		public int[] down;
 		public int[] left;
 		public int[] right;
+	}
+	
+	public class JSONPlayerAttacking implements Jsonable {
+		public int[] keys;
+		public JSONDirections directions;
 	}
 
 	public class JSONLevel{
@@ -70,6 +75,9 @@ public class JsonUtil {
 	 }
 	 
 	public class JSONPlayerActions {
+
+	public class JSONPlayerActions implements Jsonable {
 		public JSONPlayerWalking walking;
+		public JSONPlayerAttacking attacking;
 	}
 }

@@ -29,7 +29,7 @@ public abstract class AutomatedCharacter extends GameCharacter{
 		super();
 
 	public AutomatedCharacter(Game game, Location loc, String configURL){
-		super(game, null, configURL);
+		super(game, loc, configURL);
 	}
 
 	public void setAlive(boolean alive){

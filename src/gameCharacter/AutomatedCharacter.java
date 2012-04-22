@@ -2,7 +2,7 @@ package gameCharacter;
 
 import utils.Location;
 
-import com.golden.gamedev.Game;
+import app.RPGame;
 
 //import dialogue.AbstractDialogue;
 
@@ -21,7 +21,7 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	public abstract void setAlive(boolean alive);
 	public abstract boolean isAlive();
 	
-	public AutomatedCharacter(Game game, Location loc, String configURL){
+	public AutomatedCharacter(RPGame game, Location loc, String configURL){
 		super(game, null, configURL);
 	}
 	

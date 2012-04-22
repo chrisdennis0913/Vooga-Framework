@@ -1,0 +1,46 @@
+package inventory;
+
+import java.awt.Graphics2D;
+
+import counters.Counter;
+import evented.EventedWrapper;
+
+public class Money extends Counter {
+	
+	/**
+     * Zahava, add your JavaDoc
+     */
+    private static final long serialVersionUID = -410609845157350942L;
+    Integer init = Integer.MAX_VALUE;
+	private int startCash;
+
+	public Money(EventedWrapper<Counter> wrapper, int count) {
+		super(wrapper, count);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void initResources() {
+		startCash = 1000;
+		
+		
+	}
+
+	@Override
+	public void update(long elapsed) {
+//		if(player buys something){
+//			decrease(item.getPrice());
+//		}
+//		else if (player sells something){
+//			increase(item.getPrice());
+//		}
+	}
+
+	@Override
+	public void render(Graphics2D g) {
+		
+		
+	}
+	
+
+}

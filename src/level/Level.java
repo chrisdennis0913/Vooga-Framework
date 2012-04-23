@@ -69,7 +69,7 @@ public class Level extends AbstractTileBackground{
     	
 		//parse JSON files and set up player and npcs
     	Gson gson = new Gson();
-    	JsonUtil.JSONLevel jsonLevel = gson.fromJson(levelFileName, JsonUtil.JSONLevel.class);
+    	JsonUtil.JSONLevel jsonLevel = gson.fromJson(JsonUtil.getJSON(levelFileName), JsonUtil.JSONLevel.class);
     	JSONPlayer jPlayer = jsonLevel.player;
     	Location playerLoc = new Location(jPlayer.location);
     	Player player = new Player(new GameCharacter(game, playerLoc, jPlayer.directionsURL), jPlayer.actionsURL);

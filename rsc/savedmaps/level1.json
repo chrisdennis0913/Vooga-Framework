@@ -2,9 +2,9 @@
 	"nextLevel": "rsc/savedmaps/level1.json",	
 	"upperFilename": "rsc/level/map00.upr",
 	"lowerFilename": "rsc/level/map00.lwr",
-	"player" : {
-		"location" : [100,100],
-		"directionsURL" : "rsc/config/player_directions.json",
-		"actionsURL" : "rsc/config/player_actions.json"
+	"player": {
+		"location": [100,100],
+		"directionsURL": "rsc/config/player_directions.json",
+		"actionsURL": "rsc/config/player_actions.json"
 	}
 }

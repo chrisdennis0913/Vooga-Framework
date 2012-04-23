@@ -15,7 +15,7 @@ import com.golden.gamedev.object.Sprite;
 
 
 public class RPGame extends GameObject {
-    private PlayField field;
+    private PlayField field = new PlayField();
     //private Background bg;
     private Player player;
     //private Dialog dialog;
@@ -32,7 +32,6 @@ public class RPGame extends GameObject {
 
     public void initResources () {
     	level = new Level(bsLoader, bsIO, this, levelFileName);
-    	field = new PlayField(level);
     	field.setComparator(new Comparator() {
 			public int compare(Object o1, Object o2) {
 				// sort based on y-order
@@ -43,10 +42,14 @@ public class RPGame extends GameObject {
     }
 
 
-    public void render (Graphics2D g) {}
+    public void render (Graphics2D g) {
+    	field.render(g);
+    }
 
 
-    public void update (long elapsed) {}
+    public void update (long elapsed) {
+    	field.update(elapsed);
+    }
 
 
     public Player getPlayer () {

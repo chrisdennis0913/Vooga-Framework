@@ -47,8 +47,8 @@ public class JsonUtil {
 
 	public class JSONLevel implements Jsonable{
 		public String nextLevel;
-		public String lowerFilename;
 		public String upperFilename;
+		public String lowerFilename;
 		public JSONPlayer player;
 		//public Enemy[] enemies;
 		//public NPC[] npcs;		

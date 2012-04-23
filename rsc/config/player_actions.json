@@ -9,7 +9,7 @@
 		"keys": [32],
 		"directions": {
 			"frames": 9,
-			"delay": 50,
+			"delay": 100,
 			"directions": [
 				{
 					"direction": "DIR_DOWN",

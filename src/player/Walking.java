@@ -14,6 +14,7 @@ public class Walking extends ActionDecorator {
 	private static final long serialVersionUID = 1L;
 
 	private KeyHandle keys;
+	private double speed = 0.05;
 
 	public Walking(Walk walk) {
 		super(walk);
@@ -42,7 +43,7 @@ public class Walking extends ActionDecorator {
 			GameCharacter character = getWrapper().getCharacter();
 
 			if (status != -1) {
-				character.setSpeed(0.07);
+				character.setSpeed(0.05);
 				if (!isActive() || status != character.getCurrentDirection()) {
 					setActive(true);
 					character.setActiveDirection(status);

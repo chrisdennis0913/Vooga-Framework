@@ -76,7 +76,6 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	}
 
 	public void render(Graphics2D g) {	
-		System.out.println("rendering");
 		super.render(g);
 		counters.render(g);
 		actions.render(g);

@@ -2,7 +2,13 @@ package inventory;
 
 import app.RPGame;
 
-public class BowAndArrows extends Weapon implements Sellable{
+public class BowAndArrows extends Weapon implements Sellable {
+    /**
+     * Bow Attack style will depend on this 
+     * Has category = weapon and
+     * weaponType = bowAndArrows
+     */
+    private static final long serialVersionUID = -9018291996580125601L;
     private BowAndArrows(){
         super();
     }

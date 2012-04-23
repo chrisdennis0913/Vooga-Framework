@@ -7,19 +7,24 @@ package utils;
  */
 
 public class Location {
-	private double x;
-	private double y;
+	private int x;
+	private int y;
 	
-	public Location(double x, double y) {
+	public Location(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
-	public double getX() {
+
+	public Location(int[] position){
+		this.x = position[0];
+		this.y = position[1];
+	}
+
+	public int getX() {
 		return x;
 	}
 	
-	public double getY() {
+	public int getY() {
 		return y;
 	}
 }

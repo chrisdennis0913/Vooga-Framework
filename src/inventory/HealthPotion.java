@@ -1,6 +1,8 @@
 package inventory;
 
 import java.awt.Graphics2D;
+
+import store.Sellable;
 import app.RPGame;
 
 

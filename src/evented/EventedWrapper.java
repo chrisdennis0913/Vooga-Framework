@@ -15,7 +15,7 @@ import java.util.Iterator;
  * @author Kirill Klimuk
  */
 
-public class EventedWrapper<T extends EventedItem<T>>
+public class EventedWrapper<T extends Evented>
     implements Evented, Iterable<T> {
 
     protected HashMap<String, T> list = new HashMap<String, T>();

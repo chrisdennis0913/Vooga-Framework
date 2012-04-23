@@ -1,7 +1,6 @@
 package actions;
 
-import java.awt.Graphics2D;
-
+import utils.Jsonable;
 import evented.EventedItem;
 import evented.EventedWrapper;
 
@@ -13,18 +12,22 @@ import evented.EventedWrapper;
  * @author Kirill Klimuk
  */
 
-public abstract class Action extends EventedItem<Action> {
+public abstract class Action extends EventedItem<ActionInterface> implements ActionInterface {
 
+	private static final long serialVersionUID = 1L;
+	
+	private Jsonable json;
 	private boolean enabled = false;
 	private boolean active = false;
 
-	public Action(EventedWrapper<Action> wrapper) {
+	public Action(EventedWrapper<ActionInterface> wrapper, Jsonable json) {
 		super(wrapper);
+		this.json = json;
 	}
 	
-	public abstract void update(long elapsed);
-
-	public abstract void render(Graphics2D g);
+	public Jsonable getJsonable() {
+		return json;
+	}
 
 	public void setEnabled(boolean enabled, boolean modifyActive) {
 		if (!enabled && modifyActive)

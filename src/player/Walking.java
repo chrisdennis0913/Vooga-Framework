@@ -1,69 +1,57 @@
 package player;
 
-import java.awt.Graphics2D;
-import java.util.HashMap;
-
-import utils.JsonUtil;
-
-import actions.Action;
-import evented.EventedWrapper;
 import gameCharacter.GameCharacter;
 
-public class Walking extends Action {
+import java.awt.Graphics2D;
 
-	private JsonUtil.JSONPlayerWalking walking;
-	private double speed = 0.07;
-	private HashMap<Integer, int[]> keys = new HashMap<Integer, int[]>();
+import utils.JsonUtil;
+import utils.KeyHandle;
+import actions.ActionDecorator;
+import actions.Walk;
 
-	public Walking(EventedWrapper<Action> wrapper, JsonUtil.JSONPlayerWalking walking) {
-		super(wrapper);
-		this.walking = walking;
+public class Walking extends ActionDecorator {
+
+	private static final long serialVersionUID = 1L;
+
+	private KeyHandle keys;
+	private double speed = 0.05;
+
+	public Walking(Walk walk) {
+		super(walk);
 		initResources();
 	}
 
 	public void initResources() {
+		keys = new KeyHandle(getWrapper().getCharacter().getGame());
+
+		JsonUtil.JSONPlayerWalking walking = (JsonUtil.JSONPlayerWalking) getJsonable();
 		if (walking.down == null || walking.right == null
 				|| walking.left == null || walking.right == null)
 			new RuntimeException("Directional keys undefined");
 
-		keys.put(GameCharacter.DIR_DOWN, walking.down);
-		keys.put(GameCharacter.DIR_UP, walking.up);
-		keys.put(GameCharacter.DIR_RIGHT, walking.right);
-		keys.put(GameCharacter.DIR_LEFT, walking.left);
-	}
-
-	private int checkKeys() {
-		boolean isDirection = false;
-
-		for (Integer direction : keys.keySet()) {
-			for (int key : keys.get(direction)) {
-				if (!getWrapper().getCharacter().getGame().keyDown(key)) {
-					isDirection = false;
-					continue;
-				}
-				isDirection = true;
-			}
-
-			if (isDirection)
-				return direction;
-		}
-
-		return -1;
+		keys.add(GameCharacter.DIR_DOWN, walking.down);
+		keys.add(GameCharacter.DIR_UP, walking.up);
+		keys.add(GameCharacter.DIR_RIGHT, walking.right);
+		keys.add(GameCharacter.DIR_LEFT, walking.left);
 	}
 
 	public void update(long elapsed) {
-		int status = checkKeys();
-		GameCharacter character = getWrapper().getCharacter();
+		if (isEnabled()) {
+			super.update(elapsed);
 
-		if (status != -1) {
-			if (!isActive() || status != character.getCurrentDirection()) {
-				setActive(true);
-				character.setActiveDirection(status);
-				character.setSpeed(speed);
+			int status = keys.checkKeys();
+			GameCharacter character = getWrapper().getCharacter();
+
+			if (status != -1) {
+				character.setSpeed(0.05);
+				if (!isActive() || status != character.getCurrentDirection()) {
+					setActive(true);
+					character.setActiveDirection(status);
+				}
+			} else {
+				setActive(false);
+				character.stop();
 			}
-		} else {
-			setActive(false);
-			character.stop();
 		}
 	}
 

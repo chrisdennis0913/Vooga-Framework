@@ -7,7 +7,11 @@ import evented.EventedWrapper;
 
 public class Money extends Counter {
 	
-	Integer init = Integer.MAX_VALUE;
+	/**
+     * Zahava, add your JavaDoc
+     */
+    private static final long serialVersionUID = -410609845157350942L;
+    Integer init = Integer.MAX_VALUE;
 	private int startCash;
 
 	public Money(EventedWrapper<Counter> wrapper, int count) {

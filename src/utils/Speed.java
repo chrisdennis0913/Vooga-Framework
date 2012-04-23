@@ -18,17 +18,27 @@ public class Speed {
 		this.y = speed;
 	}
 	
-	private double getX() {
+	public Speed(double[] speed) {
+		this.x = speed[0];
+		this.y = speed[1];
+	}
+	
+	public double getX() {
 		return x;
 	}
 	
-	private double getY() {
+	public double getY() {
 		return y;
 	}
 	
 	public void set(double speed) {
 		this.x = speed;
 		this.y = speed;
+	}
+	
+	public void set(double[] speed) {
+		this.x = speed[0];
+		this.y = speed[1];
 	}
 	
 	public double[] get(int direction) {

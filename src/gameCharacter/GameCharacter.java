@@ -1,6 +1,7 @@
 package gameCharacter;
 
 import inventory.Inventory;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
@@ -10,8 +11,7 @@ import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
 import utils.Speed;
-
-import actions.Action;
+import actions.ActionInterface;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.AnimatedSprite;
@@ -19,6 +19,7 @@ import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
 import counters.Counter;
+import evented.Evented;
 import evented.EventedWrapper;
 
 /**
@@ -35,7 +36,7 @@ import evented.EventedWrapper;
  * @author Kirill Klimuk
  */
 
-public class GameCharacter extends AnimatedSprite implements CharacterInterface {
+public class GameCharacter extends AnimatedSprite implements CharacterInterface, Evented {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +49,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	private String configURL;
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
-	private EventedWrapper<Action> actions = new EventedWrapper<Action>(this);
+	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(this);
 
 	public static final int DIR_DOWN = 0;
 	public static final int DIR_UP = 1;
@@ -76,13 +77,17 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 	}
 		
 	public void update(long elapsed) {
+		counters.update(elapsed);
+		actions.update(elapsed);
 		double[] curSpeed = speed.get(getCurrentDirection());
 		setSpeed(curSpeed[0], curSpeed[1]);
 		super.update(elapsed);
-		counters.update(elapsed);
-		actions.update(elapsed);
 	}
-
+	
+	public double[] getSpeed(int direction) {
+		return speed.get(direction);
+	}
+	
 	public void setSpeed(double speed) {
 		this.speed.set(speed);
 	}
@@ -123,7 +128,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 		directions = Arrays.asList(tempDirections);
 	}
 
-	public EventedWrapper<Action> getActions() {
+	public EventedWrapper<ActionInterface> getActions() {
 		return actions;
 	}
 	
@@ -137,6 +142,10 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface 
 
 	public int getCurrentDirection() {
 		return curDirection;
+	}
+	
+	public void setCurrentDirection(int direction) {
+		curDirection = direction;
 	}
 
 	public void setActiveDirection(int direction) {

@@ -8,7 +8,7 @@ import app.RPGame;
 public class SquareMovementAI extends AbstractMovementAI{
 	
 	private Timer timer;
-	private int directionIndex;
+	private int direction;
 	private final int[][] directions = new int[][] {{1, 0}, {0, -1}, {-1, 0}, {0, 1}};
 
 	public SquareMovementAI(RPGame game, GameCharacter character, int timeToTurn) {
@@ -17,13 +17,14 @@ public class SquareMovementAI extends AbstractMovementAI{
 	}
 
 	@Override
-	public void update(long elapsedTime) {
-		if (timer.action(elapsedTime)){
-			if (directionIndex == 3)
-				directionIndex = 0;
+	public void update(long elapsed) {
+		if (timer.action(elapsed)){
+			if (direction == 3)
+				direction = 0;
 			else
-				directionIndex ++;
-			character.setSpeed(directions[directionIndex][0], directions[directionIndex][1]);
+				direction ++;
+			character.setActiveDirection(direction);
+			character.setVelocity(1);
 		}
 	}
 

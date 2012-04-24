@@ -137,10 +137,10 @@ public class Level extends AbstractTileBackground implements Evented {
 	public void renderTile(Graphics2D g, int tileX, int tileY, int x, int y) {
 		// render layer 1
 		int tilenum = layer1[tileX][tileY];
-		if (tilenum < chipsetE.image.length) {
+		
+		if (tilenum < chipsetE.image.length)
 			g.drawImage(chipsetE.image[tilenum], x, y, null);
-
-		} else if (tilenum >= chipsetE.image.length) {
+		else if (tilenum >= chipsetE.image.length) {
 			BufferedImage image = chipset[tilenum - chipsetE.image.length].image[2];
 			g.drawImage(image, x, y, null);
 		}

@@ -5,7 +5,6 @@ import gameCharacter.Enemy;
 import app.RPGame;
 import attacks.AbstractAttack;
 
-
 public abstract class AbstractAttackAI extends AttackController{
 
 	protected RPGame game;

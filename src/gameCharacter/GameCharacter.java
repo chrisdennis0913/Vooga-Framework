@@ -176,3 +176,4 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		return behaviorModifiers;
 	}
 }
+

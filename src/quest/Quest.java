@@ -1,5 +1,13 @@
 package quest;
 
+// think about removing concrete quests
+// work on saving and loading
+// how to choose a quest
+// NPC states
+
+// Design Doc: Moderate details about implementation. Mostly about how to use game 
+// simple example and then really complicated version. Talk about flexibility and extendability.
+// Design doc midday Thursday. 
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,5 +77,4 @@ public abstract class Quest implements Observable
 	}
 	
 	public abstract void completeQuest(RPGame game2);
-
 }

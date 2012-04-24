@@ -35,8 +35,6 @@ public class RPGame extends GameObject {
 
     public void initResources () {
     	
-    	
-    	
     	level = new Level(bsLoader, bsIO, this, levelFileName);
     	field = new PlayField(level);
     	field.setComparator(new Comparator() {

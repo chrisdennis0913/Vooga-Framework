@@ -1,5 +1,8 @@
 package level;
 
+/**
+ * Level loads 
+ */
 
 import gameCharacter.GameCharacter;
 
@@ -23,13 +26,6 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
-//import enemy.Enemy;
-//import enemy.IEnemy;
-//import inventory.ItemSub;
-//import inventory.MakeItems;
-//
-//import scenery.Scenery;
-//import npc.NPC;
 import app.RPGame;
 
 public class Level extends AbstractTileBackground{

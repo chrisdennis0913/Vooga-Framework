@@ -11,6 +11,7 @@ import app.RPGame;
 
 import npc.NPC;
 
+import gameCharacter.GameCharacter;
 import inventory.Inventory;
 import inventory.Item;
 

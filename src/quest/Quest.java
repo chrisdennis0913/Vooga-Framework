@@ -1,6 +1,8 @@
 package quest;
 
-// think about removing concrete quests
+// quest maker
+// quest journal gui
+// think about removing concrete quests- done
 // work on saving and loading
 // how to choose a quest
 // NPC states

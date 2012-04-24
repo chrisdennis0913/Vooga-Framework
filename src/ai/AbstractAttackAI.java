@@ -1,7 +1,7 @@
 package ai;
 
 import controllers.AttackController;
-import gameCharacter.Enemy;
+import enemy.Enemy;
 import app.RPGame;
 import attacks.AbstractAttack;
 

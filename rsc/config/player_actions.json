@@ -8,8 +8,8 @@
 	"attacking": {
 		"keys": [32],
 		"directions": {
-			"frames": 9,
-			"delay": 100,
+			"frames": 6,
+			"delay": 60,
 			"directions": [
 				{
 					"direction": "DIR_DOWN",

@@ -25,6 +25,9 @@ public class SimpleDialogue extends AbstractDialogue{
 	
 	public class SimpleDialogueObject extends DialogueObject{
 		
+		/**
+		 * moves to the next line in the SimpleDialogue
+		 */
 		public SimpleDialogueObject(){};
 	}
 

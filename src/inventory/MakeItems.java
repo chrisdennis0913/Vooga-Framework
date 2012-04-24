@@ -11,6 +11,8 @@ import app.RPGame;
  * Any time you need to make an Item, a MakeItems class should
  * be used and passed the game.
  * 
+ * This class will no longer be used when the items become jsonable
+ * 
  * @author Chris Dennis
  */
 public class MakeItems
@@ -26,13 +28,7 @@ public class MakeItems
     public Item parseExpression (String input)
     {
         ArrayList<ItemFactory> itemList = new ArrayList<ItemFactory>();
-        itemList.add(KeyItem.getFactory());
-        itemList.add(HealthPotion.getFactory());
-        itemList.add(Sword.getFactory());
-        itemList.add(BowAndArrows.getFactory());
-        itemList.add(Accessory.getFactory());
-        
-        
+//        itemList.add(Item.getFactory());
         for (ItemFactory itemFact : itemList)
         {
             if (itemFact.isThisKindOfItem(input))

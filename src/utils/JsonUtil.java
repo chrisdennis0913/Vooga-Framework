@@ -1,9 +1,9 @@
+
 package utils;
 
 import java.io.File;
 
 import com.golden.gamedev.util.FileUtil;
-
 /**
  * JSON loader utility for different classes.
  * 

@@ -75,14 +75,14 @@ public class Attacking extends ActionDecorator {
 		if (status != -1) {
 			if (!isActive()) {
 				setActive(true);
-				character.setSpeed(0);
+				character.stop();
 				setActiveDirection(character.getCurrentDirection());
 				getWrapper().get("walking").setEnabled(false, true);
 			}
 		}
 		else if (isActive()) {
 			timer += elapsed;
-			if (timer >= 500) {
+			if (timer >= 350) {
 				getWrapper().get("walking").setEnabled(true, false);
 				setActive(false);
 				reset();

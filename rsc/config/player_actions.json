@@ -8,7 +8,7 @@
 	"attacking": {
 		"keys": [32],
 		"directions": {
-			"frames": 9,
+			"frames": 6,
 			"delay": 100,
 			"directions": [
 				{

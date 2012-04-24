@@ -12,7 +12,6 @@ public class Money extends Counter {
 
 	public Money(EventedWrapper<Counter> wrapper, int count) {
 		super(wrapper, count);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -12,6 +12,10 @@ public class YesNoScriptGenerator {
 	Scanner myInput;
 	BufferedWriter myWriter;
 	
+	/**
+	 * Prints to the console to generate a script with possible choices yes and no.
+	 * @throws IOException
+	 */
 	public void generateScript() throws IOException{
 
 		myInput = new Scanner(new BufferedReader(new InputStreamReader(System.in)));

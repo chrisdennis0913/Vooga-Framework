@@ -4,8 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 
+import npc.NPC;
+
 import player.Player;
 import utils.JsonUtil;
+import utils.JsonUtil.JSONNpc;
 import utils.JsonUtil.JSONPlayer;
 import utils.Location;
 import app.RPGame;
@@ -14,6 +17,7 @@ import com.golden.gamedev.engine.BaseIO;
 import com.golden.gamedev.engine.BaseLoader;
 import com.golden.gamedev.engine.timer.SystemTimer;
 import com.golden.gamedev.object.PlayField;
+import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
@@ -28,6 +32,7 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	private final String levelname;
 	private BaseIO baseio;
+	private BaseLoader bsloader;
 
 	private Chipset chipsetE;
 	private Chipset chipsetF;
@@ -47,35 +52,14 @@ public class Level extends AbstractTileBackground implements Evented {
 	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game,
 			String levelname) {
 		super(0, 0, TILE_WIDTH, TILE_HEIGHT);
-		
+
 		this.game = game;
 		this.field = game.getField();
 		this.levelname = levelname;
 		this.baseio = bsIO;
-		
+		this.bsloader = bsLoader;
+
 		initResources();
-
-		setSize(layer1.length, layer1[0].length);
-
-		chipsetE = new Chipset(bsLoader.getImages("rsc/level/ChipSet2.png", 6,
-				24, false));
-		chipsetF = new Chipset(bsLoader.getImages("rsc/level/ChipSet3.png", 6,
-				24));
-
-		chipset = new Chipset[16];
-		BufferedImage[] image = bsLoader.getImages("rsc/level/ChipSet1.png", 4,
-				4, false);
-		int[] chipnum = new int[] { 0, 1, 4, 5, 8, 9, 11, 12, 2, 3, 6, 7, 10,
-				11, 14, 15 };
-		for (int i = 0; i < chipset.length; i++) {
-			int num = chipnum[i];
-			BufferedImage[] chips = ImageUtil.splitImages(image[num], 3, 4);
-			chipset[i] = new Chipset(chips);
-		}
-
-		levelTimer.setFPS(100);
-		levelTimer.startTimer();
-		levelStartTime = levelTimer.getTime();
 	}
 
 	public void initResources() {
@@ -84,19 +68,65 @@ public class Level extends AbstractTileBackground implements Evented {
 
 		JsonUtil.JSONLevel level = gson.fromJson(json,
 				JsonUtil.JSONLevel.class);
-		
+
 		setPlayer(level);
+		setNpcs(level);
 		setTiles(level);
+		setSize(layer1.length, layer1[0].length);
+		setChipsets();
+		setLevelTimer();
 	}
+	
+	private void setChipsets() {
+		chipsetE = new Chipset(bsloader.getImages("rsc/level/ChipSet2.png", 6,
+				24, false));
+		chipsetF = new Chipset(bsloader.getImages("rsc/level/ChipSet3.png", 6,
+				24));
+
+		chipset = new Chipset[16];
+		BufferedImage[] image = bsloader.getImages("rsc/level/ChipSet1.png", 4,
+				4, false);
+		int[] chipnum = new int[] { 0, 1, 4, 5, 8, 9, 11, 12, 2, 3, 6, 7, 10,
+				11, 14, 15 };
+		for (int i = 0; i < chipset.length; i++) {
+			int num = chipnum[i];
+			BufferedImage[] chips = ImageUtil.splitImages(image[num], 3, 4);
+			chipset[i] = new Chipset(chips);
+		}
+	}
+	
+	private void setLevelTimer() {
+		levelTimer.setFPS(100);
+		levelTimer.startTimer();
+		levelStartTime = levelTimer.getTime();
+	}
+	
 
 	private void setPlayer(JsonUtil.JSONLevel level) {
 		JSONPlayer jPlayer = level.player;
-		
+		SpriteGroup group = new SpriteGroup("player");
+
 		Location playerLoc = new Location(jPlayer.location);
 		Player player = new Player(new GameCharacter(game, playerLoc,
 				jPlayer.directionsURL), jPlayer.actionsURL);
-		
+
 		game.setPlayer(player);
+		group.add(player.getCharacter());
+		
+		field.addGroup(group);
+	}
+	
+	private void setNpcs(JsonUtil.JSONLevel level) {
+		JSONNpc[] npcs = level.npcs;
+		SpriteGroup group = new SpriteGroup("npcs");
+		
+		for (JSONNpc jsonNpc : npcs) {
+			Location loc = new Location(jsonNpc.location);
+			NPC npc = new NPC(game, loc, jsonNpc.directions);
+			group.add(npc);
+		}
+		
+		field.addGroup(group);
 	}
 
 	private void setTiles(JsonUtil.JSONLevel level) {
@@ -137,7 +167,7 @@ public class Level extends AbstractTileBackground implements Evented {
 	public void renderTile(Graphics2D g, int tileX, int tileY, int x, int y) {
 		// render layer 1
 		int tilenum = layer1[tileX][tileY];
-		
+
 		if (tilenum < chipsetE.image.length)
 			g.drawImage(chipsetE.image[tilenum], x, y, null);
 		else if (tilenum >= chipsetE.image.length) {

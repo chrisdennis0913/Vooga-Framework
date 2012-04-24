@@ -82,7 +82,7 @@ public class Attacking extends ActionDecorator {
 		}
 		else if (isActive()) {
 			timer += elapsed;
-			if (timer >= 350) {
+			if (timer >= 250) {
 				getWrapper().get("walking").setEnabled(true, false);
 				setActive(false);
 				reset();

@@ -46,7 +46,7 @@ public class Walking extends ActionDecorator {
 				if (!isActive() || status != character.getCurrentDirection()) {
 					setActive(true);
 					character.setActiveDirection(status);
-					character.setVelocity(character.getSpeed(character.getCurrentDirection()));
+					character.setVelocity(character.getSpeed());
 				}
 			} else {
 				setActive(false);

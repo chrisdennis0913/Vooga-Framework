@@ -3,10 +3,7 @@ package utils;
 
 import java.io.File;
 
-import npc.NPC;
-
 import com.golden.gamedev.util.FileUtil;
-
 /**
  * JSON loader utility for different classes.
  * 
@@ -53,10 +50,14 @@ public class JsonUtil {
 		public String upperFilename;
 		public String lowerFilename;
 		public JSONPlayer player;
-		// public Enemy[] enemies;
-		public NPC[] npcs;
+		public JSONNpc[] npcs;
 	}
 
+	public class JSONNpc implements Jsonable {
+		public int[] location;
+		public String directions;
+	}
+	
 	public class JSONGame implements Jsonable {
 		public String level;
 	}
@@ -73,11 +74,6 @@ public class JsonUtil {
 		public String actions;
 	}
 
-	public class JSONNpc implements Jsonable {
-		public int[] location;
-		public String actions;
-	}
-
 	public class JSONScenery implements Jsonable {
 		public int[] locations;
 		public String imageURL;
@@ -88,8 +84,5 @@ public class JsonUtil {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
 	}
-	
-	public class JSONNpcActions implements Jsonable {
-		public String talking;
-	}
 }
+>>>>>>> caf56e1954075070a7ec08c5c12f8eabdeba8dd0

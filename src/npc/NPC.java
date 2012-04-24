@@ -1,16 +1,12 @@
 package npc;
+import gameCharacter.AutomatedCharacter;
 import utils.JsonUtil;
 import utils.Location;
-
 import app.RPGame;
 
-import com.golden.gamedev.Game;
 import com.google.gson.Gson;
 
 import dialogue.AbstractDialogue;
-import dialogue.NullDialogue;
-
-import gameCharacter.AutomatedCharacter;
 
 public class NPC extends AutomatedCharacter{
 
@@ -29,18 +25,14 @@ public class NPC extends AutomatedCharacter{
 		super(game, loc, configURL);
 	}
 	
-	public void initResources(String configURL){
-		
-	}
-	
 	private void constructActions(String json) {
-		Gson gson = new Gson();
-		JsonUtil.JSONNpcActions actions = gson.fromJson(json,
-				JsonUtil.JSONNpcActions.class);
-		if (actions.talking == null)
-			this.dialogue = new NullDialogue();
-		this.getActions().add("talking",
-				new Talking(new Talk(this.getActions(), actions.talking)));
+//		Gson gson = new Gson();
+//		JsonUtil.JSONNpcActions actions = gson.fromJson(json,
+//				JsonUtil.JSONNpcActions.class);
+//		if (actions.talking == null)
+//			this.dialogue = new NullDialogue();
+//		this.getActions().add("talking",
+//				new Talking(new Talk(this.getActions(), actions.talking)));
 	}
 	
 	public void setDialogue (AbstractDialogue dialogue){

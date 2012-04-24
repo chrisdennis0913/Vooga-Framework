@@ -2,7 +2,6 @@ package app;
 
 import java.awt.Dimension;
 
-import com.golden.gamedev.Game;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;

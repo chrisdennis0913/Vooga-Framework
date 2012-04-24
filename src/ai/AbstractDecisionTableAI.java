@@ -41,7 +41,7 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 		}
 		AbstractAttack choice;
 		while((choice = attackQ.poll()) != null)
-			if(choice.isActive() && choice.isAvailable(elapsedTime))
+			if(choice.isActive() && choice.isAvailable(0))
 				return choice;
 		return null;
 	}

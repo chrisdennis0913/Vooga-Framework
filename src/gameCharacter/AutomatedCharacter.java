@@ -1,9 +1,7 @@
 package gameCharacter;
 
 import utils.Location;
-
 import app.RPGame;
-
 import dialogue.AbstractDialogue;
 import dialogue.AbstractDialogue.DialogueObject;
 
@@ -19,8 +17,8 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	private static final long serialVersionUID = 1L;
 
 	//--- CONTROL FIELDS --------------------------------------
-	private MotionController movAI;
-	private AbstractDialogue dialogue;
+	protected MotionController movAI;
+	protected AbstractDialogue dialogue;
 
 	//--- STATE FIELDS ----------------------------------------
 	private boolean alive;

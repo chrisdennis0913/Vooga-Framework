@@ -11,7 +11,8 @@ import evented.EventedWrapper;
 
 public class Talk extends Action{
 	
-	public String message;
+	private boolean show = false;;
+	private String message;
 
 	public Talk(EventedWrapper<ActionInterface> wrapper, Jsonable json) {
 		super(wrapper, json);
@@ -26,9 +27,11 @@ public class Talk extends Action{
 	}
 
 	public void render(Graphics2D g) {
-		SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 12), new Color(255,255,255));
-		drawDialogBox(g);
-		font.drawText(g, message, SystemFont.LEFT, 15, 345, 330, 2, 0);
+		if (show){
+			SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 12), new Color(255,255,255));
+			drawDialogBox(g);
+			font.drawText(g, message, SystemFont.LEFT, 15, 345, 330, 2, 0);
+		}
 	}
 
 	public void setActiveDirection(int direction) {
@@ -38,6 +41,11 @@ public class Talk extends Action{
 		g.setColor(new Color(0));
 		g.drawRect(10, 340, 380, 50);
 		g.fillRect(10, 340, 380, 50);
+	}
+	
+	public void showMessage(String message){
+		show = true;
+		this.message = message;
 	}
 
 }

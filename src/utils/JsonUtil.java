@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package utils;
 
 import java.io.File;
@@ -181,4 +181,3 @@ public class JsonUtil {
 		public String talking;
 	}
 }
->>>>>>> ec276a1f7a4dd3ee4cb696bfad1b456c177ee0fe

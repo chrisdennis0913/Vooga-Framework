@@ -1,8 +1,7 @@
 package player;
 
-import utils.JsonUtil;
+import utils.JsonUtil.JSONPlayerTalking;
 import utils.KeyHandle;
-import actions.Action;
 import actions.ActionDecorator;
 import actions.Talk;
 
@@ -19,9 +18,11 @@ public class Talking extends ActionDecorator{
 	public void initResources(){
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 		
-		JsonUtil.JSONPlayerAttacking attacking = (JsonUtil.JSONPlayerAttacking) getJsonable();
-		if (attacking.keys == null)
-			new RuntimeException("Attack keys undefined");
+		JSONPlayerTalking talking = (JSONPlayerTalking) getJsonable();
+		if (talking.keys == null)
+			new RuntimeException("Talking keys undefined");
+		
+		keys.add(Talk.TALK_BASIC, talking.keys);
 	}
 
 }

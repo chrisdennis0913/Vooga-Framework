@@ -60,7 +60,6 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public static final int DIR_LEFT = 2;
 	public static final int DIR_RIGHT = 3;
 
-
 	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
@@ -73,7 +72,6 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		constructDirections(json);
 		stop();
 		inventory = new Inventory(this);
-
 	}
 
 	public void render(Graphics2D g) {	

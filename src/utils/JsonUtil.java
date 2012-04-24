@@ -85,4 +85,3 @@ public class JsonUtil {
 		public JSONPlayerAttacking attacking;
 	}
 }
->>>>>>> caf56e1954075070a7ec08c5c12f8eabdeba8dd0

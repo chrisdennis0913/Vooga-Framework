@@ -6,5 +6,11 @@
 		"location": [100,100],
 		"directionsURL": "rsc/config/player_directions.json",
 		"actionsURL": "rsc/config/player_actions.json"
-	}
+	},
+	"npcs": [
+		{
+			"location": [150, 150],
+			"directions": "rsc/config/player_directions.json"
+		}
+	]
 }

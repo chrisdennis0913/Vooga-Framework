@@ -25,7 +25,7 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	private boolean canDie;
 	
 	public AutomatedCharacter(RPGame game, Location loc, String configURL){
-		super(game, null, configURL);
+		super(game, loc, configURL);
 	}
 
 	public void setAlive(boolean alive){
@@ -37,7 +37,7 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	}
 	
 	public void update(long elapsedTime){
-		movAI.update(elapsedTime);
+//		movAI.update(elapsedTime);
 	}
 	
 	public String respondToTalk(DialogueObject choice){

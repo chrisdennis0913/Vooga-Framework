@@ -25,10 +25,6 @@ public class NPC extends AutomatedCharacter{
 		super(game, loc, configURL);
 	}
 	
-	public void initResources(String configURL){
-		
-	}
-	
 	private void constructActions(String json) {
 //		Gson gson = new Gson();
 //		JsonUtil.JSONNpcActions actions = gson.fromJson(json,

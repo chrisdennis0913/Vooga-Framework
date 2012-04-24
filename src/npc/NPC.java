@@ -28,17 +28,21 @@ public class NPC extends AutomatedCharacter{
 		super(game, loc, configURL);
 	}
 	
+	public void initResources(String configURL){
+		
+	}
+	
 	private void constructActions(String json) {
 		Gson gson = new Gson();
-		JsonUtil.JSONPlayerActions actions = gson.fromJson(json,
-				JsonUtil.JSONPlayerActions.class);
+		JsonUtil.JSONNpcActions actions = gson.fromJson(json,
+				JsonUtil.JSONNpcActions.class);
 		if (actions.talking == null)
 			this.dialogue = new NullDialogue();
 		this.getActions().add("talking",
 				new Talking(new Talk(this.getActions(), actions.talking)));
 	}
 	
-	private void setDialogue (AbstractDialogue dialogue){
+	public void setDialogue (AbstractDialogue dialogue){
 		this.dialogue = dialogue;
 	}
 

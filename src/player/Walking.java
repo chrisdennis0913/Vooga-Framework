@@ -1,3 +1,4 @@
+
 package player;
 
 import gameCharacter.GameCharacter;
@@ -45,7 +46,7 @@ public class Walking extends ActionDecorator {
 				if (!isActive() || status != character.getCurrentDirection()) {
 					setActive(true);
 					character.setActiveDirection(status);
-					character.setVelocity(character.getSpeed());
+					character.setVelocity(character.getSpeed(character.getCurrentDirection()));
 				}
 			} else {
 				setActive(false);
@@ -56,5 +57,4 @@ public class Walking extends ActionDecorator {
 
 	public void render(Graphics2D g) {
 	}
-
 }

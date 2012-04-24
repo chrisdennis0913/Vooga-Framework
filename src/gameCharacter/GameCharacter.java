@@ -10,7 +10,7 @@ import java.util.List;
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
-import utils.Velocity;
+import utils.Speed;
 import actions.ActionInterface;
 import app.RPGame;
 import attacks.BehaviorModifierContainer;
@@ -45,8 +45,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 
 	private int curDirection = 0;
 	private List<Direction> directions;
-	private Velocity velocity = new Velocity(0.05);
-	private Velocity curVelocity = new Velocity(0.0);
+	private Speed speed = new Speed(0);
 	protected Inventory inventory;
 
 	private String configURL;
@@ -60,6 +59,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public static final int DIR_LEFT = 2;
 	public static final int DIR_RIGHT = 3;
 
+
 	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
@@ -72,6 +72,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		constructDirections(json);
 		stop();
 		inventory = new Inventory(this);
+
 	}
 
 	public void render(Graphics2D g) {	
@@ -86,23 +87,19 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	
 		counters.update(elapsed);
 		actions.update(elapsed);
-		double[] velocity = curVelocity.get(getCurrentDirection());
-		setSpeed(velocity[0], velocity[1]);
+		double[] curSpeed = speed.get(getCurrentDirection());
+		setSpeed(curSpeed[0], curSpeed[1]);
 		super.update(elapsed);
 		
 		behaviorModifiers.unsetUpAll(elapsed);
 	}
 	
-	public double[] getVelocity(int direction) {
-		return velocity.get(direction);
+	public double[] getSpeed(int direction) {
+		return speed.get(direction);
 	}
 	
-	public double getSpeed() {
-		return velocity.getSpeed();
-	}
-	
-	public void setVelocity(double speed) {
-		this.curVelocity.set(speed);
+	public void setSpeed(double speed) {
+		this.speed.set(speed);
 	}
 
 	public RPGame getGame() {
@@ -167,7 +164,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	}
 
 	public void stop() {
-		curVelocity.set(0);
+		speed.set(0);
 		directions.get(curDirection).changeCharacter(false);
 	}
 	
@@ -179,3 +176,4 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		return behaviorModifiers;
 	}
 }
+

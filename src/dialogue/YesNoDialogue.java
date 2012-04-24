@@ -13,7 +13,6 @@ public class YesNoDialogue extends AbstractDialogue{
 		currentNode = generateTree(lines);
 	}
 	
-	@Override
 	public void goToNextLine(DialogueObject choice) {
 		YesNoDialogueObject thisChoice = (YesNoDialogueObject) choice;
 		if (thisChoice.getChoice())
@@ -22,12 +21,10 @@ public class YesNoDialogue extends AbstractDialogue{
 			currentNode = currentNode.children.get(1);
 	}
 
-	@Override
 	public String getCurrentLine() {
 		return currentNode.info;
 	}
 
-	@Override
 	public boolean isDone() {
 		return currentNode.children.size() == 0;
 	}
@@ -52,6 +49,10 @@ public class YesNoDialogue extends AbstractDialogue{
 		
 		boolean choice;
 		
+		/**
+		 * moves to one of two possible next lines in the dialogue based on the boolean choice
+		 * @param choice
+		 */
 		public YesNoDialogueObject(boolean choice){
 			this.choice = choice;
 		}

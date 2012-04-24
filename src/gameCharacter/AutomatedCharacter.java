@@ -1,6 +1,5 @@
 package gameCharacter;
 
-import controllers.MotionController;
 import utils.Location;
 import ai.SquareMovementAI;
 import app.RPGame;

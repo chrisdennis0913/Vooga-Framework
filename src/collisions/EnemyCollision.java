@@ -1,5 +1,6 @@
 package collisions;
 
+import gameCharacter.Enemy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,6 @@ import app.RPGame;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.collision.BasicCollisionGroup;
-import gameCharacter.Enemy;
-
 
 public class EnemyCollision extends BasicCollisionGroup {
 

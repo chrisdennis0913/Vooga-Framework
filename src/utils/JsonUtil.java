@@ -44,6 +44,10 @@ public class JsonUtil {
 		public int[] keys;
 		public JSONDirections directions;
 	}
+	
+	public class JSONPlayerTalking implements Jsonable {
+		public int[] keys;
+	}
 
 	public class JSONLevel implements Jsonable {
 		public String nextLevel;
@@ -83,5 +87,6 @@ public class JsonUtil {
 	public class JSONPlayerActions implements Jsonable {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
+		public JSONPlayerTalking talking;
 	}
 }

@@ -4,7 +4,7 @@
 
 package quest;
 
-import gameCharacter.Enemy;
+import enemy.Enemy;
 
 public class DestroyTask extends Task
 {

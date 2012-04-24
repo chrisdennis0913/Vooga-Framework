@@ -9,7 +9,7 @@
 	},
 	"npcs": [
 		{
-			"location": [150, 150],
+			"location": [200, 200],
 			"directions": "rsc/config/player_directions.json"
 		}
 	]

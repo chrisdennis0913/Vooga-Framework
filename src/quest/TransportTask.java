@@ -1,6 +1,7 @@
 package quest;
 
 import app.RPGame;
+import gameCharacter.GameCharacter;
 import inventory.Inventory;
 import inventory.Item;
 import npc.NPC;

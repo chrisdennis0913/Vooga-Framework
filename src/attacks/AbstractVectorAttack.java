@@ -42,4 +42,7 @@ public abstract class AbstractVectorAttack extends AbstractAttack {
 	}
 	
 	public abstract void launchVector(double x, double y, double speedX, double speedY);
+
+	public abstract void onCollision(Sprite arg0, Sprite arg1);
+	
 }

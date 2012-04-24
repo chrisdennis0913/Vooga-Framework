@@ -14,6 +14,8 @@ public class Talk extends Action {
 	private static final long serialVersionUID = 1L;
 
 	private String script = "";
+	
+	public static final int TALK_BASIC = 10;
 
 	public Talk(EventedWrapper<ActionInterface> wrapper, Jsonable json) {
 		super(wrapper, json);

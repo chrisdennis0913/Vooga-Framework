@@ -8,8 +8,8 @@ import app.RPGame;
 public class SquareMovementAI extends AbstractMovementAI{
 	
 	private Timer timer;
-	private int direction;
-	private final int[][] directions = new int[][] {{1, 0}, {0, -1}, {-1, 0}, {0, 1}};
+	private int directionIndex;
+	private final int[] directions = new int[] {GameCharacter.DIR_DOWN, GameCharacter.DIR_LEFT, GameCharacter.DIR_UP, GameCharacter.DIR_RIGHT};
 
 	public SquareMovementAI(RPGame game, GameCharacter character, int timeToTurn) {
 		super(game, character);
@@ -19,12 +19,12 @@ public class SquareMovementAI extends AbstractMovementAI{
 	@Override
 	public void update(long elapsed) {
 		if (timer.action(elapsed)){
-			if (direction == 3)
-				direction = 0;
+			if (directionIndex == 3)
+				directionIndex = 0;
 			else
-				direction ++;
-			character.setActiveDirection(direction);
-			character.setVelocity(1);
+				directionIndex ++;
+			character.setActiveDirection(directions[directionIndex]);
+			character.setVelocity(0.05);
 		}
 	}
 

@@ -51,6 +51,11 @@ public class CharacterDecorator extends AnimatedSprite implements CharacterInter
 	public GameCharacter getCharacter(){
 	    return character;
 	}
+
+	@Override
+	public void setCurrentDirection(int direction) {
+		character.setCurrentDirection(direction);
+	}
 	
 	
 }

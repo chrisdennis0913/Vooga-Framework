@@ -1,5 +1,6 @@
 package inventory;
 
+import store.Sellable;
 import app.RPGame;
 
 public class BowAndArrows extends Weapon implements Sellable {

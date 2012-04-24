@@ -9,14 +9,14 @@ import com.golden.gamedev.object.Sprite;
  * @author Kirill Klimuk
  */
 
-public abstract class EventedItem<T extends EventedItem<T>> extends Sprite implements Evented{
+public abstract class EventedItem<T extends Evented> extends Sprite implements Evented{
 	private static final long serialVersionUID = 1L;
 
 
 	protected EventedWrapper<T> wrapper;
 	
-	public EventedItem(EventedWrapper<T> wrapper) {
-		this.wrapper = wrapper;
+	public EventedItem(EventedWrapper<T> eventedWrapper) {
+		this.wrapper = eventedWrapper;
 	}
 	
 	protected EventedItem () {

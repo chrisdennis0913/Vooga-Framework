@@ -1,40 +1,32 @@
 package testing;
 
-import gameCharacter.GameCharacter;
-
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 
-import player.Player;
-import utils.Location;
+import app.Main;
+import app.RPGame;
 
-
-import com.golden.gamedev.Game;
+import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.GameObject;
 
-public class PlayerTest extends Game {
-
-	Player player;
-
+public class PlayerTest extends GameEngine {
+	
+	public static final int GAME_MODE = 1;
+	
 	public void initResources() {
-		Location loc = new Location(120, 80);
-		String config = "rsc/config/player_directions.json";
-		String actions = "rsc/config/player_actions.json";
-		player = new Player(new GameCharacter(this, loc, config), actions) ;
+		nextGameID = GAME_MODE;
 	}
-
-	public void render(Graphics2D g) {
-		player.render(g);
+	
+	public GameObject getGame(int GameID) {
+		switch (GameID) {
+			case GAME_MODE : return new RPGame(this);
+		}
+		return null;
 	}
-
-	public void update(long elapsed) {
-		player.update(elapsed);
-	}
-
+	
 	public static void main(String[] args) {
 		GameLoader game = new GameLoader();
-		game.setup(new PlayerTest(), new Dimension(480, 320), false);
-		game.start();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		game.setup(new Main(), new Dimension(480, 320), false);
+		game.start();
 	}
-
 }

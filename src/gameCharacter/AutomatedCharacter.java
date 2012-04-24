@@ -1,9 +1,7 @@
 package gameCharacter;
 
 import utils.Location;
-
 import app.RPGame;
-
 import dialogue.AbstractDialogue;
 import dialogue.AbstractDialogue.DialogueObject;
 

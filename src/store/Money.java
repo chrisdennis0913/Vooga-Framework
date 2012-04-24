@@ -1,4 +1,4 @@
-package inventory;
+package store;
 
 import java.awt.Graphics2D;
 
@@ -7,11 +7,7 @@ import evented.EventedWrapper;
 
 public class Money extends Counter {
 	
-	/**
-     * Zahava, add your JavaDoc
-     */
-    private static final long serialVersionUID = -410609845157350942L;
-    Integer init = Integer.MAX_VALUE;
+	Integer init = Integer.MAX_VALUE;
 	private int startCash;
 
 	public Money(EventedWrapper<Counter> wrapper, int count) {

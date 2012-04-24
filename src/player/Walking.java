@@ -1,28 +1,29 @@
 package player;
 
-import java.awt.Graphics2D;
-import java.util.HashMap;
-
-import utils.JsonUtil;
-import utils.KeyHandler;
-import actions.Action;
-import evented.EventedWrapper;
 import gameCharacter.GameCharacter;
 
-public class Walking extends Action {
+import java.awt.Graphics2D;
+
+import utils.JsonUtil;
+import utils.KeyHandle;
+import actions.ActionDecorator;
+import actions.Walk;
+
+public class Walking extends ActionDecorator {
 
 	private static final long serialVersionUID = 1L;
 
-	private KeyHandler keys = new KeyHandler(getWrapper().getCharacter()
-			.getGame());
-	private double speed = 0.07;
+	private KeyHandle keys;
+	private double speed = 0.05;
 
-	public Walking(EventedWrapper<Action> wrapper,
-			JsonUtil.JSONPlayerWalking walking) {
-		super(wrapper, walking);
+	public Walking(Walk walk) {
+		super(walk);
+		initResources();
 	}
 
 	public void initResources() {
+		keys = new KeyHandle(getWrapper().getCharacter().getGame());
+
 		JsonUtil.JSONPlayerWalking walking = (JsonUtil.JSONPlayerWalking) getJsonable();
 		if (walking.down == null || walking.right == null
 				|| walking.left == null || walking.right == null)
@@ -35,18 +36,22 @@ public class Walking extends Action {
 	}
 
 	public void update(long elapsed) {
-		int status = keys.checkKeys();
-		GameCharacter character = getWrapper().getCharacter();
+		if (isEnabled()) {
+			super.update(elapsed);
 
-		if (status != -1) {
-			if (!isActive() || status != character.getCurrentDirection()) {
-				setActive(true);
-				character.setActiveDirection(status);
-				character.setSpeed(speed);
+			int status = keys.checkKeys();
+			GameCharacter character = getWrapper().getCharacter();
+
+			if (status != -1) {
+				character.setSpeed(0.05);
+				if (!isActive() || status != character.getCurrentDirection()) {
+					setActive(true);
+					character.setActiveDirection(status);
+				}
+			} else {
+				setActive(false);
+				character.stop();
 			}
-		} else {
-			setActive(false);
-			character.stop();
 		}
 	}
 

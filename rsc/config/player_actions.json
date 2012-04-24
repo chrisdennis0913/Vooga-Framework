@@ -6,9 +6,9 @@
 		"right": [39]
 	},
 	"attacking": {
-		"keys": [17],
+		"keys": [32],
 		"directions": {
-			"frames": 6,
+			"frames": 9,
 			"delay": 100,
 			"directions": [
 				{

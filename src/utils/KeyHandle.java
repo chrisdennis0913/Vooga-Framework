@@ -5,14 +5,12 @@ import java.util.Iterator;
 
 import app.RPGame;
 
-import com.golden.gamedev.Game;
-
-public class KeyHandler implements Iterable<Integer> {
+public class KeyHandle implements Iterable<Integer> {
 	
 	private HashMap<Integer, int[]> keyMap = new HashMap<Integer, int[]>();
 	private RPGame game;
-	
-	public KeyHandler(RPGame game) {
+
+	public KeyHandle(RPGame game) {
 		this.game = game;
 	}
 
@@ -29,19 +27,19 @@ public class KeyHandler implements Iterable<Integer> {
 	}	
 	
 	public int checkKeys() {
-		boolean isDirection = false;
+		boolean isKey = false;
 
-		for (Integer direction : this) {
-			for (int key : get(direction)) {
+		for (Integer keyCode : this) {
+			for (int key : get(keyCode)) {
 				if (!game.keyDown(key)) {
-					isDirection = false;
+					isKey = false;
 					continue;
 				}
-				isDirection = true;
+				isKey = true;
 			}
 
-			if (isDirection)
-				return direction;
+			if (isKey)
+				return keyCode;
 		}
 
 		return -1;

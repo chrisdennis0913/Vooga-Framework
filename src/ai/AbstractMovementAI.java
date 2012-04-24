@@ -2,7 +2,7 @@ package ai;
 
 import app.RPGame;
 import gameCharacter.GameCharacter;
-import gameCharacter.MotionController;
+import controllers.MotionController;
 
 public abstract class AbstractMovementAI extends MotionController{
 	

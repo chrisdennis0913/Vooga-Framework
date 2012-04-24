@@ -8,6 +8,7 @@ import com.golden.gamedev.Game;
 import com.google.gson.Gson;
 
 import dialogue.AbstractDialogue;
+import dialogue.NullDialogue;
 
 import gameCharacter.AutomatedCharacter;
 

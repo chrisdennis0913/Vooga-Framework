@@ -2,6 +2,8 @@ package utils;
 
 import java.io.File;
 
+import npc.NPC;
+
 import com.golden.gamedev.util.FileUtil;
 
 /**
@@ -51,7 +53,7 @@ public class JsonUtil {
 		public String lowerFilename;
 		public JSONPlayer player;
 		// public Enemy[] enemies;
-		// public NPC[] npcs;
+		public NPC[] npcs;
 	}
 
 	public class JSONGame implements Jsonable {
@@ -72,6 +74,7 @@ public class JsonUtil {
 
 	public class JSONNpc implements Jsonable {
 		public int[] location;
+		public String actions;
 	}
 
 	public class JSONScenery implements Jsonable {
@@ -83,5 +86,9 @@ public class JsonUtil {
 	public class JSONPlayerActions implements Jsonable {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
+	}
+	
+	public class JSONNpcActions implements Jsonable {
+		public String talking;
 	}
 }

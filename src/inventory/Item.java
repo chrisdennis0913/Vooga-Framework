@@ -7,17 +7,14 @@ import com.golden.gamedev.object.SpriteGroup;
 import evented.EventedItem;
 import evented.EventedWrapper;
 
-/**
- * Can subclass to create other instance variables
- * such as weight, damage, price
- * ItemNames should be lowerCase
- * 
- * @author chrisdennis0913
- */
-public abstract class Item extends EventedItem<Item> implements EquipItemInterface{
+public abstract class Item extends EventedItem<Item>
+    implements EquipItemInterface, Potion, Accessory, Weapon {
 
     /**
+     * Can subclass to create other instance variables such as weight, damage, price
+     * ItemNames should be lowerCase
      * 
+     * @author chrisdennis0913
      */
     private static final long serialVersionUID = 6760280693009697161L;
     protected static RPGame game;
@@ -26,17 +23,18 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
     protected SpriteGroup myGroup;
     protected String myName;
     protected String category;
-    protected int quantity=1; // make sure this gets instantiated properly
-    
-    public Item(EventedWrapper<Item> wrapper){
+    protected int quantity = 1; // make sure this gets instantiated properly
+
+    public Item (EventedWrapper<Item> wrapper) {
         super(wrapper);
     }
+
 
     // Can subclass to create other instance variables
     // such as weight
     protected Item () {
-        super();
     }
+
 
     public Item (RPGame game2, String name, String gifName, String categ) {
         Item.game = game2;
@@ -78,7 +76,6 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
 //                                          collision);
 //    }
 
-
     public SpriteGroup getGroup () {
         return myGroup;
     }
@@ -97,24 +94,32 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
     public String getCategory () {
         return category;
     }
-    public void add(int quant){
-        quantity+=quant;
+
+
+    public void add (int quant) {
+        quantity += quant;
     }
-    public void remove(int quant){
+
+
+    public void remove (int quant) {
         quantity -= quant;
-        if (quantity<=0){
+        if (quantity <= 0) {
             wrapper.remove(this.myName);
         }
         //needs to tell wrapper if quantity falls below zero
     }
-    public void removeAll(){
+
+
+    public void removeAll () {
         quantity = 0;
-            wrapper.remove(this.myName);
+        wrapper.remove(this.myName);
     }
-    
-    public int getQuantity(){
+
+
+    public int getQuantity () {
         return quantity;
     }
+
 
     /**
      * @return string representation of item
@@ -149,11 +154,16 @@ public abstract class Item extends EventedItem<Item> implements EquipItemInterfa
 
         return compareTo(it) == 0;
     }
+    public abstract boolean removeWhenUsed(int quantity);
 
     public abstract boolean isThisKindOfItem (String toParse);
 
+
     public abstract Item parseItem (RPGame game2, String toParse);
     
+    public void changeWrapper(EventedWrapper<Item> wrappr){
+        wrapper = wrappr;
+    }
 
     public String parseName (String toParse) {
         String[] parseArray = toParse.split(",");

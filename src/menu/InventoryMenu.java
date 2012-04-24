@@ -46,9 +46,7 @@ public class InventoryMenu extends Menu {
                 else {
                     Item currentItem = optionsList.get(option - 1);
                     currentItem.use();
-                    if (currentItem.getCategory()
-                                   .equalsIgnoreCase("healthpotion")) inventory.remove(currentItem,
-                                                                                1);
+                    currentItem.removeWhenUsed(1);
                 }
                 optionsList = new ArrayList<Item>();
                 firstTime = true;

@@ -16,41 +16,27 @@ import gameCharacter.GameCharacter;
 public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 //  private InventoryMenu menu;
     private Item equippedItem;
-    private ArrayList<Accessory> accessoryList;
 
 
     public Inventory (GameCharacter character) {
         super(character);
-        accessoryList = new ArrayList<Accessory>();
         equippedItem = null;
     }
 
 
     public void add (Item itm) {
-        if (itm.getCategory().equalsIgnoreCase("accessory")) {
-            Accessory acc = (Accessory) itm;
-            acc.equip();
-        }
         if (!contains(itm)) add(itm.myName, itm);
     }
 
 
     public void add (Item itm, int quantity) {
         if (equippedItem == null & itm.canBeEquipped()) equippedItem = itm;
-        if (itm.getCategory().equalsIgnoreCase("accessory")) {
-            Accessory acc = (Accessory) itm;
-            acc.equip();
-        }
         add(itm);
         itm.add(quantity);
     }
 
 
     public void remove (Item itm) {
-        if (itm.getCategory().equalsIgnoreCase("accessory")) {
-            Accessory acc = (Accessory) itm;
-            acc.unequip();
-        }
         if (equippedItem == itm) {
             equippedItem = null;
         }
@@ -88,24 +74,6 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         return equippedItem == itm;
     }
 
-
-    public void equipAcc (Accessory acc) {
-        if (!accessoryList.contains(acc)) {
-            accessoryList.add(acc);
-        }
-    }
-
-
-    public void unEquipAcc (Accessory acc) {
-        if (accessoryList.contains(acc)) accessoryList.remove(acc);
-    }
-
-
-    public boolean hasAccessory (Accessory accessory) {
-        return accessoryList.contains(accessory);
-    }
-
-
     @Override
     public void initResources () {
         list = new HashMap<String, Item>();
@@ -115,10 +83,10 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
     @Override
     public void render (Graphics2D g) {
-        // inventory menu?
-        for (Accessory acc : accessoryList) {
-            acc.render(g);
+        for (Item itm : this.list.values()) {
+            itm.render(g);
         }
+//         inventory menu?
 //        menu.render(g);
     }
 

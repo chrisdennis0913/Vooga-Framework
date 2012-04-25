@@ -1,5 +1,6 @@
 package inventory;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import store.Sellable;
 import app.RPGame;
@@ -164,7 +165,7 @@ public abstract class Item extends EventedItem<Item> implements Sellable, EquipI
 
 
     public abstract Item parseItem (RPGame game2, String toParse);
-
+    public void render(Graphics2D g){}
 
     public void changeWrapper (EventedWrapper<Item> wrappr) {
         wrapper = wrappr;

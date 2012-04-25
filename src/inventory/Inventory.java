@@ -24,7 +24,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
 
     public void add (Item itm) {
-        if (!contains(itm)) add(itm.myName, itm);
+        if (!contains(itm)) add(itm.getName(), itm);
     }
 
 
@@ -39,7 +39,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         if (equippedItem == itm) {
             equippedItem = null;
         }
-        remove(itm.myName);
+        remove(itm.getName());
         itm.removeAll();
     }
 

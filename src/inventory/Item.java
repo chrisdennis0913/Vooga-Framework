@@ -1,18 +1,20 @@
 package inventory;
 
 import java.awt.image.BufferedImage;
+import store.Sellable;
 import app.RPGame;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import evented.EventedItem;
 import evented.EventedWrapper;
 
-public abstract class Item extends EventedItem<Item>
-    implements EquipItemInterface, Potion, Accessory, Weapon {
+
+public abstract class Item extends EventedItem<Item> implements Sellable, EquipItemInterface //Potion, Accessory, Weapon 
+{
 
     /**
-     * Can subclass to create other instance variables such as weight, damage, price
-     * ItemNames should be lowerCase
+     * Can subclass to create other instance variables such as weight, damage,
+     * price ItemNames should be lowerCase
      * 
      * @author chrisdennis0913
      */
@@ -25,6 +27,7 @@ public abstract class Item extends EventedItem<Item>
     protected String category;
     protected int quantity = 1; // make sure this gets instantiated properly
 
+
     public Item (EventedWrapper<Item> wrapper) {
         super(wrapper);
     }
@@ -32,8 +35,7 @@ public abstract class Item extends EventedItem<Item>
 
     // Can subclass to create other instance variables
     // such as weight
-    protected Item () {
-    }
+    protected Item () {}
 
 
     public Item (RPGame game2, String name, String gifName, String categ) {
@@ -50,7 +52,7 @@ public abstract class Item extends EventedItem<Item>
         this.myName = name;
         category = "Item";
         myGroup = new SpriteGroup(myName);
-        System.out.println(gifName);
+        System.out.println("Item's GifName is: "+gifName);
         this.image = game2.getImage("resources/items/" + gifName + ".gif");
     }
 
@@ -106,7 +108,6 @@ public abstract class Item extends EventedItem<Item>
         if (quantity <= 0) {
             wrapper.remove(this.myName);
         }
-        //needs to tell wrapper if quantity falls below zero
     }
 
 
@@ -154,16 +155,21 @@ public abstract class Item extends EventedItem<Item>
 
         return compareTo(it) == 0;
     }
-    public abstract boolean removeWhenUsed(int quantity);
+
+
+    public abstract void removeWhenUsed (int quantity);
+
 
     public abstract boolean isThisKindOfItem (String toParse);
 
 
     public abstract Item parseItem (RPGame game2, String toParse);
-    
-    public void changeWrapper(EventedWrapper<Item> wrappr){
+
+
+    public void changeWrapper (EventedWrapper<Item> wrappr) {
         wrapper = wrappr;
     }
+
 
     public String parseName (String toParse) {
         String[] parseArray = toParse.split(",");

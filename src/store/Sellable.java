@@ -2,9 +2,9 @@ package store;
 
 public interface Sellable {
 	
-	public void setPrice();
+	public void setPrice(int price);
 	public int getPrice();
-	public void adjustPrice();
 	boolean isSellable();
+	void setSellable(boolean sell);
 
 }

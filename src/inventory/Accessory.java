@@ -26,6 +26,11 @@ public interface Accessory {
 
     int getStatChange ();
 
+
+    void setRelPosition (double x, double y);
+
+
+    int[] getRelPosition ();
 //    public void render (Graphics2D g) {
 //        if (!showsOnScreen) return;
 //        mySprite.setActive(true);

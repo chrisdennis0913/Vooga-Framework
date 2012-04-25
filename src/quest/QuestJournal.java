@@ -19,9 +19,11 @@ public class QuestJournal
 		myQuests = new ArrayList<Quest>();
 	}
 	
-	public void addQuest(Quest qu)
+	public void addQuest(Quest qu, QuestGiver qg)
 	{
 		myQuests.add(qu);
+		qg.addQuest(qu);
+		qu.addObserver(qg);
 	}
 	
 	public void removeQuest(Quest qu)

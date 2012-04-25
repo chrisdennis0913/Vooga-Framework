@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
+import level.Level;
 
 import utils.Direction;
 import utils.JsonUtil;
@@ -50,6 +51,8 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	protected Inventory inventory;
 
 	private String configURL;
+	
+	Level level;
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(this);
@@ -64,6 +67,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
+		this.level = game.level;
 		this.configURL = configURL;
 		initResources();
 	}
@@ -80,6 +84,11 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		super.render(g);
 		counters.render(g);
 		actions.render(g);
+	}
+	
+	public Location getLocation()
+	{
+		return new Location((int) this.getX(), (int) this.getY());
 	}
 		
 	

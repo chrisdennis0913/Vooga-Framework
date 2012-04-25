@@ -1,11 +1,9 @@
 package inventory;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.HashMap;
 import evented.EventedWrapper;
 import gameCharacter.GameCharacter;
-
 
 /**
  * Keeps track of quantity of Items Given to every game character
@@ -14,7 +12,6 @@ import gameCharacter.GameCharacter;
  */
 
 public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
-//  private InventoryMenu menu;
     private Item equippedItem;
 
 
@@ -25,7 +22,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
 
     public void add (Item itm) {
-        if (!contains(itm)) add(itm.myName, itm);
+        if (!contains(itm)) add(itm.getName(), itm);
     }
 
 
@@ -40,7 +37,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         if (equippedItem == itm) {
             equippedItem = null;
         }
-        remove(itm.myName);
+        remove(itm.getName());
         itm.removeAll();
     }
 
@@ -51,7 +48,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
 
     public boolean contains (Item itm) {
-        return contains(itm.myName);
+        return contains(itm.getName());
     }
 
 

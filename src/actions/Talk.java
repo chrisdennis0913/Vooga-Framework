@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import npc.NPC;
+
 import com.golden.gamedev.object.font.SystemFont;
 
 import utils.Jsonable;
@@ -14,6 +16,7 @@ public class Talk extends Action {
 	private static final long serialVersionUID = 1L;
 
 	private String script = "";
+	private NPC npc;
 	
 	public static final int TALK_BASIC = 10;
 
@@ -26,6 +29,14 @@ public class Talk extends Action {
 		setEnabled(false, true);
 	}
 
+	public NPC getNpc() {
+		return npc;
+	}
+
+	public void setNpc(NPC npc) {
+		this.npc = npc;
+	}
+
 	public void update(long elapsed) {}
 
 	public void render(Graphics2D g) {
@@ -33,21 +44,20 @@ public class Talk extends Action {
 			drawDialogBox(g);
 	}
 
-	public void setActiveDirection(int direction) {
-	}
-
 	private void drawDialogBox(Graphics2D g) {
 		SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 12),
 				new Color(255, 255, 255));
 		g.setColor(new Color(0));
-		g.drawRect(10, 340, 380, 50);
-		g.fillRect(10, 340, 380, 50);
-		font.drawText(g, script, SystemFont.LEFT, 15, 345, 330, 2, 0);
+		g.drawRect(10, 260, 460, 50);
+		g.fillRect(10, 260, 460, 50);
+		font.drawText(g, script, SystemFont.LEFT, 15, 265, 260, 2, 0);
 	}
 
-	public void set(String message) {
+	public void setMessage(String message) {
 		setActive(true);
 		this.script = message;
 	}
+
+	public void setActiveDirection(int direction) {}
 
 }

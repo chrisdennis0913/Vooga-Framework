@@ -9,43 +9,45 @@ import com.golden.gamedev.object.font.SystemFont;
 import utils.Jsonable;
 import evented.EventedWrapper;
 
-public class Talk extends Action{
+public class Talk extends Action {
+
+	private static final long serialVersionUID = 1L;
+
+	private String script = "";
 	
-	private boolean show = false;;
-	private String message;
+	public static final int TALK_BASIC = 10;
 
 	public Talk(EventedWrapper<ActionInterface> wrapper, Jsonable json) {
 		super(wrapper, json);
 		initResources();
 	}
-	
-	public void initResources(){
-		setEnabled(true, false);
-	}
-	
-	public void update(long elapsed){
+
+	public void initResources() {
+		setEnabled(false, true);
 	}
 
+	public void update(long elapsed) {}
+
 	public void render(Graphics2D g) {
-		if (show){
-			SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 12), new Color(255,255,255));
+		if (isActive())
 			drawDialogBox(g);
-			font.drawText(g, message, SystemFont.LEFT, 15, 345, 330, 2, 0);
-		}
 	}
 
 	public void setActiveDirection(int direction) {
 	}
-	
+
 	private void drawDialogBox(Graphics2D g) {
+		SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 12),
+				new Color(255, 255, 255));
 		g.setColor(new Color(0));
 		g.drawRect(10, 340, 380, 50);
 		g.fillRect(10, 340, 380, 50);
+		font.drawText(g, script, SystemFont.LEFT, 15, 345, 330, 2, 0);
 	}
-	
-	public void showMessage(String message){
-		show = true;
-		this.message = message;
+
+	public void set(String message) {
+		setActive(true);
+		this.script = message;
 	}
 
 }

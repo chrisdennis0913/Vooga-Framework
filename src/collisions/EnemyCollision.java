@@ -1,24 +1,22 @@
 package collisions;
 
+import enemy.Enemy;
 import java.util.ArrayList;
 import java.util.List;
 
 import player.Player;
-import app.RPGGame;
+import app.RPGame;
+
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.collision.BasicCollisionGroup;
-import enemy.IEnemy;
-
 
 public class EnemyCollision extends BasicCollisionGroup {
 
-    private RPGGame game;
-    private IEnemy enemy;
+    private RPGame game;
+    private Enemy enemy;
     private Player player;
 
-    private List<CollisionObserver> collisionObservers = new ArrayList<CollisionObserver>();
-
-    public EnemyCollision (RPGGame game, Player player, String enemyname) {
+    public EnemyCollision (RPGame game, Player player, String enemyname) {
         this.game = game;
         this.player = player;
         this.enemy = game.getLevel().getEnemy(enemyname);
@@ -27,9 +25,7 @@ public class EnemyCollision extends BasicCollisionGroup {
 
     public void collided (Sprite character, Sprite scenery) {
         overlap(character, scenery);
-        
-        for(CollisionObserver co : collisionObservers)
-        	co.notifyOfCollision();
+    
         
         if (player.getActions().isAttacking()) {
             enemy.addToHealth(-1);
@@ -45,12 +41,10 @@ public class EnemyCollision extends BasicCollisionGroup {
         }
     }
 
-
     protected void jump (Sprite character, Sprite scenery) {
         scenery.setX(character.getX() - 100);
         scenery.setY(character.getY() - 100);
     }
-
 
     protected void overlap (Sprite character, Sprite scenery) {
         double maxsep =
@@ -64,11 +58,4 @@ public class EnemyCollision extends BasicCollisionGroup {
         }
     }
 
-    public void registerCollisionObserver(CollisionObserver co){
-    	collisionObservers.add(co);
-    }
-    
-    public void deregisterCollisionObserver(CollisionObserver co){
-    	collisionObservers.remove(co);
-    }
 }

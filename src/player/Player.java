@@ -1,5 +1,7 @@
 package player;
 
+import java.awt.Graphics2D;
+
 import utils.JsonUtil;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
@@ -41,4 +43,9 @@ public class Player extends CharacterDecorator {
 				new Attacking(new Attack(character.getActions(), actions.attacking)));
 	}
 
+	public void update(long elapsed) {
+		super.update(elapsed);
+		
+	}
+	
 }

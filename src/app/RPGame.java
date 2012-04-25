@@ -8,6 +8,9 @@ import java.util.Comparator;
 
 import level.Level;
 import player.Player;
+import quest.Quest;
+import quest.QuestGiver;
+import quest.QuestJournal;
 import utils.JsonUtil;
 
 import com.golden.gamedev.GameEngine;
@@ -20,14 +23,12 @@ public class RPGame extends GameObject {
 
 	private final String gameURL = "rsc/config/game.json";
 
-	private PlayField field = new PlayField();
+	public PlayField field = new PlayField();
 
-	// private Background bg;
 	private Player player;
-	// private Dialog dialog;
-	private Level level;
+	public Level level;
 	private Inventory myInventory;
-	String levelFileName = "rsc/savedmaps/level1.json";
+	private QuestJournal myJournal;
 	String lower, upper;
 	boolean pausedForInventory = false;
 
@@ -41,36 +42,42 @@ public class RPGame extends GameObject {
 				JsonUtil.JSONGame.class);
 
 		level = new Level(bsLoader, bsIO, this, gameJson.level);
-		field.setComparator(new Comparator<Object>() {
-			public int compare(Object o1, Object o2) {
-				return (int) (((Sprite) o1).getY() - ((Sprite) o2).getY());
+		field.setComparator(new Comparator<Sprite>() {
+			public int compare(Sprite o1, Sprite o2) {
+				return (int) (o1.getY() - o2.getY());
 			}
 		});
 	}
 
 	public void render(Graphics2D g) {
-		field.render(g);
 		level.render(g);
-		getPlayer().render(g); 			// this is a hack that should not be there!
+		field.render(g);
 	}
 
 	public void update(long elapsed) {
-		field.update(elapsed);
 		level.update(elapsed);
-		getPlayer().update(elapsed);	// this is a hack that should not be there!
+		field.update(elapsed);
 	}
 
 	public Player getPlayer() {
 		return player;
 	}
+	
+	public Level getLevel() {
+		return level;
+	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
-		field.add(player);
 	}
 
 	public void addItems(Item itm) {
 		myInventory.add(itm);
+	}
+	
+	public void addQuest(Quest qu, QuestGiver qg)
+	{
+		myJournal.addQuest(qu, qg);
 	}
 
 	public PlayField getField() {

@@ -3,7 +3,7 @@ package ai;
 import app.RPGame;
 import attacks.AbstractAttack;
 
-import gameCharacter.Enemy;
+import enemy.Enemy;
 
 import java.util.Comparator;
 import java.util.HashMap;

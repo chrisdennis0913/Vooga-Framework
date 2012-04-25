@@ -44,16 +44,24 @@ public class JsonUtil {
 		public int[] keys;
 		public JSONDirections directions;
 	}
+	
+	public class JSONPlayerTalking implements Jsonable {
+		public int[] keys;
+	}
 
 	public class JSONLevel implements Jsonable {
 		public String nextLevel;
 		public String upperFilename;
 		public String lowerFilename;
 		public JSONPlayer player;
-		// public Enemy[] enemies;
-		// public NPC[] npcs;
+		public JSONNpc[] npcs;
 	}
 
+	public class JSONNpc implements Jsonable {
+		public int[] location;
+		public String directions;
+	}
+	
 	public class JSONGame implements Jsonable {
 		public String level;
 	}
@@ -70,10 +78,6 @@ public class JsonUtil {
 		public String actions;
 	}
 
-	public class JSONNpc implements Jsonable {
-		public int[] location;
-	}
-
 	public class JSONScenery implements Jsonable {
 		public int[] locations;
 		public String imageURL;
@@ -83,5 +87,6 @@ public class JsonUtil {
 	public class JSONPlayerActions implements Jsonable {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
+		public JSONPlayerTalking talking;
 	}
 }

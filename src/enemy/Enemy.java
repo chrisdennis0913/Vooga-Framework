@@ -1,4 +1,7 @@
-package gameCharacter;
+package enemy;
+
+import gameCharacter.Attackable;
+import gameCharacter.AutomatedCharacter;
 
 import java.util.HashMap;
 

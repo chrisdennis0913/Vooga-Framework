@@ -54,7 +54,6 @@ public class EventedWrapper<T extends Evented>
         return list.containsKey(itemName);
     }
 
-
     public boolean containsType (String itemType) { // fix this
         for (T item : this) {
             if (((Item) item).getCategory().equalsIgnoreCase(itemType)) {

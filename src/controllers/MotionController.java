@@ -1,5 +1,6 @@
-package gameCharacter;
+package controllers;
 
+import gameCharacter.GameCharacter;
 import app.RPGame;
 
 /**

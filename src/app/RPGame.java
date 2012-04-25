@@ -48,6 +48,10 @@ public class RPGame extends GameObject {
 			}
 		});
 	}
+	
+	public Inventory getInventory() {
+		return myInventory;
+	}
 
 	public void render(Graphics2D g) {
 		level.render(g);
@@ -62,7 +66,7 @@ public class RPGame extends GameObject {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public Level getLevel() {
 		return level;
 	}
@@ -74,9 +78,8 @@ public class RPGame extends GameObject {
 	public void addItems(Item itm) {
 		myInventory.add(itm);
 	}
-	
-	public void addQuest(Quest qu, QuestGiver qg)
-	{
+
+	public void addQuest(Quest qu, QuestGiver qg) {
 		myJournal.addQuest(qu, qg);
 	}
 

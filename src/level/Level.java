@@ -1,5 +1,8 @@
 package level;
 
+import inventory.ConcreteItem;
+import inventory.Item;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
@@ -7,6 +10,7 @@ import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
 import utils.JsonUtil;
+import utils.JsonUtil.JSONInventory;
 import utils.JsonUtil.JSONItem;
 import utils.JsonUtil.JSONNpc;
 import utils.JsonUtil.JSONPlayer;
@@ -125,14 +129,14 @@ public class Level extends AbstractTileBackground implements Evented {
 	}
 
 	private void setItems(JsonUtil.JSONLevel level) {
-		JSONItem[] items = level.items;
+		JSONInventory inventory = level.inventory;		
 		SpriteGroup group = new SpriteGroup("items");
 
-		for (JSONItem item : items) {
-			Location loc = new Location(jsonNpc.location);
-			NPC npc = new NPC(game, loc, jsonNpc.directions);
-			group.add(npc);
+		for (JSONItem it : inventory.items) {
+			Item item = new ConcreteItem(game.getInventory(), it);
+			group.add(item);
 		}
+		
 		game.getField().addGroup(group);
 	}
 	

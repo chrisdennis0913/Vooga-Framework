@@ -16,6 +16,7 @@ import utils.JsonUtil.JSONNpc;
 import utils.JsonUtil.JSONPlayer;
 import utils.Location;
 import app.RPGame;
+import collisions.ItemCollision;
 import collisions.NPCCollision;
 
 import com.golden.gamedev.engine.BaseIO;
@@ -45,20 +46,20 @@ public class Level extends AbstractTileBackground implements Evented {
 	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
 	int[][] layer1 = new int[40][25]; // the lower tiles
 	int[][] layer2 = new int[40][25]; // the fringe tiles
-	public GameCharacter[][] layer3  = new GameCharacter[40][25];	// the object/event/npc tiles
 
-	protected RPGame game;
-	protected SystemTimer levelTimer = new SystemTimer();
+	private SystemTimer levelTimer = new SystemTimer();
 	protected long levelStartTime;
 	protected String nextLevelName;
 	protected String startText;
-	//protected PlayField field;
+
+	private RPGame game;
+	private LevelInventory<Item> inventory;
 
 	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game, String levelname) {
 		super(0, 0, TILE_WIDTH, TILE_HEIGHT);
 
 		this.game = game;
-		//this.field = game.getField();
+		this.inventory = new LevelInventory<Item>(game);
 		this.levelname = levelname;
 		this.baseio = bsIO;
 		this.bsloader = bsLoader;
@@ -86,9 +87,13 @@ public class Level extends AbstractTileBackground implements Evented {
 	}
 
 	private void setCollisions() {
+		ItemCollision itCol = new ItemCollision();
 		NPCCollision collision = new NPCCollision();
+		
 		game.getField().addCollisionGroup(game.getField().getGroup("player"),
 				game.getField().getGroup("npcs"), collision);
+		game.getField().addCollisionGroup(game.getField().getGroup("player"),
+				game.getField().getGroup("items"), itCol);
 	}
 
 	private void setChipsets() {
@@ -107,6 +112,10 @@ public class Level extends AbstractTileBackground implements Evented {
 			BufferedImage[] chips = ImageUtil.splitImages(image[num], 3, 4);
 			chipset[i] = new Chipset(chips);
 		}
+	}
+
+	public LevelInventory<Item> getInventory() {
+		return inventory;
 	}
 
 	private void setLevelTimer() {
@@ -129,17 +138,17 @@ public class Level extends AbstractTileBackground implements Evented {
 	}
 
 	private void setItems(JsonUtil.JSONLevel level) {
-		JSONInventory inventory = level.inventory;		
+		JSONInventory inventory = level.inventory;
 		SpriteGroup group = new SpriteGroup("items");
 
 		for (JSONItem it : inventory.items) {
-			Item item = new ConcreteItem(game.getInventory(), it);
+			Item item = new ConcreteItem(game, it);
 			group.add(item);
 		}
-		
+
 		game.getField().addGroup(group);
 	}
-	
+
 	private void setNpcs(JsonUtil.JSONLevel level) {
 		JSONNpc[] npcs = level.npcs;
 		SpriteGroup group = new SpriteGroup("npcs");
@@ -185,6 +194,12 @@ public class Level extends AbstractTileBackground implements Evented {
 				renderTile(g, i, j, 32 * i, 32 * j);
 			}
 		}
+		
+		GameCharacter player = game.getPlayer().getCharacter();
+		setToCenter((int) player.getX(),
+				(int) player.getY(), player.getWidth(), player.getHeight());
+
+		super.render(g);
 	}
 
 	public void renderTile(Graphics2D g, int tileX, int tileY, int x, int y) {
@@ -203,27 +218,16 @@ public class Level extends AbstractTileBackground implements Evented {
 		if (tilenum2 != -1) {
 			g.drawImage(chipsetF.image[tilenum2], x, y, null);
 		}
-
-		// layer 3 is rendered by sprite group
 	}
 
 	public boolean isOccupied(int tileX, int tileY) {
 		try {
-			return (layer2[tileX][tileY] != -1 ||
-					layer3[tileX][tileY] != null);
+			return (layer2[tileX][tileY] != -1);
 		} catch (Exception e) {
 			// out of bounds
 			return true;
 		}
 	}
-	
-	public GameCharacter getLayer3(int tileX, int tileY) {
-		try {
-		    return layer3[tileX][tileY];
-		} catch (Exception e) {
-			// out of bounds
-			return null;
-		} }
 
 	// chipset is only a pack of images
 	class Chipset {

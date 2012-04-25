@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 
 import utils.JsonUtil;
 import utils.KeyHandle;
+import actions.Action;
 import actions.ActionDecorator;
-import actions.Walk;
 
 public class Walking extends ActionDecorator {
 
@@ -16,12 +16,14 @@ public class Walking extends ActionDecorator {
 
 	private KeyHandle keys;
 
-	public Walking(Walk walk) {
-		super(walk);
+	public Walking(Action action) {
+		super(action);
 		initResources();
 	}
 
 	public void initResources() {
+		setEnabled(true, false);
+		
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
 		JsonUtil.JSONPlayerWalking walking = (JsonUtil.JSONPlayerWalking) getJsonable();

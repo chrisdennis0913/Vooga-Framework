@@ -1,7 +1,6 @@
 package inventory;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -12,6 +11,7 @@ import utils.Location;
 import app.RPGame;
 
 import com.golden.gamedev.util.ImageUtil;
+
 import evented.EventedItem;
 import evented.EventedWrapper;
 
@@ -29,9 +29,13 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 	private final JSONItem item;
 
 	private String myName;
-	protected String category = "";
 	private BufferedImage image;
 	protected int quantity;
+
+	public Item(RPGame game, JSONItem item) {
+		super(game);
+		this.item = item;
+	}
 
 	public Item(EventedWrapper<Item> wrapper, JSONItem item) {
 		super(wrapper);
@@ -45,7 +49,8 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 			image = getWrapper().getCharacter().getGame().getImage(item.image);
 		else
 			try {
-				image = ImageUtil.getImage(new File(item.image).toURI().toURL(), new Color(255));
+				image = ImageUtil.getImage(
+						new File(item.image).toURI().toURL(), new Color(255));
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
@@ -55,8 +60,6 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 		quantity = item.quantity;
 		myName = item.name;
 	}
-	
-	public void render(Graphics2D g) {}
 
 	public String getName() {
 		return myName;
@@ -66,24 +69,28 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 		return "Picked up " + myName + ".";
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
 	public void add(int quant) {
 		quantity += quant;
 	}
 
 	public void remove(int quant) {
 		quantity -= quant;
-		if (quantity <= 0) {
-			wrapper.remove(this.myName);
-		}
+		if (quantity <= 0)
+			delete();
 	}
 
+	private void delete() {
+		if (hasWrapper())
+			getWrapper().remove(myName);
+		else {
+			getGame().getLevel().getInventory().remove(myName);
+			setActive(false);
+		}
+	}
+	
 	public void removeAll() {
 		quantity = 0;
-		wrapper.remove(this.myName);
+		delete();
 	}
 
 	public int getQuantity() {
@@ -98,13 +105,7 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 	 * @return string representation of item
 	 */
 	public String toString() {
-		StringBuffer result = new StringBuffer();
-		result.append("(");
-		result.append(myName + " ");
-		result.append("is a " + category + ".");
-		result.append(")");
-
-		return result.toString();
+		return "[" + getName() + ": " + getQuantity() + "]";
 	}
 
 	/**
@@ -115,8 +116,6 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 	 * @return appropriate value less than zero, zero, or greater than zero
 	 */
 	public int compareTo(Item it) {
-		if (category != it.getCategory())
-			return category.compareTo(it.getCategory());
 		if (myName != it.getName())
 			return myName.compareTo(it.getName());
 		return 0;

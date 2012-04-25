@@ -1,6 +1,5 @@
 package app;
 
-import inventory.Inventory;
 import inventory.Item;
 
 import java.awt.Graphics2D;
@@ -27,7 +26,6 @@ public class RPGame extends GameObject {
 
 	private Player player;
 	public Level level;
-	private Inventory myInventory;
 	private QuestJournal myJournal;
 	String lower, upper;
 	boolean pausedForInventory = false;
@@ -42,24 +40,24 @@ public class RPGame extends GameObject {
 				JsonUtil.JSONGame.class);
 
 		level = new Level(bsLoader, bsIO, this, gameJson.level);
+		
 		field.setComparator(new Comparator<Sprite>() {
 			public int compare(Sprite o1, Sprite o2) {
+				if (o1 instanceof Item)
+					return -1;
+				else if (o2 instanceof Item)
+					return 1;
 				return (int) (o1.getY() - o2.getY());
 			}
 		});
-	}
-	
-	public Inventory getInventory() {
-		return myInventory;
+		field.setBackground(level);
 	}
 
 	public void render(Graphics2D g) {
-		level.render(g);
 		field.render(g);
 	}
 
 	public void update(long elapsed) {
-		level.update(elapsed);
 		field.update(elapsed);
 	}
 
@@ -74,11 +72,7 @@ public class RPGame extends GameObject {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
-	public void addItems(Item itm) {
-		myInventory.add(itm);
-	}
-
+	
 	public void addQuest(Quest qu, QuestGiver qg) {
 		myJournal.addQuest(qu, qg);
 	}

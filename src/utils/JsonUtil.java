@@ -45,7 +45,7 @@ public class JsonUtil {
 		public JSONDirections directions;
 	}
 	
-	public class JSONPlayerTalking implements Jsonable {
+	public class JSONPlayerAction implements Jsonable {
 		public int[] keys;
 	}
 
@@ -100,6 +100,7 @@ public class JsonUtil {
 	public class JSONPlayerActions implements Jsonable {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
-		public JSONPlayerTalking talking;
+		public JSONPlayerAction talking;
+		public JSONPlayerAction grabbing;
 	}
 }

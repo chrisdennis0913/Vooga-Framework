@@ -3,15 +3,13 @@ package player;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import utils.JsonUtil;
+import actions.Action;
 import actions.Attack;
 import actions.Talk;
-import actions.Walk;
 
 import com.google.gson.Gson;
 
 public class Player extends CharacterDecorator {
-
-	private static final long serialVersionUID = 1L;
 	
 	private String configURL;
 
@@ -36,15 +34,13 @@ public class Player extends CharacterDecorator {
 			throw new RuntimeException("Action undefined for player");
 
 		character.getActions().add("walking",
-				new Walking(new Walk(character.getActions(), actions.walking)));
+				new Walking(new Action(character.getActions(), actions.walking)));
 		character.getActions().add("attacking",
 				new Attacking(new Attack(character.getActions(), actions.attacking)));
 		character.getActions().add("talking",
 				new Talking(new Talk(character.getActions(), actions.talking)));
-	}
-
-	public void update(long elapsed) {
-		super.update(elapsed);
+		character.getActions().add("grabbing",
+				new Grabbing(new Action(character.getActions(), actions.grabbing)));
 	}
 	
 }

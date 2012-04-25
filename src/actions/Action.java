@@ -12,7 +12,7 @@ import evented.EventedWrapper;
  * @author Kirill Klimuk
  */
 
-public abstract class Action extends EventedItem<ActionInterface> implements ActionInterface {
+public class Action extends EventedItem<ActionInterface> implements ActionInterface {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -46,4 +46,8 @@ public abstract class Action extends EventedItem<ActionInterface> implements Act
 	public boolean isActive() {
 		return active;
 	}
+
+	public void initResources() {}
+
+	public void setActiveDirection(int direction) {}
 }

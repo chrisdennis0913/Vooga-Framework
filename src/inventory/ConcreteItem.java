@@ -17,6 +17,12 @@ public class ConcreteItem extends Item {
 	private boolean isForSale;
 	private boolean quantifiable;
 
+	public ConcreteItem(RPGame game, JSONItem item) {
+		super(game, item);
+		initResources();
+		cost = 0;
+	}
+	
 	public ConcreteItem(EventedWrapper<Item> wrapper, JSONItem item) {
 		super(wrapper, item);
 		initResources();

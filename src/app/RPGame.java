@@ -20,10 +20,10 @@ public class RPGame extends GameObject {
 
 	private final String gameURL = "rsc/config/game.json";
 
-	private PlayField field = new PlayField();
+	public PlayField field = new PlayField();
 
 	private Player player;
-	private Level level;
+	public Level level;
 	private Inventory myInventory;
 	String lower, upper;
 	boolean pausedForInventory = false;

@@ -41,20 +41,21 @@ public class Level extends AbstractTileBackground implements Evented {
 	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
 	int[][] layer1 = new int[40][25]; // the lower tiles
 	int[][] layer2 = new int[40][25]; // the fringe tiles
+	public GameCharacter[][] layer3  = new GameCharacter[40][25];	// the object/event/npc tiles
 
 	protected RPGame game;
 	protected SystemTimer levelTimer = new SystemTimer();
 	protected long levelStartTime;
 	protected String nextLevelName;
 	protected String startText;
-	protected PlayField field;
+	//protected PlayField field;
 
 	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game,
 			String levelname) {
 		super(0, 0, TILE_WIDTH, TILE_HEIGHT);
 
 		this.game = game;
-		this.field = game.getField();
+		//this.field = game.getField();
 		this.levelname = levelname;
 		this.baseio = bsIO;
 		this.bsloader = bsLoader;
@@ -113,7 +114,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		game.setPlayer(player);
 		group.add(player.getCharacter());
 		
-		field.addGroup(group);
+		game.field.addGroup(group);
 	}
 	
 	private void setNpcs(JsonUtil.JSONLevel level) {
@@ -126,7 +127,7 @@ public class Level extends AbstractTileBackground implements Evented {
 			group.add(npc);
 		}
 		
-		field.addGroup(group);
+		game.field.addGroup(group);
 	}
 
 	private void setTiles(JsonUtil.JSONLevel level) {
@@ -186,12 +187,21 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	public boolean isOccupied(int tileX, int tileY) {
 		try {
-			return (layer2[tileX][tileY] != -1);
+			return (layer2[tileX][tileY] != -1 ||
+					layer3[tileX][tileY] != null);
 		} catch (Exception e) {
 			// out of bounds
 			return true;
 		}
 	}
+	
+	public GameCharacter getLayer3(int tileX, int tileY) {
+		try {
+		    return layer3[tileX][tileY];
+		} catch (Exception e) {
+			// out of bounds
+			return null;
+		} }
 
 	// chipset is only a pack of images
 	class Chipset {

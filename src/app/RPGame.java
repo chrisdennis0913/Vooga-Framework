@@ -8,6 +8,9 @@ import java.util.Comparator;
 
 import level.Level;
 import player.Player;
+import quest.Quest;
+import quest.QuestGiver;
+import quest.QuestJournal;
 import utils.JsonUtil;
 
 import com.golden.gamedev.GameEngine;
@@ -20,11 +23,12 @@ public class RPGame extends GameObject {
 
 	private final String gameURL = "rsc/config/game.json";
 
-	private PlayField field = new PlayField();
+	public PlayField field = new PlayField();
 
 	private Player player;
-	private Level level;
+	public Level level;
 	private Inventory myInventory;
+	private QuestJournal myJournal;
 	String lower, upper;
 	boolean pausedForInventory = false;
 
@@ -69,6 +73,11 @@ public class RPGame extends GameObject {
 
 	public void addItems(Item itm) {
 		myInventory.add(itm);
+	}
+	
+	public void addQuest(Quest qu, QuestGiver qg)
+	{
+		myJournal.addQuest(qu, qg);
 	}
 
 	public PlayField getField() {

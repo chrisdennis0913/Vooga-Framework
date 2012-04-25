@@ -1,6 +1,6 @@
 package quest;
 
-//need QuestJournal, QuestGiver, QuestType, tasks
+//need QuestJournal, QuestGiver, tasks
 //maybe put this in RPGame
 
 public class QuestMaker 

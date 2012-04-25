@@ -85,6 +85,11 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		counters.render(g);
 		actions.render(g);
 	}
+	
+	public Location getLocation()
+	{
+		return new Location((int) this.getX(), (int) this.getY());
+	}
 		
 	
 	public void update(long elapsed) {

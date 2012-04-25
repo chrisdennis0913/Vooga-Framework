@@ -1,15 +1,6 @@
 package quest;
 
-// quest maker
-// quest journal gui
-// think about removing concrete quests- done
-// work on saving and loading
-// how to choose a quest
-// NPC states
 
-// Design Doc: Moderate details about implementation. Mostly about how to use game 
-// simple example and then really complicated version. Talk about flexibility and extendability.
-// Design doc midday Thursday. 
 
 import java.util.ArrayList;
 import java.util.Arrays;

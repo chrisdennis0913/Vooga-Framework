@@ -9,6 +9,7 @@ import java.util.Comparator;
 import level.Level;
 import player.Player;
 import quest.Quest;
+import quest.QuestGiver;
 import quest.QuestJournal;
 import utils.JsonUtil;
 
@@ -74,9 +75,9 @@ public class RPGame extends GameObject {
 		myInventory.add(itm);
 	}
 	
-	public void addQuest(Quest qu)
+	public void addQuest(Quest qu, QuestGiver qg)
 	{
-		myJournal.addQuest(qu);
+		myJournal.addQuest(qu, qg);
 	}
 
 	public PlayField getField() {

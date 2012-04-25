@@ -23,6 +23,7 @@ public class QuestJournal
 	{
 		myQuests.add(qu);
 		qg.addQuest(qu);
+		qu.addObserver(qg);
 	}
 	
 	public void removeQuest(Quest qu)

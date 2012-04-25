@@ -32,5 +32,8 @@
 	},
 	"talking": {
 		"keys": [10]
+	},
+	"grabbing": {
+		"keys": [10]
 	}
 }

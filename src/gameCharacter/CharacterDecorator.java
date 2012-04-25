@@ -10,7 +10,7 @@ import com.golden.gamedev.object.AnimatedSprite;
  * @author Kirill Klimuk
  */
 
-public class CharacterDecorator extends AnimatedSprite implements CharacterInterface{
+public class CharacterDecorator extends AnimatedSprite implements CharacterInterface {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -52,7 +52,6 @@ public class CharacterDecorator extends AnimatedSprite implements CharacterInter
 	    return character;
 	}
 
-	@Override
 	public void setCurrentDirection(int direction) {
 		character.setCurrentDirection(direction);
 	}

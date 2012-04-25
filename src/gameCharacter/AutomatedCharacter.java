@@ -28,6 +28,7 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	
 	public AutomatedCharacter(RPGame game, Location loc, String configURL){
 		super(game, loc, configURL);
+		movAI = new SquareMovementAI(game, this, 500);
 	}
 
 	public void setAlive(boolean alive){

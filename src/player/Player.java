@@ -1,12 +1,10 @@
 package player;
 
-import java.awt.Graphics2D;
-
-import utils.JsonUtil;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
-
+import utils.JsonUtil;
 import actions.Attack;
+import actions.Talk;
 import actions.Walk;
 
 import com.google.gson.Gson;
@@ -41,11 +39,12 @@ public class Player extends CharacterDecorator {
 				new Walking(new Walk(character.getActions(), actions.walking)));
 		character.getActions().add("attacking",
 				new Attacking(new Attack(character.getActions(), actions.attacking)));
+		character.getActions().add("talking",
+				new Talking(new Talk(character.getActions(), actions.talking)));
 	}
 
 	public void update(long elapsed) {
 		super.update(elapsed);
-		
 	}
 	
 }

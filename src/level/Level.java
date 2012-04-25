@@ -13,6 +13,8 @@ import utils.JsonUtil.JSONPlayer;
 import utils.Location;
 import app.RPGame;
 
+import collisions.NPCCollision;
+
 import com.golden.gamedev.engine.BaseIO;
 import com.golden.gamedev.engine.BaseLoader;
 import com.golden.gamedev.engine.timer.SystemTimer;
@@ -49,8 +51,7 @@ public class Level extends AbstractTileBackground implements Evented {
 	protected String startText;
 	protected PlayField field;
 
-	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game,
-			String levelname) {
+	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game, String levelname) {
 		super(0, 0, TILE_WIDTH, TILE_HEIGHT);
 
 		this.game = game;
@@ -66,17 +67,26 @@ public class Level extends AbstractTileBackground implements Evented {
 		Gson gson = new Gson();
 		String json = JsonUtil.getJSON(levelname);
 
-		JsonUtil.JSONLevel level = gson.fromJson(json,
-				JsonUtil.JSONLevel.class);
+		JsonUtil.JSONLevel level = gson
+				.fromJson(json, JsonUtil.JSONLevel.class);
 
 		setPlayer(level);
 		setNpcs(level);
+
+		setCollisions();
+
 		setTiles(level);
 		setSize(layer1.length, layer1[0].length);
 		setChipsets();
 		setLevelTimer();
 	}
-	
+
+	private void setCollisions() {
+		NPCCollision collision = new NPCCollision();
+		field.addCollisionGroup(field.getGroup("player"),
+				field.getGroup("npcs"), collision);
+	}
+
 	private void setChipsets() {
 		chipsetE = new Chipset(bsloader.getImages("rsc/level/ChipSet2.png", 6,
 				24, false));
@@ -94,13 +104,12 @@ public class Level extends AbstractTileBackground implements Evented {
 			chipset[i] = new Chipset(chips);
 		}
 	}
-	
+
 	private void setLevelTimer() {
 		levelTimer.setFPS(100);
 		levelTimer.startTimer();
 		levelStartTime = levelTimer.getTime();
 	}
-	
 
 	private void setPlayer(JsonUtil.JSONLevel level) {
 		JSONPlayer jPlayer = level.player;
@@ -112,20 +121,20 @@ public class Level extends AbstractTileBackground implements Evented {
 
 		game.setPlayer(player);
 		group.add(player.getCharacter());
-		
+
 		field.addGroup(group);
 	}
-	
+
 	private void setNpcs(JsonUtil.JSONLevel level) {
 		JSONNpc[] npcs = level.npcs;
 		SpriteGroup group = new SpriteGroup("npcs");
-		
+
 		for (JSONNpc jsonNpc : npcs) {
 			Location loc = new Location(jsonNpc.location);
 			NPC npc = new NPC(game, loc, jsonNpc.directions);
 			group.add(npc);
 		}
-		
+
 		field.addGroup(group);
 	}
 
@@ -159,7 +168,7 @@ public class Level extends AbstractTileBackground implements Evented {
 	public void render(Graphics2D g) {
 		for (int i = 0; i < layer1.length; i++) {
 			for (int j = 0; j < layer1[0].length; j++) {
-				renderTile(g, i, j, 32*i, 32*j);
+				renderTile(g, i, j, 32 * i, 32 * j);
 			}
 		}
 	}

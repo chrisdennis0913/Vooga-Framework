@@ -12,5 +12,12 @@
 			"location": [200, 200],
 			"directions": "rsc/config/player_directions.json"
 		}
+	],
+	"items": [
+		{
+			"name": "sword",
+			"location": [120, 120],
+			"image": "rsc/items/sword.png"
+		}
 	]
 }

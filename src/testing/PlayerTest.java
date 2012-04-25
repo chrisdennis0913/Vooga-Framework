@@ -12,7 +12,7 @@ import com.golden.gamedev.GameObject;
 public class PlayerTest extends GameEngine {
 	
 	public static final int GAME_MODE = 1;
-	
+	  
 	public void initResources() {
 		nextGameID = GAME_MODE;
 	}

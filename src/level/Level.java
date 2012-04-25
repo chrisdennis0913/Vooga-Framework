@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
 import utils.JsonUtil;
+import utils.JsonUtil.JSONItem;
 import utils.JsonUtil.JSONNpc;
 import utils.JsonUtil.JSONPlayer;
 import utils.Location;
@@ -70,6 +71,7 @@ public class Level extends AbstractTileBackground implements Evented {
 
 		setPlayer(level);
 		setNpcs(level);
+		setItems(level);
 
 		setCollisions();
 
@@ -122,6 +124,18 @@ public class Level extends AbstractTileBackground implements Evented {
 		game.getField().addGroup(group);
 	}
 
+	private void setItems(JsonUtil.JSONLevel level) {
+		JSONItem[] items = level.items;
+		SpriteGroup group = new SpriteGroup("items");
+
+		for (JSONItem item : items) {
+			Location loc = new Location(jsonNpc.location);
+			NPC npc = new NPC(game, loc, jsonNpc.directions);
+			group.add(npc);
+		}
+		game.getField().addGroup(group);
+	}
+	
 	private void setNpcs(JsonUtil.JSONLevel level) {
 		JSONNpc[] npcs = level.npcs;
 		SpriteGroup group = new SpriteGroup("npcs");

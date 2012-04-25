@@ -55,8 +55,15 @@ public class JsonUtil {
 		public String lowerFilename;
 		public JSONPlayer player;
 		public JSONNpc[] npcs;
+		public JSONItem[] items;
 	}
 
+	public class JSONItem implements Jsonable {
+		public String name;
+		public int[] location;
+		public String image;
+	}
+	
 	public class JSONNpc implements Jsonable {
 		public int[] location;
 		public String directions;

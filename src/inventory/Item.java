@@ -1,6 +1,7 @@
 package inventory;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -11,7 +12,6 @@ import utils.Location;
 import app.RPGame;
 
 import com.golden.gamedev.util.ImageUtil;
-
 import evented.EventedItem;
 import evented.EventedWrapper;
 
@@ -29,7 +29,7 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 	private final JSONItem item;
 
 	private String myName;
-	protected String category;
+	protected String category = "";
 	private BufferedImage image;
 	protected int quantity;
 
@@ -55,6 +55,8 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 		quantity = item.quantity;
 		myName = item.name;
 	}
+	
+	public void render(Graphics2D g) {}
 
 	public String getName() {
 		return myName;

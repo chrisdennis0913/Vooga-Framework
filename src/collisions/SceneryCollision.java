@@ -8,7 +8,7 @@ public class SceneryCollision extends BasicCollisionGroup {
 	public void collided(Sprite character, Sprite scenery) {
 		pixelPerfectCollision = true;
 
-		double ySeparation = Math.abs(character.getY() - scenery.getY());
+		double ySeparation = Math.abs(character.getY() - (scenery.getY()));
 		double maxsep = Math.abs(getCollisionShape2(scenery).getHeight()
 				- getCollisionShape1(character).getHeight())/2;
 		

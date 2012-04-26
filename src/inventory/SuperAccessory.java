@@ -67,6 +67,9 @@ public class SuperAccessory extends Item implements Accessory, Weapon, Potion {
         if (myWrapper.getEquipped() != null) myWrapper.getEquipped().unequip();
         myWrapper.setEquipped(this);
         equipped = true;
+        game.getPlayer().getCharacter().getCounters().get(statCategory).boostTotal(statChange);
+        game.getPlayer().getCharacter().getCounters().get(statCategory).decrease(1);
+        game.getPlayer().getCharacter().getCounters().get(statCategory).increase(statChange + 1);
     }
 
 
@@ -75,6 +78,8 @@ public class SuperAccessory extends Item implements Accessory, Weapon, Potion {
         Inventory myWrapper = (Inventory) wrapper;
         myWrapper.removeEquipped(this);
         equipped = false;
+        game.getPlayer().getCharacter().getCounters().get(statCategory).boostTotal(-statChange);
+        game.getPlayer().getCharacter().getCounters().get(statCategory).decrease(statChange);
     }
 
 

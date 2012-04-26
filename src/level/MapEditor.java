@@ -1,21 +1,15 @@
 package level;
 
-
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+
+import app.RPGame;
 
 import com.golden.gamedev.*;
-import com.golden.gamedev.object.*;
-import com.golden.gamedev.object.background.*;
 import com.golden.gamedev.util.*;
+import com.google.gson.JsonObject;
 
 
 /**
@@ -35,12 +29,13 @@ public class MapEditor extends Game {
 	int 	tilenum;
 	int		tilemode;
 	int 	charnum;
-	BufferedImage hero;
-
-
+	BufferedImage player;
+	BufferedImage enemy;
+	RPGame game;
+	
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
-		hero = getImage("rsc/player/playerstart.png", false);
+		player = getImage("rsc/player/playerstart.png", false);
 	}
 
 
@@ -67,8 +62,6 @@ public class MapEditor extends Game {
 		if (keyPressed(KeyEvent.VK_SPACE)) {
 			if (++tilemode > 2) 
 				tilemode = 0;
-			else
-				tilemode += 1;
 
 			// validate current mode tile count
 			if (tilenum > getChipsetLength()) {
@@ -114,6 +107,8 @@ public class MapEditor extends Game {
 					String att2;
 					att2 = JOptionPane.showInputDialog("Attribute2:");
 					//save sprite
+					JsonObject jPlayer;
+					
 					
 				}
 				else
@@ -185,9 +180,9 @@ public class MapEditor extends Game {
 		case 1:
 			return map.chipsetF.image[num];
 			
-		// sprite mode - return chipset array
+		// sprite mode - return chipset
 		case 2:
-			return null;
+			return player;
 		}
 
 		return null;
@@ -213,14 +208,12 @@ public class MapEditor extends Game {
 		if (getChipsetImage(tilenum) != null) {
 			g.drawImage(getChipsetImage(tilenum), 600, 40, null);
 		}
-		else {
-			
-			g.drawImage(hero, getMouseX(), getMouseY(),null);
+		
+		if (tilemode == 1 || tilemode == 0) {
+			g.setColor(Color.BLACK);
+			g.drawRect(600, 40, 32, 32);
 		}
-			
-		g.setColor(Color.BLACK);
-		g.drawRect(600, 40, 32, 32);
-
+		
 		Point tileAt = map.getTileAt(getMouseX(), getMouseY());
 		if (tileAt != null) {
 			g.setColor(Color.WHITE);

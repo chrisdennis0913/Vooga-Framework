@@ -9,7 +9,8 @@
 	},
 	"npcs": [
 		{
-			"location": [400, 200],
+			"location": [200, 200],
+			"name": "NPCTest1",
 			"directions": "rsc/config/player_directions.json"
 		},
 		{

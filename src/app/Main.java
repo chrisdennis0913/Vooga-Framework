@@ -14,7 +14,6 @@ public class Main extends GameEngine {
 	
 	public void initResources() {
 		nextGameID = GAME_MODE;
-//		nextGameID = LEVEL_EDITOR;
 
 	}
 	

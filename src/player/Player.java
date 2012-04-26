@@ -8,7 +8,9 @@ import actions.Action;
 import actions.Attack;
 import actions.Talk;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import counters.Health;
 
@@ -50,8 +52,14 @@ public class Player extends CharacterDecorator implements Jsonable {
 
 	@Override
 	public JsonObject toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		JsonObject json = new JsonObject();
+		JsonArray location = new JsonArray();
+		location.add(new JsonPrimitive(getCharacter().getX()));
+		location.add(new JsonPrimitive(getCharacter().getY()));
+		json.add("directionsURL", new JsonPrimitive("rsc/config/player_directions.json"));
+		json.add("actionsURL", new JsonPrimitive("rsc/config/player_direction.json"));
+		
+		return json;
 	}
 	
 }

@@ -11,7 +11,7 @@ import utils.Location;
 
 import com.golden.gamedev.Game;
 
-import ai.AbstractPathFindingAI;
+import ai.PathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
@@ -55,7 +55,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	}
 	
 	private void initMovementAI(){
-		character.getControllers().add("MovementAI", new AbstractPathFindingAI(game,this.getCharacter()));
+		character.getControllers().add("MovementAI", new PathFindingAI(game,this.getCharacter()));
 	}
 	
 	public void update(long elapsedTime){

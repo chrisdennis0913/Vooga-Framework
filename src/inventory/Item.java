@@ -1,184 +1,154 @@
 package inventory;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.MalformedURLException;
+
+import store.Sellable;
+import utils.JsonUtil.JSONItem;
+import utils.Location;
 import app.RPGame;
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.SpriteGroup;
+
+import com.golden.gamedev.util.ImageUtil;
+
 import evented.EventedItem;
 import evented.EventedWrapper;
 
-public abstract class Item extends EventedItem<Item>
-    implements EquipItemInterface, Potion, Accessory, Weapon {
+/**
+ * Can subclass to create other instance variables such as weight, damage, price
+ * ItemNames should be lowerCase
+ * 
+ * @author chrisdennis0913
+ */
 
-    /**
-     * Can subclass to create other instance variables such as weight, damage, price
-     * ItemNames should be lowerCase
-     * 
-     * @author chrisdennis0913
-     */
-    private static final long serialVersionUID = 6760280693009697161L;
-    protected static RPGame game;
-    protected BufferedImage image;
-    protected Sprite mySprite;
-    protected SpriteGroup myGroup;
-    protected String myName;
-    protected String category;
-    protected int quantity = 1; // make sure this gets instantiated properly
+public abstract class Item extends EventedItem<Item> implements Sellable,
+		EquipItemInterface {
 
-    public Item (EventedWrapper<Item> wrapper) {
-        super(wrapper);
-    }
+	private static final long serialVersionUID = 6760280693009697161L;
+	private final JSONItem item;
 
+	private String myName;
+	private BufferedImage image;
+	protected int quantity;
 
-    // Can subclass to create other instance variables
-    // such as weight
-    protected Item () {
-    }
+	public Item(RPGame game, JSONItem item) {
+		super(game);
+		this.item = item;
+	}
 
+	public Item(EventedWrapper<Item> wrapper, JSONItem item) {
+		super(wrapper);
+		this.item = item;
+	}
 
-    public Item (RPGame game2, String name, String gifName, String categ) {
-        Item.game = game2;
-        this.myName = name;
-        myGroup = new SpriteGroup(myName);
-        this.image = game2.getImage("resources/items/" + gifName + ".gif");
-        category = categ;
-    }
+	public void initResources() {
+		Location loc = new Location(item.location);
 
+		if (getWrapper() != null)
+			image = getWrapper().getCharacter().getGame().getImage(item.image);
+		else
+			try {
+				image = ImageUtil.getImage(
+						new File(item.image).toURI().toURL(), new Color(255));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 
-    public Item (RPGame game2, String name, String gifName) {
-        Item.game = game2;
-        this.myName = name;
-        category = "Item";
-        myGroup = new SpriteGroup(myName);
-        System.out.println(gifName);
-        this.image = game2.getImage("resources/items/" + gifName + ".gif");
-    }
+		setImage(image);
+		setLocation(loc.getX(), loc.getY());
+		quantity = item.quantity;
+		myName = item.name;
+	}
 
+	public String getName() {
+		return myName;
+	}
 
-    public void add (int[] loc, int layer) {
-        mySprite = new Sprite(image, loc[0], loc[1]);
-        mySprite.setLayer(layer);
-        myGroup.add(mySprite);
-    }
+	public String getMessage() {
+		return "Picked up " + myName + ".";
+	}
 
+	public void add(int quant) {
+		quantity += quant;
+	}
 
-//    public void generate () {
-//        game.getField().addGroup(myGroup);
-//        setCollision();
-//    }
-//
-//
-//    public void setCollision () {
-//        ItemCollision collision =
-//            new ItemCollision(game, myName, this, mySprite);
-//        game.getField().addCollisionGroup(game.getPlayer().getGroup(),
-//                                          getGroup(),
-//                                          collision);
-//    }
+	public void remove(int quant) {
+		quantity -= quant;
+		if (quantity <= 0)
+			delete();
+	}
 
-    public SpriteGroup getGroup () {
-        return myGroup;
-    }
+	private void delete() {
+		if (hasWrapper())
+			getWrapper().remove(myName);
+		else {
+			getGame().getLevel().getInventory().remove(myName);
+			setActive(false);
+		}
+	}
+	
+	public void removeAll() {
+		quantity = 0;
+		delete();
+	}
 
+	public int getQuantity() {
+		return quantity;
+	}
 
-    public String getName () {
-        return myName;
-    }
+	public void setQuantity(int quanity) {
+		this.quantity = quanity;
+	}
 
+	/**
+	 * @return string representation of item
+	 */
+	public String toString() {
+		return "[" + getName() + ": " + getQuantity() + "]";
+	}
 
-    public String getMessage () {
-        return "Picked up " + myName + ".";
-    }
+	/**
+	 * Return value that meets criteria of compareTo conventions.
+	 * 
+	 * @param if is the Item to which this is compared Sort by category, then by
+	 *        name, then by price Higher price is greater
+	 * @return appropriate value less than zero, zero, or greater than zero
+	 */
+	public int compareTo(Item it) {
+		if (myName != it.getName())
+			return myName.compareTo(it.getName());
+		return 0;
+	}
 
+	public boolean equals(Object o) {
+		Item it = (Item) o;
 
-    public String getCategory () {
-        return category;
-    }
+		return compareTo(it) == 0;
+	}
 
+	public abstract void removeWhenUsed(int quantity);
 
-    public void add (int quant) {
-        quantity += quant;
-    }
+	public abstract boolean isThisKindOfItem(String toParse);
 
+	public abstract Item parseItem(RPGame game2, String toParse);
 
-    public void remove (int quant) {
-        quantity -= quant;
-        if (quantity <= 0) {
-            wrapper.remove(this.myName);
-        }
-        //needs to tell wrapper if quantity falls below zero
-    }
+	public void changeWrapper(EventedWrapper<Item> wrapper) {
+		this.wrapper = wrapper;
+	}
 
+	public String parseName(String toParse) {
+		String[] parseArray = toParse.split(",");
+		return parseArray[0].trim();
+	}
 
-    public void removeAll () {
-        quantity = 0;
-        wrapper.remove(this.myName);
-    }
+	public String parseGifName(String toParse) {
+		String[] parseArray = toParse.split(",");
+		return parseArray[1].trim();
+	}
 
-
-    public int getQuantity () {
-        return quantity;
-    }
-
-
-    /**
-     * @return string representation of item
-     */
-    public String toString () {
-        StringBuffer result = new StringBuffer();
-        result.append("(");
-        result.append(myName + " ");
-        result.append("is a " + category + ".");
-        result.append(")");
-
-        return result.toString();
-    }
-
-
-    /**
-     * Return value that meets criteria of compareTo conventions.
-     * 
-     * @param if is the Item to which this is compared Sort by category, then by
-     *        name, then by price Higher price is greater
-     * @return appropriate value less than zero, zero, or greater than zero
-     */
-    public int compareTo (Item it) {
-        if (category != it.getCategory()) return category.compareTo(it.getCategory());
-        if (myName != it.getName()) return myName.compareTo(it.getName());
-        return 0;
-    }
-
-
-    public boolean equals (Object o) {
-        Item it = (Item) o;
-
-        return compareTo(it) == 0;
-    }
-    public abstract boolean removeWhenUsed(int quantity);
-
-    public abstract boolean isThisKindOfItem (String toParse);
-
-
-    public abstract Item parseItem (RPGame game2, String toParse);
-    
-    public void changeWrapper(EventedWrapper<Item> wrappr){
-        wrapper = wrappr;
-    }
-
-    public String parseName (String toParse) {
-        String[] parseArray = toParse.split(",");
-        return parseArray[0].trim();
-    }
-
-
-    public String parseGifName (String toParse) {
-        String[] parseArray = toParse.split(",");
-        return parseArray[1].trim();
-    }
-
-
-    public String parseCategory (String toParse) {
-        String[] parseArray = toParse.split(",");
-        return parseArray[2].trim();
-    }
+	public String parseCategory(String toParse) {
+		String[] parseArray = toParse.split(",");
+		return parseArray[2].trim();
+	}
 }

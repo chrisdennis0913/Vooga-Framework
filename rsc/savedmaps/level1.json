@@ -12,5 +12,16 @@
 			"location": [200, 200],
 			"directions": "rsc/config/player_directions.json"
 		}
-	]
+	],
+	"inventory": {
+		"type": "game",
+		"items": [
+		{
+			"name": "sword",
+			"location": [120, 120],
+			"image": "rsc/items/sword.png",
+			"quantity": 1
+		}
+		]
+	}
 }

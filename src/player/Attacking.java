@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
+import com.golden.gamedev.object.Timer;
 import com.golden.gamedev.util.ImageUtil;
 
 import utils.Direction;
@@ -19,7 +20,7 @@ public class Attacking extends ActionDecorator {
 	private static final long serialVersionUID = 1L;
 
 	private KeyHandle keys;
-	private long timer;
+	private Timer timer = new Timer(250);
 
 	public Attacking(Attack attack) {
 		super(attack);
@@ -75,24 +76,21 @@ public class Attacking extends ActionDecorator {
 		if (status != -1) {
 			if (!isActive()) {
 				setActive(true);
+				timer.setActive(true);
 				character.stop();
 				setActiveDirection(character.getCurrentDirection());
 				getWrapper().get("walking").setEnabled(false, true);
 			}
 		}
 		else if (isActive()) {
-			timer += elapsed;
-			if (timer >= 250) {
+			if (timer.action(elapsed)) {
 				getWrapper().get("walking").setEnabled(true, false);
 				setActive(false);
-				reset();
+				timer.refresh();
+				timer.setActive(false);
 			}
 				
 		}
-	}
-	
-	public void reset() {
-		timer = 0;
 	}
 
 	public void render(Graphics2D g) {

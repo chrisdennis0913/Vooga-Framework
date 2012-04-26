@@ -45,7 +45,7 @@ public class JsonUtil {
 		public JSONDirections directions;
 	}
 	
-	public class JSONPlayerTalking implements Jsonable {
+	public class JSONPlayerAction implements Jsonable {
 		public int[] keys;
 	}
 
@@ -55,8 +55,21 @@ public class JsonUtil {
 		public String lowerFilename;
 		public JSONPlayer player;
 		public JSONNpc[] npcs;
+		public JSONInventory inventory;
+	}
+	
+	public class JSONInventory implements Jsonable {
+		public String type;
+		public JSONItem[] items;
 	}
 
+	public class JSONItem implements Jsonable {
+		public String name;
+		public int[] location;
+		public String image;
+		public int quantity;
+	}
+	
 	public class JSONNpc implements Jsonable {
 		public int[] location;
 		public String directions;
@@ -87,6 +100,7 @@ public class JsonUtil {
 	public class JSONPlayerActions implements Jsonable {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
-		public JSONPlayerTalking talking;
+		public JSONPlayerAction talking;
+		public JSONPlayerAction grabbing;
 	}
 }

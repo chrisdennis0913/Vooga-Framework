@@ -1,5 +1,7 @@
 package evented;
 
+import app.RPGame;
+
 import com.golden.gamedev.object.Sprite;
 
 /**
@@ -14,9 +16,20 @@ public abstract class EventedItem<T extends Evented> extends Sprite implements E
 
 
 	protected EventedWrapper<T> wrapper;
+	protected RPGame game;
 	
 	public EventedItem(EventedWrapper<T> eventedWrapper) {
 		this.wrapper = eventedWrapper;
+	}
+	
+	public EventedItem(RPGame game) {
+		this.game = game;
+	}
+	
+	public boolean hasWrapper() {
+		if (getWrapper() == null)
+			return false;
+		return true;
 	}
 	
 	protected EventedItem () {
@@ -25,5 +38,9 @@ public abstract class EventedItem<T extends Evented> extends Sprite implements E
     public EventedWrapper<T> getWrapper() {
 		return wrapper;
 	}
+    
+    public RPGame getGame() {
+    	return game;
+    }
 	
 }

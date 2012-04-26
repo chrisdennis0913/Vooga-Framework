@@ -1,13 +1,11 @@
 package npc;
 import gameCharacter.AutomatedCharacter;
-import utils.JsonUtil;
 import utils.Location;
 import ai.*;
 import app.RPGame;
 
-import com.google.gson.Gson;
-
 import dialogue.AbstractDialogue;
+import dialogue.SimpleDialogue;
 
 public class NPC extends AutomatedCharacter{
 
@@ -24,8 +22,10 @@ public class NPC extends AutomatedCharacter{
 	 */
 	public NPC(RPGame game, Location loc, String configURL) {
 		super(game, loc, configURL);
-		int[][] testArray= new int[][] {{0, 1000}, {3, 700}, {0, 300}, {1, 1000}};
+
+		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
 		this.getControllers().add("ScriptedMovementAI", new ScriptedMovementAI(game, this, testArray));
+		dialogue = new SimpleDialogue("rsc/npc1.txt");
 	}
 	
 	private void constructActions(String json) {
@@ -40,6 +40,10 @@ public class NPC extends AutomatedCharacter{
 	
 	public void setDialogue (AbstractDialogue dialogue){
 		this.dialogue = dialogue;
+	}
+	
+	public String getTalk(){
+		return dialogue.getCurrentLine();
 	}
 
 }

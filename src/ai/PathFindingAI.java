@@ -1,6 +1,5 @@
 package ai;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,15 +12,17 @@ import utils.Location;
 import gameCharacter.GameCharacter;
 import app.RPGame;
 
-public class AbstractPathFindingAI extends AbstractMovementAI{
+public class PathFindingAI extends AbstractMovementAI{
 
 	public static final int TILE_WIDTH = 10;
 	public static final int TILE_HEIGHT = 10;
 	private static final int CALCULATION_INTERVAL = 100;
+	private static final double MINIMUM_DISTANCE = 20;
+	
 	Player player;
 	Timer calcInterval;
 	
-	public AbstractPathFindingAI(RPGame game, GameCharacter character) {
+	public PathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);
 		this.player = game.getPlayer();
 		calcInterval = new Timer(CALCULATION_INTERVAL);
@@ -32,8 +33,7 @@ public class AbstractPathFindingAI extends AbstractMovementAI{
 		Location playerTile = player.getCharacter().getLocation();
 		List<ActionTransition> adjActions = getAdjacentActions(currTile,playerTile);
 				
-		if(adjActions.get(0) != null){
-			System.err.println(adjActions.get(0).direction);
+		if(adjActions.get(0) != null && adjActions.get(0).distToGoal() > MINIMUM_DISTANCE){
 			return adjActions.get(0).direction;
 		}
 		else return -1;
@@ -61,9 +61,15 @@ public class AbstractPathFindingAI extends AbstractMovementAI{
 		if(!calcInterval.action(elapsedTime))
 			return;
 		int nextDirection = nextAction();
-		if(nextDirection >= 0 && nextDirection <= 3){
+
+		if ((!character.isActive() || nextDirection != character.getCurrentDirection())
+				&& nextDirection != -1){
+			setActive(true);
 			character.setActiveDirection(nextDirection);
 			character.setVelocity(0.05);
+		} else if (nextDirection == -1){
+			setActive(false);
+			character.stop();
 		}
 	}
 	
@@ -94,7 +100,6 @@ public class AbstractPathFindingAI extends AbstractMovementAI{
 		private void calculateIntermTile(){
 			intermTile = new Location(startTile.getX()+xdelta[direction]*TILE_WIDTH, 
 					startTile.getY()+ydelta[direction]*TILE_HEIGHT);
-			System.err.println(intermTile.getX() + " " + intermTile.getY());
 		}
 
 		public double distToGoal(){

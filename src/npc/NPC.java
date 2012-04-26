@@ -1,4 +1,6 @@
 package npc;
+import java.util.ArrayList;
+
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import state.AttackingState;
@@ -7,6 +9,8 @@ import state.TalkingState;
 import state.WalkingState;
 import dialogue.AbstractDialogue;
 
+
+import dialogue.AbstractDialogue;
 
 public class NPC extends CharacterDecorator{
 
@@ -18,11 +22,15 @@ public class NPC extends CharacterDecorator{
 	private boolean alive;
 	private boolean canDie;
 	
+
 	private AttackingState atkState;
 	private TalkingState talkState;
 	private WalkingState walkState;
 	
 	private State currentState;
+
+	private static ArrayList<NPCFactory> NPCs = new ArrayList<NPCFactory>();
+
 
 	/**
 	 * constructs a non-player character based on the information at the configuration URL given
@@ -45,6 +53,15 @@ public class NPC extends CharacterDecorator{
 //				new Talking(new Talk(this.getActions(), actions.talking)));
 	}
 	
+	public static NPC createNPC(String npcName, GameCharacter gameChar){
+		NPCs.add(new NPCTest1.NPCTest1Factory());
+		for (NPCFactory npcFactory: NPCs){
+			if (npcFactory.isThisType(npcName))
+				return npcFactory.constructNPC(gameChar);
+		}
+		throw new RuntimeException("Given name of NPC not recognized");
+	}
+	
 	public void setDialogue (AbstractDialogue dialogue){
 		this.dialogue = dialogue;
 	}
@@ -61,6 +78,7 @@ public class NPC extends CharacterDecorator{
 		return alive;
 	}
 	
+	@Override
 	public void update(long elapsed){
 		currentState.update(elapsed);
 	}

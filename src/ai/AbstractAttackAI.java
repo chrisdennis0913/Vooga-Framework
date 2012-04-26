@@ -1,5 +1,6 @@
 package ai;
 
+import calculators.DamageCalculator;
 import controllers.AttackController;
 import enemy.Enemy;
 import app.RPGame;
@@ -15,7 +16,7 @@ public abstract class AbstractAttackAI extends AttackController{
 
 	protected RPGame game;
 	protected Enemy character;
-
+	
 	public AbstractAttackAI(RPGame game, Enemy character){
 		super(game, character.getCharacter());
 		this.game = game;

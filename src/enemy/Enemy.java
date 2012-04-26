@@ -11,6 +11,11 @@ import state.State;
 import state.TalkingState;
 import state.WalkingState;
 
+
+import com.golden.gamedev.Game;
+
+import ai.PathFindingAI;
+import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
@@ -40,6 +45,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		//constructActions(json);
 		initAttacks();
 		//initAttackAI();
+		initMovementAI();
 	}
 	
 	private void constructActions(String json) {
@@ -52,13 +58,17 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	}
 	
 	//move to json
-	/*private void initAttackAI(){
-		character.getControllers().add("AttackAI", new SimpleAttackAI(game,this));
-	}*/
+	private void initAttackAI(){
+		setCurrentState(new AttackingState(new SimpleAttackAI(game,this)));
+	}
 	
+
 	public void update(long elapsedTime)
 	{
 		currentState.update(elapsedTime);
+	}
+	private void initMovementAI(){
+		setCurrentState(new WalkingState(new PathFindingAI(game, this.getCharacter())));
 	}
 	
 	public HashMap<String, AbstractAttack> getAttacks() {

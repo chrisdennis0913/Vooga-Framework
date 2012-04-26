@@ -172,8 +172,8 @@ public class Level extends AbstractTileBackground implements Evented {
 
 		for (JSONNpc jsonNpc : npcs) {
 			Location loc = new Location(jsonNpc.location);
-			NPC npc = new NPC(game, loc, jsonNpc.directions);
-			group.add(npc);
+			NPC npc = new NPC(game, new GameCharacter(game, loc, jsonNpc.directions));
+			group.add(npc.getCharacter());
 		}
 		game.getField().addGroup(group);
 	}

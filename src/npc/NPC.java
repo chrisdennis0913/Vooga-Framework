@@ -1,11 +1,12 @@
 package npc;
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import utils.Location;
 import app.RPGame;
 import dialogue.AbstractDialogue;
 import dialogue.AbstractDialogue.DialogueObject;
 
-public class NPC extends GameCharacter{
+public class NPC extends CharacterDecorator{
 
 	/**
 	 * Computer-generated serial ID number
@@ -21,8 +22,8 @@ public class NPC extends GameCharacter{
 	 * @param loc
 	 * @param configURL
 	 */
-	public NPC(RPGame game, Location loc, String configURL) {
-		super(game, loc, configURL);
+	public NPC(RPGame game, GameCharacter character) {
+		super(character);
 	}
 	
 	private void constructActions(String json) {

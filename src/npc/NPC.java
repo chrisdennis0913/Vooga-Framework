@@ -1,17 +1,19 @@
 package npc;
-import gameCharacter.AutomatedCharacter;
+import gameCharacter.GameCharacter;
 import utils.Location;
-import ai.ScriptedMovementAI;
 import app.RPGame;
 import dialogue.AbstractDialogue;
-import dialogue.SimpleDialogue;
+import dialogue.AbstractDialogue.DialogueObject;
 
-public class NPC extends AutomatedCharacter{
+public class NPC extends GameCharacter{
 
 	/**
 	 * Computer-generated serial ID number
 	 */
 	private static final long serialVersionUID = -5360689062786017503L;
+	protected AbstractDialogue dialogue;
+	private boolean alive;
+	private boolean canDie;
 
 	/**
 	 * constructs a non-player character based on the information at the configuration URL given
@@ -37,8 +39,19 @@ public class NPC extends AutomatedCharacter{
 		this.dialogue = dialogue;
 	}
 	
-	public String getTalk(){
+	public String getTalk(DialogueObject choice){
 		return dialogue.getCurrentLine();
+	}
+	public void setAlive(boolean alive){
+		this.alive = alive;
+	}
+	
+	public boolean isAlive(){
+		return alive;
+	}
+	
+	public void update(long elapsed){
+		super.update(elapsed);
 	}
 
 }

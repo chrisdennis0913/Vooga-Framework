@@ -24,8 +24,9 @@ import gameCharacter.GameCharacter;
  */
 public class ItemStore extends EventedWrapper<Item>{
 	
-	public ItemStore(GameCharacter character) {
+	public ItemStore(GameCharacter character, RPGame game) {
 		super(character);
+		this.game = game;
 	}
 
 	private Inventory myInventory;
@@ -33,13 +34,7 @@ public class ItemStore extends EventedWrapper<Item>{
 	private RPGame game;
 	
 	public void update(long elapsedTime) {
-		System.out.println("ItemStore");
-		if (game.keyPressed(java.awt.event.KeyEvent.VK_S)){
-		    character.getGame().pauseGameForStore();
-        
-		}
-		
-		if (game.keyPressed(KeyEvent.VK_ENTER)) {
+		if (game.keyPressed(KeyEvent.VK_S)) {
 			game.unPauseGameForStore();
 			storeOpen = false;
 		}

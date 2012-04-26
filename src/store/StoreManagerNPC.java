@@ -2,6 +2,8 @@ package store;
 
 import java.awt.Graphics2D;
 
+import state.TalkingState;
+
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
 
@@ -16,8 +18,9 @@ public class StoreManagerNPC extends NPC{
 
 	public StoreManagerNPC(GameCharacter character) {
 		super(character);
-		myStore = new ItemStore(this.getCharacter());
+		myStore = new ItemStore(this.getCharacter(), this.getCharacter().getGame());
 		dialogue = new SimpleDialogue("rsc/store/storeSpeech.txt");
+		this.setCurrentState(new TalkingState());
 	}
 	
 	public void update (long elapsed){
@@ -38,6 +41,10 @@ public class StoreManagerNPC extends NPC{
 //			dialogue.goToNextLine(new SimpleDialogue("").new SimpleDialogueObject());
 //			}
 			return dialogue.getCurrentLine();
+	}
+	
+	public ItemStore getStore(){
+		return myStore;
 	}
 	
 	public static class StoreManager extends NPCFactory{

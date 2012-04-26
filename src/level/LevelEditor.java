@@ -21,19 +21,11 @@ import com.google.gson.Gson;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenuBar;
-import javax.swing.KeyStroke;
-import javax.swing.ImageIcon;
- 
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import level.OptionPaneMultiple;
 
 public class LevelEditor extends Game{
 
@@ -60,6 +52,8 @@ public class LevelEditor extends Game{
 	String lower, upper;
 	boolean pausedForInventory = false;
 	RPGame game;
+	
+	String att1, att2;
 	
 	int 	tilenum;
 	int		tilemode;
@@ -122,7 +116,12 @@ public class LevelEditor extends Game{
 			if (bsInput.isMouseDown(MouseEvent.BUTTON1)) {
 				if(tilemode == 2) {
 					//swing code to take attributes of sprite
-					
+					String att1;
+					att1 = JOptionPane.showInputDialog("Attribute1:");
+					String att2;
+					att2 = JOptionPane.showInputDialog("Attribute2:");
+					System.exit(0);
+					System.out.println(att1 + att2);
 					//save sprite
 					
 				}
@@ -177,6 +176,10 @@ public class LevelEditor extends Game{
 		return 0;
 	}
 
+	public void setAttribute() {
+		
+	}
+	
 	private BufferedImage getChipsetImage(int num) {
 		if (num == -1) {
 			return null;

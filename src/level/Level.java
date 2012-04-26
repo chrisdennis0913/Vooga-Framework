@@ -27,9 +27,7 @@ import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import enemy.Enemy;

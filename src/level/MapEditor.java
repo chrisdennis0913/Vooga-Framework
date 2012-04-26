@@ -1,14 +1,15 @@
 package level;
 
-
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
 
+import app.RPGame;
+
 import com.golden.gamedev.*;
 import com.golden.gamedev.util.*;
+import com.google.gson.JsonObject;
 
 
 /**
@@ -28,12 +29,13 @@ public class MapEditor extends Game {
 	int 	tilenum;
 	int		tilemode;
 	int 	charnum;
-	BufferedImage hero;
-
-
+	BufferedImage player;
+	BufferedImage enemy;
+	RPGame game;
+	
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
-		hero = getImage("rsc/player/playerstart.png", false);
+		player = getImage("rsc/player/playerstart.png", false);
 	}
 
 
@@ -105,6 +107,8 @@ public class MapEditor extends Game {
 					String att2;
 					att2 = JOptionPane.showInputDialog("Attribute2:");
 					//save sprite
+					JsonObject jPlayer;
+					
 					
 				}
 				else
@@ -176,9 +180,9 @@ public class MapEditor extends Game {
 		case 1:
 			return map.chipsetF.image[num];
 			
-		// sprite mode - return chipset array
+		// sprite mode - return chipset
 		case 2:
-			return hero;
+			return player;
 		}
 
 		return null;

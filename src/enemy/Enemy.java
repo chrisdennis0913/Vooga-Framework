@@ -1,15 +1,11 @@
 package enemy;
 
-import gameCharacter.Attackable;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 
 import java.util.HashMap;
 
-import utils.JsonUtil;
-import utils.Location;
-
-import com.golden.gamedev.Game;
+import counters.Health;
 
 import ai.AbstractPathFindingAI;
 import ai.SimpleAttackAI;
@@ -17,79 +13,43 @@ import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
 
-public class Enemy extends CharacterDecorator implements Attackable{
+public class Enemy extends CharacterDecorator {
 
 	private HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
-	//private EnemyCollision collision;
+	@SuppressWarnings("unused")
 	private String configURL;
-	private boolean alive = true;
-	private RPGame game;
-	
-	public Enemy(RPGame game, GameCharacter character, String configURL) {
+
+	public Enemy(GameCharacter character, String configURL) {
 		super(character);
 		this.configURL = configURL;
-		this.game = game;
 		initResources();
 	}
-	
-	public void initResources(){
-		//String json = JsonUtil.getJSON(configURL);
-		//constructActions(json);
-		initAttacks();
-		initAttackAI();
-		initMovementAI();
-	}
-	
-	private void constructActions(String json) {
-		// TODO Auto-generated method stub
+
+	public void initResources() {
+		// TODO: initialize from JSON
+		getCharacter().setDecorator(this);
+		RPGame game = getCharacter().getGame();
+
+		attacks.put("shooting", new ShootingAttack(game, this, "shooting"));
+		getCharacter().getCounters().add("health",
+				new Health(getCharacter().getCounters(), 5));
+		initAI(game);
 	}
 
-	//move to json
-	public void initAttacks() {
-		attacks.put("shooting",new ShootingAttack(game,this,"shooting"));
+	public void initAI(RPGame game) {
+		character.getControllers().add("AttackAI",
+				new SimpleAttackAI(game, this));
+		character.getControllers().add("MovementAI",
+				new AbstractPathFindingAI(game, this.getCharacter()));
 	}
-	
-	//move to json
-	private void initAttackAI(){
-		character.getControllers().add("AttackAI", new SimpleAttackAI(game,this));
-	}
-	
-	private void initMovementAI(){
-		character.getControllers().add("MovementAI", new AbstractPathFindingAI(game,this.getCharacter()));
-	}
-	
-	public void update(long elapsedTime){
+
+	public void update(long elapsedTime) {
 		super.update(elapsedTime);
+		System.out.println(getCharacter().getCounters().get("health"));
 	}
-	
+
 	public HashMap<String, AbstractAttack> getAttacks() {
 		return attacks;
-	}
-/*
-	public void attack(AbstractAttack at, long elapsedTime){
-		throw new RuntimeException("Enemy attack() undefined");
-	}
-*/
-	@Override
-	public int getHealth() {
-		return character.getCounters().get("health").getCount();
-	}
-
-	@Override
-	public void addToHealth(int delta) {
-		character.getCounters().get("health").increase(delta);
-		if(character.getCounters().get("health").isEmpty())
-			alive = false;
-	}
-
-	@Override
-	public void setAlive(boolean alive) {
-		this.alive = alive;
-	}
-
-	@Override
-	public boolean isAlive() {
-		return alive;
 	}
 
 }

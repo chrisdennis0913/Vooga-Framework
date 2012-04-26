@@ -1,21 +1,18 @@
 package player;
 
+import enemy.Enemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.Direction;
 import utils.JsonUtil;
 import utils.KeyHandle;
 import actions.ActionDecorator;
 import actions.Attack;
 
 import com.golden.gamedev.object.Timer;
-import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -33,25 +30,33 @@ public class Attacking extends ActionDecorator {
 	}
 
 	public void initResources() {
-		
+
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
 		JsonObject attacking = getJsonObject();
-		JsonArray jAttackingKeys = attacking.getAsJsonArray("keys");	
+		JsonArray jAttackingKeys = attacking.getAsJsonArray("keys");
 		int[] attackingKeys = JsonUtil.JsonArrayToIntArray(jAttackingKeys);
-		
+
 		if (attackingKeys == null)
 			new RuntimeException("Attack keys undefined");
 
 		keys.add(Attack.ATTACK_BASIC, attackingKeys);
 
-
 		JsonArray attackingAttacks = attacking.getAsJsonArray("attacks");
-		//for (JSONAttack attack : attacking.attacks) {
-		for(int j=0; j<attackingAttacks.size();j++){
-			attacks.add(new StdAttack(new Attack(getWrapper(), attackingAttacks.get(j).getAsJsonObject())));
+		for (int j = 0; j < attackingAttacks.size(); j++) {
+			attacks.add(new StdAttack(new Attack(getWrapper(), attackingAttacks
+					.get(j).getAsJsonObject())));
 		}
-			
+
+	}
+
+	public int getDamage(Enemy enemy) {
+		for (ActionDecorator attack : attacks)
+			if (attack.isEnabled()) {
+				StdAttack attk = (StdAttack) attack;
+				return attk.getDamage(enemy);
+			}
+		return 0;
 	}
 
 	public void setActiveDirection(int direction) {
@@ -59,7 +64,8 @@ public class Attacking extends ActionDecorator {
 			if (attack.isEnabled()) {
 				getWrapper().getCharacter().setCurrentDirection(direction);
 				StdAttack attk = (StdAttack) attack;
-				attk.getAttack().directions.get(direction).changeCharacter(true);
+				attk.getAttack().directions.get(direction)
+						.changeCharacter(true);
 			}
 	}
 

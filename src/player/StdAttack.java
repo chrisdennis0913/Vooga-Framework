@@ -1,24 +1,26 @@
 package player;
 
+import enemy.Enemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 import utils.Direction;
+import actions.ActionDecorator;
+import actions.Attack;
+import calculators.DamageCalculator;
 
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import actions.ActionDecorator;
-import actions.Attack;
 
 public class StdAttack extends ActionDecorator {
 
 	private static final long serialVersionUID = 1L;
 
 	private String type;
+	private DamageCalculator calculator = new DamageCalculator(null, null);
 
 	public StdAttack(Attack attack) {
 		super(attack);
@@ -34,9 +36,8 @@ public class StdAttack extends ActionDecorator {
 		type = json.get("type").getAsString();
 
 		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
-		for(int i=0; i<dirsDirections.size();i++){
+		for (int i=0; i<dirsDirections.size();i++){
 			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
-		//for (JsonUtil.JSONDirection direction : dirs.directions) {
 			BufferedImage image = getWrapper().getCharacter().getGame()
 					.getImage(direction.get("image").getAsString());
 			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
@@ -62,6 +63,10 @@ public class StdAttack extends ActionDecorator {
 		Attack attk = (Attack) action;
 
 		attk.directions = Arrays.asList(tempDirections);
+	}
+	
+	public int getDamage(Enemy enemy) {
+		return calculator.calculate();
 	}
 	
 	public Attack getAttack() {

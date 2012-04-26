@@ -15,7 +15,6 @@ public class AttackVectorCollision extends BasicCollisionGroup{
 		pixelPerfectCollision = true;
 	}
 	
-	@Override
 	public void collided(Sprite arg0, Sprite arg1) {
 		owner.onCollision(arg0,arg1);
 	}

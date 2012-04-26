@@ -26,7 +26,6 @@ public class NPCTest1 extends NPC{
 	 * 
 	 * @return
 	 */
-	@Override
 	public String getTalk(DialogueObject choice){
 		if (!hasTalked){
 			hasTalked = true;

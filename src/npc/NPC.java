@@ -39,9 +39,10 @@ public class NPC extends GameCharacter{
 		this.dialogue = dialogue;
 	}
 	
-	public String getTalk(DialogueObject choice){
+	public String getTalk(){
 		return dialogue.getCurrentLine();
 	}
+	
 	public void setAlive(boolean alive){
 		this.alive = alive;
 	}

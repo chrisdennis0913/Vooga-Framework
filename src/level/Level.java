@@ -205,7 +205,7 @@ public class Level extends AbstractTileBackground implements Evented {
 				int type = Integer.parseInt(upperToken.nextToken());
 				setSceneryLayer(type, loc, scenery);
 				}
-		game.getField().addGroup(scenery);
+			game.getField().addGroup(scenery);
 		}
 	}
 

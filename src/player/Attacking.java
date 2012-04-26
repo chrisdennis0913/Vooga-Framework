@@ -37,7 +37,7 @@ public class Attacking extends ActionDecorator {
 		keys.add(Attack.ATTACK_BASIC, attacking.keys);
 
 		for (JSONAttack attack : attacking.attacks) {
-			attacks.add(new StdAttack(new Attack(wrapper, attack)));
+			attacks.add(new StdAttack(new Attack(getWrapper(), attack)));
 		}
 	}
 

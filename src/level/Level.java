@@ -46,10 +46,12 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	Chipset chipsetE;
 	Chipset chipsetF;
+	Chipset chipsetG;
 	Chipset[] chipset;
 
 	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
 	int[][] layer1 = new int[40][25]; // the lower tiles
+	int[][] layer2 = new int[40][25]; // the upper tiles
 
 	private SystemTimer levelTimer = new SystemTimer();
 	protected long levelStartTime;
@@ -113,6 +115,8 @@ public class Level extends AbstractTileBackground implements Evented {
 		chipsetE = new Chipset(bsloader.getImages("rsc/level/ChipSet2.png", 6,
 				24, false));
 		chipsetF = new Chipset(bsloader.getImages("rsc/level/ChipSet3.png", 6,
+				24));
+		chipsetG = new Chipset(bsloader.getImages("rsc/player/player.png", 6, 
 				24));
 
 		chipset = new Chipset[16];

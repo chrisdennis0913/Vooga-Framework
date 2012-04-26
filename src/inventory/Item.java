@@ -156,9 +156,6 @@ public abstract class Item extends EventedItem<Item>
     }
 
 
-    public void render (Graphics2D g) {}
-
-
     private void delete () {
         if (hasWrapper()) getWrapper().remove(myName);
         else {

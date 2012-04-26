@@ -18,5 +18,6 @@ public class ItemCollision extends BasicCollisionGroup {
 		grabbing.setEnabled(true, false);
 		grabbing.setItem(item);
 	}
+	
 
 }

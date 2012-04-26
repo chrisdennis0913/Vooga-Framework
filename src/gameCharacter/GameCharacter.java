@@ -4,9 +4,13 @@ import inventory.Inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+
 import java.util.List;
 
 import level.Level;
+
+import java.util.List;
+
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -195,6 +199,7 @@ public class GameCharacter extends AnimatedSprite implements
 	}
 
 	public BehaviorModifierContainer getBehaviorModifiers() {
+
 		return behaviorModifiers;
 	}
 	

@@ -67,7 +67,7 @@ public abstract class AbstractAttack {
 	public abstract boolean isAvailable(long elapsedTime);
 	
 	public abstract void performAttack(long elapsedTime);
-		
-	public abstract int calculateDamage(long elapsedTime);
+	
+	public abstract int calculateDamage();
 
 }

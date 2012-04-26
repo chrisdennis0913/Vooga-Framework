@@ -47,7 +47,6 @@ public class Attacking extends ActionDecorator {
 				getWrapper().getCharacter().setCurrentDirection(direction);
 				
 				StdAttack attk = (StdAttack) attack;
-				
 				attk.getAttack().directions.get(direction).changeCharacter(true);
 			}
 	}

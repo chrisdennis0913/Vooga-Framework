@@ -32,6 +32,7 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
+import enemy.Enemy;
 import evented.Evented;
 import gameCharacter.GameCharacter;
 
@@ -49,7 +50,6 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
 	int[][] layer1 = new int[40][25]; // the lower tiles
-	int[][] layer2 = new int[40][25]; // the fringe tiles
 
 	private SystemTimer levelTimer = new SystemTimer();
 	protected long levelStartTime;
@@ -86,6 +86,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		setPlayer(level);
 		setNpcs(level);
 		setItems(level);
+		setEnemies();
 
 		setCollisions();
 	}
@@ -172,6 +173,13 @@ public class Level extends AbstractTileBackground implements Evented {
 		}
 		game.getField().addGroup(group);
 	}
+	
+	private void setEnemies(){
+		SpriteGroup group = new SpriteGroup("enemies");
+		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
+		group.add(enemy.getCharacter());
+		game.getField().addGroup(group);
+	}
 
 	private void setTiles(JsonUtil.JSONLevel level) {
 		String[] lowerTile = FileUtil.fileRead(baseio
@@ -191,9 +199,9 @@ public class Level extends AbstractTileBackground implements Evented {
 				int type = Integer.parseInt(upperToken.nextToken());
 				setSceneryLayer(type, loc, scenery);
 			}
-			
-			//game.getField().addGroup(scenery);
 		}
+		
+		game.getField().addGroup(scenery);
 	}
 
 	private void setSceneryLayer(int type, Location loc, SpriteGroup scenery) {

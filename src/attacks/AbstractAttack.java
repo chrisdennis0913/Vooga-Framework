@@ -24,6 +24,7 @@ public abstract class AbstractAttack {
 		this.game = game;
 		this.attacker = attacker;
 		this.name = name;
+		setTarget(game.getPlayer().getCharacter());
 	}
 	
 	public AbstractAttack (RPGame game, GameCharacter attacker, GameCharacter target, String name){

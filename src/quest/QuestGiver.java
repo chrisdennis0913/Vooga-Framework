@@ -10,6 +10,4 @@ package quest;
 public interface QuestGiver 
 {
 	public void update(Quest qu);
-	
-	public void addQuest(Quest qu);
 }

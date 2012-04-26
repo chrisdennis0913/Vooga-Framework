@@ -19,6 +19,8 @@ import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
+import controllers.Controller;
+
 import counters.Counter;
 import evented.Evented;
 import evented.EventedWrapper;
@@ -46,6 +48,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 
 	private int curDirection = 0;
 	private List<Direction> directions;
+
 	private Velocity velocity = new Velocity(0.07);
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
@@ -54,6 +57,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(this);
+	private EventedWrapper<Controller> controllers = new EventedWrapper<Controller>(this);
 	private	BehaviorModifierContainer behaviorModifiers = new BehaviorModifierContainer();
 
 	public static final int DIR_DOWN = 0;
@@ -81,6 +85,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		super.render(g);
 		counters.render(g);
 		actions.render(g);
+		controllers.render(g);
 	}
 	
 	public Location getLocation()
@@ -94,6 +99,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	
 		counters.update(elapsed);
 		actions.update(elapsed);
+		controllers.update(elapsed);
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
@@ -155,6 +161,10 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	
 	public EventedWrapper<Counter> getCounters() {
 		return counters;
+	}
+	
+	public EventedWrapper<Controller> getControllers() {
+		return controllers;
 	}
 	
 	public boolean isCurrentDirection(int direction) {

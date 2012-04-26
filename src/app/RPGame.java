@@ -18,7 +18,6 @@ import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
 import com.google.gson.Gson;
 
-import enemy.Enemy;
 
 public class RPGame extends GameObject {
 
@@ -58,10 +57,20 @@ public class RPGame extends GameObject {
 
 	public void render(Graphics2D g) {
 		field.render(g);
+	      if (isPausedForInventory()){
+	            player.getCharacter().getInventory().render(g);
+	            return;
+	            }
 	}
 
 	public void update(long elapsed) {
+	    if (isPausedForInventory()){
+	        player.getCharacter().getInventory().update(elapsed);
+	        return;
+	        }
+	    
 		field.update(elapsed);
+		player.update(elapsed);
 	}
 
 	public Player getPlayer() {
@@ -92,6 +101,9 @@ public class RPGame extends GameObject {
 		pausedForInventory = false;
 	}
 	
+	public boolean isPausedForInventory(){
+	    return pausedForInventory;
+	}
 	public void pauseGameForStore() {
 		pausedForStore = true;
 	}

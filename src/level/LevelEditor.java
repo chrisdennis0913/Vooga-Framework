@@ -1,9 +1,12 @@
 package level;
 
+import inventory.Item;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Comparator;
 
 import player.Player;
 import quest.QuestJournal;
@@ -21,21 +24,14 @@ import com.google.gson.Gson;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenuBar;
-import javax.swing.KeyStroke;
-import javax.swing.ImageIcon;
- 
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.JFrame;
 
-public class LevelEditor extends Game{
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import level.OptionPaneMultiple;
+
+public class LevelEditor extends GameObject{
+
 
 
 	/**
@@ -50,6 +46,12 @@ public class LevelEditor extends Game{
 	 * Ctrl + S		: save
 	 */
 
+
+	public LevelEditor(GameEngine parent) {
+		super(parent);
+		// TODO Auto-generated constructor stub
+	}
+	
 	private final String gameURL = "rsc/config/game.json";
 
 	public PlayField field = new PlayField();
@@ -70,11 +72,23 @@ public class LevelEditor extends Game{
 				JsonUtil.JSONGame.class);
 
 		level = new Level(bsLoader, bsIO, game, gameJson.level);
+		
+		field.setComparator(new Comparator<Sprite>() {
+			public int compare(Sprite o1, Sprite o2) {
+				if (o1 instanceof Item)
+					return -1;
+				else if (o2 instanceof Item)
+					return 1;
+				return (int) (o1.getY() - o2.getY());
+			}
+		});
+		field.setBackground(level);
 	}
 
 
 	public void update(long elapsedTime) {
 		level.update(elapsedTime);
+		field.update(elapsedTime);
 
 		// navigate
 		if (keyDown(KeyEvent.VK_LEFT)) {
@@ -122,7 +136,12 @@ public class LevelEditor extends Game{
 			if (bsInput.isMouseDown(MouseEvent.BUTTON1)) {
 				if(tilemode == 2) {
 					//swing code to take attributes of sprite
-					
+					String att1;
+					att1 = JOptionPane.showInputDialog("Attribute1:");
+					String att2;
+					att2 = JOptionPane.showInputDialog("Attribute2:");
+					System.exit(0);
+					System.out.println(att1 + att2);
 					//save sprite
 					
 				}
@@ -177,6 +196,10 @@ public class LevelEditor extends Game{
 		return 0;
 	}
 
+	public void setAttribute() {
+		
+	}
+	
 	private BufferedImage getChipsetImage(int num) {
 		if (num == -1) {
 			return null;
@@ -236,11 +259,4 @@ public class LevelEditor extends Game{
 					32, 32);
 		}
 	}
-
-	public static void main(String[] args) {
-		GameLoader game = new GameLoader();
-		game.setup(new LevelEditor(), new Dimension(640,480), false);
-		game.start();
-	}
-
 }

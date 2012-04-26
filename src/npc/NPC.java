@@ -1,12 +1,15 @@
 package npc;
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import utils.Location;
+import ai.ScriptedMovementAI;
 import app.RPGame;
 import dialogue.AbstractDialogue;
 
 import dialogue.AbstractDialogue.DialogueObject;
+import dialogue.SimpleDialogue;
 
-public class NPC extends GameCharacter{
+public class NPC extends CharacterDecorator{
 
 	/**
 	 * Computer-generated serial ID number
@@ -22,8 +25,9 @@ public class NPC extends GameCharacter{
 	 * @param loc
 	 * @param configURL
 	 */
-	public NPC(RPGame game, Location loc, String configURL) {
-		super(game, loc, configURL);
+	public NPC(GameCharacter character) {
+		super(character);
+		character.setDecorator(this);
 	}
 	
 	private void constructActions(String json) {
@@ -54,6 +58,11 @@ public class NPC extends GameCharacter{
 	
 	public void update(long elapsed){
 		super.update(elapsed);
+	}
+	
+	public NPC setCharacter(GameCharacter character){
+		this.character = character;
+		return this;
 	}
 
 }

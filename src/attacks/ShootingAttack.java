@@ -14,13 +14,15 @@ import attacks.AbstractVectorAttack;
 public class ShootingAttack extends AbstractVectorAttack{
 
 	private Timer timer;
-	private DamageCalculator calculator = new DamageCalculator(null, null);
+	private DamageCalculator calculator;
 	
 	public ShootingAttack(RPGame game, Enemy enemy, String name) {
 		super(game, enemy.getCharacter(), name);
 		timer = new Timer(1000);
 		vectorSpeedX = 0.1;
 		vectorSpeedY = 0.1;
+		calculator = new DamageCalculator(game.getPlayer().getCharacter().getCounters(), 
+				enemy.getCharacter().getCounters());
 	}
 	
 	public void launchVector(double x, double y, double speedX, double speedY) {

@@ -18,7 +18,6 @@ public class NPCTest1 extends NPC{
 
 	public NPCTest1(GameCharacter character) {
 		super(character);
-		hasTalked = false;
 		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
 		this.getCharacter().getControllers().add("ScriptedMovementAI",  new ScriptedMovementAI(this.character.getGame(), this.getCharacter(), testArray));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");

@@ -16,10 +16,10 @@ public class NPCTest1 extends NPC{
 	 */
 	private static final long serialVersionUID = 4483591744499315422L;
 
-	public NPCTest1(RPGame game, GameCharacter character) {
-		super(game, character);
+	public NPCTest1(GameCharacter character) {
+		super(character);
 		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
-		this.getCharacter().getControllers().add("ScriptedMovementAI",  new ScriptedMovementAI(game, this.getCharacter(), testArray));
+		this.getCharacter().getControllers().add("ScriptedMovementAI",  new ScriptedMovementAI(this.character.getGame(), this.getCharacter(), testArray));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 	

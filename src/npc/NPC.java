@@ -26,6 +26,7 @@ public class NPC extends CharacterDecorator{
 	 */
 	public NPC(RPGame game, GameCharacter character) {
 		super(character);
+		character.setDecorator(this);
 	}
 	
 	private void constructActions(String json) {
@@ -56,6 +57,11 @@ public class NPC extends CharacterDecorator{
 	
 	public void update(long elapsed){
 		super.update(elapsed);
+	}
+	
+	public NPC setCharacter(GameCharacter character){
+		this.character = character;
+		return this;
 	}
 
 }

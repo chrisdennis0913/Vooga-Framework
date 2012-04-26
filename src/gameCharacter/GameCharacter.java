@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
+
+import npc.NPC;
 import level.Level;
 
 import utils.Direction;
@@ -45,6 +47,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	private static final long serialVersionUID = 1L;
 
 	private RPGame game;
+	private CharacterDecorator decorator;
 
 	private int curDirection = 0;
 	private List<Direction> directions;
@@ -201,6 +204,10 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	}
 	
 	public void setDecorator(CharacterDecorator decorator){
-		
+		this.decorator = decorator;
+	}
+	
+	public CharacterDecorator getDecorator(){
+		return this.decorator;
 	}
 }

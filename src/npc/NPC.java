@@ -1,4 +1,6 @@
 package npc;
+import java.util.ArrayList;
+
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import utils.Location;
@@ -17,6 +19,8 @@ public class NPC extends CharacterDecorator{
 	protected AbstractDialogue dialogue;
 	private boolean alive;
 	private boolean canDie;
+	
+	private static ArrayList<NPCFactory> NPCs = new ArrayList<NPCFactory>();
 
 	/**
 	 * constructs a non-player character based on the information at the configuration URL given
@@ -37,6 +41,15 @@ public class NPC extends CharacterDecorator{
 //			this.dialogue = new NullDialogue();
 //		this.getActions().add("talking",
 //				new Talking(new Talk(this.getActions(), actions.talking)));
+	}
+	
+	public static NPC createNPC(String npcName, GameCharacter gameChar){
+		NPCs.add(new NPCTest1.NPCTest1Factory());
+		for (NPCFactory npcFactory: NPCs){
+			if (npcFactory.isThisType(npcName))
+				return npcFactory.constructNPC(gameChar);
+		}
+		throw new RuntimeException("Given name of NPC not recognized");
 	}
 	
 	public void setDialogue (AbstractDialogue dialogue){

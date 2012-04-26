@@ -37,5 +37,21 @@ public class NPCTest1 extends NPC{
 		}
 		return dialogue.getCurrentLine();
 	}
+	
+	public static class NPCTest1Factory extends NPCFactory{
+		
+		public NPCTest1Factory(){};
+
+		@Override
+		public boolean isThisType(String npcName) {
+			return npcName.equals("NPCTest1");
+		}
+
+		@Override
+		public NPC constructNPC(GameCharacter gameChar) {
+			return new NPCTest1(gameChar);
+		}
+		
+	}
 
 }

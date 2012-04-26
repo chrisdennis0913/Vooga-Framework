@@ -6,6 +6,8 @@ import ai.ScriptedMovementAI;
 import app.RPGame;
 
 public class NPCTest1 extends NPC{
+	
+	private boolean hasTalked;
 
 	/**
 	 * Computer-generated serial ID number 
@@ -17,6 +19,16 @@ public class NPCTest1 extends NPC{
 		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
 		movAI = new ScriptedMovementAI(game, this, testArray);
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
+	}
+	
+	public String getTalk(){
+		if (!hasTalked){
+			hasTalked = true;
+		}
+		else{
+			dialogue.goToNextLine(new SimpleDialogue("").new SimpleDialogueObject());
+		}
+		return dialogue.getCurrentLine();
 	}
 
 }

@@ -8,6 +8,14 @@ import enemy.Enemy;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
+/**
+ * Attack chooser that uses a decision table to determine
+ * the best attack to use in a given situation. It calculates
+ * a score for each attack and chooses the one with the
+ * largest score.
+ * @author jameshong
+ *
+ */
 public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 
 	DecisionTable dTable = new DecisionTable();

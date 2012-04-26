@@ -6,6 +6,13 @@ import java.util.Set;
 
 import attacks.AbstractAttack;
 
+/**
+ * Decision table wrapper.
+ * Attack names are mapped to the heuristics that are relevant to it.
+ * Heuristics associated with an attack are mapped to weights.
+ * @author jameshong
+ *
+ */
 public class DecisionTable {
 
 	private HashMap<String,HashMap<AbstractGameHeuristic,Double>> table = new HashMap<String,HashMap<AbstractGameHeuristic,Double>>();

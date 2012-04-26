@@ -14,12 +14,18 @@ import state.WalkingState;
 
 import com.golden.gamedev.Game;
 
-import ai.PathFindingAI;
+import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
 
+/**
+ * GameCharacter decorated with attacks and actions.
+ * Can use pluggable AI algorithms to behave automatically.
+ * @author jameshong
+ *
+ */
 public class Enemy extends CharacterDecorator implements Attackable{
 
 	private HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
@@ -68,7 +74,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		currentState.update(elapsedTime);
 	}
 	private void initMovementAI(){
-		setCurrentState(new WalkingState(new PathFindingAI(game, this.getCharacter())));
+		setCurrentState(new WalkingState(new GreedyPathFindingAI(game, this.getCharacter())));
 	}
 	
 	public HashMap<String, AbstractAttack> getAttacks() {

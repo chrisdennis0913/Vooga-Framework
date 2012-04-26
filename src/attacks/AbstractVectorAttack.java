@@ -8,7 +8,12 @@ import com.golden.gamedev.object.SpriteGroup;
 
 import app.RPGame;
 
-
+/**
+ * Attack that uses vectors to convey the action.
+ * For example: shooting projectiles or laser beams
+ * @author jameshong
+ *
+ */
 public abstract class AbstractVectorAttack extends AbstractAttack {
 	
 	private SpriteGroup vectors;

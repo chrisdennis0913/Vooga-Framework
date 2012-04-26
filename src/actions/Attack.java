@@ -3,6 +3,8 @@ package actions;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import utils.Direction;
 import utils.Jsonable;
 import calculators.DamageCalculator;
@@ -17,7 +19,7 @@ public class Attack extends Action {
 	
 	public static final int ATTACK_BASIC = 4;
 
-	public Attack(EventedWrapper<ActionInterface> wrapper, Jsonable json) {
+	public Attack(EventedWrapper<ActionInterface> wrapper, JsonObject json) {
 		super(wrapper, json);
 		initResources();
 	}

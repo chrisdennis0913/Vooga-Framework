@@ -1,4 +1,3 @@
-
 package inventory;
 
 import java.awt.Color;
@@ -6,12 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
 import store.Sellable;
-import utils.JsonUtil.JSONItem;
 import utils.Location;
 import app.RPGame;
-import com.golden.gamedev.util.ImageUtil;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
+import com.golden.gamedev.util.ImageUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import evented.EventedItem;
 import evented.EventedWrapper;
 
@@ -21,11 +21,11 @@ public abstract class Item extends EventedItem<Item>
 {
 
     /**
-* Can subclass to create other instance variables such as weight, damage,
-* price ItemNames should be lowerCase
-*
-* @author chrisdennis0913
-*/
+     * Can subclass to create other instance variables such as weight, damage,
+     * price ItemNames should be lowerCase
+     * 
+     * @author chrisdennis0913
+     */
     private static final long serialVersionUID = 6760280693009697161L;
     protected static RPGame game;
     protected BufferedImage image;
@@ -34,30 +34,31 @@ public abstract class Item extends EventedItem<Item>
     protected String myName;
     protected String category;
     protected int quantity = 1; // make sure this gets instantiated properly
-    private final JSONItem item;
-    
+    private final JsonObject item;
+
     // Can subclass to create other instance variables
     // such as weight
-    public Item (RPGame game, JSONItem item) {
+    public Item (RPGame game, JsonObject item) {
         super(game);
         this.item = item;
     }
 
 
-    public Item (EventedWrapper<Item> wrapper, JSONItem item) {
+    public Item (EventedWrapper<Item> wrapper, JsonObject item) {
         super(wrapper);
         this.item = item;
     }
 
 
     public void initResources () {
-        Location loc = new Location(item.location);
+    	JsonArray jLocation = item.getAsJsonArray("location");			
+        Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
 
         if (getWrapper() != null) image =
-            getWrapper().getCharacter().getGame().getImage(item.image);
+            getWrapper().getCharacter().getGame().getImage(item.get("image").getAsString());
         else try {
             image =
-                ImageUtil.getImage(new File(item.image).toURI().toURL(),
+                ImageUtil.getImage(new File(item.get("image").getAsString()).toURI().toURL(),
                                    new Color(255));
         }
         catch (MalformedURLException e) {
@@ -65,8 +66,8 @@ public abstract class Item extends EventedItem<Item>
         }
         setImage(image);
         setLocation(loc.getX(), loc.getY());
-        quantity = item.quantity;
-        myName = item.name;
+        quantity = item.get("quantity").getAsInt();
+        myName = item.get("name").getAsString();
     }
 
 
@@ -99,9 +100,9 @@ public abstract class Item extends EventedItem<Item>
     public String getName () {
         return myName;
     }
-    
 
-    public BufferedImage getImage(){
+
+    public BufferedImage getImage () {
         return image;
     }
 
@@ -141,8 +142,8 @@ public abstract class Item extends EventedItem<Item>
 
 
     /**
-* @return string representation of item
-*/
+     * @return string representation of item
+     */
     public String toString () {
         return "[" + getName() + ": " + getQuantity() + "]";
     }
@@ -153,6 +154,7 @@ public abstract class Item extends EventedItem<Item>
 
         return compareTo(it) == 0;
     }
+
 
     private void delete () {
         if (hasWrapper()) getWrapper().remove(myName);
@@ -169,12 +171,12 @@ public abstract class Item extends EventedItem<Item>
 
 
     /**
-* Return value that meets criteria of compareTo conventions.
-*
-* @param if is the Item to which this is compared Sort by category, then by
-* name, then by price Higher price is greater
-* @return appropriate value less than zero, zero, or greater than zero
-*/
+     * Return value that meets criteria of compareTo conventions.
+     * 
+     * @param if is the Item to which this is compared Sort by category, then by
+     *        name, then by price Higher price is greater
+     * @return appropriate value less than zero, zero, or greater than zero
+     */
     public int compareTo (Item it) {
         if (myName != it.getName()) return myName.compareTo(it.getName());
         return 0;
@@ -182,12 +184,6 @@ public abstract class Item extends EventedItem<Item>
 
 
     public abstract void removeWhenUsed (int quantity);
-
-
-    public abstract boolean isThisKindOfItem (String toParse);
-
-
-    public abstract Item parseItem (RPGame game2, String toParse);
 
 
     public String parseName (String toParse) {

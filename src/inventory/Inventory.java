@@ -45,7 +45,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
             equippedItem = null;
         }
         remove(itm.getName());
-        itm.removeAll();
+//        itm.removeAll();
     }
 
 
@@ -89,7 +89,6 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
     public boolean isEquipped(String itmName){
     	if (equippedItem == null)
     		return false;
-    	
     	String name = equippedItem.getName().toLowerCase();
         return name.contains(itmName.toLowerCase());
     }
@@ -120,10 +119,5 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         }
 
         if (character.getGame().isPausedForInventory()) invMenu.update(elapsed);
-    }
-
-
-    public String getMessage () {
-        return "proper Inventory";
     }
 }

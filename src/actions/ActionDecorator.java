@@ -2,7 +2,8 @@ package actions;
 
 import java.awt.Graphics2D;
 
-import utils.Jsonable;
+import com.google.gson.JsonObject;
+
 import evented.Evented;
 import evented.EventedItem;
 import evented.EventedWrapper;
@@ -30,8 +31,8 @@ public abstract class ActionDecorator extends EventedItem<ActionInterface>
 		action.render(g);
 	}
 
-	public Jsonable getJsonable() {
-		return action.getJsonable();
+	public JsonObject getJsonObject() {
+		return action.getJsonObject();
 	}
 
 	public void setEnabled(boolean enabled, boolean modifyActive) {

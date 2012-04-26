@@ -1,12 +1,12 @@
 package npc;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
-import utils.Location;
-import ai.ScriptedMovementAI;
-import app.RPGame;
+import state.AttackingState;
+import state.State;
+import state.TalkingState;
+import state.WalkingState;
 import dialogue.AbstractDialogue;
-import dialogue.AbstractDialogue.DialogueObject;
-import dialogue.SimpleDialogue;
+
 
 public class NPC extends CharacterDecorator{
 
@@ -17,6 +17,12 @@ public class NPC extends CharacterDecorator{
 	protected AbstractDialogue dialogue;
 	private boolean alive;
 	private boolean canDie;
+	
+	private AttackingState atkState;
+	private TalkingState talkState;
+	private WalkingState walkState;
+	
+	private State currentState;
 
 	/**
 	 * constructs a non-player character based on the information at the configuration URL given
@@ -56,12 +62,17 @@ public class NPC extends CharacterDecorator{
 	}
 	
 	public void update(long elapsed){
-		super.update(elapsed);
+		currentState.update(elapsed);
 	}
 	
 	public NPC setCharacter(GameCharacter character){
 		this.character = character;
 		return this;
+	}
+	
+	public void setCurrentState(State s)
+	{
+		currentState = s;
 	}
 
 }

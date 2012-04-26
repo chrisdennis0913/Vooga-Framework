@@ -18,6 +18,11 @@ public class AttackingState implements State
 		myAI.update(elapsedTime);
 	}
 	
+	public AbstractAttackAI getAI()
+	{
+		return myAI;
+	}
+	
 	public void setAI(AbstractAttackAI ai)
 	{
 		myAI = ai;

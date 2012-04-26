@@ -1,7 +1,6 @@
 package gameCharacter;
 
 import inventory.Inventory;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
@@ -15,11 +14,10 @@ import utils.Velocity;
 import actions.ActionInterface;
 import app.RPGame;
 import attacks.BehaviorModifierContainer;
-
 import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.Gson;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import controllers.Controller;
 import counters.Counter;
 import evented.Evented;
@@ -62,6 +60,7 @@ public class GameCharacter extends AnimatedSprite implements
 
 	Level level;
 
+
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(
 			this);
@@ -80,8 +79,8 @@ public class GameCharacter extends AnimatedSprite implements
 	}
 
 	public void initResources() {
-		String json = JsonUtil.getJSON(configURL);
-		constructDirections(json);
+		JsonObject directions = JsonUtil.getJSON(configURL);
+		constructDirections(directions);
 		stop();
 		inventory = new Inventory(this);
 
@@ -100,6 +99,9 @@ public class GameCharacter extends AnimatedSprite implements
 
 	public void update(long elapsed) {
 		behaviorModifiers.setUpAll(elapsed);
+		
+		if (getDecorator() != null)
+			getDecorator().update(elapsed);
 
 		counters.update(elapsed);
 		actions.update(elapsed);
@@ -127,35 +129,34 @@ public class GameCharacter extends AnimatedSprite implements
 		return game;
 	}
 
-	private void constructDirections(String json) {
-		Gson gson = new Gson();
-		JsonUtil.JSONDirections dirs = gson.fromJson(json,
-				JsonUtil.JSONDirections.class);
-
+	
+	private void constructDirections(JsonObject dirs) {
+		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
+		
 		Direction[] tempDirections = new Direction[4];
-
-		for (JsonUtil.JSONDirection direction : dirs.directions) {
-			BufferedImage image = game.getImage(direction.image);
-			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames,
+		
+		for(int i=0; i<dirsDirections.size(); i++){
+			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
+			BufferedImage image = game.getImage(direction.get("image").getAsString());
+			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
 					1);
 
 			int intepretedDirection = 0;
 
-			if (direction.direction.equals("DIR_DOWN"))
+			if (direction.get("direction").getAsString().equals("DIR_DOWN"))
 				intepretedDirection = GameCharacter.DIR_DOWN;
-			else if (direction.direction.equals("DIR_UP"))
+			else if (direction.get("direction").getAsString().equals("DIR_UP"))
 				intepretedDirection = GameCharacter.DIR_UP;
-			else if (direction.direction.equals("DIR_LEFT"))
+			else if (direction.get("direction").getAsString().equals("DIR_LEFT"))
 				intepretedDirection = GameCharacter.DIR_LEFT;
-			else if (direction.direction.equals("DIR_RIGHT"))
+			else if (direction.get("direction").getAsString().equals("DIR_RIGHT"))
 				intepretedDirection = GameCharacter.DIR_RIGHT;
 			else
 				throw new RuntimeException("Invalid direction specified");
 
 			tempDirections[intepretedDirection] = new Direction(this, images,
-					intepretedDirection, dirs.delay);
+					intepretedDirection, dirs.get("delay").getAsInt());
 		}
-
 		directions = Arrays.asList(tempDirections);
 	}
 

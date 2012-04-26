@@ -6,14 +6,11 @@ import gameCharacter.GameCharacter;
 
 import java.util.HashMap;
 
-import utils.JsonUtil;
-import utils.Location;
+import state.AttackingState;
+import state.State;
+import state.TalkingState;
+import state.WalkingState;
 
-import collisions.EnemyCollision;
-
-import com.golden.gamedev.Game;
-
-import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
@@ -25,6 +22,11 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	private String configURL;
 	private boolean alive = true;
 	private RPGame game;
+	private AttackingState atkState;
+	private TalkingState talkState;
+	private WalkingState walkState;
+	
+	private State currentState;
 	
 	public Enemy(RPGame game, GameCharacter character, String configURL) {
 		super(character);
@@ -37,7 +39,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		//String json = JsonUtil.getJSON(configURL);
 		//constructActions(json);
 		initAttacks();
-		initAttackAI();
+		//initAttackAI();
 	}
 	
 	private void constructActions(String json) {
@@ -50,15 +52,13 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	}
 	
 	//move to json
-	private void initAttackAI(){
+	/*private void initAttackAI(){
 		character.getControllers().add("AttackAI", new SimpleAttackAI(game,this));
-	}
+	}*/
 	
-	public void update(long elapsedTime){
-		
-		//stateobject.update(long elapsedTime
-		
-		super.update(elapsedTime);
+	public void update(long elapsedTime)
+	{
+		currentState.update(elapsedTime);
 	}
 	
 	public HashMap<String, AbstractAttack> getAttacks() {
@@ -89,6 +89,11 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	@Override
 	public boolean isAlive() {
 		return alive;
+	}
+	
+	public void setCurrentState(State s)
+	{
+		currentState = s;
 	}
 
 }

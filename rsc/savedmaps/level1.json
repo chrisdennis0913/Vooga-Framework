@@ -25,13 +25,15 @@
 			"name": "sword",
 			"location": [380, 120],
 			"image": "rsc/items/sword.png",
-			"quantity": 1
+			"quantity": 1,
+			"price": 250
 		},
 		{
 			"name": "bow",
 			"location": [280, 120],
 			"image": "rsc/items/bow.png",
-			"quantity": 1
+			"quantity": 1,
+			"price": 450
 		}
 		]
 	}

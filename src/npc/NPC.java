@@ -25,7 +25,7 @@ public class NPC extends AutomatedCharacter{
 	public NPC(RPGame game, Location loc, String configURL) {
 		super(game, loc, configURL);
 		int[][] testArray= new int[][] {{0, 1000}, {3, 700}, {0, 300}, {1, 1000}};
-		movAI = new ScriptedMovementAI(game, this, testArray);
+		this.getControllers().add("ScriptedMovementAI", new ScriptedMovementAI(game, this, testArray));
 	}
 	
 	private void constructActions(String json) {

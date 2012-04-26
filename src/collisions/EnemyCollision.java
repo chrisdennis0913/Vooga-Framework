@@ -16,34 +16,14 @@ public class EnemyCollision extends BasicCollisionGroup {
     private Enemy enemy;
     private Player player;
 
-    public EnemyCollision (RPGame game, Player player, String enemyname) {
+    public EnemyCollision (RPGame game, Player player, Enemy enemy, String enemyname) {
         this.game = game;
         this.player = player;
-        this.enemy = game.getLevel().getEnemy(enemyname);
+        this.enemy = enemy;
     }
 
-
-    public void collided (Sprite character, Sprite scenery) {
-        overlap(character, scenery);
-    
-        
-        if (player.getActions().isAttacking()) {
-            enemy.addToHealth(-1);
-            if (enemy.getHealth() < 1) {
-                enemy.die();
-                game.getField().removeCollisionGroup(this);
-            }
-            jump(character, scenery);
-        }
-        else {
-            jump(character, scenery);
-            enemy.onCollision();
-        }
-    }
-
-    protected void jump (Sprite character, Sprite scenery) {
-        scenery.setX(character.getX() - 100);
-        scenery.setY(character.getY() - 100);
+    public void collided (Sprite character, Sprite enemy) {
+        overlap(character, enemy);
     }
 
     protected void overlap (Sprite character, Sprite scenery) {

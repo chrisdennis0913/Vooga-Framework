@@ -23,6 +23,7 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
+import enemy.Enemy;
 import evented.Evented;
 import gameCharacter.GameCharacter;
 
@@ -75,6 +76,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		setSize(layer1.length, layer1[0].length);
 		setChipsets();
 		setLevelTimer();
+		setEnemies();
 	}
 	
 	private void setChipsets() {
@@ -126,6 +128,13 @@ public class Level extends AbstractTileBackground implements Evented {
 			group.add(npc);
 		}
 		
+		field.addGroup(group);
+	}
+	
+	private void setEnemies(){
+		SpriteGroup group = new SpriteGroup("enemies");
+		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
+		group.add(enemy.getCharacter());
 		field.addGroup(group);
 	}
 

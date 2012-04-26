@@ -4,6 +4,8 @@ package utils;
 import java.io.File;
 
 import com.golden.gamedev.util.FileUtil;
+import com.google.gson.JsonArray;
+
 /**
  * JSON loader utility for different classes.
  * 
@@ -18,10 +20,17 @@ public class JsonUtil {
 		for (String line : jsonPacked) {
 			jsonBuilder.append(line);
 		}
-
 		return jsonBuilder.toString();
 	}
-
+	
+	public static int[] JsonArrayToIntArray(JsonArray json){
+		int[] ret = new int[json.size()];
+		for(int i=0; i<json.size(); i++){
+			ret[i] = json.get(i).getAsInt();
+		}		
+		return ret;		
+	}
+/*
 	public class JSONDirections implements Jsonable {
 		public int frames;
 		public int delay;
@@ -44,8 +53,22 @@ public class JsonUtil {
 		public int[] keys;
 		public JSONDirections directions;
 	}
+
+	public class JSONLevel implements Jsonable {
+		public String nextLevel;
+		public String upperFilename;
+		public String lowerFilename;
+		public JSONPlayer player;
+		// public Enemy[] enemies;
+		public NPC[] npcs;
+	}
+
+	public class JSONGame implements Jsonable {
+		public String level;
+
+	}
 	
-	public class JSONPlayerAction implements Jsonable {
+	public class JSONPlayerTalking implements Jsonable {
 		public int[] keys;
 	}
 
@@ -55,21 +78,8 @@ public class JsonUtil {
 		public String lowerFilename;
 		public JSONPlayer player;
 		public JSONNpc[] npcs;
-		public JSONInventory inventory;
-	}
-	
-	public class JSONInventory implements Jsonable {
-		public String type;
-		public JSONItem[] items;
 	}
 
-	public class JSONItem implements Jsonable {
-		public String name;
-		public int[] location;
-		public String image;
-		public int quantity;
-	}
-	
 	public class JSONNpc implements Jsonable {
 		public int[] location;
 		public String directions;
@@ -97,10 +107,10 @@ public class JsonUtil {
 		public int layer;
 	}
 
-	public class JSONPlayerActions implements Jsonable {
+	public class JSONPlayerActions {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
-		public JSONPlayerAction talking;
-		public JSONPlayerAction grabbing;
+		public JSONPlayerTalking talking;
 	}
+	*/
 }

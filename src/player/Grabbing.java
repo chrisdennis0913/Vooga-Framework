@@ -1,12 +1,14 @@
 package player;
 
-import com.golden.gamedev.object.Timer;
-
 import inventory.Item;
-import utils.JsonUtil.JSONPlayerAction;
+import utils.JsonUtil;
 import utils.KeyHandle;
 import actions.Action;
 import actions.ActionDecorator;
+
+import com.golden.gamedev.object.Timer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class Grabbing extends ActionDecorator {
 
@@ -26,11 +28,13 @@ public class Grabbing extends ActionDecorator {
 	public void initResources() {
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
-		JSONPlayerAction grabbing = (JSONPlayerAction) getJsonable();
-		if (grabbing.keys == null)
+		JsonObject grabbing = getJsonObject();
+		JsonArray jGrabbingKeys = grabbing.getAsJsonArray("keys");
+		int[] grabbingKeys = JsonUtil.JsonArrayToIntArray(jGrabbingKeys);
+		if (grabbingKeys == null)
 			new RuntimeException("Grabbing keys undefined");
 
-		keys.add(GRAB_BASIC, grabbing.keys);
+		keys.add(GRAB_BASIC, grabbingKeys);
 	}
 
 	public Item getItem() {

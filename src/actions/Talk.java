@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 import npc.NPC;
 
 import com.golden.gamedev.object.font.SystemFont;
+import com.google.gson.JsonObject;
 
-import utils.Jsonable;
 import evented.EventedWrapper;
 
 public class Talk extends Action {
@@ -20,7 +20,7 @@ public class Talk extends Action {
 	
 	public static final int TALK_BASIC = 10;
 
-	public Talk(EventedWrapper<ActionInterface> wrapper, Jsonable json) {
+	public Talk(EventedWrapper<ActionInterface> wrapper, JsonObject json) {
 		super(wrapper, json);
 		initResources();
 	}

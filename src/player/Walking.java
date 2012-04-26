@@ -10,6 +10,10 @@ import utils.KeyHandle;
 import actions.Action;
 import actions.ActionDecorator;
 
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 public class Walking extends ActionDecorator {
 
 	private static final long serialVersionUID = 1L;
@@ -22,19 +26,24 @@ public class Walking extends ActionDecorator {
 	}
 
 	public void initResources() {
-		setEnabled(true, false);
-		
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
-		JsonUtil.JSONPlayerWalking walking = (JsonUtil.JSONPlayerWalking) getJsonable();
-		if (walking.down == null || walking.right == null
-				|| walking.left == null || walking.right == null)
+		//JsonUtil.JSONPlayerWalking walking = (JsonUtil.JSONPlayerWalking) getJsonObject();
+		JsonObject walking = getJsonObject();
+		int[] down = JsonUtil.JsonArrayToIntArray(walking.getAsJsonArray("down"));
+		int[] up = JsonUtil.JsonArrayToIntArray(walking.getAsJsonArray("up"));
+		int[] right = JsonUtil.JsonArrayToIntArray(walking.getAsJsonArray("right"));
+		int[] left = JsonUtil.JsonArrayToIntArray(walking.getAsJsonArray("left"));	
+		
+		
+		if (down == null || up == null
+				|| left == null || right == null)
 			new RuntimeException("Directional keys undefined");
 
-		keys.add(GameCharacter.DIR_DOWN, walking.down);
-		keys.add(GameCharacter.DIR_UP, walking.up);
-		keys.add(GameCharacter.DIR_RIGHT, walking.right);
-		keys.add(GameCharacter.DIR_LEFT, walking.left);
+		keys.add(GameCharacter.DIR_DOWN, down);
+		keys.add(GameCharacter.DIR_UP, up);
+		keys.add(GameCharacter.DIR_RIGHT, right);
+		keys.add(GameCharacter.DIR_LEFT, left);
 	}
 
 	public void update(long elapsed) {

@@ -6,14 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-import com.golden.gamedev.object.Timer;
-import com.golden.gamedev.util.ImageUtil;
-
 import utils.Direction;
 import utils.JsonUtil;
 import utils.KeyHandle;
 import actions.ActionDecorator;
 import actions.Attack;
+
+import com.golden.gamedev.object.Timer;
+import com.golden.gamedev.util.ImageUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class Attacking extends ActionDecorator {
 
@@ -28,38 +31,50 @@ public class Attacking extends ActionDecorator {
 	}
 
 	public void initResources() {
+		Gson gson = new Gson();
+		
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
-		JsonUtil.JSONPlayerAttacking attacking = (JsonUtil.JSONPlayerAttacking) getJsonable();
-		if (attacking.keys == null)
+		//JsonUtil.JSONPlayerAttacking attacking = (JsonUtil.JSONPlayerAttacking) getJsonObject();
+		JsonObject attacking = getJsonObject();
+		JsonArray jAttackingKeys = attacking.getAsJsonArray("keys");	
+		int[] attackingKeys = JsonUtil.JsonArrayToIntArray(jAttackingKeys);
+		
+		
+		if (attackingKeys == null)
 			new RuntimeException("Attack keys undefined");
 
-		keys.add(Attack.ATTACK_BASIC, attacking.keys);
+		keys.add(Attack.ATTACK_BASIC, attackingKeys);
 		
-		JsonUtil.JSONDirections dirs = attacking.directions;
+		JsonObject dirs = attacking.getAsJsonObject("directions");
+		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
+		
 		Direction[] tempDirections = new Direction[4];
 
-		for (JsonUtil.JSONDirection direction : dirs.directions) {
+		//for (JsonUtil.JSONDirection direction : dirs.directions) {
+		for(int i=0; i<dirsDirections.size(); i++){
+			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
+			
 			BufferedImage image = getWrapper().getCharacter().getGame()
-					.getImage(direction.image);
-			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames,
-					1);
+					.getImage(direction.get("image").getAsString());
+			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
+					1);			
 
 			int intepretedDirection = 0;
 
-			if (direction.direction.equals("DIR_DOWN"))
+			if (direction.get("direction").getAsString().equals("DIR_DOWN"))
 				intepretedDirection = GameCharacter.DIR_DOWN;
-			else if (direction.direction.equals("DIR_UP"))
+			else if (direction.get("direction").getAsString().equals("DIR_UP"))
 				intepretedDirection = GameCharacter.DIR_UP;
-			else if (direction.direction.equals("DIR_LEFT"))
+			else if (direction.get("direction").getAsString().equals("DIR_LEFT"))
 				intepretedDirection = GameCharacter.DIR_LEFT;
-			else if (direction.direction.equals("DIR_RIGHT"))
+			else if (direction.get("direction").getAsString().equals("DIR_RIGHT"))
 				intepretedDirection = GameCharacter.DIR_RIGHT;
 			else
 				throw new RuntimeException("Invalid direction specified");
 
 			tempDirections[intepretedDirection] = new Direction(getWrapper()
-					.getCharacter(), images, intepretedDirection, dirs.delay);
+					.getCharacter(), images, intepretedDirection, dirs.get("delay").getAsInt());
 		}
 
 		Attack attack = (Attack) action;

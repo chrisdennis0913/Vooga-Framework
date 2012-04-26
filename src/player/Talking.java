@@ -1,12 +1,14 @@
 package player;
 
 import npc.NPC;
-import utils.JsonUtil.JSONPlayerAction;
+import utils.JsonUtil;
 import utils.KeyHandle;
 import actions.ActionDecorator;
 import actions.Talk;
 
 import com.golden.gamedev.object.Timer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class Talking extends ActionDecorator {
 
@@ -25,12 +27,15 @@ public class Talking extends ActionDecorator {
 
 	public void initResources() {
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
-
-		JSONPlayerAction talking = (JSONPlayerAction) getJsonable();
-		if (talking.keys == null)
+		
+		JsonObject talking = getJsonObject();
+		JsonArray jTalkingKeys = talking.getAsJsonArray("keys");
+		int[] talkingKeys = JsonUtil.JsonArrayToIntArray(jTalkingKeys);
+		
+		if (talkingKeys == null)
 			new RuntimeException("Talking keys undefined");
 
-		keys.add(Talk.TALK_BASIC, talking.keys);
+		keys.add(Talk.TALK_BASIC, talkingKeys);
 	}
 	
 	public void setNPC(NPC npc) {

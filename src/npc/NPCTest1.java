@@ -3,9 +3,7 @@ package npc;
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
-import utils.Location;
 import ai.ScriptedMovementAI;
-import app.RPGame;
 
 public class NPCTest1 extends NPC{
 	
@@ -14,6 +12,7 @@ public class NPCTest1 extends NPC{
 	/**
 	 * Computer-generated serial ID number 
 	 */
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 4483591744499315422L;
 
 	public NPCTest1(GameCharacter character) {

@@ -9,6 +9,8 @@ import actions.Talk;
 
 import com.google.gson.Gson;
 
+import counters.Health;
+
 public class Player extends CharacterDecorator {
 	
 	private String configURL;
@@ -22,7 +24,7 @@ public class Player extends CharacterDecorator {
 	public void initResources() {
 		String json = JsonUtil.getJSON(configURL);
 		constructActions(json);
-		// TODO: constructInventory(inventoryJsonURL)
+		// TODO: constructInventory(inventoryJsonURL);
 	}
 
 	private void constructActions(String json) {
@@ -41,6 +43,8 @@ public class Player extends CharacterDecorator {
 				new Talking(new Talk(character.getActions(), actions.talking)));
 		character.getActions().add("grabbing",
 				new Grabbing(new Action(character.getActions(), actions.grabbing)));
+		
+		character.getCounters().add("health", new Health(character.getCounters(), 10));
 	}
 	
 }

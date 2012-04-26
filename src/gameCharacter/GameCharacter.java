@@ -46,7 +46,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 
 	private int curDirection = 0;
 	private List<Direction> directions;
-	private Velocity velocity = new Velocity(0.08);
+	private Velocity velocity = new Velocity(0.1);
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
 
@@ -84,6 +84,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		super.render(g);
 		counters.render(g);
 		actions.render(g);
+		inventory.render(g);
 	}
 	
 	public Location getLocation()
@@ -100,7 +101,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
-		
+		inventory.update(elapsed);
 		behaviorModifiers.unsetUpAll(elapsed);
 	}
 	

@@ -156,6 +156,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		for (JSONItem it : inventory.items) {
 			Item item = new ConcreteItem(game, it);
 			group.add(item);
+			System.out.println("Added concrete item to sprite group");
 		}
 
 		game.getField().addGroup(group);
@@ -192,7 +193,7 @@ public class Level extends AbstractTileBackground implements Evented {
 				setSceneryLayer(type, loc, scenery);
 			}
 			
-			//game.getField().addGroup(scenery);
+			game.getField().addGroup(scenery);
 		}
 	}
 

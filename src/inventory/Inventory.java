@@ -2,8 +2,10 @@ package inventory;
 
 import java.awt.Graphics2D;
 import java.util.HashMap;
+import menu.InventoryMenu;
 import evented.EventedWrapper;
 import gameCharacter.GameCharacter;
+
 
 /**
  * Keeps track of quantity of Items Given to every game character
@@ -13,21 +15,26 @@ import gameCharacter.GameCharacter;
 
 public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
     private Item equippedItem;
+    private InventoryMenu invMenu;
 
 
     public Inventory (GameCharacter character) {
         super(character);
-        equippedItem = null;
+        initResources();
     }
 
 
     public void add (Item itm) {
+        System.out.println(itm.getName());
         if (!contains(itm)) add(itm.getName(), itm);
+        if (equippedItem == null & itm.canBeEquipped()) {
+            itm.equip();
+        }
+        itm.add(1);
     }
 
 
     public void add (Item itm, int quantity) {
-        if (equippedItem == null & itm.canBeEquipped()) equippedItem = itm;
         add(itm);
         itm.add(quantity);
     }
@@ -67,17 +74,29 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
             equippedItem = itm;
         }
     }
-    public boolean isEquipped(Item itm){
+    
+    public void removeEquipped(Item itm){
+        if (equippedItem == itm){
+            equippedItem = null;
+        }
+    }
+
+
+    public boolean isEquipped (Item itm) {
         return equippedItem == itm;
     }
-    public boolean isEquipped(String itmName){
+
+
+    public boolean isEquipped (String itmName) {
         return equippedItem.getName().equalsIgnoreCase(itmName);
     }
+
 
     @Override
     public void initResources () {
         list = new HashMap<String, Item>();
-//        menu = new InventoryMenu(this);
+        invMenu = new InventoryMenu(this);
+        equippedItem = null;
     }
 
 
@@ -86,13 +105,22 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         for (Item itm : this.list.values()) {
             itm.render(g);
         }
-//         inventory menu?
-//        menu.render(g);
+        if (character.getGame().isPausedForInventory()) invMenu.render(g);
     }
 
 
     @Override
     public void update (long elapsed) {
-//        menu.update(elapsed);
+        if (character.getGame().keyPressed(java.awt.event.KeyEvent.VK_O)) {
+            character.getGame().pauseGameForInventory();
+            invMenu.updateInventory(this);
+        }
+
+        if (character.getGame().isPausedForInventory()) invMenu.update(elapsed);
+    }
+
+
+    public String getMessage () {
+        return "proper Inventory";
     }
 }

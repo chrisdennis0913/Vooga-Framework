@@ -1,7 +1,6 @@
 package inventory;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -63,7 +62,6 @@ public abstract class Item extends EventedItem<Item>
         catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
         setImage(image);
         setLocation(loc.getX(), loc.getY());
         quantity = item.quantity;
@@ -99,6 +97,10 @@ public abstract class Item extends EventedItem<Item>
 
     public String getName () {
         return myName;
+    }
+    
+    public BufferedImage getImage(){
+        return image;
     }
 
 
@@ -150,10 +152,6 @@ public abstract class Item extends EventedItem<Item>
         return compareTo(it) == 0;
     }
 
-
-    public void render (Graphics2D g) {}
-
-
     private void delete () {
         if (hasWrapper()) getWrapper().remove(myName);
         else {
@@ -188,11 +186,6 @@ public abstract class Item extends EventedItem<Item>
 
 
     public abstract Item parseItem (RPGame game2, String toParse);
-
-
-    public void changeWrapper (EventedWrapper<Item> wrapper) {
-        this.wrapper = wrapper;
-    }
 
 
     public String parseName (String toParse) {

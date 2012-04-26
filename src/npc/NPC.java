@@ -1,9 +1,8 @@
 package npc;
 import gameCharacter.AutomatedCharacter;
 import utils.Location;
-import ai.*;
+import ai.ScriptedMovementAI;
 import app.RPGame;
-
 import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue;
 

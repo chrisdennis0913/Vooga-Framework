@@ -5,12 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
 import store.Sellable;
-import utils.JsonUtil.JSONItem;
 import utils.Location;
 import app.RPGame;
-import com.golden.gamedev.util.ImageUtil;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
+import com.golden.gamedev.util.ImageUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import evented.EventedItem;
 import evented.EventedWrapper;
 
@@ -33,31 +34,31 @@ public abstract class Item extends EventedItem<Item>
     protected String myName;
     protected String category;
     protected int quantity = 1; // make sure this gets instantiated properly
-    private final JSONItem item;
-
+    private final JsonObject item;
 
     // Can subclass to create other instance variables
     // such as weight
-    public Item (RPGame game, JSONItem item) {
+    public Item (RPGame game, JsonObject item) {
         super(game);
         this.item = item;
     }
 
 
-    public Item (EventedWrapper<Item> wrapper, JSONItem item) {
+    public Item (EventedWrapper<Item> wrapper, JsonObject item) {
         super(wrapper);
         this.item = item;
     }
 
 
     public void initResources () {
-        Location loc = new Location(item.location);
+    	JsonArray jLocation = item.getAsJsonArray("location");			
+        Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
 
         if (getWrapper() != null) image =
-            getWrapper().getCharacter().getGame().getImage(item.image);
+            getWrapper().getCharacter().getGame().getImage(item.get("image").getAsString());
         else try {
             image =
-                ImageUtil.getImage(new File(item.image).toURI().toURL(),
+                ImageUtil.getImage(new File(item.get("image").getAsString()).toURI().toURL(),
                                    new Color(255));
         }
         catch (MalformedURLException e) {
@@ -65,8 +66,8 @@ public abstract class Item extends EventedItem<Item>
         }
         setImage(image);
         setLocation(loc.getX(), loc.getY());
-        quantity = item.quantity;
-        myName = item.name;
+        quantity = item.get("quantity").getAsInt();
+        myName = item.get("name").getAsString();
     }
 
 

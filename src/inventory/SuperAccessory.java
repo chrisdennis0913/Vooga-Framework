@@ -1,7 +1,7 @@
 package inventory;
 
+import com.google.gson.JsonObject;
 import app.RPGame;
-import utils.JsonUtil.JSONItem;
 import evented.EventedWrapper;
 
 
@@ -23,13 +23,13 @@ public class SuperAccessory extends Item implements Accessory, Weapon, Potion {
     private String statCategory;
 
 
-    public SuperAccessory (EventedWrapper<Item> wrapper, JSONItem item) {
+    public SuperAccessory (EventedWrapper<Item> wrapper, JsonObject item) {
         super(wrapper, item);
         initResources();
     }
 
 
-    public SuperAccessory (RPGame game, JSONItem item) {
+    public SuperAccessory (RPGame game, JsonObject item) {
         super(game, item);
         initResources();
     }

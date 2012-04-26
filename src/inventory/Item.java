@@ -1,9 +1,15 @@
 package inventory;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.MalformedURLException;
 import store.Sellable;
+import utils.JsonUtil.JSONItem;
+import utils.Location;
 import app.RPGame;
+import com.golden.gamedev.util.ImageUtil;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import evented.EventedItem;
@@ -28,34 +34,40 @@ public abstract class Item extends EventedItem<Item>
     protected String myName;
     protected String category;
     protected int quantity = 1; // make sure this gets instantiated properly
-
-
-    public Item (EventedWrapper<Item> wrapper) {
-        super(wrapper);
-    }
-
-
+    private final JSONItem item;
+    
     // Can subclass to create other instance variables
     // such as weight
-    protected Item () {}
-
-
-    public Item (RPGame game2, String name, String gifName, String categ) {
-        Item.game = game2;
-        this.myName = name;
-        myGroup = new SpriteGroup(myName);
-        this.image = game2.getImage("resources/items/" + gifName + ".gif");
-        category = categ;
+    public Item (RPGame game, JSONItem item) {
+        super(game);
+        this.item = item;
     }
 
 
-    public Item (RPGame game2, String name, String gifName) {
-        Item.game = game2;
-        this.myName = name;
-        category = "Item";
-        myGroup = new SpriteGroup(myName);
-        System.out.println("Item's GifName is: " + gifName);
-        this.image = game2.getImage("resources/items/" + gifName + ".gif");
+    public Item (EventedWrapper<Item> wrapper, JSONItem item) {
+        super(wrapper);
+        this.item = item;
+    }
+
+
+    public void initResources () {
+        Location loc = new Location(item.location);
+
+        if (getWrapper() != null) image =
+            getWrapper().getCharacter().getGame().getImage(item.image);
+        else try {
+            image =
+                ImageUtil.getImage(new File(item.image).toURI().toURL(),
+                                   new Color(255));
+        }
+        catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        setImage(image);
+        setLocation(loc.getX(), loc.getY());
+        quantity = item.quantity;
+        myName = item.name;
     }
 
 
@@ -108,14 +120,14 @@ public abstract class Item extends EventedItem<Item>
     public void remove (int quant) {
         quantity -= quant;
         if (quantity <= 0) {
-            wrapper.remove(this.myName);
+            delete();
         }
     }
 
 
     public void removeAll () {
         quantity = 0;
-        wrapper.remove(this.myName);
+        delete();
     }
 
 
@@ -128,13 +140,31 @@ public abstract class Item extends EventedItem<Item>
      * @return string representation of item
      */
     public String toString () {
-        StringBuffer result = new StringBuffer();
-        result.append("(");
-        result.append(myName + " ");
-        result.append("is a " + category + ".");
-        result.append(")");
+        return "[" + getName() + ": " + getQuantity() + "]";
+    }
 
-        return result.toString();
+
+    public boolean equals (Object o) {
+        Item it = (Item) o;
+
+        return compareTo(it) == 0;
+    }
+
+
+    public void render (Graphics2D g) {}
+
+
+    private void delete () {
+        if (hasWrapper()) getWrapper().remove(myName);
+        else {
+            getGame().getLevel().getInventory().remove(myName);
+            setActive(false);
+        }
+    }
+
+
+    public void setQuantity (int quanity) {
+        this.quantity = quanity;
     }
 
 
@@ -146,16 +176,8 @@ public abstract class Item extends EventedItem<Item>
      * @return appropriate value less than zero, zero, or greater than zero
      */
     public int compareTo (Item it) {
-        if (category != it.getCategory()) return category.compareTo(it.getCategory());
         if (myName != it.getName()) return myName.compareTo(it.getName());
         return 0;
-    }
-
-
-    public boolean equals (Object o) {
-        Item it = (Item) o;
-
-        return compareTo(it) == 0;
     }
 
 
@@ -168,11 +190,8 @@ public abstract class Item extends EventedItem<Item>
     public abstract Item parseItem (RPGame game2, String toParse);
 
 
-    public void render (Graphics2D g) {}
-
-
-    public void changeWrapper (EventedWrapper<Item> wrappr) {
-        wrapper = wrappr;
+    public void changeWrapper (EventedWrapper<Item> wrapper) {
+        this.wrapper = wrapper;
     }
 
 

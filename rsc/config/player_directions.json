@@ -1,6 +1,6 @@
 {
 	"frames": 7,
-	"delay": 75,
+	"delay": 125,
 	"directions": [
 	{
 		"direction": "DIR_DOWN",

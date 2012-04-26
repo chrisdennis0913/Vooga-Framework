@@ -5,7 +5,6 @@ import java.util.HashMap;
 import evented.EventedWrapper;
 import gameCharacter.GameCharacter;
 
-
 /**
  * Keeps track of quantity of Items Given to every game character
  * 
@@ -13,7 +12,6 @@ import gameCharacter.GameCharacter;
  */
 
 public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
-//  private InventoryMenu menu;
     private Item equippedItem;
 
 
@@ -50,7 +48,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
 
     public boolean contains (Item itm) {
-        return contains(itm.myName);
+        return contains(itm.getName());
     }
 
 

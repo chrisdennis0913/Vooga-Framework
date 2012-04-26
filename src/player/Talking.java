@@ -1,7 +1,7 @@
 package player;
 
 import npc.NPC;
-import utils.JsonUtil.JSONPlayerTalking;
+import utils.JsonUtil.JSONPlayerAction;
 import utils.KeyHandle;
 import actions.ActionDecorator;
 import actions.Talk;
@@ -26,7 +26,7 @@ public class Talking extends ActionDecorator {
 	public void initResources() {
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
-		JSONPlayerTalking talking = (JSONPlayerTalking) getJsonable();
+		JSONPlayerAction talking = (JSONPlayerAction) getJsonable();
 		if (talking.keys == null)
 			new RuntimeException("Talking keys undefined");
 
@@ -54,15 +54,17 @@ public class Talking extends ActionDecorator {
 					talk.setMessage("You very nice lady!");
 					getNPC().stop();
 				}
-			} else if (isActive()) {
-				if (timer.action(elapsed)) {
-					timer.refresh();
-					timer.setActive(false);
-					setActive(false);
-					setEnabled(false, true);
-				}
+				else reactToTimer(elapsed);
+			} else if (isActive()) reactToTimer(elapsed);
+		}
+	}
 
-			}
+	public void reactToTimer(long elapsed) {
+		if (timer.action(elapsed)) {
+			timer.refresh();
+			timer.setActive(false);
+			setActive(false);
+			setEnabled(false, true);
 		}
 	}
 

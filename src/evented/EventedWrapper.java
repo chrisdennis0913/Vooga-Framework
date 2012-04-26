@@ -1,7 +1,7 @@
 package evented;
 
 import gameCharacter.GameCharacter;
-import inventory.Item;
+
 import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,15 +52,6 @@ public class EventedWrapper<T extends Evented>
 
     public boolean contains (String itemName) {
         return list.containsKey(itemName);
-    }
-
-    public boolean containsType (String itemType) { // fix this
-        for (T item : this) {
-            if (((Item) item).getCategory().equalsIgnoreCase(itemType)) {
-                return true;
-            }
-        }
-        return false;
     }
     
     public int getSize(){

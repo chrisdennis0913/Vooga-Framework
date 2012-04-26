@@ -27,7 +27,8 @@ import javax.swing.JOptionPane;
 
 import level.OptionPaneMultiple;
 
-public class LevelEditor extends Game{
+public class LevelEditor extends GameObject{
+
 
 
 	/**
@@ -42,6 +43,12 @@ public class LevelEditor extends Game{
 	 * Ctrl + S		: save
 	 */
 
+
+	public LevelEditor(GameEngine parent) {
+		super(parent);
+		// TODO Auto-generated constructor stub
+	}
+	
 	private final String gameURL = "rsc/config/game.json";
 
 	public PlayField field = new PlayField();
@@ -239,11 +246,4 @@ public class LevelEditor extends Game{
 					32, 32);
 		}
 	}
-
-	public static void main(String[] args) {
-		GameLoader game = new GameLoader();
-		game.setup(new LevelEditor(), new Dimension(640,480), false);
-		game.start();
-	}
-
 }

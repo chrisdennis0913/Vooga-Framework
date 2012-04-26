@@ -64,6 +64,10 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 	public String getName() {
 		return myName;
 	}
+	
+	public BufferedImage getImage() {
+		return image;
+	}
 
 	public String getMessage() {
 		return "Picked up " + myName + ".";

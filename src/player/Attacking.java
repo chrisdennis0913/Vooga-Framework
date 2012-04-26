@@ -15,7 +15,7 @@ import utils.KeyHandle;
 import actions.ActionDecorator;
 import actions.Attack;
 
-public class Attacking extends ActionDecorator {
+public abstract class Attacking extends ActionDecorator {
 
 	private static final long serialVersionUID = 1L;
 

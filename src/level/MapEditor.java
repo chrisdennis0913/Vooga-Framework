@@ -34,10 +34,13 @@ public class MapEditor extends Game {
 	Map 	map;
 	int 	tilenum;
 	int		tilemode;
+	int 	charnum;
+	BufferedImage hero;
 
 
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
+		hero = getImage("rsc/player/playerstart.png", false);
 	}
 
 
@@ -56,12 +59,6 @@ public class MapEditor extends Game {
 		}
 		if (keyDown(KeyEvent.VK_DOWN)) {
 			map.move(0, 0.2*elapsedTime);
-			String att1;
-			att1 = JOptionPane.showInputDialog("Attribute1:");
-			String att2;
-			att2 = JOptionPane.showInputDialog("Attribute2:");
-			System.exit(0);
-			System.out.println(att1 + att2);
 		}
 		
 		
@@ -90,6 +87,18 @@ public class MapEditor extends Game {
 				tilenum = 0;
 			}
 		}
+		
+		// next/prev character
+		if (keyPressed(KeyEvent.VK_N)) {
+			if (++charnum > getChipsetLength()) {
+				charnum = getChipsetLength();
+			}
+		}
+		if (keyPressed(KeyEvent.VK_M)) {
+			if (--charnum < 0) {
+				charnum = 0;
+			}
+		}
 
 
 		Point tileAt = map.getTileAt(getMouseX(), getMouseY());
@@ -97,6 +106,8 @@ public class MapEditor extends Game {
 			// put tile
 			if (bsInput.isMouseDown(MouseEvent.BUTTON1)) {
 				if(tilemode == 2) {
+					// place picture of character
+					
 					//swing code to take attributes of sprite
 					String att1;
 					att1 = JOptionPane.showInputDialog("Attribute1:");
@@ -151,7 +162,7 @@ public class MapEditor extends Game {
 		switch (tilemode) {
 			case 0: return map.chipsetE.image.length + map.chipset.length - 2;	// lower mode
 			case 1: return map.chipsetF.image.length - 1;	// upper mode
-			case 2: return map.chipsetG.image.length -1; // sprite mode
+			case 2: return 1; // sprite mode
 		}
 		return 0;
 	}
@@ -176,7 +187,7 @@ public class MapEditor extends Game {
 			
 		// sprite mode - return chipset array
 		case 2:
-			return map.chipsetG.image[num];
+			return null;
 		}
 
 		return null;
@@ -188,7 +199,7 @@ public class MapEditor extends Game {
 		switch (tilemode) {
 			case 0: return map.layer1;	// lower mode
 			case 1: return map.layer2;	// upper mode
-			case 2: return map.layer2;  // sprite mode
+			case 2: return null;  // sprite mode
 		}
 
 		return null;
@@ -202,6 +213,11 @@ public class MapEditor extends Game {
 		if (getChipsetImage(tilenum) != null) {
 			g.drawImage(getChipsetImage(tilenum), 600, 40, null);
 		}
+		else {
+			
+			g.drawImage(hero, getMouseX(), getMouseY(),null);
+		}
+			
 		g.setColor(Color.BLACK);
 		g.drawRect(600, 40, 32, 32);
 

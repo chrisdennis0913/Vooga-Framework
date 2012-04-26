@@ -1,7 +1,6 @@
 package enemy;
 
 import gameCharacter.Attackable;
-import gameCharacter.AutomatedCharacter;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 

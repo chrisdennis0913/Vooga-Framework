@@ -15,7 +15,9 @@ public class AutomatedCharCollision extends BasicCollisionGroup {
 
 	public void collided(Sprite character, Sprite npcChar) {
 		NPC npc = (NPC) ((GameCharacter) npcChar).getDecorator();
-		setTalking((GameCharacter) character, npc);
+		if (npc.getTalk() != null){
+			setTalking((GameCharacter) character, npc);
+		}
 		overlap(character, npcChar);
 		if (npc.getClass().equals(StoreManagerNPC.class)){
 			store = ((StoreManagerNPC) npc).getStore();

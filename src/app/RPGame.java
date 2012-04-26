@@ -61,10 +61,7 @@ public class RPGame extends GameObject {
 	            player.getCharacter().getInventory().render(g);
 	            return;
 	            }
-	      if (isPausedForStore()){
-	            player.getCharacter().getStore().render(g);
-	            return;
-	            }
+	     
 	}
 
 	public void update(long elapsed) {
@@ -72,10 +69,7 @@ public class RPGame extends GameObject {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
 	        }
-	    if (isPausedForStore()){
-	        player.getCharacter().getStore().update(elapsed);
-	        return;
-	        }
+	    
 	    
 		field.update(elapsed);
 		player.update(elapsed);

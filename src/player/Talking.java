@@ -51,7 +51,7 @@ public class Talking extends ActionDecorator {
 				if (!isActive()) {
 					timer.setActive(true);
 					setActive(true);
-					talk.setMessage("You very nice lady!");
+					talk.setMessage(getNPC().getTalk());
 					getNPC().stop();
 				}
 				else reactToTimer(elapsed);

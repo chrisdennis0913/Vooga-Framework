@@ -43,9 +43,9 @@ public class Level extends AbstractTileBackground implements Evented {
 	private BaseIO baseio;
 	private BaseLoader bsloader;
 
-	private Chipset chipsetE;
-	private Chipset chipsetF;
-	private Chipset[] chipset;
+	Chipset chipsetE;
+	Chipset chipsetF;
+	Chipset[] chipset;
 
 	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
 	int[][] layer1 = new int[40][25]; // the lower tiles
@@ -192,7 +192,7 @@ public class Level extends AbstractTileBackground implements Evented {
 				setSceneryLayer(type, loc, scenery);
 			}
 			
-			game.getField().addGroup(scenery);
+			//game.getField().addGroup(scenery);
 		}
 	}
 

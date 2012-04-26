@@ -30,7 +30,7 @@ public class StdAttack extends ActionDecorator {
 		JSONAttack json = (JSONAttack) getJsonable();
 		JSONDirections dirs = json.directions;
 		Direction[] tempDirections = new Direction[4];
-		
+
 		type = json.type;
 
 		for (JsonUtil.JSONDirection direction : dirs.directions) {
@@ -56,15 +56,13 @@ public class StdAttack extends ActionDecorator {
 					.getCharacter(), images, intepretedDirection, dirs.delay);
 		}
 
-
 		Attack attk = (Attack) action;
 
 		attk.directions = Arrays.asList(tempDirections);
 	}
-	
+
 	public boolean isEnabled() {
-		return getWrapper().getCharacter().getInventory()
-				.isEquipped(type);
+		return getWrapper().getCharacter().getInventory().isEquipped(type);
 	}
 
 }

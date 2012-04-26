@@ -31,7 +31,7 @@ public class NPCTest1 extends NPC{
 			hasTalked = true;
 		}
 		else{
-			dialogue.goToNextLine(new SimpleDialogue("").new SimpleDialogueObject());
+			dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
 		}
 		return dialogue.getCurrentLine();
 	}

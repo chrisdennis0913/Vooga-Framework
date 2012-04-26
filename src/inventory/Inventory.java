@@ -70,6 +70,9 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
     public boolean isEquipped(Item itm){
         return equippedItem == itm;
     }
+    public boolean isEquipped(String itmName){
+        return equippedItem.getName().equalsIgnoreCase(itmName);
+    }
 
     @Override
     public void initResources () {

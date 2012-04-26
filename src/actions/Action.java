@@ -1,6 +1,7 @@
 package actions;
 
-import utils.Jsonable;
+import com.google.gson.JsonObject;
+
 import evented.EventedItem;
 import evented.EventedWrapper;
 
@@ -16,16 +17,16 @@ public class Action extends EventedItem<ActionInterface> implements ActionInterf
 
 	private static final long serialVersionUID = 1L;
 	
-	private Jsonable json;
+	private JsonObject json;
 	private boolean enabled = false;
 	private boolean active = false;
 
-	public Action(EventedWrapper<ActionInterface> wrapper, Jsonable json) {
+	public Action(EventedWrapper<ActionInterface> wrapper, JsonObject json) {
 		super(wrapper);
 		this.json = json;
 	}
 	
-	public Jsonable getJsonable() {
+	public JsonObject getJsonObject() {
 		return json;
 	}
 

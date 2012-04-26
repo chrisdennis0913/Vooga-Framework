@@ -31,4 +31,9 @@ public class Location {
 	public String toString() {
 		return "["+x+","+y+"]";
 	}
+
+	public double distance(Location goalTile) {
+		return Math.sqrt((x-goalTile.getX())*(x-goalTile.getX()) + 
+							(y-goalTile.getY())*(y-goalTile.getY()));
+	}
 }

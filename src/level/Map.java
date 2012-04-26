@@ -20,7 +20,6 @@ public class Map extends AbstractTileBackground {
 
 	Chipset		chipsetE;
 	Chipset		chipsetF;
-	Chipset 	chipsetG;
 	Chipset[] 	chipset;
 
 	int[][] layer1;			// the lower tiles
@@ -48,7 +47,6 @@ public class Map extends AbstractTileBackground {
 
 		chipsetE = new Chipset(bsLoader.getImages("rsc/level/ChipSet2.png", 6, 24, false));
 		chipsetF = new Chipset(bsLoader.getImages("rsc/level/ChipSet3.png", 6, 24));
-		chipsetG = new Chipset(bsLoader.getImages("rsc/player/player.png", 6, 24));
 
 		chipset = new Chipset[16];
 		BufferedImage[] image = bsLoader.getImages("rsc/level/ChipSet1.png", 4, 4, false);

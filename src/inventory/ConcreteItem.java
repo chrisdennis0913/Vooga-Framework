@@ -1,6 +1,7 @@
 package inventory;
 
-import utils.JsonUtil.JSONItem;
+import com.google.gson.JsonObject;
+
 import evented.EventedWrapper;
 import app.RPGame;
 
@@ -20,14 +21,14 @@ public class ConcreteItem extends Item {
     private boolean equipped;
 
 
-    public ConcreteItem (RPGame game, JSONItem item) {
+    public ConcreteItem (RPGame game, JsonObject item) {
         super(game, item);
         initResources();
         cost = 0;
     }
 
 
-    public ConcreteItem (EventedWrapper<Item> wrapper, JSONItem item) {
+    public ConcreteItem (EventedWrapper<Item> wrapper, JsonObject item) {
         super(wrapper, item);
         initResources();
         cost = 0;
@@ -91,7 +92,6 @@ public class ConcreteItem extends Item {
 
     @Override
     public boolean isEquipped () {
-        // TODO Auto-generated method stub
         return equipped;
     }
 
@@ -103,28 +103,9 @@ public class ConcreteItem extends Item {
     }
 
 
-    public void initResources () {
-        super.initResources();
-    }
-
-
     @Override
     public void removeWhenUsed (int quantity) {
         if (quantifiable) remove(quantity);
-    }
-
-
-    @Override
-    public boolean isThisKindOfItem (String toParse) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public Item parseItem (RPGame game2, String toParse) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

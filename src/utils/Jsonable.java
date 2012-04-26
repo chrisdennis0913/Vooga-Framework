@@ -1,3 +1,9 @@
 package utils;
 
-public interface Jsonable {}
+import com.google.gson.JsonObject;
+
+public interface Jsonable {
+	
+	public JsonObject toJson();
+
+}

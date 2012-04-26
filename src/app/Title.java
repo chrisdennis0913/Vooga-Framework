@@ -10,6 +10,7 @@ import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.Timer;
+import utils.*;
 
 
 public class Title extends GameObject {
@@ -55,7 +56,7 @@ public class Title extends GameObject {
 					// load
 					//LoadFileFilter lwrFilter = new LoadFileFilter(new String[]{".lwr"});
 				    //LoadFileFilter uprFilter = new LoadFileFilter(new String[]{".upr"});
-				    LoadFileFilter jsonFilter = new LoadFileFilter(new String[]{".json"});
+				    LoadFileFilter jsonFilter = new LoadFileFilter(new String[]{".json",".lwr",".upr"});
 					
 					//JFileChooser lwrChooser = new JFileChooser();
 					//JFileChooser uprChooser = new JFileChooser();

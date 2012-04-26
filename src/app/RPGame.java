@@ -16,7 +16,7 @@ import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
 public class RPGame extends GameObject {
@@ -26,7 +26,7 @@ public class RPGame extends GameObject {
 	public PlayField field = new PlayField();
 
 	private Player player;
-	public Level level;
+	private Level level;
 	private QuestJournal myJournal;
 	String lower, upper;
 	boolean pausedForInventory = false;
@@ -37,12 +37,10 @@ public class RPGame extends GameObject {
 	}
 
 	public void initResources() {
-		Gson gson = new Gson();
-		JsonUtil.JSONGame gameJson = gson.fromJson(JsonUtil.getJSON(gameURL),
-				JsonUtil.JSONGame.class);
-
-		level = new Level(bsLoader, bsIO, this, gameJson.level);
+		JsonObject gameJson = JsonUtil.getJSON(gameURL);
 		
+		level = new Level(bsLoader, bsIO, this, gameJson.get("level").getAsString());
+
 		field.setComparator(new Comparator<Sprite>() {
 			public int compare(Sprite o1, Sprite o2) {
 				if (o1 instanceof Item)

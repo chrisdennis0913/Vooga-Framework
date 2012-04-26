@@ -6,11 +6,10 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 import utils.Direction;
-import utils.JsonUtil;
-import utils.JsonUtil.JSONAttack;
-import utils.JsonUtil.JSONDirections;
 
 import com.golden.gamedev.util.ImageUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import actions.ActionDecorator;
 import actions.Attack;
@@ -27,44 +26,50 @@ public class StdAttack extends ActionDecorator {
 	}
 
 	public void initResources() {
-		JSONAttack json = (JSONAttack) getJsonable();
-		JSONDirections dirs = json.directions;
+		JsonObject json = getJsonObject();
+		JsonObject dirs = json.getAsJsonObject("directions");
+		
 		Direction[] tempDirections = new Direction[4];
 		
-		type = json.type;
+		type = json.get("type").getAsString();
 
-		for (JsonUtil.JSONDirection direction : dirs.directions) {
+		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
+		for(int i=0; i<dirsDirections.size();i++){
+			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
+		//for (JsonUtil.JSONDirection direction : dirs.directions) {
 			BufferedImage image = getWrapper().getCharacter().getGame()
-					.getImage(direction.image);
-			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames,
+					.getImage(direction.get("image").getAsString());
+			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
 					1);
 
 			int intepretedDirection = 0;
 
-			if (direction.direction.equals("DIR_DOWN"))
+			if (direction.get("direction").getAsString().equals("DIR_DOWN"))
 				intepretedDirection = GameCharacter.DIR_DOWN;
-			else if (direction.direction.equals("DIR_UP"))
+			else if (direction.get("direction").getAsString().equals("DIR_UP"))
 				intepretedDirection = GameCharacter.DIR_UP;
-			else if (direction.direction.equals("DIR_LEFT"))
+			else if (direction.get("direction").getAsString().equals("DIR_LEFT"))
 				intepretedDirection = GameCharacter.DIR_LEFT;
-			else if (direction.direction.equals("DIR_RIGHT"))
+			else if (direction.get("direction").getAsString().equals("DIR_RIGHT"))
 				intepretedDirection = GameCharacter.DIR_RIGHT;
 			else
 				throw new RuntimeException("Invalid direction specified");
 
 			tempDirections[intepretedDirection] = new Direction(getWrapper()
-					.getCharacter(), images, intepretedDirection, dirs.delay);
+					.getCharacter(), images, intepretedDirection, dirs.get("delay").getAsInt());
 		}
-
 
 		Attack attk = (Attack) action;
 
 		attk.directions = Arrays.asList(tempDirections);
 	}
 	
+	public Attack getAttack() {
+		return (Attack) action;
+	}
+
 	public boolean isEnabled() {
-		return getWrapper().getCharacter().getInventory()
-				.isEquipped(type);
+		return getWrapper().getCharacter().getInventory().isEquipped(type);
 	}
 
 }

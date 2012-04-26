@@ -5,16 +5,9 @@ package level;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import com.golden.gamedev.*;
-import com.golden.gamedev.object.*;
-import com.golden.gamedev.object.background.*;
 import com.golden.gamedev.util.*;
 
 

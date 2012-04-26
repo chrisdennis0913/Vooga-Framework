@@ -91,7 +91,6 @@ public class ConcreteItem extends Item {
 
     @Override
     public boolean isEquipped () {
-        // TODO Auto-generated method stub
         return equipped;
     }
 
@@ -103,28 +102,9 @@ public class ConcreteItem extends Item {
     }
 
 
-    public void initResources () {
-        super.initResources();
-    }
-
-
     @Override
     public void removeWhenUsed (int quantity) {
         if (quantifiable) remove(quantity);
-    }
-
-
-    @Override
-    public boolean isThisKindOfItem (String toParse) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public Item parseItem (RPGame game2, String toParse) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

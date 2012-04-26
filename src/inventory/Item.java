@@ -185,12 +185,6 @@ public abstract class Item extends EventedItem<Item>
     public abstract void removeWhenUsed (int quantity);
 
 
-    public abstract boolean isThisKindOfItem (String toParse);
-
-
-    public abstract Item parseItem (RPGame game2, String toParse);
-
-
     public String parseName (String toParse) {
         String[] parseArray = toParse.split(",");
         return parseArray[0].trim();

@@ -4,160 +4,207 @@ import app.RPGame;
 import utils.JsonUtil.JSONItem;
 import evented.EventedWrapper;
 
+
 public class SuperAccessory extends Item implements Accessory, Weapon, Potion {
+
+    /**
+     * Great example for super Item
+     */
+    private static final long serialVersionUID = 1L;
+    private int cost;
+    private boolean isForSale;
+    private boolean equipped;
+    private int healValue;
+    private int statChange;
+    private int damage;
+    private int relX;
+    private int relY;
+    private String weaponType;
+    private String statCategory;
+
 
     public SuperAccessory (EventedWrapper<Item> wrapper, JSONItem item) {
         super(wrapper, item);
-        // TODO Auto-generated constructor stub
+        initResources();
     }
 
-    @Override
-    public void setPrice (int price) {
-        // TODO Auto-generated method stub
+
+    public SuperAccessory (RPGame game, JSONItem item) {
+        super(game, item);
+        initResources();
     }
 
-    @Override
-    public int getPrice () {
-        // TODO Auto-generated method stub
-        return 0;
+
+    public void initResources () {
+        super.initResources();
+        cost = 0;
+        isForSale = true;
+        equipped = false;
+        healValue = 1;
+        statChange = 20;
+        damage = 5;
+        weaponType = "bow";
+        relX = 0;
+        relY = 0;
     }
 
-    @Override
-    public boolean isSellable () {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public void setSellable (boolean sell) {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
     public void use () {
-        // TODO Auto-generated method stub
-        
+        this.getGame()
+            .getPlayer()
+            .getCharacter()
+            .getCounters()
+            .get("health")
+            .increase(statChange);
+        equip();
     }
+
 
     @Override
     public void equip () {
-        // TODO Auto-generated method stub
-        
+        Inventory myWrapper = (Inventory) wrapper;
+        if (myWrapper.getEquipped() != null) myWrapper.getEquipped().unequip();
+        myWrapper.setEquipped(this);
+        equipped = true;
     }
+
 
     @Override
     public void unequip () {
-        // TODO Auto-generated method stub
-        
+        Inventory myWrapper = (Inventory) wrapper;
+        myWrapper.removeEquipped(this);
+        equipped = false;
     }
+
 
     @Override
     public void drop () {
-        // TODO Auto-generated method stub
-        
+        Inventory myInv = (Inventory) getWrapper();
+        myInv.remove(this);
+        getWrapper().getCharacter()
+                    .getGame()
+                    .getLevel()
+                    .getInventory()
+                    .add(this);
+        setLocation(getWrapper().getCharacter().getX(),
+                    getWrapper().getCharacter().getY());
     }
+
 
     @Override
     public boolean isEquipped () {
-        // TODO Auto-generated method stub
-        return false;
+        return equipped;
     }
+
 
     @Override
     public boolean canBeEquipped () {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
+
 
     @Override
     public void setPotionValue (int value) {
-        // TODO Auto-generated method stub
-        
+        healValue = value;
     }
+
 
     @Override
     public int getPotionValue () {
-        // TODO Auto-generated method stub
-        return 0;
+        return healValue;
     }
+
 
     @Override
     public int getDamage () {
-        // TODO Auto-generated method stub
-        return 0;
+        return damage;
     }
+
 
     @Override
     public void setDamage (int damageValue) {
-        // TODO Auto-generated method stub
-        
+        damage = damageValue;
     }
+
 
     @Override
     public String getWeaponType () {
-        // TODO Auto-generated method stub
-        return null;
+        return weaponType;
     }
 
+
     @Override
-    public void setWeaponType (String Type) {
-        // TODO Auto-generated method stub
-        
+    public void setWeaponType (String type) {
+        weaponType = type;
+
     }
+
 
     @Override
     public void setStatCategory (String statistic) {
-        // TODO Auto-generated method stub
-        
+        statCategory = statistic;
+
     }
+
 
     @Override
     public void setStatChange (int value) {
-        // TODO Auto-generated method stub
-        
+        statChange = value;
     }
+
 
     @Override
     public String getStatCategory () {
-        // TODO Auto-generated method stub
-        return null;
+        return statCategory;
     }
+
 
     @Override
     public int getStatChange () {
-        // TODO Auto-generated method stub
-        return 0;
+        return statChange;
     }
 
+
     @Override
-    public void setRelPosition (double x, double y) {
-        // TODO Auto-generated method stub
-        
+    public void setRelPosition (int x, int y) {
+        relX = x;
+        relY = y;
     }
+
 
     @Override
     public int[] getRelPosition () {
-        // TODO Auto-generated method stub
-        return null;
+        int[] relPos = {relX, relY};
+        return relPos;
     }
+
 
     @Override
     public void removeWhenUsed (int quantity) {
-        // TODO Auto-generated method stub
-        
     }
 
-    @Override
-    public boolean isThisKindOfItem (String toParse) {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
     @Override
-    public Item parseItem (RPGame game2, String toParse) {
-        // TODO Auto-generated method stub
-        return null;
+    public void setPrice (int price) {
+        cost = price;
+    }
+
+
+    @Override
+    public int getPrice () {
+        return cost;
+    }
+
+
+    @Override
+    public boolean isSellable () {
+        return isForSale;
+    }
+
+
+    @Override
+    public void setSellable (boolean sell) {
     }
 
 }

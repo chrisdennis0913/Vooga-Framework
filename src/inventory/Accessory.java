@@ -27,7 +27,7 @@ public interface Accessory {
     int getStatChange ();
 
 
-    void setRelPosition (double x, double y);
+    void setRelPosition (int x, int y);
 
 
     int[] getRelPosition ();

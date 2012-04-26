@@ -5,20 +5,28 @@ import enemy.Enemy;
 import app.RPGame;
 import attacks.AbstractAttack;
 
+/**
+ * Smart attack controller that chooses attacks based on an algorithm
+ * 
+ * @author jameshong
+ *
+ */
 public abstract class AbstractAttackAI extends AttackController{
 
 	protected RPGame game;
 	protected Enemy character;
 
 	public AbstractAttackAI(RPGame game, Enemy character){
-		super(game,character);
+		super(game, character.getCharacter());
+		this.game = game;
+		this.character = character;
 	}
 
 	public AbstractAttack chooseAttack(){
 		return pickBestAttack();
 	}
 	
-	public abstract void update(long elapsedTime);
+	public abstract void update(long elapsedTime);	
 	public abstract boolean shouldAttack();
 
 	/**

@@ -1,5 +1,6 @@
 package controllers;
 
+import evented.EventedItem;
 import gameCharacter.GameCharacter;
 import app.RPGame;
 
@@ -10,16 +11,14 @@ import app.RPGame;
  * @author jameshong
  *
  */
-public abstract class MotionController {
+public abstract class MotionController extends EventedItem<Controller> implements Controller{
 
-	RPGame game;
+	protected RPGame game;
 	GameCharacter character;
 	
 	public MotionController(RPGame game, GameCharacter character){
 		this.game = game;
 		this.character = character;
 	}
-	
-	public abstract void update(long elapsedTime);
-	
+		
 }

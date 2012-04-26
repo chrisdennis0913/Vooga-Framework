@@ -18,6 +18,8 @@ import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
 import com.google.gson.Gson;
 
+import enemy.Enemy;
+
 public class RPGame extends GameObject {
 
 	private final String gameURL = "rsc/config/game.json";
@@ -97,5 +99,6 @@ public class RPGame extends GameObject {
 	public void unPauseGameForStore() {
 		pausedForStore = false;
 	}
+
 
 }

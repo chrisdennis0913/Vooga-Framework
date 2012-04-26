@@ -3,24 +3,24 @@ package player;
 import gameCharacter.GameCharacter;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.golden.gamedev.object.Timer;
-import com.golden.gamedev.util.ImageUtil;
-
-import utils.Direction;
 import utils.JsonUtil;
+import utils.JsonUtil.JSONAttack;
 import utils.KeyHandle;
 import actions.ActionDecorator;
 import actions.Attack;
 
-public abstract class Attacking extends ActionDecorator {
+import com.golden.gamedev.object.Timer;
+
+public class Attacking extends ActionDecorator {
 
 	private static final long serialVersionUID = 1L;
 
 	private KeyHandle keys;
 	private Timer timer = new Timer(250);
+	private List<ActionDecorator> attacks = new ArrayList<ActionDecorator>();
 
 	public Attacking(Attack attack) {
 		super(attack);
@@ -36,35 +36,26 @@ public abstract class Attacking extends ActionDecorator {
 
 		keys.add(Attack.ATTACK_BASIC, attacking.keys);
 
-		JsonUtil.JSONDirections dirs = attacking.directions;
-		Direction[] tempDirections = new Direction[4];
-
-		for (JsonUtil.JSONDirection direction : dirs.directions) {
-			BufferedImage image = getWrapper().getCharacter().getGame()
-					.getImage(direction.image);
-			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames,
-					1);
-
-			int intepretedDirection = 0;
-
-			if (direction.direction.equals("DIR_DOWN"))
-				intepretedDirection = GameCharacter.DIR_DOWN;
-			else if (direction.direction.equals("DIR_UP"))
-				intepretedDirection = GameCharacter.DIR_UP;
-			else if (direction.direction.equals("DIR_LEFT"))
-				intepretedDirection = GameCharacter.DIR_LEFT;
-			else if (direction.direction.equals("DIR_RIGHT"))
-				intepretedDirection = GameCharacter.DIR_RIGHT;
-			else
-				throw new RuntimeException("Invalid direction specified");
-
-			tempDirections[intepretedDirection] = new Direction(getWrapper()
-					.getCharacter(), images, intepretedDirection, dirs.delay);
+		for (JSONAttack attack : attacking.attacks) {
+			attacks.add(new StdAttack(new Attack(wrapper, attack)));
 		}
+	}
 
-		Attack attack = (Attack) action;
+	public void setActiveDirection(int direction) {
+		for (ActionDecorator attack : attacks)
+			if (attack.isEnabled()) {
+				getWrapper().getCharacter().setCurrentDirection(direction);
+				
+				Attack attk = (Attack) action;
+				attk.directions.get(direction).changeCharacter(true);
+			}
+	}
 
-		attack.directions = Arrays.asList(tempDirections);
+	public boolean isEnabled() {
+		for (ActionDecorator attack : attacks)
+			if (attack.isEnabled())
+				return true;
+		return false;
 	}
 
 	public void update(long elapsed) {

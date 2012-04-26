@@ -25,7 +25,7 @@ public class NPC extends AutomatedCharacter{
 
 		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
 		this.getControllers().add("ScriptedMovementAI", new ScriptedMovementAI(game, this, testArray));
-		dialogue = new SimpleDialogue("rsc/npc1.txt");
+		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 	
 	private void constructActions(String json) {

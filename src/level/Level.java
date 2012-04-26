@@ -16,12 +16,16 @@ import utils.JsonUtil.JSONNpc;
 import utils.JsonUtil.JSONPlayer;
 import utils.Location;
 import app.RPGame;
+import collisions.BoundaryCollision;
 import collisions.ItemCollision;
-import collisions.NPCCollision;
+import collisions.AutomatedCharCollision;
+import collisions.SceneryCollision;
 
 import com.golden.gamedev.engine.BaseIO;
 import com.golden.gamedev.engine.BaseLoader;
 import com.golden.gamedev.engine.timer.SystemTimer;
+import com.golden.gamedev.object.PlayField;
+import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 import com.golden.gamedev.util.FileUtil;
@@ -74,26 +78,34 @@ public class Level extends AbstractTileBackground implements Evented {
 		JsonUtil.JSONLevel level = gson
 				.fromJson(json, JsonUtil.JSONLevel.class);
 
+		setChipsets();
+		setTiles(level);
+		setSize(layer1.length, layer1[0].length);
+		setLevelTimer();
+
 		setPlayer(level);
 		setNpcs(level);
 		setItems(level);
 
 		setCollisions();
-
-		setTiles(level);
-		setSize(layer1.length, layer1[0].length);
-		setChipsets();
-		setLevelTimer();
 	}
 
 	private void setCollisions() {
+		SceneryCollision sceneCol = new SceneryCollision();
 		ItemCollision itCol = new ItemCollision();
-		NPCCollision collision = new NPCCollision();
-		
-		game.getField().addCollisionGroup(game.getField().getGroup("player"),
-				game.getField().getGroup("npcs"), collision);
-		game.getField().addCollisionGroup(game.getField().getGroup("player"),
-				game.getField().getGroup("items"), itCol);
+		AutomatedCharCollision collision = new AutomatedCharCollision();
+		BoundaryCollision boundCol = new BoundaryCollision(this);
+
+		PlayField field = game.getField();
+		SpriteGroup player = field.getGroup("player");
+
+		game.getField().addCollisionGroup(player, field.getGroup("npcs"),
+				collision);
+		game.getField().addCollisionGroup(player, field.getGroup("items"),
+				itCol);
+		game.getField().addCollisionGroup(player, field.getGroup("scenery"),
+				sceneCol);
+		game.getField().addCollisionGroup(player, null, boundCol);
 	}
 
 	private void setChipsets() {
@@ -166,14 +178,28 @@ public class Level extends AbstractTileBackground implements Evented {
 				.getStream(level.lowerFilename));
 		String[] upperTile = FileUtil.fileRead(baseio
 				.getStream(level.upperFilename));
+
+		SpriteGroup scenery = new SpriteGroup("scenery");
+
 		for (int j = 0; j < layer1[0].length; j++) {
 			StringTokenizer lowerToken = new StringTokenizer(lowerTile[j]);
 			StringTokenizer upperToken = new StringTokenizer(upperTile[j]);
 			for (int i = 0; i < layer1.length; i++) {
 				layer1[i][j] = Integer.parseInt(lowerToken.nextToken());
-				layer2[i][j] = Integer.parseInt(upperToken.nextToken());
+
+				Location loc = new Location(TILE_WIDTH * i, TILE_HEIGHT * j);
+				int type = Integer.parseInt(upperToken.nextToken());
+				setSceneryLayer(type, loc, scenery);
 			}
+			
+			game.getField().addGroup(scenery);
 		}
+	}
+
+	private void setSceneryLayer(int type, Location loc, SpriteGroup scenery) {
+		if (type == -1)
+			return;
+		scenery.add(new Sprite(chipsetF.image[type], loc.getX(), loc.getY()));
 	}
 
 	public void nextLevel(String next) {
@@ -191,13 +217,13 @@ public class Level extends AbstractTileBackground implements Evented {
 	public void render(Graphics2D g) {
 		for (int i = 0; i < layer1.length; i++) {
 			for (int j = 0; j < layer1[0].length; j++) {
-				renderTile(g, i, j, 32 * i, 32 * j);
+				renderTile(g, i, j, TILE_WIDTH * i, TILE_HEIGHT * j);
 			}
 		}
-		
+
 		GameCharacter player = game.getPlayer().getCharacter();
-		setToCenter((int) player.getX(),
-				(int) player.getY(), player.getWidth(), player.getHeight());
+		setToCenter((int) player.getX(), (int) player.getY(),
+				player.getWidth(), player.getHeight());
 
 		super.render(g);
 	}
@@ -212,23 +238,8 @@ public class Level extends AbstractTileBackground implements Evented {
 			BufferedImage image = chipset[tilenum - chipsetE.image.length].image[2];
 			g.drawImage(image, x, y, null);
 		}
-
-		// render layer 2
-		int tilenum2 = layer2[tileX][tileY];
-		if (tilenum2 != -1) {
-			g.drawImage(chipsetF.image[tilenum2], x, y, null);
-		}
 	}
-
-	public boolean isOccupied(int tileX, int tileY) {
-		try {
-			return (layer2[tileX][tileY] != -1);
-		} catch (Exception e) {
-			// out of bounds
-			return true;
-		}
-	}
-
+	
 	// chipset is only a pack of images
 	class Chipset {
 		BufferedImage[] image;

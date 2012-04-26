@@ -24,7 +24,7 @@ public abstract class AbstractVectorAttack extends AbstractAttack {
 	}
 
 	public void initCollisions(){
-		game.getField().addCollisionGroup(vectors, target.getGroup(),
+		game.getField().addCollisionGroup(vectors, game.getField().getGroup("player"),
 				new AttackVectorCollision(this));
 	}
 

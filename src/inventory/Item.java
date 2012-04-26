@@ -1,3 +1,4 @@
+
 package inventory;
 
 import java.awt.Color;
@@ -16,15 +17,15 @@ import evented.EventedWrapper;
 
 
 public abstract class Item extends EventedItem<Item>
-    implements Sellable, EquipItemInterface //Potion, Accessory, Weapon 
+    implements Sellable, EquipItemInterface //Potion, Accessory, Weapon
 {
 
     /**
-     * Can subclass to create other instance variables such as weight, damage,
-     * price ItemNames should be lowerCase
-     * 
-     * @author chrisdennis0913
-     */
+* Can subclass to create other instance variables such as weight, damage,
+* price ItemNames should be lowerCase
+*
+* @author chrisdennis0913
+*/
     private static final long serialVersionUID = 6760280693009697161L;
     protected static RPGame game;
     protected BufferedImage image;
@@ -76,19 +77,19 @@ public abstract class Item extends EventedItem<Item>
     }
 
 
-//    public void generate () {
-//        game.getField().addGroup(myGroup);
-//        setCollision();
-//    }
+// public void generate () {
+// game.getField().addGroup(myGroup);
+// setCollision();
+// }
 //
 //
-//    public void setCollision () {
-//        ItemCollision collision =
-//            new ItemCollision(game, myName, this, mySprite);
-//        game.getField().addCollisionGroup(game.getPlayer().getGroup(),
-//                                          getGroup(),
-//                                          collision);
-//    }
+// public void setCollision () {
+// ItemCollision collision =
+// new ItemCollision(game, myName, this, mySprite);
+// game.getField().addCollisionGroup(game.getPlayer().getGroup(),
+// getGroup(),
+// collision);
+// }
 
     public SpriteGroup getGroup () {
         return myGroup;
@@ -99,6 +100,7 @@ public abstract class Item extends EventedItem<Item>
         return myName;
     }
     
+
     public BufferedImage getImage(){
         return image;
     }
@@ -139,8 +141,8 @@ public abstract class Item extends EventedItem<Item>
 
 
     /**
-     * @return string representation of item
-     */
+* @return string representation of item
+*/
     public String toString () {
         return "[" + getName() + ": " + getQuantity() + "]";
     }
@@ -167,12 +169,12 @@ public abstract class Item extends EventedItem<Item>
 
 
     /**
-     * Return value that meets criteria of compareTo conventions.
-     * 
-     * @param if is the Item to which this is compared Sort by category, then by
-     *        name, then by price Higher price is greater
-     * @return appropriate value less than zero, zero, or greater than zero
-     */
+* Return value that meets criteria of compareTo conventions.
+*
+* @param if is the Item to which this is compared Sort by category, then by
+* name, then by price Higher price is greater
+* @return appropriate value less than zero, zero, or greater than zero
+*/
     public int compareTo (Item it) {
         if (myName != it.getName()) return myName.compareTo(it.getName());
         return 0;

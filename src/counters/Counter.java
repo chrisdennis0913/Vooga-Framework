@@ -13,7 +13,6 @@ import evented.EventedWrapper;
  */
 
 public abstract class Counter extends EventedItem<Counter>{
-	
 
 	private Integer count;
 	protected Integer init; // Initial is used as maximum

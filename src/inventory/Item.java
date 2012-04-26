@@ -1,4 +1,3 @@
-
 package inventory;
 
 import java.awt.Color;
@@ -21,11 +20,11 @@ public abstract class Item extends EventedItem<Item>
 {
 
     /**
-* Can subclass to create other instance variables such as weight, damage,
-* price ItemNames should be lowerCase
-*
-* @author chrisdennis0913
-*/
+     * Can subclass to create other instance variables such as weight, damage,
+     * price ItemNames should be lowerCase
+     * 
+     * @author chrisdennis0913
+     */
     private static final long serialVersionUID = 6760280693009697161L;
     protected static RPGame game;
     protected BufferedImage image;
@@ -35,7 +34,8 @@ public abstract class Item extends EventedItem<Item>
     protected String category;
     protected int quantity = 1; // make sure this gets instantiated properly
     private final JSONItem item;
-    
+
+
     // Can subclass to create other instance variables
     // such as weight
     public Item (RPGame game, JSONItem item) {
@@ -99,9 +99,9 @@ public abstract class Item extends EventedItem<Item>
     public String getName () {
         return myName;
     }
-    
 
-    public BufferedImage getImage(){
+
+    public BufferedImage getImage () {
         return image;
     }
 
@@ -141,8 +141,8 @@ public abstract class Item extends EventedItem<Item>
 
 
     /**
-* @return string representation of item
-*/
+     * @return string representation of item
+     */
     public String toString () {
         return "[" + getName() + ": " + getQuantity() + "]";
     }
@@ -153,6 +153,7 @@ public abstract class Item extends EventedItem<Item>
 
         return compareTo(it) == 0;
     }
+
 
     private void delete () {
         if (hasWrapper()) getWrapper().remove(myName);
@@ -169,12 +170,12 @@ public abstract class Item extends EventedItem<Item>
 
 
     /**
-* Return value that meets criteria of compareTo conventions.
-*
-* @param if is the Item to which this is compared Sort by category, then by
-* name, then by price Higher price is greater
-* @return appropriate value less than zero, zero, or greater than zero
-*/
+     * Return value that meets criteria of compareTo conventions.
+     * 
+     * @param if is the Item to which this is compared Sort by category, then by
+     *        name, then by price Higher price is greater
+     * @return appropriate value less than zero, zero, or greater than zero
+     */
     public int compareTo (Item it) {
         if (myName != it.getName()) return myName.compareTo(it.getName());
         return 0;

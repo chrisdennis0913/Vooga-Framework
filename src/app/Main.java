@@ -14,8 +14,8 @@ public class Main extends GameEngine {
 	public static final int GAME_MODE = 1, LEVEL_EDITOR = 2;
 	
 	public void initResources() {
-		//nextGameID = GAME_MODE;
-		nextGameID = LEVEL_EDITOR;
+		nextGameID = GAME_MODE;
+//		nextGameID = LEVEL_EDITOR;
 	}
 	
 	public GameObject getGame(int GameID) {

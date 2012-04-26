@@ -3,46 +3,49 @@ package counters;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
 
+import utils.Location;
+import utils.Meter;
 import evented.EventedWrapper;
 
 public class Health extends Counter {
 
 	private static final long serialVersionUID = 1L;
+	private Meter meter;
 
 	public Health(EventedWrapper<Counter> wrapper, int count) {
 		super(wrapper, count);
+		initResources();
 	}
 
-	public void initResources() {}
+	public void initResources() {
+		meter = new Meter(this);
+	}
 
-	public void update(long elapsed) {}
+	public void update(long elapsed) {
+	}
 
 	public void render(Graphics2D g) {
 		drawMeter(g);
 	}
-	
+
 	public void drawMeter(Graphics2D g) {
-		int bgWidth = 460;
-		int fgWidth = getCount()/getInitial()*bgWidth;
+		int bgWidth = (int) getWrapper().getCharacter().getGame().getLevel()
+				.getClip().getHeight() / 2;
 		int bgHeight = 15;
-		int fgHeight = bgHeight - 2;
 		
-		Point bgloc = new Point(10, 10);
-		Point fgloc = new Point((int) bgloc.getX() + 1, (int) bgloc.getY() + 1);
+		int status = (int) ((double) getCount()/getInitial()*100);
 		
-		Rectangle bg = new Rectangle(bgloc, new Dimension(bgWidth, bgHeight));
-		Rectangle fg = new Rectangle(fgloc, new Dimension(fgWidth, fgHeight));
+		Color color;
+		if (status > 66)
+			color = new Color(0, 255, 0);
+		else if (status > 33) 
+			color = new Color(255, 255, 0);
+		else
+			color = new Color(255, 0, 0);
 		
-		g.setColor(new Color(0));
-		g.draw(bg);
-		g.fill(bg);
+		meter.show(g, new Location(10, 10), new Dimension(bgWidth, bgHeight), color);
 		
-		g.setColor(new Color(255, 0, 0));
-		g.draw(fg);
-		g.fill(fg);
 	}
 
 }

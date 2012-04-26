@@ -39,6 +39,9 @@ public abstract class EventedItem<T extends Evented> extends Sprite implements E
 		return wrapper;
 	}
     
+    public void setWrapper(EventedWrapper<T> wrappr){
+        wrapper = wrappr;
+    }
     public RPGame getGame() {
     	return game;
     }

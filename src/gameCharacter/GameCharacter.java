@@ -90,6 +90,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		super.render(g);
 		counters.render(g);
 		actions.render(g);
+		inventory.render(g);
 		controllers.render(g);
 	}
 	
@@ -108,7 +109,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
-		
+		inventory.update(elapsed);
 		behaviorModifiers.unsetUpAll(elapsed);
 	}
 	

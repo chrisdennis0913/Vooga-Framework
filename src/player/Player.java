@@ -22,7 +22,7 @@ public class Player extends CharacterDecorator {
 	public void initResources() {
 		String json = JsonUtil.getJSON(configURL);
 		constructActions(json);
-		// TODO: constructInventory(inventoryJsonURL)
+		// TODO: constructInventory(inventoryJsonURL);
 	}
 
 	private void constructActions(String json) {

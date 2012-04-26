@@ -24,7 +24,7 @@ public class NPC extends CharacterDecorator{
 	 * @param loc
 	 * @param configURL
 	 */
-	public NPC(RPGame game, GameCharacter character) {
+	public NPC(GameCharacter character) {
 		super(character);
 		character.setDecorator(this);
 	}

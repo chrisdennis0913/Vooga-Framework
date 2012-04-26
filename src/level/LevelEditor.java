@@ -47,8 +47,7 @@ public class LevelEditor extends Game{
 	
 	int 	tilenum;
 	int		tilemode;
-
-
+	
 	public void initResources() {
 		Gson gson = new Gson();
 		JsonUtil.JSONGame gameJson = gson.fromJson(JsonUtil.getJSON(gameURL),
@@ -77,9 +76,10 @@ public class LevelEditor extends Game{
 
 		// switch lower/upper tile
 		if (keyPressed(KeyEvent.VK_SPACE)) {
-			if (++tilemode > 1) {
+			if (++tilemode > 2) 
 				tilemode = 0;
-			}
+			else
+				tilemode += 1;
 
 			// validate current mode tile count
 			if (tilenum > getChipsetLength()) {
@@ -104,7 +104,14 @@ public class LevelEditor extends Game{
 		if (tileAt != null) {
 			// put tile
 			if (bsInput.isMouseDown(MouseEvent.BUTTON1)) {
-				getLayer() [tileAt.x] [tileAt.y] = tilenum;
+				if(tilemode == 2) {
+					//swing code to take attributes of sprite
+					
+					//save sprite
+					
+				}
+				else
+					getLayer() [tileAt.x] [tileAt.y] = tilenum;
 			}
 
 
@@ -149,6 +156,7 @@ public class LevelEditor extends Game{
 		switch (tilemode) {
 		case 0: return level.chipsetE.image.length + level.chipset.length - 2;	// lower mode
 		case 1: return level.chipsetF.image.length - 1;	// upper mode
+		case 2: return level.chipsetG.image.length -1; // sprite mode
 		}
 		return 0;
 	}
@@ -167,9 +175,13 @@ public class LevelEditor extends Game{
 				return level.chipset[num-level.chipsetE.image.length].image[2];
 			}
 
-			// upper mode
+		// upper mode
 		case 1:
 			return level.chipsetF.image[num];
+			
+		// sprite mode - return chipset array
+		case 2:
+			return level.chipsetG.image[num];
 		}
 
 		return null;
@@ -181,6 +193,7 @@ public class LevelEditor extends Game{
 		switch (tilemode) {
 		case 0: return level.layer1;	// lower mode
 		case 1: return level.layer2;	// upper mode
+		case 2: return level.layer2;	// sprite mode
 		}
 
 		return null;
@@ -207,7 +220,6 @@ public class LevelEditor extends Game{
 					32, 32);
 		}
 	}
-
 
 	public static void main(String[] args) {
 		GameLoader game = new GameLoader();

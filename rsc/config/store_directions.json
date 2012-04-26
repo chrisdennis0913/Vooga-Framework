@@ -1,0 +1,22 @@
+{
+	"frames": 1,
+	"delay": 1,
+	"directions": [
+	{
+		"direction": "DIR_DOWN",
+		"image": "rsc/store/store.gif"
+	},
+	{
+		"direction": "DIR_UP",
+		"image": "rsc/store/store.gif"
+	},
+	{
+		"direction": "DIR_RIGHT",
+		"image": "rsc/store/store.gif"
+	},
+	{
+		"direction": "DIR_LEFT",
+		"image": "rsc/store/store.gif"
+	}
+	]
+}

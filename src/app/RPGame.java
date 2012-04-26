@@ -59,6 +59,7 @@ public class RPGame extends GameObject {
 	            player.getCharacter().getInventory().render(g);
 	            return;
 	            }
+	     
 	}
 
 	public void update(long elapsed) {
@@ -66,6 +67,7 @@ public class RPGame extends GameObject {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
 	        }
+	    
 	    
 		field.update(elapsed);
 		player.update(elapsed);
@@ -102,6 +104,11 @@ public class RPGame extends GameObject {
 	public boolean isPausedForInventory(){
 	    return pausedForInventory;
 	}
+	
+	public boolean isPausedForStore(){
+	    return pausedForStore;
+	}
+	
 	public void pauseGameForStore() {
 		pausedForStore = true;
 	}

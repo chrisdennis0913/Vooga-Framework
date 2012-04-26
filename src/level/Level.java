@@ -84,7 +84,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		setPlayer(level);
 		setNpcs(level);
 		setItems(level);
-		setEnemies();
+		setEnemies(level);
 
 		setCollisions();
 	}
@@ -185,8 +185,17 @@ public class Level extends AbstractTileBackground implements Evented {
 		game.getField().addGroup(group);
 	}
 	
-	private void setEnemies(){
+	private void setEnemies(JsonObject level){
+		JsonArray enemies = level.getAsJsonArray("enemies");
 		SpriteGroup group = new SpriteGroup("enemies");
+		
+		for (int i = 0; i < enemies.size(); i++){
+			JsonObject jEnemy = enemies.get(i).getAsJsonObject();
+			JsonArray jLocation = jEnemy.get("location").getAsJsonArray();
+			
+			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
+			String aiName = jEnemy.get("ai").getAsString();
+		}
 		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
 		group.add(enemy.getCharacter());
 		game.getField().addGroup(group);

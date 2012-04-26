@@ -5,40 +5,46 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.golden.gamedev.object.Timer;
+
 import level.Level;
 import player.Player;
+import utils.Location;
 import gameCharacter.GameCharacter;
 import app.RPGame;
 
 public class AbstractPathFindingAI extends AbstractMovementAI{
 
-	Level level;
+	public static final int TILE_WIDTH = 10;
+	public static final int TILE_HEIGHT = 10;
+	private static final int CALCULATION_INTERVAL = 100;
 	Player player;
+	Timer calcInterval;
 	
 	public AbstractPathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);
-		this.level = game.getLevel();
-		System.err.println(level);
 		this.player = game.getPlayer();
+		calcInterval = new Timer(CALCULATION_INTERVAL);
 	}
 	
 	public int nextAction(){
-		Point currTile = level.getTileAt(character.getX(), character.getY());
-		Point playerTile = level.getTileAt(player.getCharacter().getX(), player.getCharacter().getY());
+		Location currTile = character.getLocation();
+		Location playerTile = player.getCharacter().getLocation();
 		List<ActionTransition> adjActions = getAdjacentActions(currTile,playerTile);
 				
 		if(adjActions.get(0) != null){
+			System.err.println(adjActions.get(0).direction);
 			return adjActions.get(0).direction;
 		}
 		else return -1;
 	}
 	
-	public List<ActionTransition> getAdjacentActions(Point currTile,Point goalTile){
+	public List<ActionTransition> getAdjacentActions(Location currTile,Location goalTile){
 		
 		ArrayList<ActionTransition> adjActions = new ArrayList<ActionTransition>();
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i <= 3; i++){
 			ActionTransition nextAction = 
-					new ActionTransition(currTile,goalTile,i,level);
+					new ActionTransition(currTile,goalTile,i);
 			if(!adjActions.contains(nextAction) && nextAction.intermTile != null)
 				adjActions.add(nextAction);
 		}
@@ -52,15 +58,19 @@ public class AbstractPathFindingAI extends AbstractMovementAI{
 
 	@Override
 	public void update(long elapsedTime) {
+		if(!calcInterval.action(elapsedTime))
+			return;
 		int nextDirection = nextAction();
-		if(nextDirection >= 0 && nextDirection <= 3)
-			character.setCurrentDirection(nextDirection);			
+		if(nextDirection >= 0 && nextDirection <= 3){
+			character.setActiveDirection(nextDirection);
+			character.setVelocity(0.05);
+		}
 	}
 	
 	public static class ActionTransition implements Comparable<ActionTransition>{
-		Point startTile;
-		Point goalTile;
-		Point intermTile;
+		Location startTile;
+		Location goalTile;
+		Location intermTile;
 		int direction;
 		Level level;
 		
@@ -68,11 +78,10 @@ public class AbstractPathFindingAI extends AbstractMovementAI{
 		static int[] xdelta = new int[] {0,0,-1,1};
 		static int[] ydelta = new int[] {1,-1,0,0};
 		
-		public ActionTransition(Point start, Point goal, int direction, Level level){
+		public ActionTransition(Location start, Location goal, int direction){
 			this.startTile = start;
 			this.goalTile = goal;
 			this.direction = direction;
-			this.level = level;
 			calculateIntermTile();
 		}
 		
@@ -83,10 +92,9 @@ public class AbstractPathFindingAI extends AbstractMovementAI{
 		}
 		
 		private void calculateIntermTile(){
-			int tileHeight = level.getTileHeight();
-			int tileWidth = level.getTileWidth();
-			intermTile = level.getTileAt(startTile.x+xdelta[direction]*tileWidth, 
-					startTile.y+ydelta[direction]*tileHeight);
+			intermTile = new Location(startTile.getX()+xdelta[direction]*TILE_WIDTH, 
+					startTile.getY()+ydelta[direction]*TILE_HEIGHT);
+			System.err.println(intermTile.getX() + " " + intermTile.getY());
 		}
 
 		public double distToGoal(){

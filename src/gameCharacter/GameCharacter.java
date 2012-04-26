@@ -57,8 +57,6 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 
 	private String configURL;
 	
-	Level level;
-
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(this);
 	private EventedWrapper<Controller> controllers = new EventedWrapper<Controller>(this);
@@ -73,7 +71,6 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
-		this.level = game.level;
 		this.configURL = configURL;
 		initResources();
 	}

@@ -169,16 +169,6 @@ public class Level extends AbstractTileBackground implements Evented {
 		game.getField().addGroup(group);
 	}
 
-<<<<<<< HEAD
-	private void setNpcs(JsonUtil.JSONLevel level) {
-		JSONNpc[] npcs = level.npcs;
-		SpriteGroup group = new SpriteGroup("npcs");
-
-		for (JSONNpc jsonNpc : npcs) {
-			Location loc = new Location(jsonNpc.location);
-			NPC npc = new NPCTest1(new GameCharacter(game, loc, jsonNpc.directions));
-			group.add(npc.getCharacter());
-=======
 	private void setNpcs(JsonObject level) {
 		JsonArray npcs = level.getAsJsonArray("npcs");
 		SpriteGroup group = new SpriteGroup("npcs");		
@@ -190,7 +180,7 @@ public class Level extends AbstractTileBackground implements Evented {
 			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
 			NPC npc = new NPCTest1(new GameCharacter(game, loc, jNPC.get("directions").getAsString()));
 			group.add(npc.getCharacter());
->>>>>>> origin/master
+
 		}
 		game.getField().addGroup(group);
 	}

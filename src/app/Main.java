@@ -2,7 +2,6 @@ package app;
 
 import java.awt.Dimension;
 
-import level.LevelEditor;
 
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
@@ -15,6 +14,8 @@ public class Main extends GameEngine {
 	
 	public void initResources() {
 		nextGameID = GAME_MODE;
+//		nextGameID = LEVEL_EDITOR;
+
 	}
 	
 	public GameObject getGame(int GameID) {

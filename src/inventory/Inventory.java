@@ -71,7 +71,11 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         return equippedItem == itm;
     }
     public boolean isEquipped(String itmName){
-        return equippedItem.getName().equalsIgnoreCase(itmName);
+    	if (equippedItem == null)
+    		return false;
+    	
+    	String name = equippedItem.getName().toLowerCase();
+        return name.contains(itmName.toLowerCase());
     }
 
     @Override

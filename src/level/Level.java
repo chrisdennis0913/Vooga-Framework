@@ -49,7 +49,6 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
 	int[][] layer1 = new int[40][25]; // the lower tiles
-	int[][] layer2 = new int[40][25]; // the fringe tiles
 
 	private SystemTimer levelTimer = new SystemTimer();
 	protected long levelStartTime;
@@ -191,9 +190,9 @@ public class Level extends AbstractTileBackground implements Evented {
 				int type = Integer.parseInt(upperToken.nextToken());
 				setSceneryLayer(type, loc, scenery);
 			}
-			
-			//game.getField().addGroup(scenery);
 		}
+		
+		game.getField().addGroup(scenery);
 	}
 
 	private void setSceneryLayer(int type, Location loc, SpriteGroup scenery) {

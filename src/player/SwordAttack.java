@@ -9,9 +9,9 @@ public class SwordAttack extends Attacking {
 	public SwordAttack(Attack attack) {
 		super(attack);
 	}
-	
+
 	public boolean isEnabled() {
-		return 
+		return getWrapper().getCharacter().getInventory().isEquipped("sword");
 	}
 
 }

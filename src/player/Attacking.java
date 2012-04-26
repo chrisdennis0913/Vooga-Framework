@@ -35,7 +35,7 @@ public abstract class Attacking extends ActionDecorator {
 			new RuntimeException("Attack keys undefined");
 
 		keys.add(Attack.ATTACK_BASIC, attacking.keys);
-		
+
 		JsonUtil.JSONDirections dirs = attacking.directions;
 		Direction[] tempDirections = new Direction[4];
 
@@ -63,33 +63,34 @@ public abstract class Attacking extends ActionDecorator {
 		}
 
 		Attack attack = (Attack) action;
-		
+
 		attack.directions = Arrays.asList(tempDirections);
 	}
 
 	public void update(long elapsed) {
-		super.update(elapsed);
+		if (isEnabled()) {
+			super.update(elapsed);
 
-		int status = keys.checkKeys();
-		GameCharacter character = getWrapper().getCharacter();
+			int status = keys.checkKeys();
+			GameCharacter character = getWrapper().getCharacter();
 
-		if (status != -1) {
-			if (!isActive()) {
-				setActive(true);
-				timer.setActive(true);
-				character.stop();
-				setActiveDirection(character.getCurrentDirection());
-				getWrapper().get("walking").setEnabled(false, true);
+			if (status != -1) {
+				if (!isActive()) {
+					setActive(true);
+					timer.setActive(true);
+					character.stop();
+					setActiveDirection(character.getCurrentDirection());
+					getWrapper().get("walking").setEnabled(false, true);
+				}
+			} else if (isActive()) {
+				if (timer.action(elapsed)) {
+					getWrapper().get("walking").setEnabled(true, false);
+					setActive(false);
+					timer.refresh();
+					timer.setActive(false);
+				}
+
 			}
-		}
-		else if (isActive()) {
-			if (timer.action(elapsed)) {
-				getWrapper().get("walking").setEnabled(true, false);
-				setActive(false);
-				timer.refresh();
-				timer.setActive(false);
-			}
-				
 		}
 	}
 

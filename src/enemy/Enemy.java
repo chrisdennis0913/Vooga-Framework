@@ -5,13 +5,12 @@ import gameCharacter.GameCharacter;
 
 import java.util.HashMap;
 
-import counters.Health;
-
-import ai.AbstractPathFindingAI;
+import ai.PathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
+import counters.EnemyHealth;
 
 public class Enemy extends CharacterDecorator {
 
@@ -24,7 +23,7 @@ public class Enemy extends CharacterDecorator {
 		this.configURL = configURL;
 		initResources();
 	}
-
+	
 	public void initResources() {
 		// TODO: initialize from JSON
 		getCharacter().setDecorator(this);
@@ -32,7 +31,7 @@ public class Enemy extends CharacterDecorator {
 
 		attacks.put("shooting", new ShootingAttack(game, this, "shooting"));
 		getCharacter().getCounters().add("health",
-				new Health(getCharacter().getCounters(), 5));
+				new EnemyHealth(getCharacter().getCounters(), 5));
 		initAI(game);
 	}
 
@@ -40,12 +39,7 @@ public class Enemy extends CharacterDecorator {
 		character.getControllers().add("AttackAI",
 				new SimpleAttackAI(game, this));
 		character.getControllers().add("MovementAI",
-				new AbstractPathFindingAI(game, this.getCharacter()));
-	}
-
-	public void update(long elapsedTime) {
-		super.update(elapsedTime);
-		System.out.println(getCharacter().getCounters().get("health"));
+				new PathFindingAI(game, this.getCharacter()));
 	}
 
 	public HashMap<String, AbstractAttack> getAttacks() {

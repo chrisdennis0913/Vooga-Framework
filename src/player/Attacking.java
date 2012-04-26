@@ -30,7 +30,8 @@ public class Attacking extends ActionDecorator {
 	}
 
 	public void initResources() {
-
+		timer.setActive(false);
+		
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
 		JsonObject attacking = getJsonObject();
@@ -84,23 +85,24 @@ public class Attacking extends ActionDecorator {
 			GameCharacter character = getWrapper().getCharacter();
 
 			if (status != -1) {
-				if (!isActive()) {
+				if (!isActive() && !timer.isActive()) {
 					setActive(true);
 					timer.setActive(true);
 					character.stop();
 					setActiveDirection(character.getCurrentDirection());
 					getWrapper().get("walking").setEnabled(false, true);
 				}
-			} else if (isActive()) {
-				if (timer.action(elapsed)) {
-					getWrapper().get("walking").setEnabled(true, false);
-					setActive(false);
-					timer.refresh();
-					timer.setActive(false);
-				}
-
-			}
+			} else if (!getWrapper().get("walking").isEnabled())
+				if (timer.action(elapsed))
+					finishAttack();
 		}
+	}
+	
+	public void finishAttack() {
+		getWrapper().get("walking").setEnabled(true, false);
+		setActive(false);
+		timer.refresh();
+		timer.setActive(false);
 	}
 
 	public void render(Graphics2D g) {

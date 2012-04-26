@@ -47,7 +47,6 @@ public class Walking extends ActionDecorator {
 	public void update(long elapsed) {
 		if (isEnabled()) {
 			super.update(elapsed);
-			System.out.println("walking");
 
 			int status = keys.checkKeys();
 			GameCharacter character = getWrapper().getCharacter();

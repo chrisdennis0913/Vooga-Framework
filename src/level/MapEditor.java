@@ -1,14 +1,29 @@
 package level;
 
+import gameCharacter.GameCharacter;
 
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
-import com.golden.gamedev.*;
-import com.golden.gamedev.util.*;
+import player.Player;
+import utils.Location;
+import app.RPGame;
+
+import com.golden.gamedev.Game;
+import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.util.FileUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 
 /**
@@ -28,12 +43,21 @@ public class MapEditor extends Game {
 	int 	tilenum;
 	int		tilemode;
 	int 	charnum;
-	BufferedImage hero;
-
-
+	BufferedImage player;
+	BufferedImage enemy;
+	RPGame game;
+	
+	// add 
+	JsonObject jLevel = new JsonObject();
+	JsonObject jPlayer = new JsonObject();
+	JsonArray jNPCs = new JsonArray();
+	JsonArray jItems = new JsonArray();
+	JsonArray jEnemies = new JsonArray();
+	JsonObject jInventory = new JsonObject();
+	
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
-		hero = getImage("rsc/player/playerstart.png", false);
+		player = getImage("rsc/player/playerstart.png", false);
 	}
 
 
@@ -105,6 +129,10 @@ public class MapEditor extends Game {
 					String att2;
 					att2 = JOptionPane.showInputDialog("Attribute2:");
 					//save sprite
+					Location loc = new Location(new int[]{getMouseX(), getMouseY()});
+					Player player = new Player(new GameCharacter(game, loc,
+							"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
+					jPlayer = player.toJson();
 					
 				}
 				else
@@ -133,6 +161,30 @@ public class MapEditor extends Game {
 			}
 			FileUtil.fileWrite(lowerTile, bsIO.setFile("rsc/level/map00.lwr"));
 			FileUtil.fileWrite(upperTile, bsIO.setFile("rsc/level/map00.upr"));
+			
+			String nextLevel = JOptionPane.showInputDialog("Next file name:");
+			jLevel.add("nextLevel", new JsonPrimitive("rsc/savedmaps/"+nextLevel+".json"));
+			
+			jLevel.add("upperFilename", new JsonPrimitive("rsc/level/map00.upr"));
+			jLevel.add("lowerFilename", new JsonPrimitive("rsc/level/map00.lwr"));
+			
+			jLevel.add("player", jPlayer);
+			jLevel.add("enemies", jEnemies);
+			jLevel.add("npcs", jNPCs);
+			
+			jInventory.add("items", jItems);
+			jLevel.add("inventory", jInventory);
+			
+			String file = JOptionPane.showInputDialog("File name:");
+			try {
+				FileWriter f1 = new FileWriter(file); 
+				f1.write(jLevel.toString());
+				f1.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}   		
+			
 		}
 	}
 
@@ -176,9 +228,9 @@ public class MapEditor extends Game {
 		case 1:
 			return map.chipsetF.image[num];
 			
-		// sprite mode - return chipset array
+		// sprite mode - return chipset
 		case 2:
-			return hero;
+			return player;
 		}
 
 		return null;

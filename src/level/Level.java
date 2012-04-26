@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 import npc.NPC;
 import npc.NPCTest1;
 import player.Player;
+import store.ItemStore;
 import utils.JsonUtil;
 import utils.JsonUtil.JSONInventory;
 import utils.JsonUtil.JSONItem;
@@ -61,6 +62,7 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	private RPGame game;
 	private LevelInventory<Item> inventory;
+	private ItemStore store;
 
 	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game, String levelname) {
 		super(0, 0, TILE_WIDTH, TILE_HEIGHT);

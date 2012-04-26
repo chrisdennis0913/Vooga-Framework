@@ -10,6 +10,7 @@ import java.util.List;
 import npc.NPC;
 import level.Level;
 
+import store.ItemStore;
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -54,6 +55,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	private Velocity velocity = new Velocity(0.15);
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
+	protected ItemStore store;
 
 	private String configURL;
 	
@@ -197,6 +199,10 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	
 	public Inventory getInventory(){
 	    return inventory;
+	}
+	
+	public ItemStore getStore(){
+		return store;
 	}
 	
 	public BehaviorModifierContainer getBehaviorModifiers(){

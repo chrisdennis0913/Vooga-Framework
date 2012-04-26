@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
-import level.Level;
 
 import utils.Direction;
 import utils.JsonUtil;
@@ -38,7 +37,8 @@ import evented.EventedWrapper;
  * @author Kirill Klimuk
  */
 
-public class GameCharacter extends AnimatedSprite implements CharacterInterface, Evented {
+public class GameCharacter extends AnimatedSprite implements CharacterInterface, Evented 
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,13 +46,11 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 
 	private int curDirection = 0;
 	private List<Direction> directions;
-	private Velocity velocity = new Velocity(0.08);
+	private Velocity velocity = new Velocity(0.07);
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
 
 	private String configURL;
-	
-	Level level;
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(this);
@@ -67,7 +65,6 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
-		this.level = game.level;
 		this.configURL = configURL;
 		initResources();
 	}

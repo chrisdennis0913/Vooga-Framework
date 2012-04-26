@@ -1,23 +1,18 @@
 package player;
 
-import java.awt.Graphics2D;
-
-import utils.JsonUtil;
-import utils.Jsonable;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
-
+import utils.JsonUtil;
+import utils.Jsonable;
 import actions.Action;
 import actions.Attack;
 import actions.Talk;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class Player extends CharacterDecorator implements Jsonable {
+import counters.Health;
 
-	private static final long serialVersionUID = 1L;
+public class Player extends CharacterDecorator implements Jsonable {
 	
 	private String configURL;
 
@@ -39,8 +34,8 @@ public class Player extends CharacterDecorator implements Jsonable {
 		JsonObject grabbing = actions.get("grabbing").getAsJsonObject();
 		
 		if(walking == null || attacking == null)
-			throw new RuntimeException("Action undefined for player");		
-
+			throw new RuntimeException("Action undefined for player");
+		
 		character.getActions().add("walking",
 				new Walking(new Action(character.getActions(), walking)));
 		character.getActions().add("attacking",
@@ -49,10 +44,8 @@ public class Player extends CharacterDecorator implements Jsonable {
 				new Talking(new Talk(character.getActions(), talking)));
 		character.getActions().add("grabbing",
 				new Grabbing(new Action(character.getActions(), grabbing)));
-	}
-
-	public void update(long elapsed) {
-		super.update(elapsed);		
+		
+		character.getCounters().add("health", new Health(character.getCounters(), 10));
 	}
 
 	@Override
@@ -62,4 +55,3 @@ public class Player extends CharacterDecorator implements Jsonable {
 	}
 	
 }
-

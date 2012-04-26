@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 
 import npc.NPC;
+import npc.NPCTest1;
 import player.Player;
 import utils.JsonUtil;
 import utils.Location;
@@ -161,6 +162,7 @@ public class Level extends AbstractTileBackground implements Evented {
 			JsonObject it = items.get(i).getAsJsonObject();
 			Item item = new ConcreteItem(game, it);
 			group.add(item);
+			System.out.println("Added concrete item to sprite group");
 		}
 		game.getField().addGroup(group);
 	}
@@ -169,13 +171,13 @@ public class Level extends AbstractTileBackground implements Evented {
 		JsonArray npcs = level.getAsJsonArray("npcs");
 		SpriteGroup group = new SpriteGroup("npcs");		
 
-		for(int i=0; i<npcs.size(); i++){
-			JsonObject jsonNpc = npcs.get(i).getAsJsonObject();
-			JsonArray jLocation = jsonNpc.get("location").getAsJsonArray();			
+		for(int i=0; i<npcs.size(); i++){	
+			JsonObject jNPC = npcs.get(i).getAsJsonObject();
+			JsonArray jLocation = jNPC.get("location").getAsJsonArray();
 			
 			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
-			NPC npc = new NPC(game, loc, jsonNpc.get("directions").getAsString());
-			group.add(npc);
+			NPC npc = new NPCTest1(new GameCharacter(game, loc, jNPC.get("directions").getAsString()));
+			group.add(npc.getCharacter());
 		}
 		game.getField().addGroup(group);
 	}
@@ -204,10 +206,9 @@ public class Level extends AbstractTileBackground implements Evented {
 				Location loc = new Location(TILE_WIDTH * i, TILE_HEIGHT * j);
 				int type = Integer.parseInt(upperToken.nextToken());
 				setSceneryLayer(type, loc, scenery);
-			}
+				}
+			game.getField().addGroup(scenery);
 		}
-		
-		game.getField().addGroup(scenery);
 	}
 
 	private void setSceneryLayer(int type, Location loc, SpriteGroup scenery) {

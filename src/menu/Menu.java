@@ -23,9 +23,10 @@ public abstract class Menu {
                  String menuBackgroundImage,
                  String fontImage) {
         game = game1;
-        cursor = game.getImage("Arrow.png");
+        cursor = game.getImage("rsc/menu/Arrow.png");
         menuBackground = game.getImage(menuBackgroundImage, false);
         font = game.fontManager.getFont(game.getImage(fontImage));
+        option = 0;
     }
 
 

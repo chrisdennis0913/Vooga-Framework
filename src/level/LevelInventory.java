@@ -48,7 +48,6 @@ public class LevelInventory<T extends Item> implements Evented, Iterable<T> {
 
 	public void remove(Item itm) {
 		remove(itm.getName());
-		itm.removeAll();
 	}
 
 	public void remove(Item itm, int quantity) {

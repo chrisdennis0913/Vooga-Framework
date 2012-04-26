@@ -18,17 +18,21 @@ public class InventoryMenu extends Menu {
 
     public InventoryMenu (Inventory inv) {
         super(inv.getCharacter().getGame(),
-              "Arrow.png",
-              "resources/items/itemMenuBackground.gif",
-              "BitmapFont.png");
+              "rsc/menu/Arrow.png",
+              "rsc/menu/itemMenuBackground.gif",
+              "rsc/menu/BitmapFont.png");
         inventory = inv;
         numOptions = inv.getSize();
-        emphasisBullet = game.getImage("resources/items/goldStar.gif");
+        emphasisBullet = game.getImage("rsc/menu/goldStar.gif");
     }
 
 
     public void initResources () {
-
+        
+    }
+    public void updateInventory(Inventory inv){
+        inventory = inv;
+        numOptions = inv.getSize();
     }
 
 
@@ -36,6 +40,8 @@ public class InventoryMenu extends Menu {
         if (blinkTimer.action(elapsedTime)) {
             blink = !blink;
         }
+        
+        numOptions = inventory.getSize();
 
         switch (game.bsInput.getKeyPressed()) {
             case KeyEvent.VK_ENTER:

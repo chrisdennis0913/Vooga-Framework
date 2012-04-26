@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 import utils.Direction;
-import utils.JsonUtil;
 
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
@@ -34,7 +33,6 @@ public class StdAttack extends ActionDecorator {
 		
 		type = json.get("type").getAsString();
 
-
 		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
 		for(int i=0; i<dirsDirections.size();i++){
 			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
@@ -61,15 +59,17 @@ public class StdAttack extends ActionDecorator {
 					.getCharacter(), images, intepretedDirection, dirs.get("delay").getAsInt());
 		}
 
-
 		Attack attk = (Attack) action;
 
 		attk.directions = Arrays.asList(tempDirections);
 	}
 	
+	public Attack getAttack() {
+		return (Attack) action;
+	}
+
 	public boolean isEnabled() {
-		return getWrapper().getCharacter().getInventory()
-				.isEquipped(type);
+		return getWrapper().getCharacter().getInventory().isEquipped(type);
 	}
 
 }

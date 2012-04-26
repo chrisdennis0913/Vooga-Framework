@@ -25,7 +25,7 @@ public class EscortTask extends Task
 	}
 
 	public boolean checkComplete() {
-		isComplete = (loc == recipient.getLocation() );
+		isComplete = (loc == recipient.getCharacter().getLocation() );
 		return isComplete;
 	}
 

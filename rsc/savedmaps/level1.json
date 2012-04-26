@@ -15,6 +15,7 @@
 		},
 		{
 			"location": [500, 350],
+			"name": "StoreManagerNPC",
 			"directions": "rsc/config/store_directions.json"
 		}
 	],

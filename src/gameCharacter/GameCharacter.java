@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
-import level.Level;
 
+import level.Level;
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -21,7 +21,6 @@ import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 
 import controllers.Controller;
-
 import counters.Counter;
 import evented.Evented;
 import evented.EventedWrapper;
@@ -46,6 +45,7 @@ public class GameCharacter extends AnimatedSprite implements
 	private static final long serialVersionUID = 1L;
 
 	private RPGame game;
+	private CharacterDecorator decorator;
 
 	private int curDirection = 0;
 	private List<Direction> directions;
@@ -89,6 +89,7 @@ public class GameCharacter extends AnimatedSprite implements
 		super.render(g);
 		counters.render(g);
 		actions.render(g);
+		inventory.render(g);
 		controllers.render(g);
 	}
 
@@ -102,10 +103,11 @@ public class GameCharacter extends AnimatedSprite implements
 		counters.update(elapsed);
 		actions.update(elapsed);
 		controllers.update(elapsed);
+		inventory.update(elapsed);
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
-
+		
 		behaviorModifiers.unsetUpAll(elapsed);
 	}
 
@@ -197,5 +199,13 @@ public class GameCharacter extends AnimatedSprite implements
 
 	public BehaviorModifierContainer getBehaviorModifiers() {
 		return behaviorModifiers;
+	}
+	
+	public void setDecorator(CharacterDecorator decorator){
+		this.decorator = decorator;
+	}
+	
+	public CharacterDecorator getDecorator(){
+		return this.decorator;
 	}
 }

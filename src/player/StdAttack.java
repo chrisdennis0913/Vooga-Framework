@@ -60,6 +60,10 @@ public class StdAttack extends ActionDecorator {
 
 		attk.directions = Arrays.asList(tempDirections);
 	}
+	
+	public Attack getAttack() {
+		return (Attack) action;
+	}
 
 	public boolean isEnabled() {
 		return getWrapper().getCharacter().getInventory().isEquipped(type);

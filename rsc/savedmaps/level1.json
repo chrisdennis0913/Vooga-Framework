@@ -18,8 +18,14 @@
 		"items": [
 		{
 			"name": "sword",
-			"location": [120, 120],
+			"location": [320, 120],
 			"image": "rsc/items/sword.png",
+			"quantity": 1
+		},
+		{
+			"name": "bow",
+			"location": [280, 120],
+			"image": "rsc/items/bow.png",
 			"quantity": 1
 		}
 		]

@@ -25,14 +25,16 @@ public class Health extends Counter {
 	}
 	
 	public void drawMeter(Graphics2D g) {
-		int fullSize = 480;
-		int curSize = getCount()/getInitial()*480;
-		int height = 15;
+		int bgWidth = 460;
+		int fgWidth = getCount()/getInitial()*bgWidth;
+		int bgHeight = 15;
+		int fgHeight = bgHeight - 2;
 		
-		Point loc = new Point(10, 10);
+		Point bgloc = new Point(10, 10);
+		Point fgloc = new Point((int) bgloc.getX() + 1, (int) bgloc.getY() + 1);
 		
-		Rectangle bg = new Rectangle(loc, new Dimension(fullSize, height));
-		Rectangle fg = new Rectangle(loc, new Dimension(curSize, height));
+		Rectangle bg = new Rectangle(bgloc, new Dimension(bgWidth, bgHeight));
+		Rectangle fg = new Rectangle(fgloc, new Dimension(fgWidth, fgHeight));
 		
 		g.setColor(new Color(0));
 		g.draw(bg);

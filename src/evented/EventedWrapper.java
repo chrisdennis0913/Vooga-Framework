@@ -19,7 +19,7 @@ public class EventedWrapper<T extends Evented>
     implements Evented, Iterable<T> {
 
     protected HashMap<String, T> list = new HashMap<String, T>();
-    private GameCharacter character;
+    protected GameCharacter character;
 
 
     public EventedWrapper (GameCharacter character) {

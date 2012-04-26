@@ -9,9 +9,10 @@ import com.golden.gamedev.object.collision.BasicCollisionGroup;
 
 public class AutomatedCharCollision extends BasicCollisionGroup {
 
-	public void collided(Sprite character, Sprite npc) {
-		setTalking((GameCharacter) character, (NPC) npc);
-		overlap(character, npc);
+	public void collided(Sprite character, Sprite npcChar) {
+		NPC npc = (NPC) ((GameCharacter) npcChar).getDecorator();
+		setTalking((GameCharacter) character, npc);
+		overlap(character, npcChar);
 	}
 
 	protected void overlap(Sprite player, Sprite npc) {		

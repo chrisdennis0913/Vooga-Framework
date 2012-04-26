@@ -12,6 +12,13 @@ import app.RPGame;
 import inventory.Inventory;
 import inventory.Item;
 
+
+/**
+ * Creates the store with it's own inventory
+ * 
+ * @author zahavaalston
+ *
+ */
 public class ItemStore {
 	
 	private Inventory myInventory;

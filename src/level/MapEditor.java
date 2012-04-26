@@ -67,8 +67,6 @@ public class MapEditor extends Game {
 		if (keyPressed(KeyEvent.VK_SPACE)) {
 			if (++tilemode > 2) 
 				tilemode = 0;
-			else
-				tilemode += 1;
 
 			// validate current mode tile count
 			if (tilenum > getChipsetLength()) {
@@ -187,7 +185,7 @@ public class MapEditor extends Game {
 			
 		// sprite mode - return chipset array
 		case 2:
-			return null;
+			return hero;
 		}
 
 		return null;
@@ -213,14 +211,12 @@ public class MapEditor extends Game {
 		if (getChipsetImage(tilenum) != null) {
 			g.drawImage(getChipsetImage(tilenum), 600, 40, null);
 		}
-		else {
-			
-			g.drawImage(hero, getMouseX(), getMouseY(),null);
+		
+		if (tilemode == 1 || tilemode == 0) {
+			g.setColor(Color.BLACK);
+			g.drawRect(600, 40, 32, 32);
 		}
-			
-		g.setColor(Color.BLACK);
-		g.drawRect(600, 40, 32, 32);
-
+		
 		Point tileAt = map.getTileAt(getMouseX(), getMouseY());
 		if (tileAt != null) {
 			g.setColor(Color.WHITE);

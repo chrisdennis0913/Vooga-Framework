@@ -14,6 +14,8 @@ import evented.EventedWrapper;
 
 public abstract class Counter extends EventedItem<Counter>{
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer count;
 	protected Integer init; // Initial is used as maximum
 	private boolean full = false;

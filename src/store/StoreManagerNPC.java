@@ -20,9 +20,6 @@ public class StoreManagerNPC extends NPC{
 		dialogue = new SimpleDialogue("rsc/store/storeSpeech.txt");
 	}
 	
-	public void asdf(){
-	}
-	
 	public void update (long elapsed){
 		
 		super.update(elapsed);

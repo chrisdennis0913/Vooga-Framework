@@ -5,11 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
-<<<<<<< HEAD
-
-import level.Level;
-=======
->>>>>>> origin/master
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;

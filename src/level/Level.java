@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 
 import npc.NPC;
+import npc.NPCTest1;
 import player.Player;
 import utils.JsonUtil;
 import utils.JsonUtil.JSONInventory;
@@ -173,7 +174,7 @@ public class Level extends AbstractTileBackground implements Evented {
 
 		for (JSONNpc jsonNpc : npcs) {
 			Location loc = new Location(jsonNpc.location);
-			NPC npc = new NPC(game, new GameCharacter(game, loc, jsonNpc.directions));
+			NPC npc = new NPCTest1(new GameCharacter(game, loc, jsonNpc.directions));
 			group.add(npc.getCharacter());
 		}
 		game.getField().addGroup(group);
@@ -204,7 +205,7 @@ public class Level extends AbstractTileBackground implements Evented {
 				int type = Integer.parseInt(upperToken.nextToken());
 				setSceneryLayer(type, loc, scenery);
 				}
-		game.getField().addGroup(scenery);
+			game.getField().addGroup(scenery);
 		}
 	}
 

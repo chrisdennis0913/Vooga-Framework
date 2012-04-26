@@ -49,7 +49,7 @@ public class GameCharacter extends AnimatedSprite implements
 
 	private int curDirection = 0;
 	private List<Direction> directions;
-	private Velocity velocity = new Velocity(0.15);
+	private Velocity velocity = new Velocity(0.05);
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
 

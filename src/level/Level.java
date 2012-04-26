@@ -27,9 +27,7 @@ import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import enemy.Enemy;
@@ -176,7 +174,9 @@ public class Level extends AbstractTileBackground implements Evented {
 			JsonArray jLocation = jNPC.get("location").getAsJsonArray();
 			
 			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
-			NPC npc = new NPCTest1(new GameCharacter(game, loc, jNPC.get("directions").getAsString()));
+			String npcName = jNPC.get("name").getAsString();
+			
+			NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC.get("directions").getAsString()));
 			group.add(npc.getCharacter());
 		}
 		game.getField().addGroup(group);

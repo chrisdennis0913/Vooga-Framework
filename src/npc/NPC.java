@@ -10,18 +10,15 @@ import state.WalkingState;
 import store.StoreManagerNPC;
 import dialogue.AbstractDialogue;
 
-
-import dialogue.AbstractDialogue;
-
 public class NPC extends CharacterDecorator{
 
 	/**
 	 * Computer-generated serial ID number
 	 */
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -5360689062786017503L;
 	protected AbstractDialogue dialogue;
 	private boolean alive;
-	private boolean canDie;
 	
 
 	private AttackingState atkState;
@@ -42,16 +39,6 @@ public class NPC extends CharacterDecorator{
 	public NPC(GameCharacter character) {
 		super(character);
 		character.setDecorator(this);
-	}
-	
-	private void constructActions(String json) {
-//		Gson gson = new Gson();
-//		JsonUtil.JSONNpcActions actions = gson.fromJson(json,
-//				JsonUtil.JSONNpcActions.class);
-//		if (actions.talking == null)
-//			this.dialogue = new NullDialogue();
-//		this.getActions().add("talking",
-//				new Talking(new Talk(this.getActions(), actions.talking)));
 	}
 	
 	public static NPC createNPC(String npcName, GameCharacter gameChar){

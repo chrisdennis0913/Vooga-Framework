@@ -6,6 +6,7 @@ import ai.SquareMovementAI;
 import app.RPGame;
 import dialogue.AbstractDialogue;
 import dialogue.AbstractDialogue.DialogueObject;
+import evented.EventedWrapper;
 
 /**
  * Character that is non-playable and has movements
@@ -18,17 +19,13 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	
 	private static final long serialVersionUID = 1L;
 
-	//--- CONTROL FIELDS --------------------------------------
-	protected MotionController movAI;
 	protected AbstractDialogue dialogue;
 
-	//--- STATE FIELDS ----------------------------------------
 	private boolean alive;
 	private boolean canDie;
 	
 	public AutomatedCharacter(RPGame game, Location loc, String configURL){
 		super(game, loc, configURL);
-		movAI = new SquareMovementAI(game, this, 500);
 	}
 
 	public void setAlive(boolean alive){
@@ -40,7 +37,6 @@ public abstract class AutomatedCharacter extends GameCharacter{
 	}
 	
 	public void update(long elapsed){
-		movAI.update(elapsed);
 		super.update(elapsed);
 	}
 	

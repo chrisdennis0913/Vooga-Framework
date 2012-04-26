@@ -15,6 +15,6 @@ public abstract class AbstractGameHeuristic {
 		this.conditionName = conditionName;
 	}
 	
-	public abstract boolean getHeuristicBool();
+	public abstract double getHeuristic();
 	
 }

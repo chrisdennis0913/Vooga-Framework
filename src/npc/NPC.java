@@ -1,10 +1,10 @@
 package npc;
 import gameCharacter.AutomatedCharacter;
 import utils.Location;
-import ai.*;
+import ai.ScriptedMovementAI;
 import app.RPGame;
-
 import dialogue.AbstractDialogue;
+import dialogue.SimpleDialogue;
 
 public class NPC extends AutomatedCharacter{
 
@@ -21,8 +21,9 @@ public class NPC extends AutomatedCharacter{
 	 */
 	public NPC(RPGame game, Location loc, String configURL) {
 		super(game, loc, configURL);
-		int[][] testArray= new int[][] {{0, 1000}, {3, 700}, {0, 300}, {3, 300}, {0, 500}, {3, 1450}};
+		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
 		movAI = new ScriptedMovementAI(game, this, testArray);
+		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 	
 	private void constructActions(String json) {

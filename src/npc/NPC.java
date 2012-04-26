@@ -81,5 +81,9 @@ public class NPC extends CharacterDecorator{
 	{
 		currentState = s;
 	}
+	
+	public boolean hasDialogue(){
+		return (dialogue != null);
+	}
 
 }

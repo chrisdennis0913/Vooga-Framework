@@ -15,7 +15,7 @@ public class AutomatedCharCollision extends BasicCollisionGroup {
 
 	public void collided(Sprite character, Sprite npcChar) {
 		NPC npc = (NPC) ((GameCharacter) npcChar).getDecorator();
-		if (npc.getTalk() != null){
+		if (npc.hasDialogue()){
 			setTalking((GameCharacter) character, npc);
 		}
 		overlap(character, npcChar);

@@ -7,6 +7,7 @@ import state.AttackingState;
 import state.State;
 import state.TalkingState;
 import state.WalkingState;
+import store.StoreManagerNPC;
 import dialogue.AbstractDialogue;
 
 
@@ -55,6 +56,7 @@ public class NPC extends CharacterDecorator{
 	
 	public static NPC createNPC(String npcName, GameCharacter gameChar){
 		NPCs.add(new NPCTest1.NPCTest1Factory());
+		NPCs.add(new StoreManagerNPC.StoreManager());
 		for (NPCFactory npcFactory: NPCs){
 			if (npcFactory.isThisType(npcName))
 				return npcFactory.constructNPC(gameChar);

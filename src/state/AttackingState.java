@@ -5,6 +5,7 @@ import gameCharacter.CharacterDecorator;
 
 public class AttackingState implements State 
 {
+	private boolean canTalk = false;
 	
 	private AbstractAttackAI myAI;
 	
@@ -28,4 +29,8 @@ public class AttackingState implements State
 		myAI = ai;
 	}
 	
+	public String getStatus()
+	{
+		return "Attacking";
+	}
 }

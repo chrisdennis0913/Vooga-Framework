@@ -3,7 +3,7 @@ package npc;
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
-import state.WalkingState;
+import state.MovingState;
 import utils.Location;
 import ai.ScriptedMovementAI;
 import ai.SquareMovementAI;
@@ -23,7 +23,7 @@ public class NPCTest1 extends NPC{
 	public NPCTest1(GameCharacter character) {
 		super(character);
 		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
-		this.setCurrentState(new WalkingState(new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300)));
+		this.setCurrentState(new MovingState(new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300)));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 	

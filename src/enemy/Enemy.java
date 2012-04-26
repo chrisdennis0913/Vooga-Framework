@@ -9,10 +9,7 @@ import java.util.HashMap;
 import state.AttackingState;
 import state.State;
 import state.TalkingState;
-import state.WalkingState;
-
-
-import com.golden.gamedev.Game;
+import state.MovingState;
 
 import ai.PathFindingAI;
 import ai.SimpleAttackAI;
@@ -29,7 +26,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	private RPGame game;
 	private AttackingState atkState;
 	private TalkingState talkState;
-	private WalkingState walkState;
+	private MovingState walkState;
 	
 	private State currentState;
 	
@@ -44,7 +41,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		//String json = JsonUtil.getJSON(configURL);
 		//constructActions(json);
 		initAttacks();
-		//initAttackAI();
+		initAttackAI();
 		initMovementAI();
 	}
 	
@@ -68,7 +65,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		currentState.update(elapsedTime);
 	}
 	private void initMovementAI(){
-		setCurrentState(new WalkingState(new PathFindingAI(game, this.getCharacter())));
+		setCurrentState(new MovingState(new PathFindingAI(game, this.getCharacter())));
 	}
 	
 	public HashMap<String, AbstractAttack> getAttacks() {
@@ -105,5 +102,9 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	{
 		currentState = s;
 	}
-
+	
+	public State getCurrentState()
+	{
+		return currentState;
+	}
 }

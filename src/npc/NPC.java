@@ -6,10 +6,7 @@ import gameCharacter.GameCharacter;
 import state.AttackingState;
 import state.State;
 import state.TalkingState;
-import state.WalkingState;
-import dialogue.AbstractDialogue;
-
-
+import state.MovingState;
 import dialogue.AbstractDialogue;
 
 public class NPC extends CharacterDecorator{
@@ -25,7 +22,9 @@ public class NPC extends CharacterDecorator{
 
 	private AttackingState atkState;
 	private TalkingState talkState;
-	private WalkingState walkState;
+	private MovingState walkState;
+	
+	private ArrayList<State> currentStates;
 	
 	private State currentState;
 
@@ -41,6 +40,7 @@ public class NPC extends CharacterDecorator{
 	public NPC(GameCharacter character) {
 		super(character);
 		character.setDecorator(this);
+		currentStates = new ArrayList<State>();
 	}
 	
 	private void constructActions(String json) {
@@ -62,6 +62,11 @@ public class NPC extends CharacterDecorator{
 		throw new RuntimeException("Given name of NPC not recognized");
 	}
 	
+	private ArrayList<State> getCurrentStates()
+	{
+		return currentStates;
+	}
+	
 	public void setDialogue (AbstractDialogue dialogue){
 		this.dialogue = dialogue;
 	}
@@ -77,8 +82,7 @@ public class NPC extends CharacterDecorator{
 	public boolean isAlive(){
 		return alive;
 	}
-	
-	@Override
+
 	public void update(long elapsed){
 		currentState.update(elapsed);
 	}
@@ -92,5 +96,9 @@ public class NPC extends CharacterDecorator{
 	{
 		currentState = s;
 	}
-
+	
+	public State getCurrentState()
+	{
+		return currentState;
+	}
 }

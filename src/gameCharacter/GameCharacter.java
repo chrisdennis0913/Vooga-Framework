@@ -8,9 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import level.Level;
-
-import java.util.List;
-
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -22,7 +19,6 @@ import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import controllers.Controller;
 import counters.Counter;
 import evented.Evented;
 import evented.EventedWrapper;

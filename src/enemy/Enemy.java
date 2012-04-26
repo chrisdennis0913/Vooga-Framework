@@ -55,6 +55,9 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	}
 	
 	public void update(long elapsedTime){
+		
+		//stateobject.update(long elapsedTime
+		
 		super.update(elapsedTime);
 	}
 	

@@ -22,7 +22,7 @@
 	"enemies": [
 		{
 			"location": [250, 250],
-			"ai": "INSERT_AI_NAME_HERE",
+			"name": "INSERT_SUBCLASS_NAME_HERE",
 			"directions": "rsc/config/player_directions.json"
 		}
 	],

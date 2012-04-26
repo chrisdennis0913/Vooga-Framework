@@ -194,10 +194,12 @@ public class Level extends AbstractTileBackground implements Evented {
 			JsonArray jLocation = jEnemy.get("location").getAsJsonArray();
 			
 			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
-			String aiName = jEnemy.get("ai").getAsString();
+			String enemyName = jEnemy.get("name").getAsString();
+			
+			//TODO: James, we need some kind of factory thing here
+			Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
+			group.add(enemy.getCharacter());
 		}
-		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
-		group.add(enemy.getCharacter());
 		game.getField().addGroup(group);
 	}
 

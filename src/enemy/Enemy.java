@@ -10,8 +10,6 @@ import java.util.HashMap;
 import utils.JsonUtil;
 import utils.Location;
 
-import collisions.EnemyCollision;
-
 import com.golden.gamedev.Game;
 
 import ai.SimpleAttackAI;

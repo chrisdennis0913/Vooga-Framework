@@ -4,7 +4,8 @@ import gameCharacter.GameCharacter;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import utils.Direction;
 import utils.JsonUtil;
@@ -24,6 +25,7 @@ public class Attacking extends ActionDecorator {
 
 	private KeyHandle keys;
 	private Timer timer = new Timer(250);
+	private List<ActionDecorator> attacks = new ArrayList<ActionDecorator>();
 
 	public Attacking(Attack attack) {
 		super(attack);
@@ -31,80 +33,68 @@ public class Attacking extends ActionDecorator {
 	}
 
 	public void initResources() {
-		Gson gson = new Gson();
 		
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
-		//JsonUtil.JSONPlayerAttacking attacking = (JsonUtil.JSONPlayerAttacking) getJsonObject();
 		JsonObject attacking = getJsonObject();
 		JsonArray jAttackingKeys = attacking.getAsJsonArray("keys");	
 		int[] attackingKeys = JsonUtil.JsonArrayToIntArray(jAttackingKeys);
-		
 		
 		if (attackingKeys == null)
 			new RuntimeException("Attack keys undefined");
 
 		keys.add(Attack.ATTACK_BASIC, attackingKeys);
-		
-		JsonObject dirs = attacking.getAsJsonObject("directions");
-		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
-		
-		Direction[] tempDirections = new Direction[4];
 
-		//for (JsonUtil.JSONDirection direction : dirs.directions) {
-		for(int i=0; i<dirsDirections.size(); i++){
-			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
-			
-			BufferedImage image = getWrapper().getCharacter().getGame()
-					.getImage(direction.get("image").getAsString());
-			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
-					1);			
 
-			int intepretedDirection = 0;
-
-			if (direction.get("direction").getAsString().equals("DIR_DOWN"))
-				intepretedDirection = GameCharacter.DIR_DOWN;
-			else if (direction.get("direction").getAsString().equals("DIR_UP"))
-				intepretedDirection = GameCharacter.DIR_UP;
-			else if (direction.get("direction").getAsString().equals("DIR_LEFT"))
-				intepretedDirection = GameCharacter.DIR_LEFT;
-			else if (direction.get("direction").getAsString().equals("DIR_RIGHT"))
-				intepretedDirection = GameCharacter.DIR_RIGHT;
-			else
-				throw new RuntimeException("Invalid direction specified");
-
-			tempDirections[intepretedDirection] = new Direction(getWrapper()
-					.getCharacter(), images, intepretedDirection, dirs.get("delay").getAsInt());
+		JsonArray attackingAttacks = attacking.getAsJsonArray("attacks");
+		//for (JSONAttack attack : attacking.attacks) {
+		for(int j=0; j<attackingAttacks.size();j++){
+			attacks.add(new StdAttack(new Attack(getWrapper(), attackingAttacks.get(j).getAsJsonObject())));
 		}
+			
+	}
 
-		Attack attack = (Attack) action;
-		
-		attack.directions = Arrays.asList(tempDirections);
+	public void setActiveDirection(int direction) {
+		for (ActionDecorator attack : attacks)
+			if (attack.isEnabled()) {
+				getWrapper().getCharacter().setCurrentDirection(direction);
+				
+				Attack attk = (Attack) action;
+				attk.directions.get(direction).changeCharacter(true);
+			}
+	}
+
+	public boolean isEnabled() {
+		for (ActionDecorator attack : attacks)
+			if (attack.isEnabled())
+				return true;
+		return false;
 	}
 
 	public void update(long elapsed) {
-		super.update(elapsed);
+		if (isEnabled()) {
+			super.update(elapsed);
 
-		int status = keys.checkKeys();
-		GameCharacter character = getWrapper().getCharacter();
+			int status = keys.checkKeys();
+			GameCharacter character = getWrapper().getCharacter();
 
-		if (status != -1) {
-			if (!isActive()) {
-				setActive(true);
-				timer.setActive(true);
-				character.stop();
-				setActiveDirection(character.getCurrentDirection());
-				getWrapper().get("walking").setEnabled(false, true);
+			if (status != -1) {
+				if (!isActive()) {
+					setActive(true);
+					timer.setActive(true);
+					character.stop();
+					setActiveDirection(character.getCurrentDirection());
+					getWrapper().get("walking").setEnabled(false, true);
+				}
+			} else if (isActive()) {
+				if (timer.action(elapsed)) {
+					getWrapper().get("walking").setEnabled(true, false);
+					setActive(false);
+					timer.refresh();
+					timer.setActive(false);
+				}
+
 			}
-		}
-		else if (isActive()) {
-			if (timer.action(elapsed)) {
-				getWrapper().get("walking").setEnabled(true, false);
-				setActive(false);
-				timer.refresh();
-				timer.setActive(false);
-			}
-				
 		}
 	}
 

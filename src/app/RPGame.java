@@ -19,6 +19,8 @@ import com.golden.gamedev.object.Sprite;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import enemy.Enemy;
+
 public class RPGame extends GameObject {
 
 	private final String gameURL = "rsc/config/game.json";
@@ -30,6 +32,7 @@ public class RPGame extends GameObject {
 	private QuestJournal myJournal;
 	String lower, upper;
 	boolean pausedForInventory = false;
+	boolean pausedForStore = false;
 
 	public RPGame(GameEngine parent) {
 		super(parent);
@@ -91,5 +94,14 @@ public class RPGame extends GameObject {
 	public void unPauseGameForInventory() {
 		pausedForInventory = false;
 	}
+	
+	public void pauseGameForStore() {
+		pausedForStore = true;
+	}
+
+	public void unPauseGameForStore() {
+		pausedForStore = false;
+	}
+
 
 }

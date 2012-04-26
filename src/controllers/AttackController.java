@@ -1,10 +1,13 @@
 package controllers;
 
+import evented.EventedItem;
 import gameCharacter.GameCharacter;
 import app.RPGame;
 import attacks.AbstractAttack;
 
-public abstract class AttackController {
+public abstract class AttackController extends EventedItem<Controller> implements Controller{
+
+	private static final long serialVersionUID = 1L;
 
 	protected RPGame game;
 	protected GameCharacter character;
@@ -13,7 +16,7 @@ public abstract class AttackController {
 		this.game = game;
 		this.character = character;
 	}
-	
+
 	public abstract AbstractAttack chooseAttack();
 	public abstract AbstractAttack getCurrentAttack();
 	public abstract boolean isAttacking();

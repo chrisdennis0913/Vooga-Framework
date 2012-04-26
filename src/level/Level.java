@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import enemy.Enemy;
 import evented.Evented;
 import gameCharacter.GameCharacter;
 
@@ -43,11 +44,12 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	Chipset chipsetE;
 	Chipset chipsetF;
+	Chipset chipsetG;
 	Chipset[] chipset;
 
 	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
 	int[][] layer1 = new int[40][25]; // the lower tiles
-	int[][] layer2 = new int[40][25]; // the fringe tiles
+	int[][] layer2 = new int[40][25]; // the upper tiles
 
 	private SystemTimer levelTimer = new SystemTimer();
 	protected long levelStartTime;
@@ -85,6 +87,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		setPlayer(level);
 		setNpcs(level);
 		setItems(level);
+		setEnemies();
 
 		setCollisions();
 	}
@@ -111,6 +114,8 @@ public class Level extends AbstractTileBackground implements Evented {
 		chipsetE = new Chipset(bsloader.getImages("rsc/level/ChipSet2.png", 6,
 				24, false));
 		chipsetF = new Chipset(bsloader.getImages("rsc/level/ChipSet3.png", 6,
+				24));
+		chipsetG = new Chipset(bsloader.getImages("rsc/player/player.png", 6, 
 				24));
 
 		chipset = new Chipset[16];
@@ -181,6 +186,13 @@ public class Level extends AbstractTileBackground implements Evented {
 		}
 		game.getField().addGroup(group);
 	}
+	
+	private void setEnemies(){
+		SpriteGroup group = new SpriteGroup("enemies");
+		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
+		group.add(enemy.getCharacter());
+		game.getField().addGroup(group);
+	}
 
 	private void setTiles(JsonObject level) {
 		String[] lowerTile = FileUtil.fileRead(baseio
@@ -200,9 +212,9 @@ public class Level extends AbstractTileBackground implements Evented {
 				int type = Integer.parseInt(upperToken.nextToken());
 				setSceneryLayer(type, loc, scenery);
 			}
-			
-			//game.getField().addGroup(scenery);
 		}
+		
+		game.getField().addGroup(scenery);
 	}
 
 	private void setSceneryLayer(int type, Location loc, SpriteGroup scenery) {

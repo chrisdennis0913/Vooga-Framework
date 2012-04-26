@@ -7,7 +7,9 @@ import utils.Jsonable;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 
+import actions.Action;
 import actions.Attack;
+import actions.Talk;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -40,18 +42,24 @@ public class Player extends CharacterDecorator implements Jsonable {
 
 		JsonObject walking = actions.getAsJsonObject("walking");
 		JsonObject attacking = actions.getAsJsonObject("attacking");
+		JsonObject talking = actions.getAsJsonObject("talking");
+		JsonObject grabbing = actions.getAsJsonObject("grabbing");
+		
 		if(actions.getAsJsonObject("walking") == null || actions.getAsJsonObject("attacking") == null)
-			throw new RuntimeException("Action undefined for player");
+			throw new RuntimeException("Action undefined for player");		
 
 		character.getActions().add("walking",
-				new Walking(new Walk(character.getActions(), walking)));
+				new Walking(new Action(character.getActions(), walking)));
 		character.getActions().add("attacking",
 				new Attacking(new Attack(character.getActions(), attacking)));
+		character.getActions().add("talking",
+				new Talking(new Talk(character.getActions(), talking)));
+		character.getActions().add("grabbing",
+				new Grabbing(new Action(character.getActions(), grabbing)));
 	}
 
 	public void update(long elapsed) {
-		super.update(elapsed);
-		
+		super.update(elapsed);		
 	}
 
 	@Override
@@ -61,3 +69,4 @@ public class Player extends CharacterDecorator implements Jsonable {
 	}
 	
 }
+

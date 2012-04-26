@@ -20,8 +20,10 @@ public class JsonUtil {
 		for (String line : jsonPacked) {
 			jsonBuilder.append(line);
 		}
+
 		return jsonBuilder.toString();
 	}
+
 	
 	public static int[] JsonArrayToIntArray(JsonArray json){
 		int[] ret = new int[json.size()];
@@ -31,6 +33,18 @@ public class JsonUtil {
 		return ret;		
 	}
 /*
+ * 
+ * 
+	public class JSONPlayerAttacking implements Jsonable {
+		public int[] keys;
+		public JSONAttack[] attacks;
+	}
+	
+	public class JSONAttack implements Jsonable {
+		public String type;
+		public JSONDirections directions;
+	}
+	
 	public class JSONDirections implements Jsonable {
 		public int frames;
 		public int delay;

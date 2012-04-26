@@ -14,7 +14,6 @@ import collisions.EnemyCollision;
 
 import com.golden.gamedev.Game;
 
-import ai.AbstractAttackAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;

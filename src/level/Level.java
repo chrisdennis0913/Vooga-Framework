@@ -179,7 +179,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		SpriteGroup group = new SpriteGroup("enemies");
 		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
 		group.add(enemy.getCharacter());
-		field.addGroup(group);
+		game.getField().addGroup(group);
 	}
 
 	private void setTiles(JsonUtil.JSONLevel level) {

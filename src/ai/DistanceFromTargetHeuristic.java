@@ -11,7 +11,7 @@ public class DistanceFromTargetHeuristic extends AbstractGameHeuristic {
 
 	@Override
 	public double getHeuristic() {
-		double dist = attacker.getDistance(game.getPlayer());
+		double dist = attacker.getDistance(game.getPlayer().getCharacter());
 		return dist;
 	}
 

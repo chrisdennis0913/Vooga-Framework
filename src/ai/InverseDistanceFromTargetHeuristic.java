@@ -11,7 +11,7 @@ public class InverseDistanceFromTargetHeuristic extends AbstractGameHeuristic {
 
 	@Override
 	public double getHeuristic() {
-		double dist = attacker.getDistance(game.getPlayer());
+		double dist = attacker.getDistance(game.getPlayer().getCharacter());
 		if(dist > 0){
 			return 1/dist;
 		}

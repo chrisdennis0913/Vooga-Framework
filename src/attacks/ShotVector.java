@@ -9,7 +9,7 @@ import com.golden.gamedev.object.AnimatedSprite;
 
 public class ShotVector extends AbstractAttackVector {
 
-	private static final String imagePath = "rsc/items/sword.gif";
+	private static final String imagePath = "rsc/items/sword.png";
 	
 	public ShotVector(RPGame game, AbstractVectorAttack owner, double x, double y, double speedX, double speedY) {
 		super(game, owner,x,y, speedX, speedY);

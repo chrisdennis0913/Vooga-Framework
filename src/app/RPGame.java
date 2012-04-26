@@ -17,6 +17,7 @@ import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import enemy.Enemy;
@@ -39,12 +40,9 @@ public class RPGame extends GameObject {
 	}
 
 	public void initResources() {
-		Gson gson = new Gson();
-		//JsonUtil.JSONGame gameJson = gson.fromJson(JsonUtil.getJSON(gameURL),	JsonUtil.JSONGame.class);
-
-		JsonObject gameJson = gson.fromJson(JsonUtil.getJSON(gameURL), JsonObject.class);
 		
-		//level = new Level(bsLoader, bsIO, this, gameJson.level);
+		JsonObject gameJson = JsonUtil.getJSON(gameURL);
+		
 		level = new Level(bsLoader, bsIO, this, gameJson.get("level").getAsString());
 		
 		field.setComparator(new Comparator<Sprite>() {

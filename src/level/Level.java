@@ -28,6 +28,7 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import enemy.Enemy;
@@ -72,12 +73,7 @@ public class Level extends AbstractTileBackground implements Evented {
 	}
 
 	public void initResources() {
-		Gson gson = new Gson();
-		String json = JsonUtil.getJSON(levelname);
-
-		//JsonUtil.JSONLevel level = gson.fromJson(json, JsonUtil.JSONLevel.class);
-		
-		JsonObject level = gson.fromJson(json, JsonObject.class);
+		JsonObject level =  JsonUtil.getJSON(levelname);
 
 		setChipsets();
 		setTiles(level);
@@ -140,9 +136,9 @@ public class Level extends AbstractTileBackground implements Evented {
 		levelStartTime = levelTimer.getTime();
 	}
 
-	private void setPlayer(JsonObject level) {
-		JsonObject jPlayer = level.getAsJsonObject("player");
-		JsonArray jLocation = jPlayer.getAsJsonObject("location").getAsJsonArray();
+	private void setPlayer(JsonObject level) {		
+		JsonObject jPlayer = level.getAsJsonObject("player");		
+		JsonArray jLocation = jPlayer.getAsJsonArray("location");
 		
 		SpriteGroup group = new SpriteGroup("player");
 		int[] location = new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()};
@@ -157,28 +153,25 @@ public class Level extends AbstractTileBackground implements Evented {
 	}
 
 	private void setItems(JsonObject level) {
-		JsonArray inventory = level.getAsJsonArray("inventory");
+		JsonObject inventory = level.getAsJsonObject("inventory");
+		JsonArray items = inventory.getAsJsonArray("items");
 		SpriteGroup group = new SpriteGroup("items");
 
-		//for (JSONItem it : inventory.items) {
-		for(int i=0; i<inventory.size(); i++){
-			JsonObject it = inventory.get(i).getAsJsonObject();
+		for(int i=0; i<items.size(); i++){
+			JsonObject it = items.get(i).getAsJsonObject();
 			Item item = new ConcreteItem(game, it);
 			group.add(item);
 		}
-
 		game.getField().addGroup(group);
 	}
 
 	private void setNpcs(JsonObject level) {
 		JsonArray npcs = level.getAsJsonArray("npcs");
-		//JSONNpc[] npcs = level.npcs;
 		SpriteGroup group = new SpriteGroup("npcs");		
 
-		//for (JSONNpc jsonNpc : npcs) {
 		for(int i=0; i<npcs.size(); i++){
 			JsonObject jsonNpc = npcs.get(i).getAsJsonObject();
-			JsonArray jLocation = jsonNpc.getAsJsonObject("location").getAsJsonArray();			
+			JsonArray jLocation = jsonNpc.get("location").getAsJsonArray();			
 			
 			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
 			NPC npc = new NPC(game, loc, jsonNpc.get("directions").getAsString());

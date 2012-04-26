@@ -28,24 +28,17 @@ public class Player extends CharacterDecorator implements Jsonable {
 	}
 
 	public void initResources() {
-		String json = JsonUtil.getJSON(configURL);
-		constructActions(json);
-		// TODO: constructInventory(inventoryJsonURL)
+		JsonObject actions = JsonUtil.getJSON(configURL);
+		constructActions(actions);
 	}
 
-	private void constructActions(String json) {
-		Gson gson = new Gson();
-		//JsonUtil.JSONPlayerActions actions = gson.fromJson(json,
-				//JsonUtil.JSONPlayerActions.class);
-		JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-		JsonObject actions = jsonObject.getAsJsonObject();
-
-		JsonObject walking = actions.getAsJsonObject("walking");
-		JsonObject attacking = actions.getAsJsonObject("attacking");
-		JsonObject talking = actions.getAsJsonObject("talking");
-		JsonObject grabbing = actions.getAsJsonObject("grabbing");
+	private void constructActions(JsonObject actions) {
+		JsonObject walking = actions.get("walking").getAsJsonObject();
+		JsonObject attacking = actions.get("attacking").getAsJsonObject();
+		JsonObject talking = actions.get("talking").getAsJsonObject();
+		JsonObject grabbing = actions.get("grabbing").getAsJsonObject();
 		
-		if(actions.getAsJsonObject("walking") == null || actions.getAsJsonObject("attacking") == null)
+		if(walking == null || attacking == null)
 			throw new RuntimeException("Action undefined for player");		
 
 		character.getActions().add("walking",

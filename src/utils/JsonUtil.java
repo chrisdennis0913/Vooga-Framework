@@ -4,7 +4,10 @@ package utils;
 import java.io.File;
 
 import com.golden.gamedev.util.FileUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * JSON loader utility for different classes.
@@ -13,7 +16,8 @@ import com.google.gson.JsonArray;
  */
 
 public class JsonUtil {
-	public static String getJSON(String url) {
+	public static JsonObject getJSON(String url) {
+		Gson gson = new Gson();
 		String[] jsonPacked = FileUtil.fileRead(new File(url));
 
 		StringBuilder jsonBuilder = new StringBuilder();
@@ -21,7 +25,7 @@ public class JsonUtil {
 			jsonBuilder.append(line);
 		}
 
-		return jsonBuilder.toString();
+		return gson.fromJson(jsonBuilder.toString(), JsonElement.class).getAsJsonObject();
 	}
 
 	

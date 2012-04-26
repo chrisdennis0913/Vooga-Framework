@@ -1,13 +1,15 @@
 package gameCharacter;
 
+import evented.Evented;
+import evented.EventedWrapper;
 import inventory.Inventory;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
-import level.Level;
 
+import level.Level;
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -18,15 +20,11 @@ import attacks.BehaviorModifierContainer;
 
 import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import controllers.Controller;
-
 import counters.Counter;
-import evented.Evented;
-import evented.EventedWrapper;
 
 /**
  * Basic class for all character game objects: enemies, automated characters,
@@ -78,8 +76,8 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	}
 
 	public void initResources() {
-		String json = JsonUtil.getJSON(configURL);
-		constructDirections(json);
+		JsonObject directions = JsonUtil.getJSON(configURL);
+		constructDirections(directions);
 		stop();
 		inventory = new Inventory(this);
 
@@ -127,17 +125,13 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		return game;
 	}
 	
-	private void constructDirections(String json) {
-		Gson gson = new Gson();
-		//JsonUtil.JSONDirections dirs = gson.fromJson(json, JsonUtil.JSONDirections.class);
-		JsonObject dirs = gson.fromJson(json, JsonObject.class);
+	private void constructDirections(JsonObject dirs) {
 		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
 		
 		Direction[] tempDirections = new Direction[4];
 		
 		for(int i=0; i<dirsDirections.size(); i++){
 			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
-		//for (JsonUtil.JSONDirection direction : dirs.directions) {
 			BufferedImage image = game.getImage(direction.get("image").getAsString());
 			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
 					1);

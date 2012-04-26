@@ -57,11 +57,8 @@ public abstract class Item extends EventedItem<Item>
 
 
     public void initResources () {
-    	JsonArray jLocation = item.getAsJsonObject("location").getAsJsonArray();
-		
-		int[] location = new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()};
-		
-        Location loc = new Location(location);
+    	JsonArray jLocation = item.getAsJsonArray("location");			
+        Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
 
         if (getWrapper() != null) image =
             getWrapper().getCharacter().getGame().getImage(item.get("image").getAsString());

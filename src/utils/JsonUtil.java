@@ -42,6 +42,11 @@ public class JsonUtil {
 
 	public class JSONPlayerAttacking implements Jsonable {
 		public int[] keys;
+		public JSONAttack[] attacks;
+	}
+	
+	public class JSONAttack implements Jsonable {
+		public String type;
 		public JSONDirections directions;
 	}
 	

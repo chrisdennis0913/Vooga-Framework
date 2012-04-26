@@ -1,5 +1,6 @@
 package npc;
 
+import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
 import utils.Location;
 import ai.ScriptedMovementAI;
@@ -21,7 +22,11 @@ public class NPCTest1 extends NPC{
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 	
-	public String getTalk(){
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTalk(DialogueObject choice){
 		if (!hasTalked){
 			hasTalked = true;
 		}

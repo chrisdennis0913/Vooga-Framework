@@ -192,7 +192,7 @@ public class Level extends AbstractTileBackground implements Evented {
 				setSceneryLayer(type, loc, scenery);
 			}
 			
-			//game.getField().addGroup(scenery);
+			game.getField().addGroup(scenery);
 		}
 	}
 

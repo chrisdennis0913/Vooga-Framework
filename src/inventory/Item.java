@@ -10,7 +10,8 @@ import evented.EventedItem;
 import evented.EventedWrapper;
 
 
-public abstract class Item extends EventedItem<Item> implements Sellable, EquipItemInterface //Potion, Accessory, Weapon 
+public abstract class Item extends EventedItem<Item>
+    implements Sellable, EquipItemInterface //Potion, Accessory, Weapon 
 {
 
     /**
@@ -53,7 +54,7 @@ public abstract class Item extends EventedItem<Item> implements Sellable, EquipI
         this.myName = name;
         category = "Item";
         myGroup = new SpriteGroup(myName);
-        System.out.println("Item's GifName is: "+gifName);
+        System.out.println("Item's GifName is: " + gifName);
         this.image = game2.getImage("resources/items/" + gifName + ".gif");
     }
 
@@ -165,7 +166,10 @@ public abstract class Item extends EventedItem<Item> implements Sellable, EquipI
 
 
     public abstract Item parseItem (RPGame game2, String toParse);
-    public void render(Graphics2D g){}
+
+
+    public void render (Graphics2D g) {}
+
 
     public void changeWrapper (EventedWrapper<Item> wrappr) {
         wrapper = wrappr;

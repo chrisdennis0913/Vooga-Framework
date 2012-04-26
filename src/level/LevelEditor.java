@@ -1,9 +1,12 @@
 package level;
 
+import inventory.Item;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Comparator;
 
 import player.Player;
 import quest.QuestJournal;
@@ -60,8 +63,6 @@ public class LevelEditor extends GameObject{
 	boolean pausedForInventory = false;
 	RPGame game;
 	
-	String att1, att2;
-	
 	int 	tilenum;
 	int		tilemode;
 	
@@ -71,11 +72,23 @@ public class LevelEditor extends GameObject{
 				JsonUtil.JSONGame.class);
 
 		level = new Level(bsLoader, bsIO, game, gameJson.level);
+		
+		field.setComparator(new Comparator<Sprite>() {
+			public int compare(Sprite o1, Sprite o2) {
+				if (o1 instanceof Item)
+					return -1;
+				else if (o2 instanceof Item)
+					return 1;
+				return (int) (o1.getY() - o2.getY());
+			}
+		});
+		field.setBackground(level);
 	}
 
 
 	public void update(long elapsedTime) {
 		level.update(elapsedTime);
+		field.update(elapsedTime);
 
 		// navigate
 		if (keyDown(KeyEvent.VK_LEFT)) {

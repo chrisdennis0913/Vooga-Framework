@@ -4,6 +4,11 @@ package utils;
 import java.io.File;
 
 import com.golden.gamedev.util.FileUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 /**
  * JSON loader utility for different classes.
  * 
@@ -11,7 +16,8 @@ import com.golden.gamedev.util.FileUtil;
  */
 
 public class JsonUtil {
-	public static String getJSON(String url) {
+	public static JsonObject getJSON(String url) {
+		Gson gson = new Gson();
 		String[] jsonPacked = FileUtil.fileRead(new File(url));
 
 		StringBuilder jsonBuilder = new StringBuilder();
@@ -19,9 +25,30 @@ public class JsonUtil {
 			jsonBuilder.append(line);
 		}
 
-		return jsonBuilder.toString();
+		return gson.fromJson(jsonBuilder.toString(), JsonElement.class).getAsJsonObject();
 	}
 
+	
+	public static int[] JsonArrayToIntArray(JsonArray json){
+		int[] ret = new int[json.size()];
+		for(int i=0; i<json.size(); i++){
+			ret[i] = json.get(i).getAsInt();
+		}		
+		return ret;		
+	}
+/*
+ * 
+ * 
+	public class JSONPlayerAttacking implements Jsonable {
+		public int[] keys;
+		public JSONAttack[] attacks;
+	}
+	
+	public class JSONAttack implements Jsonable {
+		public String type;
+		public JSONDirections directions;
+	}
+	
 	public class JSONDirections implements Jsonable {
 		public int frames;
 		public int delay;
@@ -42,15 +69,24 @@ public class JsonUtil {
 
 	public class JSONPlayerAttacking implements Jsonable {
 		public int[] keys;
-		public JSONAttack[] attacks;
-	}
-	
-	public class JSONAttack implements Jsonable {
-		public String type;
 		public JSONDirections directions;
 	}
+
+	public class JSONLevel implements Jsonable {
+		public String nextLevel;
+		public String upperFilename;
+		public String lowerFilename;
+		public JSONPlayer player;
+		// public Enemy[] enemies;
+		public NPC[] npcs;
+	}
+
+	public class JSONGame implements Jsonable {
+		public String level;
+
+	}
 	
-	public class JSONPlayerAction implements Jsonable {
+	public class JSONPlayerTalking implements Jsonable {
 		public int[] keys;
 	}
 
@@ -60,21 +96,8 @@ public class JsonUtil {
 		public String lowerFilename;
 		public JSONPlayer player;
 		public JSONNpc[] npcs;
-		public JSONInventory inventory;
-	}
-	
-	public class JSONInventory implements Jsonable {
-		public String type;
-		public JSONItem[] items;
 	}
 
-	public class JSONItem implements Jsonable {
-		public String name;
-		public int[] location;
-		public String image;
-		public int quantity;
-	}
-	
 	public class JSONNpc implements Jsonable {
 		public int[] location;
 		public String directions;
@@ -102,10 +125,10 @@ public class JsonUtil {
 		public int layer;
 	}
 
-	public class JSONPlayerActions implements Jsonable {
+	public class JSONPlayerActions {
 		public JSONPlayerWalking walking;
 		public JSONPlayerAttacking attacking;
-		public JSONPlayerAction talking;
-		public JSONPlayerAction grabbing;
+		public JSONPlayerTalking talking;
 	}
+	*/
 }

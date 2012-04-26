@@ -9,10 +9,9 @@ import java.util.HashMap;
 import utils.JsonUtil;
 import utils.Location;
 
-import collisions.EnemyCollision;
-
 import com.golden.gamedev.Game;
 
+import ai.AbstractPathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
@@ -38,6 +37,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		//constructActions(json);
 		initAttacks();
 		initAttackAI();
+		initMovementAI();
 	}
 	
 	private void constructActions(String json) {
@@ -52,6 +52,10 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	//move to json
 	private void initAttackAI(){
 		character.getControllers().add("AttackAI", new SimpleAttackAI(game,this));
+	}
+	
+	private void initMovementAI(){
+		character.getControllers().add("MovementAI", new AbstractPathFindingAI(game,this.getCharacter()));
 	}
 	
 	public void update(long elapsedTime){

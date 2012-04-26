@@ -12,10 +12,6 @@ import npc.NPCTest1;
 import player.Player;
 import store.ItemStore;
 import utils.JsonUtil;
-import utils.JsonUtil.JSONInventory;
-import utils.JsonUtil.JSONItem;
-import utils.JsonUtil.JSONNpc;
-import utils.JsonUtil.JSONPlayer;
 import utils.Location;
 import app.RPGame;
 import collisions.BoundaryCollision;
@@ -33,6 +29,9 @@ import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import enemy.Enemy;
 import evented.Evented;
@@ -77,11 +76,7 @@ public class Level extends AbstractTileBackground implements Evented {
 	}
 
 	public void initResources() {
-		Gson gson = new Gson();
-		String json = JsonUtil.getJSON(levelname);
-
-		JsonUtil.JSONLevel level = gson
-				.fromJson(json, JsonUtil.JSONLevel.class);
+		JsonObject level =  JsonUtil.getJSON(levelname);
 
 		setChipsets();
 		setTiles(level);
@@ -144,32 +139,37 @@ public class Level extends AbstractTileBackground implements Evented {
 		levelStartTime = levelTimer.getTime();
 	}
 
-	private void setPlayer(JsonUtil.JSONLevel level) {
-		JSONPlayer jPlayer = level.player;
+	private void setPlayer(JsonObject level) {		
+		JsonObject jPlayer = level.getAsJsonObject("player");		
+		JsonArray jLocation = jPlayer.getAsJsonArray("location");
+		
 		SpriteGroup group = new SpriteGroup("player");
-
-		Location playerLoc = new Location(jPlayer.location);
+		int[] location = new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()};
+		
+		Location playerLoc = new Location(location);
 		Player player = new Player(new GameCharacter(game, playerLoc,
-				jPlayer.directionsURL), jPlayer.actionsURL);
+				jPlayer.get("directionsURL").getAsString()), jPlayer.get("actionsURL").getAsString());
 
 		game.setPlayer(player);
 		group.add(player.getCharacter());
 		game.getField().addGroup(group);
 	}
 
-	private void setItems(JsonUtil.JSONLevel level) {
-		JSONInventory inventory = level.inventory;
+	private void setItems(JsonObject level) {
+		JsonObject inventory = level.getAsJsonObject("inventory");
+		JsonArray items = inventory.getAsJsonArray("items");
 		SpriteGroup group = new SpriteGroup("items");
 
-		for (JSONItem it : inventory.items) {
+		for(int i=0; i<items.size(); i++){
+			JsonObject it = items.get(i).getAsJsonObject();
 			Item item = new ConcreteItem(game, it);
 			group.add(item);
 			System.out.println("Added concrete item to sprite group");
 		}
-
 		game.getField().addGroup(group);
 	}
 
+<<<<<<< HEAD
 	private void setNpcs(JsonUtil.JSONLevel level) {
 		JSONNpc[] npcs = level.npcs;
 		SpriteGroup group = new SpriteGroup("npcs");
@@ -178,6 +178,19 @@ public class Level extends AbstractTileBackground implements Evented {
 			Location loc = new Location(jsonNpc.location);
 			NPC npc = new NPCTest1(new GameCharacter(game, loc, jsonNpc.directions));
 			group.add(npc.getCharacter());
+=======
+	private void setNpcs(JsonObject level) {
+		JsonArray npcs = level.getAsJsonArray("npcs");
+		SpriteGroup group = new SpriteGroup("npcs");		
+
+		for(int i=0; i<npcs.size(); i++){	
+			JsonObject jNPC = npcs.get(i).getAsJsonObject();
+			JsonArray jLocation = jNPC.get("location").getAsJsonArray();
+			
+			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
+			NPC npc = new NPCTest1(new GameCharacter(game, loc, jNPC.get("directions").getAsString()));
+			group.add(npc.getCharacter());
+>>>>>>> origin/master
 		}
 		game.getField().addGroup(group);
 	}
@@ -189,11 +202,11 @@ public class Level extends AbstractTileBackground implements Evented {
 		game.getField().addGroup(group);
 	}
 
-	private void setTiles(JsonUtil.JSONLevel level) {
+	private void setTiles(JsonObject level) {
 		String[] lowerTile = FileUtil.fileRead(baseio
-				.getStream(level.lowerFilename));
+				.getStream(level.get("lowerFilename").getAsString()));
 		String[] upperTile = FileUtil.fileRead(baseio
-				.getStream(level.upperFilename));
+				.getStream(level.get("upperFilename").getAsString()));
 
 		SpriteGroup scenery = new SpriteGroup("scenery");
 

@@ -1,5 +1,7 @@
 package gameCharacter;
 
+import evented.Evented;
+import evented.EventedWrapper;
 import inventory.Inventory;
 
 import java.awt.Graphics2D;
@@ -7,10 +9,12 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 
-import npc.NPC;
 import level.Level;
+<<<<<<< HEAD
 
 import store.ItemStore;
+=======
+>>>>>>> origin/master
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -21,13 +25,11 @@ import attacks.BehaviorModifierContainer;
 
 import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import controllers.Controller;
-
 import counters.Counter;
-import evented.Evented;
-import evented.EventedWrapper;
 
 /**
  * Basic class for all character game objects: enemies, automated characters,
@@ -43,7 +45,8 @@ import evented.EventedWrapper;
  * @author Kirill Klimuk
  */
 
-public class GameCharacter extends AnimatedSprite implements CharacterInterface, Evented {
+public class GameCharacter extends AnimatedSprite implements
+		CharacterInterface, Evented {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,77 +55,74 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 
 	private int curDirection = 0;
 	private List<Direction> directions;
-	private Velocity velocity = new Velocity(0.15);
+	private Velocity velocity = new Velocity(0.05);
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
 	protected ItemStore store;
 
 	private String configURL;
-	
-	Level level;
 
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
-	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(this);
-	private EventedWrapper<Controller> controllers = new EventedWrapper<Controller>(this);
-	private	BehaviorModifierContainer behaviorModifiers = new BehaviorModifierContainer();
+	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(
+			this);
+	private EventedWrapper<Controller> controllers = new EventedWrapper<Controller>(
+			this);
+	private BehaviorModifierContainer behaviorModifiers = new BehaviorModifierContainer();
 
 	public static final int DIR_DOWN = 0;
 	public static final int DIR_UP = 1;
 	public static final int DIR_LEFT = 2;
 	public static final int DIR_RIGHT = 3;
 
-
 	public GameCharacter(RPGame game, Location loc, String configURL) {
 		super(loc.getX(), loc.getY());
 		this.game = game;
-		this.level = game.level;
 		this.configURL = configURL;
 		initResources();
 	}
 
 	public void initResources() {
-		String json = JsonUtil.getJSON(configURL);
-		constructDirections(json);
+		JsonObject directions = JsonUtil.getJSON(configURL);
+		constructDirections(directions);
 		stop();
 		inventory = new Inventory(this);
 
 	}
 
-	public void render(Graphics2D g) {	
+	public void render(Graphics2D g) {
 		super.render(g);
 		counters.render(g);
 		actions.render(g);
 		inventory.render(g);
 		controllers.render(g);
 	}
-	
-	public Location getLocation()
-	{
+
+	public Location getLocation() {
 		return new Location((int) this.getX(), (int) this.getY());
 	}
-		
-	
+
 	public void update(long elapsed) {
 		behaviorModifiers.setUpAll(elapsed);
-	
+
 		counters.update(elapsed);
 		actions.update(elapsed);
 		controllers.update(elapsed);
+		inventory.update(elapsed);
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
-		inventory.update(elapsed);
+		
 		behaviorModifiers.unsetUpAll(elapsed);
 	}
-	
+
 	public double[] getVelocity(int direction) {
 		return velocity.get(direction);
 	}
-	
+
 	public double getSpeed() {
 		return velocity.getSpeed();
 	}
-	
+
 	public void setVelocity(double speed) {
 		this.curVelocity.set(speed);
 	}
@@ -130,51 +130,50 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public RPGame getGame() {
 		return game;
 	}
+
 	
-	private void constructDirections(String json) {
-		Gson gson = new Gson();
-		JsonUtil.JSONDirections dirs = gson.fromJson(json,
-				JsonUtil.JSONDirections.class);
-
+	private void constructDirections(JsonObject dirs) {
+		JsonArray dirsDirections = dirs.getAsJsonArray("directions");
+		
 		Direction[] tempDirections = new Direction[4];
-
-		for (JsonUtil.JSONDirection direction : dirs.directions) {
-			BufferedImage image = game.getImage(direction.image);
-			BufferedImage[] images = ImageUtil.splitImages(image, dirs.frames,
+		
+		for(int i=0; i<dirsDirections.size(); i++){
+			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
+			BufferedImage image = game.getImage(direction.get("image").getAsString());
+			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
 					1);
 
 			int intepretedDirection = 0;
 
-			if (direction.direction.equals("DIR_DOWN"))
+			if (direction.get("direction").getAsString().equals("DIR_DOWN"))
 				intepretedDirection = GameCharacter.DIR_DOWN;
-			else if (direction.direction.equals("DIR_UP"))
+			else if (direction.get("direction").getAsString().equals("DIR_UP"))
 				intepretedDirection = GameCharacter.DIR_UP;
-			else if (direction.direction.equals("DIR_LEFT"))
+			else if (direction.get("direction").getAsString().equals("DIR_LEFT"))
 				intepretedDirection = GameCharacter.DIR_LEFT;
-			else if (direction.direction.equals("DIR_RIGHT"))
+			else if (direction.get("direction").getAsString().equals("DIR_RIGHT"))
 				intepretedDirection = GameCharacter.DIR_RIGHT;
 			else
 				throw new RuntimeException("Invalid direction specified");
 
 			tempDirections[intepretedDirection] = new Direction(this, images,
-					intepretedDirection, dirs.delay);
+					intepretedDirection, dirs.get("delay").getAsInt());
 		}
-
 		directions = Arrays.asList(tempDirections);
 	}
 
 	public EventedWrapper<ActionInterface> getActions() {
 		return actions;
 	}
-	
+
 	public EventedWrapper<Counter> getCounters() {
 		return counters;
 	}
-	
+
 	public EventedWrapper<Controller> getControllers() {
 		return controllers;
 	}
-	
+
 	public boolean isCurrentDirection(int direction) {
 		return direction == curDirection;
 	}
@@ -182,7 +181,7 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public int getCurrentDirection() {
 		return curDirection;
 	}
-	
+
 	public void setCurrentDirection(int direction) {
 		curDirection = direction;
 	}
@@ -196,16 +195,21 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 		curVelocity.set(0);
 		directions.get(curDirection).changeCharacter(false);
 	}
-	
-	public Inventory getInventory(){
-	    return inventory;
+
+	public Inventory getInventory() {
+		return inventory;
 	}
+<<<<<<< HEAD
 	
 	public ItemStore getStore(){
 		return store;
 	}
 	
 	public BehaviorModifierContainer getBehaviorModifiers(){
+=======
+
+	public BehaviorModifierContainer getBehaviorModifiers() {
+>>>>>>> origin/master
 		return behaviorModifiers;
 	}
 	

@@ -12,6 +12,7 @@ public class AttackVectorCollision extends BasicCollisionGroup{
 	
 	public AttackVectorCollision(AbstractVectorAttack owner){
 		this.owner = owner;
+		pixelPerfectCollision = true;
 	}
 	
 	@Override

@@ -199,4 +199,8 @@ public class GameCharacter extends AnimatedSprite implements CharacterInterface,
 	public BehaviorModifierContainer getBehaviorModifiers(){
 		return behaviorModifiers;
 	}
+	
+	public void setDecorator(CharacterDecorator decorator){
+		
+	}
 }

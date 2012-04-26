@@ -2,16 +2,17 @@ package player;
 
 import actions.Attack;
 
-public class SwordAttack extends Attacking {
+public class SwordAttack {
 
-	private static final long serialVersionUID = 1L;
+	Attack attack;
 
 	public SwordAttack(Attack attack) {
-		super(attack);
+		this.attack = attack;
 	}
 
 	public boolean isEnabled() {
-		return getWrapper().getCharacter().getInventory().isEquipped("sword");
+		return attack.getWrapper().getCharacter().getInventory()
+				.isEquipped("sword");
 	}
 
 }

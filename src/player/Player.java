@@ -36,9 +36,7 @@ public class Player extends CharacterDecorator {
 		character.getActions().add("walking",
 				new Walking(new Action(character.getActions(), actions.walking)));
 		character.getActions().add("attacking",
-				new SwordAttack(new Attack(character.getActions(), actions.attacking)));
-		character.getActions().add("attacking",
-				new BowAttack(new Attack(character.getActions(), actions.attacking)));
+				new Attacking(new Attack(character.getActions(), actions.attacking)));
 		character.getActions().add("talking",
 				new Talking(new Talk(character.getActions(), actions.talking)));
 		character.getActions().add("grabbing",

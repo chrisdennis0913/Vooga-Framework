@@ -76,6 +76,7 @@ public class RPGame extends GameObject {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
 	    }
+	    
 	    player.getCharacter().getJournal().update(elapsed);
 	    
 		field.update(elapsed);

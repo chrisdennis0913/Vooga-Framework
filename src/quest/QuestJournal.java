@@ -36,6 +36,13 @@ public class QuestJournal
 		qu.addObserver(qg);
 	}
 	
+	public void completeQuest(Quest qu)
+	{
+		qu.completeQuest(gC.getGame());
+		myCurrentQuests.remove(qu);
+		myCompletedQuests.add(qu);
+	}
+	
 	public void removeQuest(Quest qu)
 	{
 		myCurrentQuests.remove(qu);

@@ -10,7 +10,7 @@ import com.golden.gamedev.GameObject;
 
 public class Main extends GameEngine {
 	
-	public static final int GAME_MODE = 1;
+	public static final int TITLE = 0, GAME_MODE = 1;
 	
 	public String configURL;
 	
@@ -20,11 +20,13 @@ public class Main extends GameEngine {
 	
 	public void initResources() {
 		nextGameID = GAME_MODE;
+		//nextGameID = TITLE;
 	}
 	
 	public GameObject getGame(int GameID) {
 		switch (GameID) {
 			case GAME_MODE : return new RPGame(this, configURL);
+			case TITLE : return new Title(this);
 		}
 		return null;
 	}

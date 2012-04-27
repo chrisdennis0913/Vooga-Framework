@@ -20,7 +20,6 @@ import app.Main;
 import app.RPGame;
 
 import com.golden.gamedev.Game;
-import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.util.FileUtil;
 import com.google.gson.JsonArray;
@@ -133,6 +132,7 @@ public class MapEditor extends Game {
 							att2 = JOptionPane.showInputDialog("Attribute2:");
 							//save sprite
 							Location loc = new Location(new int[]{getMouseX(), getMouseY()});
+							game.bsLoader = bsLoader;
 							Player player = new Player(new GameCharacter(game, loc,
 									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
 							jPlayer = player.toJson();
@@ -275,7 +275,6 @@ public class MapEditor extends Game {
 			g.setColor(Color.BLACK);
 			g.drawRect(600, 40, 32, 32);
 		}
-		
 		Point tileAt = map.getTileAt(getMouseX(), getMouseY());
 		if (tileAt != null) {
 			g.setColor(Color.WHITE);

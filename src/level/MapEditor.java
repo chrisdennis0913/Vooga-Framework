@@ -30,14 +30,15 @@ import com.google.gson.JsonPrimitive;
 /**
  * Arrow key	: navigate
  * Space		: switch lower/upper tile
- * Page down	: next tile
- * Page up		: prev tile
- * End			: fast next tile
- * Home			: fast prev tile
+ * A			: next tile
+ * D			: prev tile
+ * W			: fast next tile
+ * S			: fast prev tile
  * Right click	: select tile
  * Click		: put tile
  * Ctrl + S		: save
  */
+
 public class MapEditor extends Game {
 
 	Map 	map;
@@ -93,12 +94,12 @@ public class MapEditor extends Game {
 		}
 
 		// next/prev tile
-		if (keyPressed(KeyEvent.VK_PAGE_DOWN) || keyDown(KeyEvent.VK_END)) {
+		if (keyPressed(KeyEvent.VK_A) || keyDown(KeyEvent.VK_D)) {
 			if (++tilenum > getChipsetLength()) {
 				tilenum = getChipsetLength();
 			}
 		}
-		if (keyPressed(KeyEvent.VK_PAGE_UP) || keyDown(KeyEvent.VK_HOME)) {
+		if (keyPressed(KeyEvent.VK_W) || keyDown(KeyEvent.VK_S)) {
 			if (--tilenum < 0) {
 				tilenum = 0;
 			}

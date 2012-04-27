@@ -3,6 +3,7 @@ package level;
 import gameCharacter.GameCharacter;
 import inventory.ConcreteItem;
 import inventory.Item;
+import inventory.SuperAccessory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
@@ -30,7 +31,6 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import demoGame.SuperAccessory;
 import enemy.AbstractEnemy;
 import evented.Evented;
 

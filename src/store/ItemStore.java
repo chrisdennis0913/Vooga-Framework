@@ -5,20 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.MalformedURLException;
 import java.util.HashMap;
-
-import player.Player;
-
-import menu.InventoryMenu;
-
-import utils.Location;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.font.SystemFont;
-import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.JsonArray;
+
 import com.google.gson.JsonObject;
 
 import evented.EventedWrapper;
@@ -27,7 +18,6 @@ import app.RPGame;
 import app.RPGame.Pausable;
 import inventory.Inventory;
 import inventory.Item;
-import gameCharacter.GameCharacter;
 
 /**
  * Creates the store with it's own inventory
@@ -44,13 +34,11 @@ public class ItemStore extends EventedWrapper<Item> {
 	private JsonObject item;
 	protected int price;
 	private BufferedImage image;
-	private StoreManagerNPC manager;
-	private Player player;
 	
-	public ItemStore(GameCharacter character, RPGame game) {
-		super(character);
+	public ItemStore(StoreManagerNPC manager, RPGame game) {
+		super(manager.getCharacter());
 		this.game = game;
-		myInventory = new Inventory(player.getCharacter());
+		myInventory = new Inventory(manager.getCharacter());
 		
 	}
 	
@@ -98,7 +86,6 @@ public class ItemStore extends EventedWrapper<Item> {
 	public void openStore() {
 		storeOpen = true;
 		game.pauseGameFor(Pausable.STORE);
-
 	}
 
 	public void render(Graphics2D g) {
@@ -110,7 +97,7 @@ public class ItemStore extends EventedWrapper<Item> {
 		drawBoxes(g);
 		int x = 0;
 		int y = 0;
-		for (Item currentItem : myInventory) {
+		for (Item currentItem : getInventory()) {
 			if (x > 5)
 				break;
 			String currentItemName = currentItem.getName();

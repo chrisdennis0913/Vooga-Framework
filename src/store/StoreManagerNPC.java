@@ -22,7 +22,7 @@ public class StoreManagerNPC extends NPC{
 
 	public StoreManagerNPC(GameCharacter character) {
 		super(character);
-		myStore = new ItemStore(this.getCharacter(), this.getCharacter().getGame());
+		myStore = new ItemStore(this, this.getCharacter().getGame());
 		dialogue = new SimpleDialogue("rsc/store/storeSpeech.txt");
 		State s = new TalkingState();
 		this.setCurrentState(s);

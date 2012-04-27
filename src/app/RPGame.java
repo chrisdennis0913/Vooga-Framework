@@ -83,6 +83,11 @@ public class RPGame extends GameObject {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
 	        }
+	    if (isPausedFor(Pausable.STORE))
+	    {
+	        manager.getStore().update(elapsed);
+	        return;
+	        }
 
 	    player.getCharacter().getJournal().update(elapsed);
 

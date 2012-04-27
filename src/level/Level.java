@@ -11,6 +11,7 @@ import npc.NPC;
 import player.Player;
 import player.Projectile;
 import store.ItemStore;
+import store.StoreManagerNPC;
 import utils.JsonUtil;
 import utils.Location;
 import app.RPGame;
@@ -59,6 +60,7 @@ public class Level extends AbstractTileBackground implements Evented {
     protected RPGame game;
     private LevelInventory<Item> inventory;
     private ItemStore store;
+    private StoreManagerNPC manager;
 
 
     public Level (BaseLoader bsLoader,
@@ -72,7 +74,6 @@ public class Level extends AbstractTileBackground implements Evented {
         this.levelname = levelname;
         this.baseio = bsIO;
         this.bsloader = bsLoader;
-        this.store = new ItemStore(null, game);
 
         initResources();
     }
@@ -84,11 +85,11 @@ public class Level extends AbstractTileBackground implements Evented {
         setChipsets();
         setTiles(level);
         setSize(layer1.length, layer1[0].length);
-        setLevelTimer1();
+        setLevelTimer();
 
-        setPlayer1(level);
+        setPlayer(level);
         setNpcs(level);
-        setItems1(level);
+        setItems(level);
         setEnemies(level);
         setStore(level);
 
@@ -131,7 +132,7 @@ public class Level extends AbstractTileBackground implements Evented {
         chipsetF =
             new Chipset(bsloader.getImages("rsc/level/ChipSet3.png", 6, 24));
         chipsetG =
-            new Chipset(bsloader.getImages("rsc/player/player.png", 6, 24));
+            new Chipset(bsloader.getImages("rsc/player/playerstart.png", 6, 24));
 
         chipset = new Chipset[16];
         BufferedImage[] image =
@@ -154,43 +155,6 @@ public class Level extends AbstractTileBackground implements Evented {
     	return store;
     }
 
-
-    private void setLevelTimer1 () {
-        levelTimer.setFPS(100);
-        levelTimer.startTimer();
-        levelStartTime = levelTimer.getTime();
-    }
-
-
-    private void setPlayer1 (JsonObject level) {
-        JsonObject jPlayer = level.getAsJsonObject("player");
-        JsonArray jLocation = jPlayer.getAsJsonArray("location");
-
-        SpriteGroup group = new SpriteGroup("player");
-        int[] location =
-            new int[] {
-                    jLocation.get(0).getAsInt(),
-                    jLocation.get(1).getAsInt() };
-
-        Location playerLoc = new Location(location);
-        Player player =
-            new Player(new GameCharacter(game,
-                                         playerLoc,
-                                         jPlayer.get("directionsURL")
-                                                .getAsString()),
-                       jPlayer.get("actionsURL").getAsString());
-
-        game.setPlayer(player);
-        group.add(player.getCharacter());
-        game.getField().addGroup(group);
-    }
-
-
-    private void setItems1(JsonObject level) {
-		JsonObject inventory = level.getAsJsonObject("inventory");
-		JsonArray items = inventory.getAsJsonArray("items");
-		SpriteGroup group = new SpriteGroup("items");
-    }
 
 	private void setLevelTimer() {
 		levelTimer.setFPS(100);

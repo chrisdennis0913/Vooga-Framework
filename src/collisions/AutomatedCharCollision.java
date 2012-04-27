@@ -18,13 +18,12 @@ public class AutomatedCharCollision extends BasicCollisionGroup {
 		if (npc.hasDialogue()){
 			setTalking((GameCharacter) character, npc);
 		}
-		overlap(character, npcChar);
 		if (npc.getClass().equals(StoreManagerNPC.class)){
 			store = ((StoreManagerNPC) npc).getStore();
 			System.out.println("Got to store");
 			store.openStore();
 		}
-	
+		overlap(character, npcChar);	
 	}
 
 	protected void overlap(Sprite player, Sprite npc) {		

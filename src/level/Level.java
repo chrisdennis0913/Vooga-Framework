@@ -11,6 +11,7 @@ import npc.NPC;
 import player.Player;
 import player.Projectile;
 import store.ItemStore;
+import store.StoreManagerNPC;
 import utils.JsonUtil;
 import utils.Location;
 import app.RPGame;
@@ -36,104 +37,124 @@ import evented.Evented;
 
 public class Level extends AbstractTileBackground implements Evented {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final String levelname;
-	private BaseIO baseio;
-	private BaseLoader bsloader;
+    private final String levelname;
+    private BaseIO baseio;
+    private BaseLoader bsloader;
 
-	Chipset chipsetE;
-	Chipset chipsetF;
-	Chipset chipsetG;
-	Chipset[] chipset;
+    Chipset chipsetE;
+    Chipset chipsetF;
+    Chipset chipsetG;
+    Chipset[] chipset;
 
-	private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
-	int[][] layer1 = new int[40][25]; // the lower tiles
-	int[][] layer2 = new int[40][25]; // the upper tiles
+    private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
+    int[][] layer1 = new int[40][25]; // the lower tiles
+    int[][] layer2 = new int[40][25]; // the upper tiles
 
-	private SystemTimer levelTimer = new SystemTimer();
-	protected long levelStartTime;
-	protected String nextLevelName;
-	protected String startText;
+    private SystemTimer levelTimer = new SystemTimer();
+    protected long levelStartTime;
+    protected String nextLevelName;
+    protected String startText;
 
-	protected RPGame game;
-	private LevelInventory<Item> inventory;
-	private ItemStore store;
+    protected RPGame game;
+    private LevelInventory<Item> inventory;
+    private ItemStore store;
+    private StoreManagerNPC manager;
 
-	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game, String levelname) {
-		super(0, 0, TILE_WIDTH, TILE_HEIGHT);
-		this.game = game;
-		this.inventory = new LevelInventory<Item>(game);
-		this.levelname = levelname;
-		this.baseio = bsIO;
-		this.bsloader = bsLoader;
 
-		initResources();
-	}
+    public Level (BaseLoader bsLoader,
+                  BaseIO bsIO,
+                  RPGame game,
+                  String levelname) {
+        super(0, 0, TILE_WIDTH, TILE_HEIGHT);
 
-	public void initResources() {
-		JsonObject level = JsonUtil.getJSON(levelname);
+        this.game = game;
+        this.inventory = new LevelInventory<Item>(game);
+        this.levelname = levelname;
+        this.baseio = bsIO;
+        this.bsloader = bsLoader;
 
-		setChipsets();
-		setTiles(level);
-		setSize(layer1.length, layer1[0].length);
-		setLevelTimer();
+        initResources();
+    }
 
-		setPlayer(level);
-		setNpcs(level);
-		setItems(level);
-		setEnemies(level);
 
-		setCollisions();
-	}
+    public void initResources () {
+        JsonObject level = JsonUtil.getJSON(levelname);
 
-	private void setCollisions() {
-		SceneryCollision sceneCol = new SceneryCollision();
-		ItemCollision itCol = new ItemCollision();
-		NPCCollision collision = new NPCCollision();
-		EnemyCollision enCol = new EnemyCollision();
-		BoundaryCollision boundCol = new BoundaryCollision(this);
-		PlayerProjectileCollision projCol = new PlayerProjectileCollision();
+        setChipsets();
+        setTiles(level);
+        setSize(layer1.length, layer1[0].length);
+        setLevelTimer();
 
-		PlayField field = game.getField();
-		SpriteGroup player = field.getGroup("player");
+        setPlayer(level);
+        setNpcs(level);
+        setItems(level);
+        setEnemies(level);
+        setStore(level);
 
-		game.getField().addCollisionGroup(player, field.getGroup("npcs"),
-				collision);
-		game.getField().addCollisionGroup(player, field.getGroup("items"),
-				itCol);
-		game.getField().addCollisionGroup(player, field.getGroup("scenery"),
-				sceneCol);
-		game.getField().addCollisionGroup(player, field.getGroup("enemies"),
-				enCol);
-		game.getField().addCollisionGroup(player, null, boundCol);
-		game.getField().addCollisionGroup(field.getGroup("enemies"),
-				field.getGroup("projectiles"), projCol);
-	}
+        setCollisions();
+    }
 
-	private void setChipsets() {
-		chipsetE = new Chipset(bsloader.getImages("rsc/level/ChipSet2.png", 6,
-				24, false));
-		chipsetF = new Chipset(bsloader.getImages("rsc/level/ChipSet3.png", 6,
-				24));
-		chipsetG = new Chipset(bsloader.getImages("rsc/player/playerstart.png",
-				6, 24));
 
-		chipset = new Chipset[16];
-		BufferedImage[] image = bsloader.getImages("rsc/level/ChipSet1.png", 4,
-				4, false);
-		int[] chipnum = new int[] { 0, 1, 4, 5, 8, 9, 11, 12, 2, 3, 6, 7, 10,
-				11, 14, 15 };
-		for (int i = 0; i < chipset.length; i++) {
-			int num = chipnum[i];
-			BufferedImage[] chips = ImageUtil.splitImages(image[num], 3, 4);
-			chipset[i] = new Chipset(chips);
-		}
-	}
+    private void setCollisions () {
+        SceneryCollision sceneCol = new SceneryCollision();
+        ItemCollision itCol = new ItemCollision();
+        NPCCollision collision = new NPCCollision();
+        EnemyCollision enCol = new EnemyCollision();
+        BoundaryCollision boundCol = new BoundaryCollision(this);
 
-	public LevelInventory<Item> getInventory() {
-		return inventory;
-	}
+        PlayField field = game.getField();
+        SpriteGroup player = field.getGroup("player");
+
+        game.getField().addCollisionGroup(player,
+                                          field.getGroup("npcs"),
+                                          collision);
+        game.getField().addCollisionGroup(player,
+                                          field.getGroup("items"),
+                                          itCol);
+        game.getField().addCollisionGroup(player,
+                                          field.getGroup("scenery"),
+                                          sceneCol);
+        game.getField().addCollisionGroup(player,
+                                          field.getGroup("enemies"),
+                                          enCol);
+        game.getField().addCollisionGroup(player, null, boundCol);
+    }
+
+
+    private void setChipsets () {
+        chipsetE =
+            new Chipset(bsloader.getImages("rsc/level/ChipSet2.png",
+                                           6,
+                                           24,
+                                           false));
+        chipsetF =
+            new Chipset(bsloader.getImages("rsc/level/ChipSet3.png", 6, 24));
+        chipsetG =
+            new Chipset(bsloader.getImages("rsc/player/playerstart.png", 6, 24));
+
+        chipset = new Chipset[16];
+        BufferedImage[] image =
+            bsloader.getImages("rsc/level/ChipSet1.png", 4, 4, false);
+        int[] chipnum =
+            new int[] { 0, 1, 4, 5, 8, 9, 11, 12, 2, 3, 6, 7, 10, 11, 14, 15 };
+        for (int i = 0; i < chipset.length; i++) {
+            int num = chipnum[i];
+            BufferedImage[] chips = ImageUtil.splitImages(image[num], 3, 4);
+            chipset[i] = new Chipset(chips);
+        }
+    }
+
+
+    public LevelInventory<Item> getInventory () {
+        return inventory;
+    }
+    
+    public ItemStore getStore(){
+    	return store;
+    }
+
 
 	private void setLevelTimer() {
 		levelTimer.setFPS(100);
@@ -172,6 +193,23 @@ public class Level extends AbstractTileBackground implements Evented {
 		SpriteGroup projectiles = new SpriteGroup("projectiles");
 		game.getField().addGroup(projectiles);
 		
+		game.getField().addGroup(group);
+	}
+    
+    private void setStore(JsonObject level) {
+		JsonObject store = level.getAsJsonObject("store");
+		JsonArray storeItems = store.getAsJsonArray("storeItems");
+		SpriteGroup group = new SpriteGroup("storeItems");
+
+		for (int i = 0; i < storeItems.size(); i++) {
+			JsonObject it = storeItems.get(i).getAsJsonObject();
+			Item item = null;
+			item = new ConcreteItem(game, it);
+//			if (it.get("name").getAsString().contains("money")){
+//			    item.setEquippable(false);
+//			}
+			group.add(item);
+		}
 		game.getField().addGroup(group);
 	}
 

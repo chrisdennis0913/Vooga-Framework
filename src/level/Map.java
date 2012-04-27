@@ -5,15 +5,12 @@ package level;
 import java.awt.*;
 import java.awt.image.*;
 import java.util.StringTokenizer;
-
-import level.Level.Chipset;
-
-import com.golden.gamedev.object.*;
 import com.golden.gamedev.object.background.abstraction.*;
 import com.golden.gamedev.util.*;
 import com.golden.gamedev.engine.*;
 
 
+@SuppressWarnings("serial")
 public class Map extends AbstractTileBackground {
 
 	public static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;

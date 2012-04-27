@@ -1,7 +1,7 @@
 package utils;
 
-import java.io.*;
-import javax.swing.*;
+import java.io.File;
+
 import javax.swing.filechooser.FileFilter;
 
 public class LoadFileFilter extends FileFilter {

@@ -1,7 +1,5 @@
 package level;
 
-import enemy.AbstractEnemy;
-import enemy.TestEnemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.Color;
@@ -15,8 +13,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
-
-import npc.NPC;
 
 import player.Player;
 import utils.Location;

@@ -3,7 +3,7 @@ package enemy;
 import gameCharacter.GameCharacter;
 import state.MovingAttackingState;
 import ai.GreedyPathFindingAI;
-import ai.SimpleAttackAI;
+import ai.TestDecisionTableAI;
 import app.RPGame;
 
 import com.google.gson.JsonObject;
@@ -35,7 +35,7 @@ public class TestEnemy extends AbstractEnemy{
 	}
 	
 	public void initAI(String json) {
-		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
+		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new TestDecisionTableAI(game,this)));
 	}
 
 	public static class TestEnemyFactory extends EnemyFactory{

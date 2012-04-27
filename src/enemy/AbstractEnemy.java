@@ -25,7 +25,6 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	public static ArrayList<EnemyFactory> enemyFactories = new ArrayList<EnemyFactory>();
 	private boolean alive = true;
 	protected RPGame game;
-	protected JsonObject jEnemy;
 	
 	private State currentState;
 	protected int moneyValue;
@@ -33,8 +32,15 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 
 	public AbstractEnemy(GameCharacter character, String name, JsonObject jEnemy) {
 		super(character);
-		this.jEnemy = jEnemy;
 		this.name = name;
+		initAttacks(jEnemy);
+		character.setDecorator(this);
+	}
+	
+	public AbstractEnemy(GameCharacter character, String name, String[] attacks) {
+		super(character);
+		this.name = name;
+		initAttacks(attacks);
 		character.setDecorator(this);
 	}
 	
@@ -43,7 +49,6 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 
 	public void initResources() {
-		initAttacks(jEnemy);
 		getCharacter().getCounters().add("health",
 				new EnemyHealth(getCharacter().getCounters(), 2));
 		initAI(null);
@@ -55,6 +60,12 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		for(JsonElement e: json.get("attacks").getAsJsonArray()){
 			String attackName = e.getAsString();
 			attacks.put(attackName, EnemyAttacks.createAttack(attackName, game, this));
+		}
+	}
+	
+	protected void initAttacks(String[] attackNames){
+		for(String at:attackNames){
+			attacks.put(at, EnemyAttacks.createAttack(at, game, this));
 		}
 	}
 

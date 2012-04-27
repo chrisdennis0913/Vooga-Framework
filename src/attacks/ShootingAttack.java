@@ -41,8 +41,9 @@ public class ShootingAttack extends AbstractVectorAttack{
 	}
 
 	public void performAttack(long elapsedTime) {
-		if (isAvailable(elapsedTime))
-			launchVector();
+		if (isAvailable(elapsedTime)){
+			launchVector();			
+		}
 	}
 
 	public int calculateDamage() {

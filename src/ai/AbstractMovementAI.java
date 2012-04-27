@@ -9,11 +9,12 @@ import app.RPGame;
 
 import com.google.gson.JsonElement;
 
-import controllers.MotionController;
-
-public abstract class AbstractMovementAI extends MotionController{
+public abstract class AbstractMovementAI {
 	
+	RPGame game;
 	GameCharacter character;
+	boolean active = true;
+	
 	private static List<AbstractMovementAIFactory> AbstractMovementAIs;
 	
 	static
@@ -24,11 +25,18 @@ public abstract class AbstractMovementAI extends MotionController{
 	}	
 
 	public AbstractMovementAI(RPGame game, GameCharacter character) {
-		super(game, character);
+		this.game = game;
 		this.character = character;
 	}
 
-	@Override
+	public void setActive(boolean active){
+		this.active = active;
+	}
+	
+	public boolean isActive(){
+		return active;
+	}
+	
 	public abstract void update(long elapsedTime);
 
 	public static AbstractMovementAI getAbstractMovementAI(RPGame game, GameCharacter gameChar, JsonElement jsonMovement){

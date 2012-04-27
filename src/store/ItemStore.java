@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.golden.gamedev.object.Sprite;
@@ -14,6 +13,7 @@ import com.golden.gamedev.object.font.SystemFont;
 import com.google.gson.JsonObject;
 
 import evented.EventedWrapper;
+import gameCharacter.GameCharacter;
 
 import app.RPGame;
 import app.RPGame.Pausable;
@@ -35,19 +35,25 @@ public class ItemStore extends EventedWrapper<Item> {
 	private JsonObject item;
 	protected int price;
 	private BufferedImage image;
+	int numOptions;
+	private GameCharacter character;
 	
 	public ItemStore(StoreManagerNPC manager, RPGame game) {
 		super(manager.getCharacter());
 		this.game = game;
 		myInventory = new Inventory(manager.getCharacter());
-		
+	}
+	
+	public void updateStore(ItemStore store){
+        numOptions = store.getSize();
+
 	}
 	
 	public void update(long elapsedTime) {
 		if (game.keyPressed(KeyEvent.VK_Q)) {
 			game.unPauseGameFor(Pausable.STORE);
 			storeOpen = false;
-		}
+        }
 		
 	}
 
@@ -141,13 +147,13 @@ public class ItemStore extends EventedWrapper<Item> {
 		return myInventory;
 	}
 
-	// public int buy (Item item){
-	// int price = item.getPrice();
-	// if (game.keyPressed(KeyEvent.VK_ENTER)){
-	// character.getInventory().get("money");
-	// }
-	// return price;
-	//
-	// }
+	 public int buy (Item item){
+	 int price = item.getPrice();
+	 if (game.keyPressed(KeyEvent.VK_ENTER)){
+	 character.getInventory().get("money");
+	 }
+	 return price;
+	
+	 }
 
 }

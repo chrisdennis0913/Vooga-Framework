@@ -46,9 +46,9 @@ public abstract class Counter extends EventedItem<Counter>{
 			empty = true;
 	}
 
-	public void increase(int count) {
+	public void increase(int value) {
 		if (!full) {
-			this.count = this.count + count;
+			this.count += value;
 			if (this.count >= init) {
 				this.count = init;
 				full = true;

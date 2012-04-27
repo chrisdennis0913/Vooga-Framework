@@ -1,11 +1,13 @@
 package enemy;
 
+import app.RPGame;
+import npc.NPC;
 import gameCharacter.GameCharacter;
 
-public class EnemyFactory {
+public abstract class EnemyFactory {
 
-	public static Enemy createEnemy(String enemyName, GameCharacter gameChar){
-		
-		return null;
-	}
+	public abstract boolean isThisType(String enemyName);
+	public abstract AbstractEnemy constructEnemy(RPGame game, GameCharacter gameChar,
+			String configURL);
+
 }

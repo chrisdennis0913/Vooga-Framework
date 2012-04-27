@@ -31,7 +31,8 @@ import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import enemy.Enemy;
+import enemy.AbstractEnemy;
+import enemy.TestEnemy;
 import evented.Evented;
 import gameCharacter.GameCharacter;
 
@@ -187,7 +188,7 @@ public class Level extends AbstractTileBackground implements Evented {
 	
 	private void setEnemies(){
 		SpriteGroup group = new SpriteGroup("enemies");
-		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
+		AbstractEnemy enemy = new TestEnemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
 		group.add(enemy.getCharacter());
 		game.getField().addGroup(group);
 	}

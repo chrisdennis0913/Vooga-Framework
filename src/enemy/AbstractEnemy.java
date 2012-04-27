@@ -30,15 +30,17 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	protected int moneyValue;
 	private String name;
 
-	public AbstractEnemy(GameCharacter character, String name, JsonObject jEnemy) {
+	public AbstractEnemy(RPGame game, GameCharacter character, String name, JsonObject jEnemy) {
 		super(character);
+		this.game = game;
 		this.name = name;
 		initAttacks(jEnemy);
 		character.setDecorator(this);
 	}
 	
-	public AbstractEnemy(GameCharacter character, String name, String[] attacks) {
+	public AbstractEnemy(RPGame game, GameCharacter character, String name, String[] attacks) {
 		super(character);
+		this.game = game;
 		this.name = name;
 		initAttacks(attacks);
 		character.setDecorator(this);

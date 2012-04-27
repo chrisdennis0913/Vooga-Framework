@@ -19,7 +19,7 @@ import com.golden.gamedev.object.Timer;
  */
 public class GreedyPathFindingAI extends AbstractPathFindingAI{
 
-	private static final double MINIMUM_DISTANCE = 20;
+	private static final double MINIMUM_DISTANCE = 50;
 	
 	public GreedyPathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);

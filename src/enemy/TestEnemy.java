@@ -3,6 +3,7 @@ package enemy;
 import gameCharacter.GameCharacter;
 import state.MovingAttackingState;
 import ai.GreedyPathFindingAI;
+import ai.SimpleAttackAI;
 import ai.TestDecisionTableAI;
 import app.RPGame;
 
@@ -19,8 +20,7 @@ public class TestEnemy extends AbstractEnemy{
 	private static final int DEFAULT_MONEY_VALUE = 10;
 
 	public TestEnemy(RPGame game, GameCharacter character, JsonObject jEnemy) {
-		super(character, "TestEnemy", jEnemy);
-		this.game = game;
+		super(game, character, "TestEnemy", jEnemy);
 		initResources();
 		moneyValue = DEFAULT_MONEY_VALUE;
 	}
@@ -35,7 +35,7 @@ public class TestEnemy extends AbstractEnemy{
 	}
 	
 	public void initAI(String json) {
-		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new TestDecisionTableAI(game,this)));
+		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
 	}
 
 	public static class TestEnemyFactory extends EnemyFactory{

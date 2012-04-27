@@ -48,5 +48,20 @@ public class ShootingAttack extends AbstractVectorAttack{
 	public int calculateDamage() {
 		return calculator.calculate();
 	}
+	
+	public static class ShootingAttackFactory extends AttackFactory{
+
+		@Override
+		public boolean isThisType(String attackName) {
+			return "shooting".equals(attackName);
+		}
+
+		@Override
+		public AbstractAttack constructAttack(RPGame game,
+				AbstractEnemy enemy) {
+			return new ShootingAttack(game,enemy,"shooting");
+		}
+		
+	}
 
 }

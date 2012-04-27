@@ -72,4 +72,5 @@ public abstract class AbstractAttack {
 	
 	public abstract int calculateDamage();
 
+	
 }

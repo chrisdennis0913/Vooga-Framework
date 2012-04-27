@@ -35,7 +35,10 @@
 		{
 			"location": [250, 250],
 			"name": "TestEnemy",
-			"directions": "rsc/config/player_directions.json"
+			"directions": "rsc/config/enemy_directions.json",
+			"attacks":[
+				"shooting"
+			]
 		}
 	],
 	"inventory": {

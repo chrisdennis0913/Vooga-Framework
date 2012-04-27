@@ -1,8 +1,5 @@
 package player;
 
-import enemy.Enemy;
-import gameCharacter.GameCharacter;
-
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,9 @@ import actions.Attack;
 import com.golden.gamedev.object.Timer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import enemy.AbstractEnemy;
+import gameCharacter.GameCharacter;
 
 public class Attacking extends ActionDecorator {
 
@@ -51,11 +51,11 @@ public class Attacking extends ActionDecorator {
 
 	}
 
-	public int getDamage(Enemy enemy) {
+	public int getDamage(AbstractEnemy abstractEnemy) {
 		for (ActionDecorator attack : attacks)
 			if (attack.isEnabled()) {
 				StdAttack attk = (StdAttack) attack;
-				return attk.getDamage(enemy);
+				return attk.getDamage(abstractEnemy);
 			}
 		return 0;
 	}

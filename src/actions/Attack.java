@@ -8,7 +8,7 @@ import calculators.DamageCalculator;
 
 import com.google.gson.JsonObject;
 
-import enemy.Enemy;
+import enemy.AbstractEnemy;
 import evented.EventedWrapper;
 
 public class Attack extends Action {
@@ -25,7 +25,7 @@ public class Attack extends Action {
 		initResources();
 	}
 
-	public int getDamage(Enemy enemy) {
+	public int getDamage(AbstractEnemy enemy) {
 		return calculator.calculate();
 	}
 

@@ -73,6 +73,11 @@ public class RPGame extends GameObject {
 	    	  player.getCharacter().getJournal().render(g);
 	    	  return;
 	      }
+	      if (isPausedFor(Pausable.STORE))
+	      {
+	    	  manager.getStore().render(g);
+	    	  return;
+	      }
 
 	}
 

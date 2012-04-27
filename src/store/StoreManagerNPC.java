@@ -29,12 +29,10 @@ public class StoreManagerNPC extends NPC{
 	
 	public void update (long elapsed){
 		super.update(elapsed);
-		//myStore.update(elapsed);
 	}
 	
 	public void render(Graphics2D g){
 		super.render(g);
-		//myStore.render(g);
 	}
 	
 	@Override
@@ -66,7 +64,6 @@ public class StoreManagerNPC extends NPC{
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
 			return new StoreManagerNPC(gameChar);
 		}
-		
 	}
 
 	/**

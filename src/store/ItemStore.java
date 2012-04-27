@@ -89,7 +89,6 @@ public class ItemStore extends EventedWrapper<Item> {
 	}
 
 	public void render(Graphics2D g) {
-		System.out.println(" store open " + storeOpen);
 		if (!storeOpen)
 			return;
 		SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 12),
@@ -117,11 +116,9 @@ public class ItemStore extends EventedWrapper<Item> {
 				y++;
 			}
 		}
-		System.out.println("Show store");
 		SystemFont font2 = new SystemFont(new Font("Arial", Font.BOLD, 12),
 				new Color(255, 255, 255));
 		font2.drawText(g, "Inventory", SystemFont.LEFT, 15, 220, 70, 2, 0);
-		System.out.println("Store rendering");
 	}
 	public void setLocation(BufferedImage image, int x, int y){
 		for (; x < 360; x += 90) {

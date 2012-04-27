@@ -6,7 +6,7 @@
 
 package quest;
 
-public interface QuestGiver 
+public interface QuestObserver 
 {
 	public void update(Quest qu);
 }

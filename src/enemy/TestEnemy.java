@@ -35,7 +35,7 @@ public class TestEnemy extends AbstractEnemy{
 	}
 	
 	public void initAI(String json) {
-		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
+		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new TestDecisionTableAI(game,this)));
 	}
 
 	public static class TestEnemyFactory extends EnemyFactory{

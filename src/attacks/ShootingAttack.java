@@ -1,6 +1,7 @@
 package attacks;
 
 import calculators.DamageCalculator;
+import calculators.RandomCalculator;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.Timer;
@@ -21,7 +22,7 @@ public class ShootingAttack extends AbstractVectorAttack{
 		timer = new Timer(1000);
 		vectorSpeedX = 0.1;
 		vectorSpeedY = 0.1;
-		calculator = new DamageCalculator(game.getPlayer().getCharacter().getCounters(), 
+		calculator = new RandomCalculator(game.getPlayer().getCharacter().getCounters(), 
 				enemy.getCharacter().getCounters());
 	}
 	

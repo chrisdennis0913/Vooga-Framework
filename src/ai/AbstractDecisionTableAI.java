@@ -28,11 +28,11 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 	
 	@Override
 	public void update(long elapsedTime) {
-		if(character.isAlive()){
+		//if(character.isAlive()){
 			AbstractAttack choice = pickBestAttack();
 			if(choice != null)
 				choice.performAttack(elapsedTime);
-		}
+		//}
 	}
 
 	@Override
@@ -49,9 +49,10 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 				attackQ.add(attackMap.get(attackName));
 		}
 		AbstractAttack choice;
-		while((choice = attackQ.poll()) != null)
-			if(choice.isActive() && choice.isAvailable(0))
+		while((choice = attackQ.poll()) != null){
+			if(choice.isActive())
 				return choice;
+		}
 		return null;
 	}
 	

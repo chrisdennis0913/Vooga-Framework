@@ -15,6 +15,7 @@ public class TestDecisionTableAI extends AbstractDecisionTableAI{
 		dTable.addAttack("shooting");
 		
 		dTable.addHeuristicToAttack("shooting", new BoolDistanceFromTargetHeuristic(game, character.getCharacter(), 150), 10);
+		
 	}
 
 	@Override

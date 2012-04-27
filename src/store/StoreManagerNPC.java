@@ -82,7 +82,7 @@ public class StoreManagerNPC extends NPC{
 			return new StoreManagerNPC(gameChar);
 		}
 
-		@Override
+		
 		public CharacterDecorator constructNPC(GameCharacter gameChar) {
 			// TODO Auto-generated method stub
 			return null;

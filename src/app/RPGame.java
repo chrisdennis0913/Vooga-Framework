@@ -7,17 +7,11 @@ import java.util.HashSet;
 import java.util.Set;
 import level.Level;
 import player.Player;
-<<<<<<< HEAD
-import quest.Quest;
-import quest.QuestGiver;
-import store.StoreManagerNPC;
-=======
 import quest.Quest;
 import quest.QuestObserver;
 import quest.QuestJournal;
 import store.StoreManagerNPC;
 
->>>>>>> origin/master
 import utils.JsonUtil;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;

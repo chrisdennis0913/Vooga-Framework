@@ -1,6 +1,7 @@
 package attacks;
 
 import gameCharacter.GameCharacter;
+import calculators.DamageCalculator;
 import collisions.AttackVectorCollision;
 
 import com.golden.gamedev.object.Sprite;
@@ -17,7 +18,8 @@ import app.RPGame;
 public abstract class AbstractVectorAttack extends AbstractAttack {
 	
 	private SpriteGroup vectors;
-	
+	protected DamageCalculator calculator;
+
 	protected double vectorSpeedX = 0;
 	protected double vectorSpeedY = 0;
 
@@ -26,7 +28,10 @@ public abstract class AbstractVectorAttack extends AbstractAttack {
 		vectors = new SpriteGroup(getClass().getName());
 		game.getField().addGroup(vectors);
 		initCollisions();
+		initCalculator();
 	}
+
+	protected abstract void initCalculator();
 
 	public void initCollisions(){
 		game.getField().addCollisionGroup(vectors, game.getField().getGroup("player"),
@@ -48,6 +53,15 @@ public abstract class AbstractVectorAttack extends AbstractAttack {
 	
 	public abstract void launchVector(double x, double y, double speedX, double speedY);
 
-	public abstract void onCollision(Sprite arg0, Sprite arg1);
+	public void onCollision(Sprite vector, Sprite character) {
+		GameCharacter player = (GameCharacter) character;
+	
+		vector.setActive(false);
+		player.getCounters().get("health").decrease(calculateDamage());
+	}
+
+	public int calculateDamage() {
+		return calculator.calculate();
+	}
 	
 }

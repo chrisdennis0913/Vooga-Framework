@@ -3,11 +3,9 @@ package attacks;
 import calculators.DamageCalculator;
 import calculators.RandomCalculator;
 
-import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.Timer;
 
 import enemy.AbstractEnemy;
-import gameCharacter.GameCharacter;
 
 import app.RPGame;
 import attacks.AbstractVectorAttack;
@@ -15,7 +13,6 @@ import attacks.AbstractVectorAttack;
 public class ShootingAttack extends AbstractVectorAttack{
 
 	private Timer timer;
-	private DamageCalculator calculator;
 	
 	public ShootingAttack(RPGame game, AbstractEnemy enemy, String name) {
 		super(game, enemy.getCharacter(), name);
@@ -28,13 +25,6 @@ public class ShootingAttack extends AbstractVectorAttack{
 	
 	public void launchVector(double x, double y, double speedX, double speedY) {
 		new ShotVector(game, this, x, y, speedX, speedY);
-	}
-
-	public void onCollision(Sprite vector, Sprite character) {
-		GameCharacter player = (GameCharacter) character;
-		
-		vector.setActive(false);
-		player.getCounters().get("health").decrease(calculateDamage());
 	}
 
 	public boolean isAvailable(long elapsedTime) {
@@ -59,11 +49,13 @@ public class ShootingAttack extends AbstractVectorAttack{
 			launchVector(speedX,speedY);			
 		}
 	}
-
-	public int calculateDamage() {
-		return calculator.calculate();
-	}
 	
+	@Override
+	protected void initCalculator() {
+		calculator = new RandomCalculator(game.getPlayer().getCharacter().getCounters(),
+				attacker.getCounters());
+	}
+
 	public static class ShootingAttackFactory extends AttackFactory{
 
 		@Override
@@ -78,5 +70,6 @@ public class ShootingAttack extends AbstractVectorAttack{
 		}
 		
 	}
+
 
 }

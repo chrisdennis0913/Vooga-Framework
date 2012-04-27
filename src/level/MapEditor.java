@@ -1,7 +1,7 @@
 package level;
 
 import enemy.AbstractEnemy;
-import enemy.TestEnemy;
+import enemy.GuardEnemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.Color;

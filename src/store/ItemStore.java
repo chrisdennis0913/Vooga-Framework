@@ -108,12 +108,13 @@ public class ItemStore extends EventedWrapper<Item>{
 		}
 	}
 	
-//	public int buy (Item item){
-//		if (player){
-//			
-//		}
-//		return 0;
-//		
-//	}
+	public int buy (Item item){
+		int price = item.getPrice();
+		if (){
+			
+		}
+		return price;
+		
+	}
 
 }

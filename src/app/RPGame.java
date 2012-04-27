@@ -1,7 +1,6 @@
 package app;
 
 import inventory.Item;
-
 import java.awt.Graphics2D;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -10,10 +9,8 @@ import level.Level;
 import player.Player;
 import quest.Quest;
 import quest.QuestGiver;
-import quest.QuestJournal;
 import store.StoreManagerNPC;
 import utils.JsonUtil;
-
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.PlayField;

@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
-import player.Projectile;
 import store.ItemStore;
 import store.StoreManagerNPC;
 import utils.JsonUtil;

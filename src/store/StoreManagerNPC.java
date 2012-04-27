@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import state.State;
 import state.TalkingState;
 
-import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
@@ -35,7 +34,7 @@ public class StoreManagerNPC extends NPC{
 	
 	public void render(Graphics2D g){
 		super.render(g);
-		myStore.render(g);
+		myStore.renderStore(g);
 	}
 	
 	@Override
@@ -73,6 +72,12 @@ public class StoreManagerNPC extends NPC{
 
 	@Override
 	public JsonObject toJson() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JsonObject getJsonAttributes() {
 		// TODO Auto-generated method stub
 		return null;
 	}

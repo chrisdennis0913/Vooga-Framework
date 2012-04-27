@@ -70,6 +70,7 @@ public class ItemStore extends EventedWrapper<Item>{
 	public void openStore() {
 		storeOpen = true;
 		game.pauseGameForStore();
+		System.out.println("Calling store");
 	}
 
 	public void renderStore(Graphics2D g) {
@@ -77,6 +78,7 @@ public class ItemStore extends EventedWrapper<Item>{
 		SystemFont font2 = new SystemFont(new Font("Arial", Font.BOLD, 12),
 				new Color(255, 255, 255));
 		font2.drawText(g, "Inventory", SystemFont.LEFT, 15, 220, 70, 2, 0);
+		System.out.println("Store rendering");
 	}
 	
 	public void showStore(Graphics2D g) {

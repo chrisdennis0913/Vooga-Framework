@@ -5,9 +5,6 @@ import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
 
 import state.MovingAttackingState;
-import state.TalkingState;
-import utils.Location;
-import ai.ScriptedMovementAI;
 
 import ai.SquareMovementAI;
 
@@ -35,11 +32,7 @@ public class NPCTest1 extends NPC {
 	 * @return
 	 */
 	public String getTalk(DialogueObject choice) {
-		if (!hasTalked) {
-			hasTalked = true;
-		} else {
-			dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
-		}
+		dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
 		return dialogue.getCurrentLine();
 	}
 

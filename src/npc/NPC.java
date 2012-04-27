@@ -1,11 +1,11 @@
 package npc;
 
-import java.util.ArrayList;
-
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
+
+import java.util.ArrayList;
+
 import state.State;
-import state.TalkingState;
 import store.StoreManagerNPC;
 import dialogue.AbstractDialogue;
 
@@ -62,7 +62,7 @@ public class NPC extends CharacterDecorator {
 	}
 
 	public void update(long elapsed) {
-		currentState.update(elapsed);
+		currentState.update(elapsed, this);
 	}
 
 	public NPC setCharacter(GameCharacter character) {

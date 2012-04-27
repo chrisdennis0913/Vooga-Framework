@@ -33,7 +33,8 @@ import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import enemy.Enemy;
+import enemy.AbstractEnemy;
+import enemy.TestEnemy;
 import evented.Evented;
 
 public class Level extends AbstractTileBackground implements Evented {
@@ -202,8 +203,7 @@ public class Level extends AbstractTileBackground implements Evented {
 			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
 			String enemyName = jEnemy.get("name").getAsString();
 			
-			//TODO: James, we need some kind of factory thing here
-			Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
+			AbstractEnemy enemy = AbstractEnemy.createEnemy(enemyName,game,new GameCharacter(game, loc, "rsc/config/player_directions.json"),"doesntmatter");
 			group.add(enemy.getCharacter());
 		}
 		

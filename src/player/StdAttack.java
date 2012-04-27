@@ -64,7 +64,7 @@ public class StdAttack extends ActionDecorator {
 
 		attk.directions = Arrays.asList(tempDirections);
 	}
-	
+
 	public int getDamage(AbstractEnemy enemy) {
 		return calculator.calculate();
 	}

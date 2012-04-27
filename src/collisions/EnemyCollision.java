@@ -1,8 +1,8 @@
 package collisions;
 
-import player.Attacking;
 import enemy.AbstractEnemy;
 import gameCharacter.GameCharacter;
+import player.Attacking;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.Timer;
@@ -24,6 +24,7 @@ public class EnemyCollision extends BasicCollisionGroup {
 		GameCharacter enemy = (GameCharacter) enemyChar;
 
 		Attacking attacking = (Attacking) player.getActions().get("attacking");
+		
 		if (attacking.isActive()) {
 			enemy.getCounters()
 					.get("health")

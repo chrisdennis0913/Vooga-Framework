@@ -12,7 +12,6 @@ import com.golden.gamedev.Game;
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
-import attacks.AbstractAttack;
 import attacks.ShootingAttack;
 
 /**

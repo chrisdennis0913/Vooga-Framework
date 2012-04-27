@@ -1,11 +1,17 @@
 package enemy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import npc.NPC;
+import npc.NPCFactory;
+import npc.NPCTest1;
 
 import state.AttackingState;
 import state.State;
 import state.TalkingState;
 import state.WalkingState;
+import store.StoreManagerNPC;
 import app.RPGame;
 import attacks.AbstractAttack;
 import gameCharacter.Attackable;
@@ -15,7 +21,7 @@ import gameCharacter.GameCharacter;
 public abstract class AbstractEnemy extends CharacterDecorator implements Attackable{
 
 	protected HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
-
+	public static ArrayList<EnemyFactory> enemyFactories = new ArrayList<EnemyFactory>();
 	protected String configURL;
 	private boolean alive = true;
 	protected RPGame game;
@@ -27,6 +33,10 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	public AbstractEnemy(GameCharacter character) {
 		super(character);
 		character.setDecorator(this);
+	}
+	
+	static{
+		enemyFactories.add(new TestEnemy.TestEnemyFactory());
 	}
 
 	public void initResources() {
@@ -64,6 +74,15 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		character.getCounters().get("health").increase(delta);
 		if(character.getCounters().get("health").isEmpty())
 			alive = false;
+	}
+	
+	public static AbstractEnemy createEnemy(String enemyName, RPGame game, GameCharacter gameChar, String configURL){
+
+		for (EnemyFactory fac : enemyFactories){
+			if (fac.isThisType(enemyName))
+				return fac.constructEnemy(game,gameChar,configURL);
+		}
+		throw new RuntimeException("Given name of NPC not recognized");
 	}
 
 	@Override

@@ -31,9 +31,9 @@ public class GreedyPathFindingAI extends AbstractPathFindingAI{
 		Location currTile = character.getLocation();
 		Location playerTile = player.getCharacter().getLocation();
 		List<ActionTransition> adjActions = getAdjacentActions(currTile,playerTile);
+		System.err.println(adjActions.get(0).direction);
 				
 		if(adjActions.get(0) != null && adjActions.get(0).distToGoal() > MINIMUM_DISTANCE){
-			System.err.println(adjActions.get(0).direction);
 			return adjActions.get(0).direction;
 		}
 		else return -1;

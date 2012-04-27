@@ -56,7 +56,7 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 	}
 	
 	public static class TestEnemyFactory extends EnemyFactory{
-				
+	
 		@Override
 		public boolean isThisType(String enemyName) {
 			return "TestEnemy".equals(enemyName);

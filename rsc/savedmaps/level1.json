@@ -37,6 +37,8 @@
 			"price": 450
 		},
 		{
+			"name": "money",
+			"location": [480, 700],
 			"name": "superBowAccessory",
 			"location": [140, 175],
 			"image": "rsc/items/money.png",
@@ -108,6 +110,7 @@
 			]
 		},
 		{
+			"location": [120, 640],
 			"location": [415, 180],
 			"name": "ArcherEnemy",
 			"directions": "rsc/config/goriya_directions.json",

@@ -3,13 +3,11 @@ package level;
 import gameCharacter.GameCharacter;
 import inventory.ConcreteItem;
 import inventory.Item;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 
 import npc.NPC;
-import npc.NPCTest1;
 import player.Player;
 import store.ItemStore;
 import utils.JsonUtil;
@@ -34,7 +32,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import enemy.AbstractEnemy;
-import enemy.TestEnemy;
 import evented.Evented;
 
 public class Level extends AbstractTileBackground implements Evented {
@@ -169,8 +166,8 @@ public class Level extends AbstractTileBackground implements Evented {
 			JsonObject it = items.get(i).getAsJsonObject();
 			Item item = new ConcreteItem(game, it);
 			group.add(item);
-			System.out.println("Added concrete item to sprite group");
 		}
+		
 		game.getField().addGroup(group);
 	}
 
@@ -181,32 +178,37 @@ public class Level extends AbstractTileBackground implements Evented {
 		for (int i = 0; i < npcs.size(); i++) {
 			JsonObject jNPC = npcs.get(i).getAsJsonObject();
 			JsonArray jLocation = jNPC.get("location").getAsJsonArray();
-			
+
 			Location loc = new Location(new int[] {
 					jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
-			NPC npc = new NPCTest1(new GameCharacter(game, loc, jNPC.get(
-					"directions").getAsString()));
+			String npcName = jNPC.get("name").getAsString();
+			NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
+					.get("directions").getAsString()));
 			group.add(npc.getCharacter());
 
 		}
 		game.getField().addGroup(group);
 	}
-	
-	private void setEnemies(JsonObject level){
+
+	private void setEnemies(JsonObject level) {
 		JsonArray enemies = level.getAsJsonArray("enemies");
 		SpriteGroup group = new SpriteGroup("enemies");
-		
-		for (int i = 0; i < enemies.size(); i++){
+
+		for (int i = 0; i < enemies.size(); i++) {
 			JsonObject jEnemy = enemies.get(i).getAsJsonObject();
 			JsonArray jLocation = jEnemy.get("location").getAsJsonArray();
-			
-			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
+
+			Location loc = new Location(new int[] {
+					jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
 			String enemyName = jEnemy.get("name").getAsString();
-			
-			AbstractEnemy enemy = AbstractEnemy.createEnemy(enemyName,game,new GameCharacter(game, loc, "rsc/config/player_directions.json"),"doesntmatter");
+
+			AbstractEnemy enemy = AbstractEnemy.createEnemy(enemyName, game,
+					new GameCharacter(game, loc,
+							"rsc/config/player_directions.json"),
+					"doesntmatter");
 			group.add(enemy.getCharacter());
 		}
-		
+
 		game.getField().addGroup(group);
 	}
 

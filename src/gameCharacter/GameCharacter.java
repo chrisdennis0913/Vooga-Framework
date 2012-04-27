@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import level.Level;
+import level.Level;
+
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;

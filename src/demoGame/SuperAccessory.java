@@ -9,68 +9,78 @@ import evented.EventedWrapper;
 
 
 public class SuperAccessory extends ConcreteItem {
+    private static final long serialVersionUID = -2524687894009056049L;
+    private int timesToHeal;
+
 
     /**
      * Great example for super Item
      */
-    private static final long serialVersionUID = 1L;
-    private boolean isForSale;
-    private boolean equipped;
-    private int healValue;
-    private int statChange;
-    private int damage;
-    private int relX;
-    private int relY;
-    private String weaponType;
-    private String statCategory;
-
 
     public SuperAccessory (EventedWrapper<Item> wrapper, JsonObject item) {
         super(wrapper, item);
-        initResources();
+        initMyResources();
     }
+
 
     public SuperAccessory (RPGame game, JsonObject item) {
         super(game, item);
-        initResources();
+        System.out.println("calling this method");
+        initMyResources();
     }
 
 
-    public void initResources () {
-        image = game.getImage("rsc/items/bow.png");
+    public void initMyResources () {
         price = 0;
         isForSale = true;
         equipped = false;
-        healValue = 1;
+        healValue = 4;
+        statCategory = "health";
         statChange = 20;
         damage = 5;
         weaponType = "bow";
         relX = 0;
         relY = 0;
+        timesToHeal = 5;
     }
 
 
     @Override
     public void use () {
-        this.getGame()
-            .getPlayer()
-            .getCharacter()
-            .getCounters()
-            .get("health")
-            .increase(statChange);
+        if (timesToHeal > 0) {
+            game.getPlayer()
+                .getCharacter()
+                .getCounters()
+                .get(statCategory)
+                .increase();
+            timesToHeal--;
+        }
         equip();
     }
 
 
     @Override
     public void equip () {
+        if (isEquipped()) return;
         Inventory myWrapper = (Inventory) wrapper;
         if (myWrapper.getEquipped() != null) myWrapper.getEquipped().unequip();
         myWrapper.setEquipped(this);
         equipped = true;
-        game.getPlayer().getCharacter().getCounters().get(statCategory).boostTotal(statChange);
-        game.getPlayer().getCharacter().getCounters().get(statCategory).decrease(1);
-        game.getPlayer().getCharacter().getCounters().get(statCategory).increase(statChange + 1);
+        game.getPlayer()
+            .getCharacter()
+            .getCounters()
+            .get(statCategory)
+            .boostTotal(statChange);
+        game.getPlayer()
+            .getCharacter()
+            .getCounters()
+            .get(statCategory)
+            .decrease(1);
+        game.getPlayer()
+            .getCharacter()
+            .getCounters()
+            .get(statCategory)
+            .increase(statChange + 1);
     }
 
 
@@ -79,8 +89,11 @@ public class SuperAccessory extends ConcreteItem {
         Inventory myWrapper = (Inventory) wrapper;
         myWrapper.removeEquipped(this);
         equipped = false;
-        game.getPlayer().getCharacter().getCounters().get(statCategory).boostTotal(-statChange);
-        game.getPlayer().getCharacter().getCounters().get(statCategory).decrease(statChange);
+        game.getPlayer()
+            .getCharacter()
+            .getCounters()
+            .get(statCategory)
+            .boostTotal(-statChange);
     }
 
 }

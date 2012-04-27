@@ -64,9 +64,9 @@ public class MapEditor extends Game {
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
 		player = getImage("rsc/player/playerstart.png", false);
-		enemy = getImage("rsc/enemy/reddot.png", false);
-		item = getImage("rsc/items/greendot.png",false);
-		npc = getImage("rsc/npc/bluedot.png", false);
+		enemy = getImage("rsc/enemy/question.png", false);
+		item = getImage("rsc/items/question.png",false);
+		npc = getImage("rsc/npc/question.png", false);
 	}
 
 
@@ -134,11 +134,6 @@ public class MapEditor extends Game {
 					switch (charnum) {
 						case 0:
 							//player
-							String att1;
-							att1 = JOptionPane.showInputDialog("Attribute1:");
-							String att2;
-							att2 = JOptionPane.showInputDialog("Attribute2:");
-							//save sprite
 							game.bsLoader = bsLoader;
 							Player player = new Player(new GameCharacter(game, loc,
 									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
@@ -162,14 +157,25 @@ public class MapEditor extends Game {
 							
 						case 2:
 							//enemy
-//							AbstractEnemy enemy = AbstractEnemy.createEnemy("TestEnemy", game, 
-//									new GameCharacter(game, loc, "rsc/config/player_directions.json"), "doesntmatter");
-							//jEnemies.add(enemy.toJson());
+							JsonObject jEnemy = new JsonObject();
+							JsonArray jELoc = new JsonArray();
+							jELoc.add(new JsonPrimitive(getMouseX()));
+							jELoc.add(new JsonPrimitive(getMouseY()));
+							
+							jEnemy.add("location", jELoc);
+							jEnemy.add("name", new JsonPrimitive("TestEnemy"));
+							jEnemy.add("directions", new JsonPrimitive("rsc/config/enemy_directions.json"));
+							
+							JsonArray jAttack = new JsonArray();
+							jAttack.add(new JsonPrimitive("shooting"));
+							jEnemy.add("attacks", jAttack);
+							jEnemies.add(jEnemy);
+							
 						case 3:
 							//npc
-//							NPC npc = NPC.createNPC("npcName", new GameCharacter(game, loc,
-//									"rsc/config/npc_directions.json"));
-//							jNPCs.add(npc.toJson());
+							NPC npc = NPC.createNPC("npcName", new GameCharacter(game, loc,
+									"rsc/config/npc_directions.json"));
+							jNPCs.add(npc.toJson());
 							
 					}
 					

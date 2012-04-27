@@ -173,9 +173,14 @@ public class MapEditor extends Game {
 							
 						case 3:
 							//npc
-							NPC npc = NPC.createNPC("npcName", new GameCharacter(game, loc,
-									"rsc/config/npc_directions.json"));
-							jNPCs.add(npc.toJson());
+							JsonObject jNPC = new JsonObject();
+							JsonArray jNLoc = new JsonArray();
+							jNLoc.add(new JsonPrimitive(getMouseX()));
+							jNLoc.add(new JsonPrimitive(getMouseY()));
+							jNPC.add("location", jNLoc);
+							jNPC.add("name", new JsonPrimitive(JOptionPane.showInputDialog("Type:")));
+							jNPC.add("directions", new JsonPrimitive("rsc/config/oldman_directions.json"));
+							jNPCs.add(jNPC);
 							
 					}
 					
@@ -230,7 +235,7 @@ public class MapEditor extends Game {
 			String file = JOptionPane.showInputDialog("File name:");
 			Gson gson = new Gson();
 			try {
-				FileWriter f1 = new FileWriter(file); 
+				FileWriter f1 = new FileWriter("rsc/savedmaps/"+file+".json"); 
 				System.out.println(gson.toJson(jLevel));
 				f1.write(jLevel.toString());
 				f1.close();

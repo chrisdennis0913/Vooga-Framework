@@ -1,6 +1,7 @@
 package store;
 
 import inventory.Inventory;
+import inventory.Item;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,9 +14,12 @@ import evented.EventedWrapper;
 
 public class Money extends Counter {
 	
+	/**
+	 * Controls counting for the player's money
+	 */
+	private static final long serialVersionUID = 1L;
 	Integer init = Integer.MAX_VALUE;
 	private int startCash;
-	private Inventory myInventory;
 
 	public Money(EventedWrapper<Counter> wrapper, int count) {
 		super(wrapper, count);
@@ -24,7 +28,6 @@ public class Money extends Counter {
 	@Override
 	public void initResources() {
 		startCash = 1000;
-
 	}
 
 	@Override
@@ -41,8 +44,8 @@ public class Money extends Counter {
 	public void render(Graphics2D g) {
 		SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 20), new Color(255,0,0));
 		g.setColor(new Color(0));
-		g.drawRect(10, 10, 25, 25);
-		g.fillRect(10, 10, 25, 25);
+		g.drawRect(20, 10, 25, 25);
+		g.fillRect(20, 10, 25, 25);
 		font.drawText(g, getCount().toString(), SystemFont.LEFT, 12, 12, 25, 2, 0);
 		
 	}

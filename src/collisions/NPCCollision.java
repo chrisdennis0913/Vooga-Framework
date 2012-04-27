@@ -3,27 +3,16 @@ package collisions;
 import gameCharacter.GameCharacter;
 import npc.NPC;
 import player.Talking;
-import store.ItemStore;
-import store.StoreManagerNPC;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.collision.BasicCollisionGroup;
 
-public class AutomatedCharCollision extends BasicCollisionGroup {
-	
-	ItemStore store;
+public class NPCCollision extends BasicCollisionGroup {
 
 	public void collided(Sprite character, Sprite npcChar) {
 		NPC npc = (NPC) ((GameCharacter) npcChar).getDecorator();
-		if (npc.hasDialogue()){
-			setTalking((GameCharacter) character, npc);
-		}
+		setTalking((GameCharacter) character, npc);
 		overlap(character, npcChar);
-		if (npc.getClass().equals(StoreManagerNPC.class)){
-			store = ((StoreManagerNPC) npc).getStore();
-			store.openStore();
-		}
-	
 	}
 
 	protected void overlap(Sprite player, Sprite npc) {		

@@ -2,6 +2,8 @@ package attacks;
 
 import gameCharacter.GameCharacter;
 
+import calculators.DamageCalculator;
+
 import com.golden.gamedev.object.Timer;
 
 import app.RPGame;

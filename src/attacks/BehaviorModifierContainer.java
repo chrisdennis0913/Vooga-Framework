@@ -3,7 +3,14 @@ package attacks;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
+/**
+ * Wrapper for Behavior Modifiers.
+ * Maintains the list by running the modifications
+ * at every global update and checking for an
+ * expired behavior modifier.
+ * @author jameshong
+ *
+ */
 public class BehaviorModifierContainer {
 
 	private LinkedList<AbstractBehaviorModifier> bmList = 

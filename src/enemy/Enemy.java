@@ -6,17 +6,22 @@ import gameCharacter.GameCharacter;
 
 import java.util.HashMap;
 
-import utils.JsonUtil;
-import utils.Location;
+import state.MovingAttackingState;
+import state.State;
+import state.TalkingState;
 
-import com.golden.gamedev.Game;
-
-import ai.AbstractPathFindingAI;
+import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
 
+/**
+ * GameCharacter decorated with attacks and actions.
+ * Can use pluggable AI algorithms to behave automatically.
+ * @author jameshong
+ *
+ */
 public class Enemy extends CharacterDecorator implements Attackable{
 
 	private HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
@@ -24,6 +29,8 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	private String configURL;
 	private boolean alive = true;
 	private RPGame game;
+
+	private State currentState;
 	
 	public Enemy(RPGame game, GameCharacter character, String configURL) {
 		super(character);
@@ -36,8 +43,6 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		//String json = JsonUtil.getJSON(configURL);
 		//constructActions(json);
 		initAttacks();
-		initAttackAI();
-		initMovementAI();
 	}
 	
 	private void constructActions(String json) {
@@ -48,18 +53,12 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	public void initAttacks() {
 		attacks.put("shooting",new ShootingAttack(game,this,"shooting"));
 	}
+
 	
-	//move to json
-	private void initAttackAI(){
-		character.getControllers().add("AttackAI", new SimpleAttackAI(game,this));
-	}
-	
-	private void initMovementAI(){
-		character.getControllers().add("MovementAI", new AbstractPathFindingAI(game,this.getCharacter()));
-	}
-	
-	public void update(long elapsedTime){
-		super.update(elapsedTime);
+	public void update(long elapsedTime)
+	{
+		System.out.println("I'm updating in Enemy");
+		currentState.update(elapsedTime, null);
 	}
 	
 	public HashMap<String, AbstractAttack> getAttacks() {
@@ -91,5 +90,14 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	public boolean isAlive() {
 		return alive;
 	}
-
+	
+	public void setCurrentState(State s)
+	{
+		currentState = s;
+	}
+	
+	public State getCurrentState()
+	{
+		return currentState;
+	}
 }

@@ -1,71 +1,37 @@
 package ai;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import com.golden.gamedev.object.Timer;
 
 import level.Level;
 import player.Player;
 import utils.Location;
+
+import com.golden.gamedev.object.Timer;
+
 import gameCharacter.GameCharacter;
 import app.RPGame;
 
-public class AbstractPathFindingAI extends AbstractMovementAI{
+public abstract class AbstractPathFindingAI extends AbstractMovementAI {
 
 	public static final int TILE_WIDTH = 10;
 	public static final int TILE_HEIGHT = 10;
-	private static final int CALCULATION_INTERVAL = 100;
-	Player player;
-	Timer calcInterval;
+	public static final int CALCULATION_INTERVAL = 100;
+
+	protected Player player;
+	protected Timer calcInterval;
 	
 	public AbstractPathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);
-		this.player = game.getPlayer();
-		calcInterval = new Timer(CALCULATION_INTERVAL);
-	}
-	
-	public int nextAction(){
-		Location currTile = character.getLocation();
-		Location playerTile = player.getCharacter().getLocation();
-		List<ActionTransition> adjActions = getAdjacentActions(currTile,playerTile);
-				
-		if(adjActions.get(0) != null){
-			System.err.println(adjActions.get(0).direction);
-			return adjActions.get(0).direction;
-		}
-		else return -1;
-	}
-	
-	public List<ActionTransition> getAdjacentActions(Location currTile,Location goalTile){
-		
-		ArrayList<ActionTransition> adjActions = new ArrayList<ActionTransition>();
-		for(int i = 0; i <= 3; i++){
-			ActionTransition nextAction = 
-					new ActionTransition(currTile,goalTile,i);
-			if(!adjActions.contains(nextAction) && nextAction.intermTile != null)
-				adjActions.add(nextAction);
-		}
-		Collections.sort(adjActions);
-		return adjActions;
 	}
 	
 	@Override
 	public void initResources() {
 	}
 
-	@Override
-	public void update(long elapsedTime) {
-		if(!calcInterval.action(elapsedTime))
-			return;
-		int nextDirection = nextAction();
-		if(nextDirection >= 0 && nextDirection <= 3){
-			character.setActiveDirection(nextDirection);
-			character.setVelocity(0.05);
-		}
-	}
+	public abstract void update(long elapsedTime);
+
+	public abstract int nextAction();
 	
 	public static class ActionTransition implements Comparable<ActionTransition>{
 		Location startTile;
@@ -94,14 +60,28 @@ public class AbstractPathFindingAI extends AbstractMovementAI{
 		private void calculateIntermTile(){
 			intermTile = new Location(startTile.getX()+xdelta[direction]*TILE_WIDTH, 
 					startTile.getY()+ydelta[direction]*TILE_HEIGHT);
-			System.err.println(intermTile.getX() + " " + intermTile.getY());
 		}
-
+	
 		public double distToGoal(){
 			if(intermTile == null)
 				return Double.MAX_VALUE;
 			return intermTile.distance(goalTile);
 		}
+		
+		public List<ActionTransition> getAllNextActions(){
+			ArrayList<ActionTransition> next = new ArrayList<ActionTransition>();
+			for(int i = 0; i <= 3; i++){
+				next.add(new ActionTransition(intermTile,goalTile,i));
+			}
+			return next;
+		}
+		//TODO: check if actions are valid
+		/*
+		public List<ActionTransition> getValidNextActions(){
+			for(ActionTransition at : getAllNextActions()){
+				
+			}
+		}*/
 		
 		@Override
 		public int compareTo(ActionTransition at) {

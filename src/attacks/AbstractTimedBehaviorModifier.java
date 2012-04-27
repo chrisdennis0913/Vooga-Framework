@@ -5,6 +5,12 @@ import app.RPGame;
 
 import com.golden.gamedev.object.Timer;
 
+/**
+ * Behavior modifier that performs modification once and 
+ * then undoes it after a set time period.
+ * @author jameshong
+ *
+ */
 public abstract class AbstractTimedBehaviorModifier extends AbstractBehaviorModifier{
 
 	Timer timer;

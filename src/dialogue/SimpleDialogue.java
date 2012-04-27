@@ -23,7 +23,7 @@ public class SimpleDialogue extends AbstractDialogue{
 		return index == script.length-1;
 	}
 	
-	public class SimpleDialogueObject extends DialogueObject{
+	public static class SimpleDialogueObject extends DialogueObject{
 		
 		/**
 		 * moves to the next line in the SimpleDialogue

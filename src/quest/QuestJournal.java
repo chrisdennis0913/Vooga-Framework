@@ -13,6 +13,7 @@ public class QuestJournal
 	private boolean showJournal = false;
 	public static final int INDENT = 10;
 	public static final Color journalColor = Color.darkGray;
+	private static final int journalSlots = 9;
 	
 	public QuestJournal()
 	{
@@ -22,7 +23,6 @@ public class QuestJournal
 	public void addQuest(Quest qu, QuestGiver qg)
 	{
 		myQuests.add(qu);
-		qg.addQuest(qu);
 		qu.addObserver(qg);
 	}
 	
@@ -50,10 +50,10 @@ public class QuestJournal
 		 
 		 font.drawString(g, "Quest Log", SystemFont.LEFT, INDENT, 40, 70);
 		 
-		 for (int i = 0; i < 9; i++)
+		 for (int i = 0; i < journalSlots; i++)
 		 {
 			 if (myQuests.size() > i)
-			 font.drawString(g, myQuests.get(i).getDescription(), SystemFont.LEFT, INDENT, +65+25*i, 70);
+			 font.drawString(g, myQuests.get(i).getDescription(), SystemFont.LEFT, INDENT, 65+25*i, 70);
 		 }
 	}
 	

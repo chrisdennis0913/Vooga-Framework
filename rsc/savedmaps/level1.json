@@ -88,7 +88,7 @@
 			"name": "GuardEnemy",
 			"directions": "rsc/config/goriya_directions.json",
 			"attacks":[
-				"shooting"
+				"poisoning","shooting"
 			]
 		},
 		{

@@ -1,6 +1,6 @@
 package level;
 
-
+import java.awt.image.BufferedImage;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;

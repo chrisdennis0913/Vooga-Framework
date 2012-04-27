@@ -12,10 +12,12 @@ import com.golden.gamedev.object.Sprite;
 public abstract class AbstractRangeAttack extends AbstractAttack{
 	
 	private int minDistance;
+	private String[] targetGroups;
 	
-	public AbstractRangeAttack(RPGame game, GameCharacter attacker, String name, int minDistance) {
+	public AbstractRangeAttack(RPGame game, GameCharacter attacker, String name, int minDistance, String... targetGroups) {
 		super(game, attacker, name);
 		this.minDistance = minDistance;
+		this.targetGroups = targetGroups;
 	}
 
 	public abstract void performAttackIndividual(long elapsedTime);
@@ -28,13 +30,18 @@ public abstract class AbstractRangeAttack extends AbstractAttack{
 		}
 	}
 	
+	@Override
+	public boolean isAvailable(long elapsedTime) {
+		return !findTargets().isEmpty();
+	}
+	
 	public boolean checkIfAttackable(GameCharacter gc){
 		return attacker.getDistance(gc) < minDistance;
 	}
 	
-	public List<GameCharacter> findTargets(String... attackableGroups){
+	public List<GameCharacter> findTargets(){
 		List<GameCharacter> targets = new ArrayList<GameCharacter>();
-		for(String s : attackableGroups){
+		for(String s : targetGroups){
 			for(Sprite sp: game.getField().getGroup(s).getSprites()){
 				if(sp instanceof GameCharacter){
 					GameCharacter gc = (GameCharacter) sp;

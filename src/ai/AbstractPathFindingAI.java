@@ -24,10 +24,6 @@ public abstract class AbstractPathFindingAI extends AbstractMovementAI {
 	public AbstractPathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);
 	}
-	
-	@Override
-	public void initResources() {
-	}
 
 	public abstract void update(long elapsedTime);
 

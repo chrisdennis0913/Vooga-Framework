@@ -48,7 +48,6 @@ public class DecisionTable {
 			int totalValue = 0;
 			for(AbstractGameHeuristic cond: attackConditions.keySet()){
 				if (cond.getHeuristic() > 0.0){
-					System.err.println(at.getName() + cond + attackConditions.get(cond));
 					totalValue += attackConditions.get(cond);
 				}
 			}

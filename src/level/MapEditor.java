@@ -1,5 +1,6 @@
 package level;
 
+import enemy.AbstractEnemy;
 import enemy.TestEnemy;
 import gameCharacter.GameCharacter;
 
@@ -147,8 +148,8 @@ public class MapEditor extends Game {
 							
 						case 2:
 							//enemy
-							TestEnemy enemy = new TestEnemy(game, new GameCharacter(game, loc,
-									"rsc/config/enemy_directions.json"), "rsc/config/enemy_actions.json");
+							AbstractEnemy enemy = AbstractEnemy.createEnemy("TestEnemy", game, 
+									new GameCharacter(game, loc, "rsc/config/enemy_directions.json"), "doesntmatter");
 							jEnemies.add(enemy.toJson());
 						case 3:
 							//npc

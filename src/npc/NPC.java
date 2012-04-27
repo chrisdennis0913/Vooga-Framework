@@ -9,7 +9,6 @@ import store.StoreManagerNPC;
 import dialogue.AbstractDialogue;
 
 public class NPC extends CharacterDecorator{
-
 	/**
 	 * Computer-generated serial ID number
 	 */
@@ -18,7 +17,7 @@ public class NPC extends CharacterDecorator{
 	protected AbstractDialogue dialogue;
 	private boolean alive;
 	
-	private ArrayList<State> currentStates;
+	private TalkingState talkingState;
 	
 	private State currentState;
 
@@ -34,7 +33,6 @@ public class NPC extends CharacterDecorator{
 	public NPC(GameCharacter character) {
 		super(character);
 		character.setDecorator(this);
-		currentStates = new ArrayList<State>();
 	}
 	
 	public static NPC createNPC(String npcName, GameCharacter gameChar){
@@ -45,11 +43,6 @@ public class NPC extends CharacterDecorator{
 				return npcFactory.constructNPC(gameChar);
 		}
 		throw new RuntimeException("Given name of NPC not recognized");
-	}
-	
-	private ArrayList<State> getCurrentStates()
-	{
-		return currentStates;
 	}
 	
 	public void setDialogue (AbstractDialogue dialogue){
@@ -69,7 +62,9 @@ public class NPC extends CharacterDecorator{
 	}
 
 	public void update(long elapsed){
-		currentState.update(elapsed);
+		currentState.update(elapsed, null);
+		if (currentState.getStatus() == "Talking State");
+			talkingState = (TalkingState) currentState;
 	}
 	
 	public NPC setCharacter(GameCharacter character){

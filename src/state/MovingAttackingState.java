@@ -1,5 +1,6 @@
 package state;
 
+import gameCharacter.CharacterDecorator;
 import ai.AbstractAttackAI;
 import ai.AbstractMovementAI;
 
@@ -14,7 +15,7 @@ public class MovingAttackingState implements State
 		myAttack = attack;
 	}
 	
-	public void update(long elapsedTime) 
+	public void update(long elapsedTime, CharacterDecorator cD) 
 	{
 		if (myMovement != null)
 			myMovement.update(elapsedTime);

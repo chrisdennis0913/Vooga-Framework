@@ -63,7 +63,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	public void update(long elapsedTime)
 	{
 		System.out.println("I'm updating in Enemy");
-		currentState.update(elapsedTime);
+		currentState.update(elapsedTime, null);
 	}
 	
 	public HashMap<String, AbstractAttack> getAttacks() {

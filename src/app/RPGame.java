@@ -96,7 +96,9 @@ public class RPGame extends GameObject {
 	    }
 
 	    player.getCharacter().getJournal().update(elapsed);
-
+	    
+	    if (player.getCharacter().getY()*32 == 22 && player.getCharacter().getX() == 0)
+	    	level.nextLevel("level0001");
 	    
 		field.update(elapsed);
 		player.update(elapsed);

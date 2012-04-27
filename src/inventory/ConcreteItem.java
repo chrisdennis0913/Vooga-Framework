@@ -1,7 +1,6 @@
 package inventory;
 
 import com.google.gson.JsonObject;
-
 import evented.EventedWrapper;
 import app.RPGame;
 
@@ -17,7 +16,15 @@ public class ConcreteItem extends Item {
     private static final long serialVersionUID = -4599650031278387506L;
     private boolean isForSale;
     private boolean quantifiable;
+    private boolean equippable = true;
     private boolean equipped;
+    private int healValue;
+    private int statChange;
+    private int damage;
+    private int relX;
+    private int relY;
+    private String weaponType;
+    private String statCategory;
 
 
     public ConcreteItem (RPGame game, JsonObject item) {
@@ -33,11 +40,6 @@ public class ConcreteItem extends Item {
 
 
     @Override
-    public void setPrice (int price) {
-    }
-
-
-    @Override
     public boolean isSellable () {
         return isForSale;
     }
@@ -45,21 +47,23 @@ public class ConcreteItem extends Item {
 
     public void setSellable (boolean sell) {
         isForSale = sell;
-
     }
 
 
     @Override
     public void use () {
         equip();
-
     }
 
 
     @Override
     public void equip () {
+        if (!canBeEquipped())
+            return;
         Inventory myWrapper = (Inventory) wrapper;
-        if (myWrapper.getEquipped() != null) myWrapper.getEquipped().unequip();
+        if (myWrapper.getEquipped() != null) {
+            myWrapper.getEquipped().unequip();
+        }
         myWrapper.setEquipped(this);
         equipped = true;
     }
@@ -74,9 +78,23 @@ public class ConcreteItem extends Item {
 
 
     @Override
-    public void drop () {
-        // TODO Auto-generated method stub
+    public void removeWhenUsed (int quantity) {
+        if (quantifiable) remove(quantity);
+    }
 
+
+    @Override
+    public void drop () {
+        Inventory myInv = (Inventory) getWrapper();
+        myInv.remove(this);
+        getWrapper().getCharacter()
+                    .getGame()
+                    .getLevel()
+                    .getInventory()
+                    .add(this);
+        setLocation(getWrapper().getCharacter().getX(),
+                    getWrapper().getCharacter().getY());
+        setActive(true);
     }
 
 
@@ -88,14 +106,100 @@ public class ConcreteItem extends Item {
 
     @Override
     public boolean canBeEquipped () {
-        // TODO Auto-generated method stub
-        return true;
+        return equippable;
     }
 
 
     @Override
-    public void removeWhenUsed (int quantity) {
-        if (quantifiable) remove(quantity);
+    public void setEquippable (boolean equip) {
+        equippable = equip;
     }
 
+
+    @Override
+    public void setPotionValue (int value) {
+        healValue = value;
+    }
+
+
+    @Override
+    public int getPotionValue () {
+        return healValue;
+    }
+
+
+    @Override
+    public int getDamage () {
+        return damage;
+    }
+
+
+    @Override
+    public void setDamage (int damageValue) {
+        damage = damageValue;
+    }
+
+
+    @Override
+    public String getWeaponType () {
+        return weaponType;
+    }
+
+
+    @Override
+    public void setWeaponType (String type) {
+        weaponType = type;
+
+    }
+
+
+    @Override
+    public void setStatCategory (String statistic) {
+        statCategory = statistic;
+
+    }
+
+
+    @Override
+    public void setStatChange (int value) {
+        statChange = value;
+    }
+
+
+    @Override
+    public String getStatCategory () {
+        return statCategory;
+    }
+
+
+    @Override
+    public int getStatChange () {
+        return statChange;
+    }
+
+
+    @Override
+    public void setRelPosition (int x, int y) {
+        relX = x;
+        relY = y;
+    }
+
+
+    @Override
+    public int[] getRelPosition () {
+        int[] relPos = { relX, relY };
+        return relPos;
+    }
+
+
+    @Override
+    public void setPrice (int price) {
+        this.price = price;
+    }
+
+
+    @Override
+    public int getPrice () {
+        return price;
+    }
 }

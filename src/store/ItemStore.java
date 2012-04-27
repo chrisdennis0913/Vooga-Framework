@@ -32,7 +32,7 @@ public class ItemStore extends EventedWrapper<Item>{
 	private Inventory myInventory;
 	private boolean storeOpen = false;
 	private RPGame game;
-	private Item item;
+//	private Item item;
 	
 	public void update(long elapsedTime) {
 		if (game.keyPressed(KeyEvent.VK_S)) {
@@ -108,13 +108,13 @@ public class ItemStore extends EventedWrapper<Item>{
 		}
 	}
 	
-	public int buy (Item item){
-		int price = item.getPrice();
-		if (){
-			
-		}
-		return price;
-		
-	}
+//	public int buy (Item item){
+//		int price = item.getPrice();
+//		if (){
+//			
+//		}
+//		return price;
+//		
+//	}
 
 }

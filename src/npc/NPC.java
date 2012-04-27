@@ -3,10 +3,7 @@ import java.util.ArrayList;
 
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
-import state.AttackingState;
 import state.State;
-import state.TalkingState;
-import state.WalkingState;
 import store.StoreManagerNPC;
 import dialogue.AbstractDialogue;
 
@@ -19,11 +16,6 @@ public class NPC extends CharacterDecorator{
 	private static final long serialVersionUID = -5360689062786017503L;
 	protected AbstractDialogue dialogue;
 	private boolean alive;
-	
-
-	private AttackingState atkState;
-	private TalkingState talkState;
-	private WalkingState walkState;
 	
 	private State currentState;
 
@@ -79,6 +71,7 @@ public class NPC extends CharacterDecorator{
 	
 	public void setCurrentState(State s)
 	{
+		System.out.println(s);
 		currentState = s;
 	}
 	

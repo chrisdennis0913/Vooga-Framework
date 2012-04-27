@@ -4,6 +4,7 @@ import gameCharacter.GameCharacter;
 import app.RPGame;
 
 import com.golden.gamedev.object.Timer;
+import com.google.gson.JsonElement;
 
 public class SquareMovementAI extends AbstractMovementAI{
 	
@@ -32,6 +33,19 @@ public class SquareMovementAI extends AbstractMovementAI{
 	public void initResources() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static class Factory extends AbstractMovementAIFactory{
+
+		@Override
+		public boolean isThisType(String movementName) {
+			return movementName.equals("SquareMovementAI");
+		}
+		
+		@Override
+		public AbstractMovementAI constructMovement(RPGame game, GameCharacter gameChar, JsonElement jsonMovement) {						
+			return new SquareMovementAI(game, gameChar, jsonMovement.getAsJsonObject().get("timeToTurn").getAsInt());
+		}			
 	}
 
 }

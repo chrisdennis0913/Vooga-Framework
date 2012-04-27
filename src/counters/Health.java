@@ -25,6 +25,9 @@ public class Health extends Counter {
 	public void update(long elapsed) {
 	}
 
+	public void updateMeter(){
+	    meter = new Meter(this);
+	}
 	public void render(Graphics2D g) {
 		drawMeter(g);
 	}
@@ -49,6 +52,11 @@ public class Health extends Counter {
 					new Dimension(bgWidth, bgHeight), color);
 		}
 
+	}
+	@Override
+	public void boostTotal(int value){
+	    super.boostTotal(value);
+	    updateMeter();
 	}
 
 }

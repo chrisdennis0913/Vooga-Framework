@@ -4,6 +4,7 @@ import gameCharacter.GameCharacter;
 import state.MovingAttackingState;
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
+import ai.TestDecisionTableAI;
 import app.RPGame;
 
 import com.google.gson.JsonObject;
@@ -19,8 +20,7 @@ public class TestEnemy extends AbstractEnemy{
 	private static final int DEFAULT_MONEY_VALUE = 10;
 
 	public TestEnemy(RPGame game, GameCharacter character, JsonObject jEnemy) {
-		super(character, "TestEnemy", jEnemy);
-		this.game = game;
+		super(game, character, "TestEnemy", jEnemy);
 		initResources();
 		moneyValue = DEFAULT_MONEY_VALUE;
 	}

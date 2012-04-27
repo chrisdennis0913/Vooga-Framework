@@ -25,8 +25,6 @@ public abstract class AbstractEnemy extends CharacterDecorator implements
 	private boolean alive = true;
 	protected RPGame game;
 
-	private TalkingState talkState;
-
 	private State currentState;
 
 	public AbstractEnemy(GameCharacter character) {

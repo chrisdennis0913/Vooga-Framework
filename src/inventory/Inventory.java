@@ -2,6 +2,8 @@ package inventory;
 
 import java.awt.Graphics2D;
 import java.util.HashMap;
+
+import app.RPGame.Pausable;
 import menu.InventoryMenu;
 import evented.EventedWrapper;
 import gameCharacter.GameCharacter;
@@ -106,17 +108,17 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         for (Item itm : this.list.values()) {
             itm.render(g);
         }
-        if (character.getGame().isPausedForInventory()) invMenu.render(g);
+        if (character.getGame().isPausedFor(Pausable.INV)) invMenu.render(g);
     }
 
 
     @Override
     public void update (long elapsed) {
-        if (character.getGame().keyPressed(java.awt.event.KeyEvent.VK_O)) {
-            character.getGame().pauseGameForInventory();
+        if (character.getGame().keyPressed(java.awt.event.KeyEvent.VK_I)) {
+            character.getGame().pauseGameFor(Pausable.INV);
             invMenu.updateInventory(this);
         }
 
-        if (character.getGame().isPausedForInventory()) invMenu.update(elapsed);
+        if (character.getGame().isPausedFor(Pausable.INV)) invMenu.update(elapsed);
     }
 }

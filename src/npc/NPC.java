@@ -47,11 +47,14 @@ public class NPC extends CharacterDecorator {
 		throw new RuntimeException("Given name of NPC not recognized");
 	}
 
-	public void setDialogue(AbstractDialogue dialogue) {
+	public void setDialogue(AbstractDialogue dialogue) 
+	{
 		this.dialogue = dialogue;
 	}
 
 	public String getTalk() {
+		if (dialogue == null)
+			return null;
 		return dialogue.getCurrentLine();
 	}
 

@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import app.RPGame.Pausable;
+
 
 public class InventoryMenu extends Menu {
 
@@ -47,7 +49,7 @@ public class InventoryMenu extends Menu {
             case KeyEvent.VK_ENTER:
                 if (option == 0) {
                     // Back to main game screen.
-                    game.unPauseGameForInventory();
+                    game.unPauseGameFor(Pausable.INV);
                 }
                 else {
                     Item currentItem = optionsList.get(option - 1);

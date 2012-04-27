@@ -11,6 +11,7 @@ import com.golden.gamedev.object.font.SystemFont;
 import evented.EventedWrapper;
 
 import app.RPGame;
+import app.RPGame.Pausable;
 import inventory.Inventory;
 import inventory.Item;
 import gameCharacter.GameCharacter;
@@ -36,10 +37,9 @@ public class ItemStore extends EventedWrapper<Item>{
 	
 	public void update(long elapsedTime) {
 		if (game.keyPressed(KeyEvent.VK_S)) {
-			game.unPauseGameForStore();
+			game.unPauseGameFor(Pausable.STORE);
 			storeOpen = false;
 		}
-		
 	}
 
 	private void drawBoxes(Graphics2D g) {
@@ -69,7 +69,7 @@ public class ItemStore extends EventedWrapper<Item>{
 
 	public void openStore() {
 		storeOpen = true;
-		game.pauseGameForStore();
+		game.pauseGameFor(Pausable.STORE);
 	}
 
 	public void renderStore(Graphics2D g) {

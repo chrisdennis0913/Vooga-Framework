@@ -34,4 +34,8 @@ public class Velocity {
 		else
 			return new double[]{speed, 0};
 	}
+	
+	public String toString() {
+		return "[speed: "+speed+"]";
+	}
 }

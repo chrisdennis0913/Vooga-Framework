@@ -27,7 +27,6 @@ public class Player extends CharacterDecorator implements Jsonable {
 	public void initResources() {
 		JsonObject actions = JsonUtil.getJSON(configURL);
 		constructActions(actions);
-		System.out.println("PlayerInit");
 	}
 
 	private void constructActions(JsonObject actions) {
@@ -58,8 +57,7 @@ public class Player extends CharacterDecorator implements Jsonable {
 		location.add(new JsonPrimitive(getCharacter().getX()));
 		location.add(new JsonPrimitive(getCharacter().getY()));
 		json.add("directionsURL", new JsonPrimitive("rsc/config/player_directions.json"));
-		json.add("actionsURL", new JsonPrimitive("rsc/config/player_direction.json"));
-		
+		json.add("actionsURL", new JsonPrimitive("rsc/config/player_direction.json"));		
 		return json;
 	}
 	

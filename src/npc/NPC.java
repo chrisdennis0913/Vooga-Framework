@@ -5,11 +5,15 @@ import gameCharacter.GameCharacter;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import state.State;
 import store.StoreManagerNPC;
+import utils.Jsonable;
 import dialogue.AbstractDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-public class NPC extends CharacterDecorator {
+public abstract class NPC extends CharacterDecorator implements Jsonable{
 	/**
 	 * Computer-generated serial ID number
 	 */
@@ -40,7 +44,6 @@ public class NPC extends CharacterDecorator {
 		NPCs.add(new StoreManagerNPC.StoreManager());
 		for (NPCFactory npcFactory : NPCs) {
 			if (npcFactory.isThisType(npcName)){
-				System.out.println(npcFactory.getClass().getSimpleName());
 				return npcFactory.constructNPC(gameChar);
 			}
 		}
@@ -51,9 +54,7 @@ public class NPC extends CharacterDecorator {
 		this.dialogue = dialogue;
 	}
 
-	public String getTalk() {
-		return dialogue.getCurrentLine();
-	}
+	public abstract String getTalk(SimpleDialogueObject simpleDialogueObject);
 
 	public void setAlive(boolean alive) {
 		this.alive = alive;
@@ -83,4 +84,7 @@ public class NPC extends CharacterDecorator {
 	public boolean hasDialogue() {
 		return (dialogue != null);
 	}
+
+	@Override
+	public abstract JsonObject toJson();
 }

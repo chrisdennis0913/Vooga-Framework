@@ -1,7 +1,6 @@
 package inventory;
 
 import com.google.gson.JsonObject;
-
 import evented.EventedWrapper;
 import app.RPGame;
 
@@ -17,7 +16,7 @@ public class ConcreteItem extends Item {
     private static final long serialVersionUID = -4599650031278387506L;
     private boolean isForSale;
     private boolean quantifiable;
-    private boolean equippable;
+    private boolean equippable = true;
     private boolean equipped;
     private int healValue;
     private int statChange;
@@ -54,14 +53,17 @@ public class ConcreteItem extends Item {
     @Override
     public void use () {
         equip();
-
     }
 
 
     @Override
     public void equip () {
+        if (!canBeEquipped())
+            return;
         Inventory myWrapper = (Inventory) wrapper;
-        if (myWrapper.getEquipped() != null) myWrapper.getEquipped().unequip();
+        if (myWrapper.getEquipped() != null) {
+            myWrapper.getEquipped().unequip();
+        }
         myWrapper.setEquipped(this);
         equipped = true;
     }
@@ -73,7 +75,6 @@ public class ConcreteItem extends Item {
         myWrapper.removeEquipped(this);
         equipped = false;
     }
-
 
 
     @Override
@@ -107,7 +108,8 @@ public class ConcreteItem extends Item {
     public boolean canBeEquipped () {
         return equippable;
     }
-    
+
+
     @Override
     public void setEquippable (boolean equip) {
         equippable = equip;
@@ -185,10 +187,9 @@ public class ConcreteItem extends Item {
 
     @Override
     public int[] getRelPosition () {
-        int[] relPos = {relX, relY};
+        int[] relPos = { relX, relY };
         return relPos;
     }
-
 
 
     @Override

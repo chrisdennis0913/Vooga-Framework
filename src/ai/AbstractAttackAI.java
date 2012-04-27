@@ -3,7 +3,6 @@ package ai;
 import calculators.DamageCalculator;
 import controllers.AttackController;
 import enemy.AbstractEnemy;
-import enemy.TestEnemy;
 import app.RPGame;
 import attacks.AbstractAttack;
 

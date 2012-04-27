@@ -3,15 +3,15 @@ package enemy;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import npc.NPC;
-import npc.NPCFactory;
-import npc.NPCTest1;
+import counters.EnemyHealth;
 
-import state.AttackingState;
 import state.State;
 import state.TalkingState;
-import state.WalkingState;
-import store.StoreManagerNPC;
+
+import state.MovingAttackingState;
+import ai.GreedyPathFindingAI;
+import ai.SimpleAttackAI;
+
 import app.RPGame;
 import attacks.AbstractAttack;
 import gameCharacter.Attackable;
@@ -25,9 +25,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	protected String configURL;
 	private boolean alive = true;
 	protected RPGame game;
-	private AttackingState atkState;
-	private TalkingState talkState;
-	private WalkingState walkState;
+
 	private State currentState;
 	protected int moneyValue;
 
@@ -44,17 +42,22 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		//String json = JsonUtil.getJSON(configURL);
 		//initActions(json);
 		initAttacks();
-		initAttackAI();
-		initMovementAI();
+		getCharacter().getCounters().add("health",
+				new EnemyHealth(getCharacter().getCounters(), 2));
+		initAI();
 	}
 
-	protected abstract void initMovementAI();
-	protected abstract void initAttackAI();
+	
+	public void initAI()
+	{
+		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
+	}
+
 	protected abstract void initAttacks();
 	protected abstract void initActions(String json);
 
 	public void update(long elapsedTime) {
-		currentState.update(elapsedTime);
+		currentState.update(elapsedTime, this);
 	}
 
 	public HashMap<String, AbstractAttack> getAttacks() {

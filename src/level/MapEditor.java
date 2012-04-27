@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import player.Player;
 import utils.Location;
+import app.Main;
 import app.RPGame;
 
 import com.golden.gamedev.Game;
@@ -45,7 +46,7 @@ public class MapEditor extends Game {
 	int 	charnum;
 	BufferedImage player;
 	BufferedImage enemy;
-	RPGame game;
+	RPGame game = new RPGame(new Main(null), null);
 	
 	// add 
 	JsonObject jLevel = new JsonObject();
@@ -122,17 +123,31 @@ public class MapEditor extends Game {
 			if (bsInput.isMouseDown(MouseEvent.BUTTON1)) {
 				if(tilemode == 2) {
 					// place picture of character
+					switch (charnum) {
+						case 0:
+							//player
+							String att1;
+							att1 = JOptionPane.showInputDialog("Attribute1:");
+							String att2;
+							att2 = JOptionPane.showInputDialog("Attribute2:");
+							//save sprite
+							Location loc = new Location(new int[]{getMouseX(), getMouseY()});
+							game.bsLoader = bsLoader;
+							Player player = new Player(new GameCharacter(game, loc,
+									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
+							jPlayer = player.toJson();
+							
+						case 1:
+							//item
+						case 2:
+							//enemy
+						case 3:
+							//npc
+							
+					}
 					
 					//swing code to take attributes of sprite
-					String att1;
-					att1 = JOptionPane.showInputDialog("Attribute1:");
-					String att2;
-					att2 = JOptionPane.showInputDialog("Attribute2:");
-					//save sprite
-					Location loc = new Location(new int[]{getMouseX(), getMouseY()});
-					Player player = new Player(new GameCharacter(game, loc,
-							"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
-					jPlayer = player.toJson();
+					
 					
 				}
 				else
@@ -261,7 +276,6 @@ public class MapEditor extends Game {
 			g.setColor(Color.BLACK);
 			g.drawRect(600, 40, 32, 32);
 		}
-		
 		Point tileAt = map.getTileAt(getMouseX(), getMouseY());
 		if (tileAt != null) {
 			g.setColor(Color.WHITE);

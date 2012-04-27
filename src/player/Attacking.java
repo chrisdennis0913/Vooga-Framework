@@ -3,7 +3,6 @@ package player;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-
 import utils.JsonUtil;
 import utils.KeyHandle;
 import actions.ActionDecorator;

@@ -2,8 +2,13 @@ package enemy;
 
 import gameCharacter.Attackable;
 import gameCharacter.GameCharacter;
-import state.AttackingState;
-import state.WalkingState;
+
+import java.util.HashMap;
+
+import state.State;
+
+import com.golden.gamedev.Game;
+
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
@@ -29,22 +34,11 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 	protected void initAttacks() {
 		attacks.put("shooting",new ShootingAttack(game,this,"shooting"));
 	}
-	
-	@Override
-	protected void initAttackAI(){
-		setCurrentState(new AttackingState(new SimpleAttackAI(game,this)));
-	}
-	
 
 	@Override
 	protected void initActions(String json) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	protected void initMovementAI(){
-		setCurrentState(new WalkingState(new GreedyPathFindingAI(game, this.getCharacter())));
 	}
 	
 	public static class TestEnemyFactory extends EnemyFactory{

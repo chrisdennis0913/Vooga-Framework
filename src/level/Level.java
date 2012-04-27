@@ -180,7 +180,9 @@ public class Level extends AbstractTileBackground implements Evented {
             item = new ConcreteItem(game, it);
             if (it.get("name").getAsString().contains("money")) {
                 item.setEquippable(false);
+                item.setDroppable(false);
             }
+            item.setWrapper(player.getCharacter().getInventory());
             player.getCharacter().getInventory().add(item, item.getQuantity());
         }
 

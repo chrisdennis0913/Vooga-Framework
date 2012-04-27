@@ -97,7 +97,7 @@ public class InventoryMenu extends Menu {
             Sprite itemSprite = new Sprite(itm.getImage(), 44, 18 + count *30);
             itemSprite.render(g);
             if (itm.isEquipped()) {
-                g.drawImage(emphasisBullet, 4, 17 + count * 20, null);
+                g.drawImage(emphasisBullet, 4, 17 + count * 30, null);
             }
             if (firstTime) optionsList.add(itm);
 

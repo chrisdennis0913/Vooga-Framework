@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import level.Level;
-import level.Level;
-
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -53,7 +51,7 @@ public class GameCharacter extends AnimatedSprite implements
 
 	private int curDirection = 0;
 
-	private Velocity velocity = new Velocity(0.07);
+	private Velocity velocity = new Velocity(0.1);
 
 	private List<Direction> directions;
 
@@ -111,6 +109,7 @@ public class GameCharacter extends AnimatedSprite implements
 		actions.update(elapsed);
 		inventory.update(elapsed);
 		double[] velocity = curVelocity.get(getCurrentDirection());
+		System.out.println(curVelocity);
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
 		
@@ -141,7 +140,7 @@ public class GameCharacter extends AnimatedSprite implements
 		
 		for(int i=0; i<dirsDirections.size(); i++){
 			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
-			BufferedImage image = game.getImage(direction.get("image").getAsString());
+			BufferedImage image = this.game.getImage(direction.get("image").getAsString());
 			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
 					1);
 
@@ -199,7 +198,6 @@ public class GameCharacter extends AnimatedSprite implements
 	}
 
 	public BehaviorModifierContainer getBehaviorModifiers() {
-
 		return behaviorModifiers;
 	}
 	

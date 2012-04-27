@@ -40,7 +40,6 @@ public class NPC extends CharacterDecorator {
 		NPCs.add(new StoreManagerNPC.StoreManager());
 		for (NPCFactory npcFactory : NPCs) {
 			if (npcFactory.isThisType(npcName)){
-				System.out.println(npcFactory.getClass().getSimpleName());
 				return npcFactory.constructNPC(gameChar);
 			}
 		}

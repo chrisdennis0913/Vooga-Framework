@@ -11,6 +11,7 @@ import state.State;
 import store.StoreManagerNPC;
 import utils.Jsonable;
 import dialogue.AbstractDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 public abstract class NPC extends CharacterDecorator implements Jsonable{
 	/**
@@ -53,9 +54,7 @@ public abstract class NPC extends CharacterDecorator implements Jsonable{
 		this.dialogue = dialogue;
 	}
 
-	public String getTalk() {
-		return dialogue.getCurrentLine();
-	}
+	public abstract String getTalk(SimpleDialogueObject simpleDialogueObject);
 
 	public void setAlive(boolean alive) {
 		this.alive = alive;

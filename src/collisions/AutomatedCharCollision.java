@@ -21,6 +21,7 @@ public class AutomatedCharCollision extends BasicCollisionGroup {
 		overlap(character, npcChar);
 		if (npc.getClass().equals(StoreManagerNPC.class)){
 			store = ((StoreManagerNPC) npc).getStore();
+			System.out.println("Got to store");
 			store.openStore();
 		}
 	

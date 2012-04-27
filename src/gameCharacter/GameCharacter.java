@@ -109,7 +109,6 @@ public class GameCharacter extends AnimatedSprite implements
 		actions.update(elapsed);
 		inventory.update(elapsed);
 		double[] velocity = curVelocity.get(getCurrentDirection());
-		System.out.println(curVelocity);
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
 		

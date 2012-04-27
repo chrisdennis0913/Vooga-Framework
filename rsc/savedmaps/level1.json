@@ -38,7 +38,7 @@
 		},
 		{
 			"name": "money",
-			"location": [480, 640],
+			"location": [480, 700],
 			"image": "rsc/items/money.png",
 			"quantity": 500,
 			"price": 1
@@ -92,7 +92,7 @@
 			]
 		},
 		{
-			"location": [400, 400],
+			"location": [120, 640],
 			"name": "ArcherEnemy",
 			"directions": "rsc/config/goriya_directions.json",
 			"attacks":[

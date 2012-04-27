@@ -141,7 +141,7 @@ public class GameCharacter extends AnimatedSprite implements
 		
 		for(int i=0; i<dirsDirections.size(); i++){
 			JsonObject direction = dirsDirections.get(i).getAsJsonObject();
-			BufferedImage image = game.getImage(direction.get("image").getAsString());
+			BufferedImage image = this.game.getImage(direction.get("image").getAsString());
 			BufferedImage[] images = ImageUtil.splitImages(image, dirs.get("frames").getAsInt(),
 					1);
 

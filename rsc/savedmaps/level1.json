@@ -31,7 +31,7 @@
 		"items": [
 		{
 			"name": "sword",
-			"location": [380, 120],
+			"location": [380, 140],
 			"image": "rsc/items/sword.png",
 			"quantity": 1,
 			"price": 250

@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 
 public class RPGame extends GameObject {
 
-	static String gameURL = "rsc/config/game.json";
+	static String gameURL;
 
 	public PlayField field = new PlayField();
 
@@ -32,8 +32,9 @@ public class RPGame extends GameObject {
 	boolean pausedForInventory = false;
 	boolean pausedForStore = false;
 
-	public RPGame(GameEngine parent) {
+	public RPGame(GameEngine parent, String configURL) {
 		super(parent);
+		gameURL = configURL;
 	}
 
 	public void initResources() {

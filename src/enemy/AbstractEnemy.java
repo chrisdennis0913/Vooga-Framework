@@ -7,20 +7,11 @@ import gameCharacter.GameCharacter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import npc.NPC;
-import npc.NPCFactory;
-import npc.NPCTest1;
-
 import state.MovingAttackingState;
 import state.State;
 import state.TalkingState;
-import store.StoreManagerNPC;
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
-
-import state.State;
-import state.TalkingState;
-
 import app.RPGame;
 import attacks.AbstractAttack;
 import counters.EnemyHealth;
@@ -51,6 +42,8 @@ public abstract class AbstractEnemy extends CharacterDecorator implements
 		// String json = JsonUtil.getJSON(configURL);
 		// initActions(json);
 		initAttacks();
+		getCharacter().getCounters().add("health",
+				new EnemyHealth(getCharacter().getCounters(), 2));
 		initAI();
 	}
 

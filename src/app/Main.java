@@ -28,7 +28,6 @@ public class Main extends GameEngine {
 	}
 	
 	public GameObject getGame(int GameID) {
-		Gson gson = new Gson();
 		JsonObject json = JsonUtil.getJSON(configURL);
 		switch (GameID) {
 			case GAME_MODE : return new RPGame(this, configURL);

@@ -1,7 +1,6 @@
 package app;
 
 import inventory.Item;
-
 import java.awt.Graphics2D;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -14,7 +13,6 @@ import quest.QuestJournal;
 import store.StoreManagerNPC;
 
 import utils.JsonUtil;
-
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.PlayField;
@@ -96,7 +94,9 @@ public class RPGame extends GameObject {
 	    }
 
 	    player.getCharacter().getJournal().update(elapsed);
-
+	    
+	    if (player.getCharacter().getY()*32 == 22 && player.getCharacter().getX() == 0)
+	    	level.nextLevel("level0001");
 	    
 		field.update(elapsed);
 		player.update(elapsed);

@@ -9,7 +9,6 @@ public abstract class NPCFactory {
 	
 	public abstract boolean isThisType(String npcName);
 
-	public abstract CharacterDecorator constructNPC(GameCharacter gameChar);
 
 	public abstract NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement);
 

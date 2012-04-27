@@ -40,8 +40,8 @@ public class SuperAccessory extends ConcreteItem {
         statChange = 20;
         damage = 5;
         weaponType = "bow";
-        relX = 0;
-        relY = 0;
+        relX = 9;
+        relY = -20;
         timesToHeal = 5;
     }
 
@@ -105,6 +105,7 @@ public class SuperAccessory extends ConcreteItem {
             .getCounters()
             .get(statCategory)
             .boostTotal(-statChange);
+        setLocation(-15,-15);
     }
 
 }

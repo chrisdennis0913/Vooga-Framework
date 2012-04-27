@@ -1,17 +1,12 @@
 package npc;
 
+import gameCharacter.GameCharacter;
 import state.MovingState;
-
+import ai.AbstractMovementAI;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import gameCharacter.CharacterDecorator;
-import gameCharacter.GameCharacter;
-import dialogue.SimpleDialogue.SimpleDialogueObject;
 import dialogue.SimpleDialogue;
-
-import ai.AbstractMovementAI;
-import ai.SquareMovementAI;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 public class NPCTest1 extends NPC {
 
@@ -55,8 +50,6 @@ public class NPCTest1 extends NPC {
 			return npcName.equals("NPCTest1");
 		}
 
-		public CharacterDecorator constructNPC(GameCharacter gameChar) {
-			return new NPCTest1(gameChar);}
 
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
 			return new NPCTest1(gameChar, jsonMovement);

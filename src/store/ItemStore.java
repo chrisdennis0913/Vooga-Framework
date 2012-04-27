@@ -5,15 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.font.SystemFont;
 
-import com.google.gson.JsonObject;
-
 import evented.EventedWrapper;
-import gameCharacter.GameCharacter;
 
 import app.RPGame;
 import app.RPGame.Pausable;
@@ -32,21 +27,14 @@ public class ItemStore extends EventedWrapper<Item> {
 	private Inventory myInventory;
 	private boolean storeOpen = true;
 	private RPGame game;
-	private JsonObject item;
 	protected int price;
 	private BufferedImage image;
 	int numOptions;
-	private GameCharacter character;
 	
 	public ItemStore(StoreManagerNPC manager, RPGame game) {
 		super(manager.getCharacter());
 		this.game = game;
 		myInventory = new Inventory(manager.getCharacter());
-	}
-	
-	public void updateStore(ItemStore store){
-        numOptions = store.getSize();
-
 	}
 	
 	public void update(long elapsedTime) {
@@ -115,9 +103,9 @@ public class ItemStore extends EventedWrapper<Item> {
 			}
 			font.drawText(g, currentItemName, SystemFont.LEFT, (x * 80) + 10,
 					(y * 60) + 10, 70, 2, 0);
-			Sprite itemSprite = new Sprite(currentItem.getImage(), x * 80 + 10,
-					y * 60 + 10);
-			itemSprite.render(g);
+			//Sprite itemSprite = new Sprite(currentItem.getImage(), x * 80 + 10,
+			//		y * 60 + 10);
+			//itemSprite.render(g);
 			x++;
 			if (x >= 5) {
 				x = 0;

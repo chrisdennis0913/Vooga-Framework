@@ -7,14 +7,13 @@ import gameCharacter.GameCharacter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import counters.EnemyHealth;
-
 import state.AttackingState;
 import state.State;
 import state.TalkingState;
 import state.WalkingState;
 import app.RPGame;
 import attacks.AbstractAttack;
+import counters.EnemyHealth;
 
 public abstract class AbstractEnemy extends CharacterDecorator implements
 		Attackable {

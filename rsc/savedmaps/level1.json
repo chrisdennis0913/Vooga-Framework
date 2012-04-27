@@ -11,12 +11,20 @@
 		{
 			"location": [200, 200],
 			"name": "NPCTest1",
-			"directions": "rsc/config/player_directions.json"
+			"directions": "rsc/config/player_directions.json",
+			"movement" : {
+				"type" : "ScriptedMovementAI",
+				"actions" : [[0,800],[3,200]]
+			}
 		},
 		{
 			"location": [500, 400],
 			"name": "StoreManagerNPC",
-			"directions": "rsc/config/store_directions.json"
+			"directions": "rsc/config/store_directions.json",
+			"movement" : {
+				"type" : "SquareMovementAI",
+				"timeToTurn" : 500 
+			}
 		}
 	],
 	"enemies": [

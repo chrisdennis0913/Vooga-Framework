@@ -207,8 +207,8 @@ public class Level extends AbstractTileBackground implements Evented {
             Location loc = new Location(new int[] {
                     jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
             String npcName = jNPC.get("name").getAsString();
-            NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
-                    .get("directions").getAsString()));
+            JsonObject move = jNPC.getAsJsonObject("movement");
+            NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC.get("directions").getAsString()), move);
             group.add(npc.getCharacter());
 
         }

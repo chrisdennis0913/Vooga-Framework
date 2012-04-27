@@ -34,7 +34,7 @@ public abstract class AbstractDialogue {
 	 * @author rachel
 	 *
 	 */
-	public abstract class DialogueObject{
+	public static abstract class DialogueObject{
 		
 	}
 

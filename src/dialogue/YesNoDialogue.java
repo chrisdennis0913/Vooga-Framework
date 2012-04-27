@@ -45,7 +45,7 @@ public class YesNoDialogue extends AbstractDialogue{
 		return thisNode;
 	}
 	
-	public class YesNoDialogueObject extends DialogueObject{
+	public static class YesNoDialogueObject extends DialogueObject{
 		
 		boolean choice;
 		

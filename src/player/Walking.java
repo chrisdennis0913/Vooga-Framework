@@ -10,8 +10,6 @@ import utils.KeyHandle;
 import actions.Action;
 import actions.ActionDecorator;
 
-
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class Walking extends ActionDecorator {
@@ -29,7 +27,6 @@ public class Walking extends ActionDecorator {
 	public void initResources() {
 		keys = new KeyHandle(getWrapper().getCharacter().getGame());
 
-		//JsonUtil.JSONPlayerWalking walking = (JsonUtil.JSONPlayerWalking) getJsonObject();
 		JsonObject walking = getJsonObject();
 		int[] down = JsonUtil.JsonArrayToIntArray(walking.getAsJsonArray("down"));
 		int[] up = JsonUtil.JsonArrayToIntArray(walking.getAsJsonArray("up"));
@@ -50,8 +47,6 @@ public class Walking extends ActionDecorator {
 	public void update(long elapsed) {
 		if (isEnabled()) {
 			super.update(elapsed);
-			System.out.println("walking");
-
 			int status = keys.checkKeys();
 			GameCharacter character = getWrapper().getCharacter();
 

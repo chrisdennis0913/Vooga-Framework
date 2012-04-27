@@ -10,6 +10,19 @@
 	"npcs": [
 		{
 			"location": [200, 200],
+			"name": "NPCTest1",
+			"directions": "rsc/config/player_directions.json"
+		},
+		{
+			"location": [500, 400],
+			"name": "StoreManagerNPC",
+			"directions": "rsc/config/store_directions.json"
+		}
+	],
+	"enemies": [
+		{
+			"location": [250, 250],
+			"name": "TestEnemy",
 			"directions": "rsc/config/player_directions.json"
 		}
 	],
@@ -18,15 +31,17 @@
 		"items": [
 		{
 			"name": "sword",
-			"location": [380, 120],
+			"location": [380, 140],
 			"image": "rsc/items/sword.png",
-			"quantity": 1
+			"quantity": 1,
+			"price": 250
 		},
 		{
 			"name": "bow",
 			"location": [280, 120],
 			"image": "rsc/items/bow.png",
-			"quantity": 1
+			"quantity": 1,
+			"price": 450
 		}
 		]
 	}

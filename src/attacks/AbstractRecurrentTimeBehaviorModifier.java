@@ -6,6 +6,14 @@ import com.golden.gamedev.object.Timer;
 
 import app.RPGame;
 
+/**
+ * Behavior modifier that performs modification
+ * on the game character at frequent periods.
+ * For example, it could deduct health points on every second.
+ * 
+ * @author jameshong
+ *
+ */
 public abstract class AbstractRecurrentTimeBehaviorModifier extends AbstractBehaviorModifier{
 
 	Timer timer;

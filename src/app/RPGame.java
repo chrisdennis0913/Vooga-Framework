@@ -16,14 +16,12 @@ import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 
 public class RPGame extends GameObject {
 
-	private final String gameURL = "rsc/config/game.json";
+	static String gameURL = "rsc/config/game.json";
 
 	public PlayField field = new PlayField();
 
@@ -61,6 +59,7 @@ public class RPGame extends GameObject {
 	            player.getCharacter().getInventory().render(g);
 	            return;
 	            }
+	     
 	}
 
 	public void update(long elapsed) {
@@ -68,6 +67,7 @@ public class RPGame extends GameObject {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
 	        }
+	    
 	    
 		field.update(elapsed);
 		player.update(elapsed);
@@ -104,6 +104,11 @@ public class RPGame extends GameObject {
 	public boolean isPausedForInventory(){
 	    return pausedForInventory;
 	}
+	
+	public boolean isPausedForStore(){
+	    return pausedForStore;
+	}
+	
 	public void pauseGameForStore() {
 		pausedForStore = true;
 	}

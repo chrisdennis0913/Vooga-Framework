@@ -27,6 +27,7 @@ public class Player extends CharacterDecorator implements Jsonable {
 	public void initResources() {
 		JsonObject actions = JsonUtil.getJSON(configURL);
 		constructActions(actions);
+		System.out.println("PlayerInit");
 	}
 
 	private void constructActions(JsonObject actions) {

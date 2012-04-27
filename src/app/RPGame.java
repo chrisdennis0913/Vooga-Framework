@@ -21,12 +21,12 @@ import com.google.gson.JsonObject;
 
 public class RPGame extends GameObject {
 
-	static String gameURL;
+	protected static String gameURL;
 
 	public PlayField field = new PlayField();
 
 	private Player player;
-	private Level level;
+	protected Level level;
 	private QuestJournal myJournal;
 	String lower, upper;
 	boolean pausedForInventory = false;

@@ -32,11 +32,7 @@ public class NPCTest1 extends NPC {
 	 * @return
 	 */
 	public String getTalk(DialogueObject choice) {
-		if (!hasTalked) {
-			hasTalked = true;
-		} else {
-			dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
-		}
+		dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
 		return dialogue.getCurrentLine();
 	}
 

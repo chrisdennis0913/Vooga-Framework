@@ -62,7 +62,7 @@ public class NPC extends CharacterDecorator {
 	}
 
 	public void update(long elapsed) {
-		currentState.update(elapsed);
+		currentState.update(elapsed, this);
 	}
 
 	public NPC setCharacter(GameCharacter character) {

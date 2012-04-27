@@ -28,42 +28,17 @@ import attacks.ShootingAttack;
  * @author jameshong
  *
  */
-public class TestEnemy extends AbstractEnemy implements Attackable{
+public class TestEnemy extends AbstractEnemy{
 
 	private static final int DEFAULT_MONEY_VALUE = 10;
 
-	public TestEnemy(RPGame game, GameCharacter character, String configURL) {
-		super(character, "TestEnemy");
-		this.configURL = configURL;
+	public TestEnemy(RPGame game, GameCharacter character, JsonObject jEnemy) {
+		super(character, "TestEnemy", jEnemy);
 		this.game = game;
 		initResources();
 		moneyValue = DEFAULT_MONEY_VALUE;
 	}
-
-	@Override
-	protected void initAttacks() {
-		attacks.put("shooting",new ShootingAttack(game,this,"shooting"));
-	}
-
-	@Override
-	public void initAI(String json) {
-		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
-	}
 	
-	public static class TestEnemyFactory extends EnemyFactory{
-	
-		@Override
-		public boolean isThisType(String enemyName) {
-			return "TestEnemy".equals(enemyName);
-		}
-
-		@Override
-		public AbstractEnemy constructEnemy(RPGame game, GameCharacter gameChar, String configURL) {
-			return new TestEnemy(game, gameChar, configURL);
-		}
-		
-	}
-
 	@Override
 	public JsonObject getJsonAttributes() {
 		JsonObject attrib = new JsonObject();
@@ -71,6 +46,24 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 		 * Add any subclass-specific variables here
 		 */
 		return attrib;
+	}
+	
+	public void initAI(String json) {
+		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
+	}
+
+	public static class TestEnemyFactory extends EnemyFactory{
+	
+		@Override
+		public boolean isThisType(String enemyName) {
+			return "TestEnemy".equals(enemyName);
+		}
+	
+		@Override
+		public AbstractEnemy constructEnemy(RPGame game, GameCharacter gameChar, JsonObject jEnemy) {
+			return new TestEnemy(game, gameChar, jEnemy);
+		}
+		
 	}
 
 }

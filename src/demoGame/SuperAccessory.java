@@ -83,6 +83,4 @@ public class SuperAccessory extends ConcreteItem {
         game.getPlayer().getCharacter().getCounters().get(statCategory).decrease(statChange);
     }
 
-
-
 }

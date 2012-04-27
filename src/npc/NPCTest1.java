@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 import state.MovingAttackingState;
 
@@ -60,6 +61,12 @@ public class NPCTest1 extends NPC {
 	public JsonObject getJsonAttributes() {
 		// TODO Auto-generated method stub
 		return new JsonObject();
+	}
+
+	@Override
+	public String getTalk(SimpleDialogueObject simpleDialogueObject) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

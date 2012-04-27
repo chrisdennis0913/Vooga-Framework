@@ -51,14 +51,10 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		initAttacks(jEnemy);
 		getCharacter().getCounters().add("health",
 				new EnemyHealth(getCharacter().getCounters(), 2));
-		initAI();
+		initAI(null);
 	}
 
-	
-	public void initAI()
-	{
-		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
-	}
+	public abstract void initAI(String Json);
 	
 	protected void initAttacks(JsonObject json){
 		for(JsonElement e: json.get("attacks").getAsJsonArray()){

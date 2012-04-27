@@ -25,6 +25,7 @@ public class ConcreteItem extends Item {
     private int relY;
     private String weaponType;
     private String statCategory;
+    private boolean canDrop = true;
 
 
     public ConcreteItem (RPGame game, JsonObject item) {
@@ -85,6 +86,8 @@ public class ConcreteItem extends Item {
 
     @Override
     public void drop () {
+        if (!canDrop)
+            return;
         Inventory myInv = (Inventory) getWrapper();
         myInv.remove(this);
         getWrapper().getCharacter()
@@ -94,7 +97,15 @@ public class ConcreteItem extends Item {
                     .add(this);
         setLocation(getWrapper().getCharacter().getX(),
                     getWrapper().getCharacter().getY());
-        setActive(true);
+        getWrapper().getCharacter().getGame().getField().getGroup("items").add(this);
+        setActive(true); 
+    }
+
+    public void setDroppable(boolean drop){
+        canDrop = drop;
+    }
+    public boolean isDroppable(){
+        return canDrop;
     }
 
 

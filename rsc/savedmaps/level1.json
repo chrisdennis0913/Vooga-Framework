@@ -5,7 +5,19 @@
 	"player": {
 		"location": [100,100],
 		"directionsURL": "rsc/config/player_directions.json",
-		"actionsURL": "rsc/config/player_actions.json"
+		"actionsURL": "rsc/config/player_actions.json",
+		"playerInventory": {
+			"type": "game",
+			"items": [
+		   		{
+			        "name": "money",
+	        		"location": [-40, -40],
+				"image": "rsc/items/coin.gif",
+			"quantity": 250,
+			"price": 1
+			}
+			]
+		}
 	},
 	"npcs": [
 		{
@@ -27,7 +39,7 @@
 			"attacks":[
 				"shooting"
 			]
-			}
+		}
 	],
 	"inventory": {
 		"type": "game",
@@ -41,17 +53,10 @@
 		},
 		{
 			"name": "bow",
-			"location": [280, 120],
+			"location": [200, 120],
 			"image": "rsc/items/bow.png",
 			"quantity": 1,
 			"price": 450
-		},
-		{
-			"name": "money",
-			"location": [200, 120],
-			"image": "rsc/items/coin.gif",
-			"quantity": 500,
-			"price": 1
 		}
 		]
 	}

@@ -32,12 +32,14 @@ public class ItemStore extends EventedWrapper<Item>{
 	private Inventory myInventory;
 	private boolean storeOpen = false;
 	private RPGame game;
+	private Item item;
 	
 	public void update(long elapsedTime) {
 		if (game.keyPressed(KeyEvent.VK_S)) {
 			game.unPauseGameForStore();
 			storeOpen = false;
 		}
+		
 	}
 
 	private void drawBoxes(Graphics2D g) {
@@ -105,5 +107,13 @@ public class ItemStore extends EventedWrapper<Item>{
 			}
 		}
 	}
+	
+//	public int buy (Item item){
+//		if (player){
+//			
+//		}
+//		return 0;
+//		
+//	}
 
 }

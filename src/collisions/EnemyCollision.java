@@ -1,7 +1,7 @@
 package collisions;
 
 import player.Attacking;
-import enemy.Enemy;
+import enemy.AbstractEnemy;
 import gameCharacter.GameCharacter;
 
 import com.golden.gamedev.object.Sprite;
@@ -27,12 +27,12 @@ public class EnemyCollision extends BasicCollisionGroup {
 		if (attacking.isActive()) {
 			enemy.getCounters()
 					.get("health")
-					.decrease(attacking.getDamage((Enemy) enemy.getDecorator()));
+					.decrease(attacking.getDamage((AbstractEnemy) enemy.getDecorator()));
 		} else if (!timer.isActive()) {
 			timer.setActive(true);
 			player.getCounters()
 					.get("health")
-					.decrease(attacking.getDamage((Enemy) enemy.getDecorator()));
+					.decrease(attacking.getDamage((AbstractEnemy) enemy.getDecorator()));
 		}
 
 		attacking.setActive(false);

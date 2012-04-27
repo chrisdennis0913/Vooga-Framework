@@ -1,7 +1,7 @@
 package calculators;
 
 import counters.Counter;
-import enemy.Enemy;
+import enemy.AbstractEnemy;
 import evented.EventedWrapper;
 
 public class DamageCalculator {
@@ -21,7 +21,7 @@ public class DamageCalculator {
 		return 1;
 	}
 	
-	public int calculate(Enemy enemy) {
+	public int calculate(AbstractEnemy enemy) {
 		return 1;
 	}
 	

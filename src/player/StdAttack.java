@@ -1,6 +1,6 @@
 package player;
 
-import enemy.Enemy;
+import enemy.AbstractEnemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.image.BufferedImage;
@@ -65,7 +65,7 @@ public class StdAttack extends ActionDecorator {
 		attk.directions = Arrays.asList(tempDirections);
 	}
 	
-	public int getDamage(Enemy enemy) {
+	public int getDamage(AbstractEnemy enemy) {
 		return calculator.calculate();
 	}
 	

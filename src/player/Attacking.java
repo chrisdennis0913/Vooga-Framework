@@ -1,6 +1,6 @@
 package player;
 
-import enemy.Enemy;
+import enemy.AbstractEnemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.Graphics2D;
@@ -51,7 +51,7 @@ public class Attacking extends ActionDecorator {
 
 	}
 
-	public int getDamage(Enemy enemy) {
+	public int getDamage(AbstractEnemy enemy) {
 		for (ActionDecorator attack : attacks)
 			if (attack.isEnabled()) {
 				StdAttack attk = (StdAttack) attack;

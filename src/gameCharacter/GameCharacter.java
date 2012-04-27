@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
+import quest.QuestJournal;
+
+import level.Level;
 
 import level.Level;
 import store.ItemStore;
@@ -58,6 +61,7 @@ public class GameCharacter extends AnimatedSprite implements
 
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
+	protected QuestJournal myJournal;
 
 	private String configURL;
 
@@ -86,7 +90,7 @@ public class GameCharacter extends AnimatedSprite implements
 		constructDirections(directions);
 		stop();
 		inventory = new Inventory(this);
-
+		myJournal = new QuestJournal(this);
 	}
 
 	public void render(Graphics2D g) {
@@ -94,6 +98,11 @@ public class GameCharacter extends AnimatedSprite implements
 		counters.render(g);
 		actions.render(g);
 		inventory.render(g);
+	}
+	
+	public QuestJournal getJournal()
+	{
+		return myJournal;
 	}
 
 	public Location getLocation() {

@@ -1,14 +1,15 @@
 package ai;
 
+import gameCharacter.GameCharacter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.golden.gamedev.object.Timer;
-
 import utils.Location;
-import gameCharacter.GameCharacter;
 import app.RPGame;
+
+import com.golden.gamedev.object.Timer;
 
 /**
  * Path finder that chooses and executes the action
@@ -18,7 +19,7 @@ import app.RPGame;
  */
 public class GreedyPathFindingAI extends AbstractPathFindingAI{
 
-	private static final double MINIMUM_DISTANCE = 20;
+	private static final double MINIMUM_DISTANCE = 50;
 	
 	public GreedyPathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);

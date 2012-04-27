@@ -4,6 +4,8 @@ import inventory.Item;
 
 import java.awt.Graphics2D;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 import level.Level;
 import player.Player;
 import quest.Quest;
@@ -25,13 +27,15 @@ public class RPGame extends GameObject {
 
 	public PlayField field = new PlayField();
 
+	private Set<Pausable> paused;
 	private Player player;
 	protected Level level;
-	private QuestJournal myJournal;
+
 	String lower, upper;
 	boolean pausedForInventory = false;
 	boolean pausedForStore = false;
 	private StoreManagerNPC manager;
+
 
 	public RPGame(GameEngine parent, String configURL) {
 		super(parent);
@@ -54,34 +58,39 @@ public class RPGame extends GameObject {
 			}
 		});
 		field.setBackground(level);
+		paused = new HashSet<Pausable>();
 	}
 
 	public void render(Graphics2D g) {
 		field.render(g);
-	      if (isPausedForInventory()){
+	      if (isPausedFor(Pausable.INV))
+	      {
 	            player.getCharacter().getInventory().render(g);
 	            return;
 	            }
-	      if (isPausedForStore()){
-	            manager.getStore().render(g);
-	            return;
-	            }
+	      if (isPausedFor(Pausable.JOURNAL))
+	      {
+	    	  player.getCharacter().getJournal().render(g);
+	    	  return;
+	      }
+
 	}
 
-	public void update(long elapsed) {
-	    if (isPausedForInventory()){
+	public void update(long elapsed) 
+	{
+	    if (isPausedFor(Pausable.INV))
+	    {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
 	        }
-	    if (isPausedForStore()){
-	        manager.getStore().update(elapsed);
-	        return;
-	        }
+
+	    player.getCharacter().getJournal().update(elapsed);
+
 	    
 		field.update(elapsed);
 		player.update(elapsed);
 	}
-
+	
 	public Player getPlayer() {
 		return player;
 	}
@@ -94,37 +103,32 @@ public class RPGame extends GameObject {
 		this.player = player;
 	}
 	
-	public void addQuest(Quest qu, QuestGiver qg) {
-		myJournal.addQuest(qu, qg);
+	public void addQuest(Quest qu, QuestGiver qg) 
+	{
+		player.getCharacter().getJournal().addQuest(qu, qg);
 	}
 
 	public PlayField getField() {
 		return field;
 	}
-
-	public void pauseGameForInventory() {
-		pausedForInventory = true;
-	}
-
-	public void unPauseGameForInventory() {
-		pausedForInventory = false;
+	
+	public void pauseGameFor(Pausable pau)
+	{
+		paused.add(pau);
 	}
 	
-	public boolean isPausedForInventory(){
-	    return pausedForInventory;
+	public void unPauseGameFor(Pausable pau)
+	{
+		paused.remove(pau);
 	}
 	
-	public boolean isPausedForStore(){
-	    return pausedForStore;
+	public boolean isPausedFor(Pausable pau)
+	{
+		return paused.contains(pau);
 	}
 	
-	public void pauseGameForStore() {
-		pausedForStore = true;
+	public enum Pausable
+	{
+		INV, STORE, JOURNAL;
 	}
-
-	public void unPauseGameForStore() {
-		pausedForStore = false;
-	}
-
-
 }

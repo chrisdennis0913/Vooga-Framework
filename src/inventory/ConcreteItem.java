@@ -14,17 +14,18 @@ import app.RPGame;
 public class ConcreteItem extends Item {
 
     private static final long serialVersionUID = -4599650031278387506L;
-    private boolean isForSale;
+    protected boolean isForSale;
     private boolean quantifiable;
     private boolean equippable = true;
-    private boolean equipped;
-    private int healValue;
-    private int statChange;
-    private int damage;
-    private int relX;
-    private int relY;
-    private String weaponType;
-    private String statCategory;
+    protected boolean equipped;
+    protected int healValue;
+    protected int statChange;
+    protected int damage;
+    protected int relX;
+    protected int relY;
+    protected String weaponType;
+    protected String statCategory;
+    private boolean canDrop = true;
 
 
     public ConcreteItem (RPGame game, JsonObject item) {
@@ -85,6 +86,8 @@ public class ConcreteItem extends Item {
 
     @Override
     public void drop () {
+        if (!canDrop)
+            return;
         Inventory myInv = (Inventory) getWrapper();
         myInv.remove(this);
         getWrapper().getCharacter()
@@ -94,7 +97,15 @@ public class ConcreteItem extends Item {
                     .add(this);
         setLocation(getWrapper().getCharacter().getX(),
                     getWrapper().getCharacter().getY());
-        setActive(true);
+        getWrapper().getCharacter().getGame().getField().getGroup("items").add(this);
+        setActive(true); 
+    }
+
+    public void setDroppable(boolean drop){
+        canDrop = drop;
+    }
+    public boolean isDroppable(){
+        return canDrop;
     }
 
 
@@ -149,7 +160,6 @@ public class ConcreteItem extends Item {
     @Override
     public void setWeaponType (String type) {
         weaponType = type;
-
     }
 
 

@@ -2,6 +2,7 @@ package store;
 
 import java.awt.Graphics2D;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import state.State;
@@ -62,17 +63,22 @@ public class StoreManagerNPC extends NPC{
 			return npcName.equals("StoreManagerNPC");
 		}
 
-		public NPC constructNPC(GameCharacter gameChar) {
+		@Override
+		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
 			return new StoreManagerNPC(gameChar);
 		}
 		
 	}
 
+	/**
+	 * 
+	 * @return a JsonObject containing the attributes specific to this subclass of
+	 * NPC
+	 */
 	@Override
 	public JsonObject getJsonAttributes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

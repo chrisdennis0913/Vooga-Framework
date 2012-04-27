@@ -11,8 +11,8 @@
 			{
 			"type": "sword",
 			"directions": {
-				"frames": 6,
-				"delay": 60,
+				"frames": 2,
+				"delay": 120,
 				"directions": [
 					{
 						"direction": "DIR_DOWN",
@@ -36,24 +36,24 @@
 			{
 			"type": "bow",
 			"directions": {
-				"frames": 6,
-				"delay": 60,
+				"frames": 2,
+				"delay": 300,
 				"directions": [
 					{
 						"direction": "DIR_DOWN",
-						"image": "rsc/player/attack_down.png"
+						"image": "rsc/player/bow_down.png"
 					},
 					{
 						"direction": "DIR_UP",
-						"image": "rsc/player/attack_up.png"
+						"image": "rsc/player/bow_up.png"
 					},
 					{
 						"direction": "DIR_RIGHT",
-						"image": "rsc/player/attack_right.png"
+						"image": "rsc/player/bow_right.png"
 					},
 					{
 						"direction": "DIR_LEFT",
-						"image": "rsc/player/attack_left.png"
+						"image": "rsc/player/bow_left.png"
 					}
 					]
 				}

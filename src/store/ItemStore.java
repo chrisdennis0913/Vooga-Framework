@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import evented.EventedWrapper;
 
 import app.RPGame;
+import app.RPGame.Pausable;
 import inventory.Inventory;
 import inventory.Item;
 import gameCharacter.GameCharacter;
@@ -55,10 +56,9 @@ public class ItemStore extends EventedWrapper<Item> {
 	
 	public void update(long elapsedTime) {
 		if (game.keyPressed(KeyEvent.VK_S)) {
-			game.unPauseGameForStore();
+			game.unPauseGameFor(Pausable.STORE);
 			storeOpen = false;
 		}
-
 	}
 
 	public void initResources() {
@@ -67,6 +67,7 @@ public class ItemStore extends EventedWrapper<Item> {
 		setImage(image);
 		setLocation(image, 10, 10);
 		list = new HashMap<String, Item>();
+
 	}
 
 	private void drawBoxes(Graphics2D g) {
@@ -95,9 +96,9 @@ public class ItemStore extends EventedWrapper<Item> {
 	}
 
 	public void openStore() {
-		game.pauseGameForStore();
 		storeOpen = true;
-		System.out.println("Calling store");
+		game.pauseGameFor(Pausable.STORE);
+
 	}
 
 	public void render(Graphics2D g) {

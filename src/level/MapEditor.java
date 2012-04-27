@@ -65,7 +65,8 @@ public class MapEditor extends Game {
 		map = new Map(bsLoader, bsIO);
 		player = getImage("rsc/player/playerstart.png", false);
 		enemy = getImage("rsc/enemy/question.png", false);
-		item = getImage("rsc/item/question.png",false);
+		item = getImage("rsc/items/question.png",false);
+		npc = getImage("rsc/npc/question.png", false);
 	}
 
 
@@ -133,16 +134,11 @@ public class MapEditor extends Game {
 					switch (charnum) {
 						case 0:
 							//player
-							String att1;
-							att1 = JOptionPane.showInputDialog("Attribute1:");
-							String att2;
-							att2 = JOptionPane.showInputDialog("Attribute2:");
-							//save sprite
 							game.bsLoader = bsLoader;
 							Player player = new Player(new GameCharacter(game, loc,
 									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
 							jPlayer = player.toJson();
-							
+							break;
 							
 						case 1:
 							//item
@@ -158,18 +154,37 @@ public class MapEditor extends Game {
 							jItem.add("quantity", new JsonPrimitive(JOptionPane.showInputDialog("Quantity:")));
 							jItem.add("price", new JsonPrimitive(JOptionPane.showInputDialog("Price:")));
 							jItems.add(jItem);
+							break;
+							
 							
 						case 2:
 							//enemy
-//							AbstractEnemy enemy = AbstractEnemy.createEnemy("TestEnemy", game, 
-//									new GameCharacter(game, loc, "rsc/config/player_directions.json"), "doesntmatter");
-							//jEnemies.add(enemy.toJson());
+							JsonObject jEnemy = new JsonObject();
+							JsonArray jELoc = new JsonArray();
+							jELoc.add(new JsonPrimitive(getMouseX()));
+							jELoc.add(new JsonPrimitive(getMouseY()));
+							
+							jEnemy.add("location", jELoc);
+							jEnemy.add("name", new JsonPrimitive("TestEnemy"));
+							jEnemy.add("directions", new JsonPrimitive("rsc/config/enemy_directions.json"));
+							
+							JsonArray jAttack = new JsonArray();
+							jAttack.add(new JsonPrimitive("shooting"));
+							jEnemy.add("attacks", jAttack);
+							jEnemies.add(jEnemy);
+							break;
+							
 						case 3:
 							//npc
-//							NPC npc = NPC.createNPC("npcName", new GameCharacter(game, loc,
-//									"rsc/config/npc_directions.json"));
-//							jNPCs.add(npc.toJson());
-							
+							JsonObject jNPC = new JsonObject();
+							JsonArray jNLoc = new JsonArray();
+							jNLoc.add(new JsonPrimitive(getMouseX()));
+							jNLoc.add(new JsonPrimitive(getMouseY()));
+							jNPC.add("location", jNLoc);
+							jNPC.add("name", new JsonPrimitive(JOptionPane.showInputDialog("Type:")));
+							jNPC.add("directions", new JsonPrimitive("rsc/config/oldman_directions.json"));
+							jNPCs.add(jNPC);
+							break;
 					}
 					
 					//swing code to take attributes of sprite
@@ -204,14 +219,14 @@ public class MapEditor extends Game {
 			String lwrLevel = JOptionPane.showInputDialog("Lower Layer:");
 			String uprLevel = JOptionPane.showInputDialog("Upper Layer:");
 			
-			FileUtil.fileWrite(lowerTile, bsIO.setFile(uprLevel));
-			FileUtil.fileWrite(upperTile, bsIO.setFile(lwrLevel));
+			FileUtil.fileWrite(lowerTile, bsIO.setFile("rsc/level/"+uprLevel+".upr"));
+			FileUtil.fileWrite(upperTile, bsIO.setFile("rsc/level/"+lwrLevel+".lwr"));
 			
 			String nextLevel = JOptionPane.showInputDialog("Next file name:");
 			jLevel.add("nextLevel", new JsonPrimitive("rsc/savedmaps/"+nextLevel+".json"));
 			
-			jLevel.add("upperFilename", new JsonPrimitive("rsc/level/map00.upr"));
-			jLevel.add("lowerFilename", new JsonPrimitive("rsc/level/map00.lwr"));
+			jLevel.add("upperFilename", new JsonPrimitive("rsc/level/"+uprLevel+".upr"));
+			jLevel.add("lowerFilename", new JsonPrimitive("rsc/level/"+lwrLevel+".lwr"));
 			
 			jLevel.add("player", jPlayer);
 			jLevel.add("enemies", jEnemies);
@@ -223,7 +238,7 @@ public class MapEditor extends Game {
 			String file = JOptionPane.showInputDialog("File name:");
 			Gson gson = new Gson();
 			try {
-				FileWriter f1 = new FileWriter(file); 
+				FileWriter f1 = new FileWriter("rsc/savedmaps/"+file+".json"); 
 				System.out.println(gson.toJson(jLevel));
 				f1.write(jLevel.toString());
 				f1.close();

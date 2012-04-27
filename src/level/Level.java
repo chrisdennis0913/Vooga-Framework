@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
+import player.Projectile;
 import store.ItemStore;
 import utils.JsonUtil;
 import utils.Location;
@@ -16,6 +17,7 @@ import collisions.BoundaryCollision;
 import collisions.EnemyCollision;
 import collisions.ItemCollision;
 import collisions.NPCCollision;
+import collisions.PlayerProjectileCollision;
 import collisions.SceneryCollision;
 import com.golden.gamedev.engine.BaseIO;
 import com.golden.gamedev.engine.BaseLoader;
@@ -28,9 +30,9 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import demoGame.SuperAccessory;
 import enemy.AbstractEnemy;
 import evented.Evented;
-
 
 public class Level extends AbstractTileBackground implements Evented {
 
@@ -82,11 +84,11 @@ public class Level extends AbstractTileBackground implements Evented {
         setChipsets();
         setTiles(level);
         setSize(layer1.length, layer1[0].length);
-        setLevelTimer();
+        setLevelTimer1();
 
-        setPlayer(level);
+        setPlayer1(level);
         setNpcs(level);
-        setItems(level);
+        setItems1(level);
         setEnemies(level);
         setStore(level);
 
@@ -153,14 +155,14 @@ public class Level extends AbstractTileBackground implements Evented {
     }
 
 
-    private void setLevelTimer () {
+    private void setLevelTimer1 () {
         levelTimer.setFPS(100);
         levelTimer.startTimer();
         levelStartTime = levelTimer.getTime();
     }
 
 
-    private void setPlayer (JsonObject level) {
+    private void setPlayer1 (JsonObject level) {
         JsonObject jPlayer = level.getAsJsonObject("player");
         JsonArray jLocation = jPlayer.getAsJsonArray("location");
 
@@ -184,20 +186,49 @@ public class Level extends AbstractTileBackground implements Evented {
     }
 
 
-    private void setItems(JsonObject level) {
+    private void setItems1(JsonObject level) {
 		JsonObject inventory = level.getAsJsonObject("inventory");
 		JsonArray items = inventory.getAsJsonArray("items");
 		SpriteGroup group = new SpriteGroup("items");
+    }
 
+	private void setLevelTimer() {
+		levelTimer.setFPS(100);
+		levelTimer.startTimer();
+		levelStartTime = levelTimer.getTime();
+	}
+
+	private void setPlayer(JsonObject level) {
+		JsonObject jPlayer = level.getAsJsonObject("player");
+		JsonArray jLocation = jPlayer.getAsJsonArray("location");
+		SpriteGroup group = new SpriteGroup("player");
+		int[] location = new int[] { jLocation.get(0).getAsInt(),
+				jLocation.get(1).getAsInt() };
+
+		Location playerLoc = new Location(location);
+		Player player = new Player(new GameCharacter(game, playerLoc, jPlayer
+				.get("directionsURL").getAsString()), jPlayer.get("actionsURL")
+				.getAsString());
+
+		JsonObject inventory = jPlayer.getAsJsonObject("playerInventory");
+		JsonArray items = inventory.getAsJsonArray("items");
 		for (int i = 0; i < items.size(); i++) {
 			JsonObject it = items.get(i).getAsJsonObject();
-			Item item = null;
-			item = new ConcreteItem(game, it);
-			if (it.get("name").getAsString().contains("money")){
-			    item.setEquippable(false);
+			Item item = new ConcreteItem(game, it);
+			if (it.get("name").getAsString().contains("money")) {
+				item.setEquippable(false);
+				item.setDroppable(false);
 			}
-			group.add(item);
+			item.setWrapper(player.getCharacter().getInventory());
+			player.getCharacter().getInventory().add(item, item.getQuantity());
 		}
+
+		game.setPlayer(player);
+		group.add(player.getCharacter());
+		
+		SpriteGroup projectiles = new SpriteGroup("projectiles");
+		game.getField().addGroup(projectiles);
+		
 		game.getField().addGroup(group);
 	}
     
@@ -218,141 +249,146 @@ public class Level extends AbstractTileBackground implements Evented {
 		game.getField().addGroup(group);
 	}
 
+	private void setItems(JsonObject level) {
+		JsonObject inventory = level.getAsJsonObject("inventory");
+		JsonArray items = inventory.getAsJsonArray("items");
+		SpriteGroup group = new SpriteGroup("items");
 
-    private void setNpcs(JsonObject level) {
-        JsonArray npcs = level.getAsJsonArray("npcs");
-        SpriteGroup group = new SpriteGroup("npcs");
+		for (int i = 0; i < items.size(); i++) {
+			JsonObject it = items.get(i).getAsJsonObject();
 
-        for (int i = 0; i < npcs.size(); i++) {
-            JsonObject jNPC = npcs.get(i).getAsJsonObject();
-            JsonArray jLocation = jNPC.get("location").getAsJsonArray();
+			if (it.get("name").getAsString().contains("super")) {
+				Item item = new SuperAccessory(game, it);
+				group.add(item);
+			} else {
+				Item item = new ConcreteItem(game, it);
 
-            Location loc = new Location(new int[] {
-                    jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
-            String npcName = jNPC.get("name").getAsString();
-            NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
-                    .get("directions").getAsString()));
-            group.add(npc.getCharacter());
+				if (it.get("name").getAsString().contains("money")) {
+					item.setEquippable(false);
 
-        }
-        game.getField().addGroup(group);
-    }
+				}
+				group.add(item);
+			}
+		}
+		game.getField().addGroup(group);
+	}
 
+	private void setNpcs(JsonObject level) {
+		JsonArray npcs = level.getAsJsonArray("npcs");
+		SpriteGroup group = new SpriteGroup("npcs");
 
-    private void setEnemies (JsonObject level) {
-        JsonArray enemies = level.getAsJsonArray("enemies");
-        SpriteGroup group = new SpriteGroup("enemies");
+		for (int i = 0; i < npcs.size(); i++) {
+			JsonObject jNPC = npcs.get(i).getAsJsonObject();
+			JsonArray jLocation = jNPC.get("location").getAsJsonArray();
 
-        for (int i = 0; i < enemies.size(); i++) {
-            JsonObject jEnemy = enemies.get(i).getAsJsonObject();
-            JsonArray jLocation = jEnemy.get("location").getAsJsonArray();
+			Location loc = new Location(new int[] {
+					jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
+			String npcName = jNPC.get("name").getAsString();
+			JsonObject move = jNPC.getAsJsonObject("movement");
+			NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
+					.get("directions").getAsString()), jNPC
+					.getAsJsonObject("movement"));
 
-            Location loc =
-                new Location(new int[] {
-                        jLocation.get(0).getAsInt(),
-                        jLocation.get(1).getAsInt() });
-            String enemyName = jEnemy.get("name").getAsString();
+			group.add(npc.getCharacter());
 
-            AbstractEnemy enemy =
-                AbstractEnemy.createEnemy(enemyName,
-                                          game,
-                                          new GameCharacter(game,
-                                                            loc,
-                                                            "rsc/config/player_directions.json"),
-                                          "doesntmatter");
-            group.add(enemy.getCharacter());
-        }
+		}
+		game.getField().addGroup(group);
+	}
 
-        game.getField().addGroup(group);
-    }
+	private void setEnemies(JsonObject level) {
+		JsonArray enemies = level.getAsJsonArray("enemies");
+		SpriteGroup group = new SpriteGroup("enemies");
 
+		for (int i = 0; i < enemies.size(); i++) {
+			JsonObject jEnemy = enemies.get(i).getAsJsonObject();
+			JsonArray jLocation = jEnemy.get("location").getAsJsonArray();
 
-    private void setTiles (JsonObject level) {
-        String[] lowerTile =
-            FileUtil.fileRead(baseio.getStream(level.get("lowerFilename")
-                                                    .getAsString()));
-        String[] upperTile =
-            FileUtil.fileRead(baseio.getStream(level.get("upperFilename")
-                                                    .getAsString()));
+			Location loc = new Location(new int[] {
+					jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
+			String enemyName = jEnemy.get("name").getAsString();
 
-        SpriteGroup scenery = new SpriteGroup("scenery");
+			AbstractEnemy enemy = AbstractEnemy.createEnemy(enemyName, game,
+					new GameCharacter(game, loc, jEnemy.get("directions")
+							.getAsString()), jEnemy);
+			group.add(enemy.getCharacter());
+		}
 
-        for (int j = 0; j < layer1[0].length; j++) {
-            StringTokenizer lowerToken = new StringTokenizer(lowerTile[j]);
-            StringTokenizer upperToken = new StringTokenizer(upperTile[j]);
-            for (int i = 0; i < layer1.length; i++) {
-                layer1[i][j] = Integer.parseInt(lowerToken.nextToken());
+		game.getField().addGroup(group);
+	}
 
-                Location loc = new Location(TILE_WIDTH * i, TILE_HEIGHT * j);
-                int type = Integer.parseInt(upperToken.nextToken());
-                setSceneryLayer(type, loc, scenery);
-            }
-            game.getField().addGroup(scenery);
-        }
-    }
+	private void setTiles(JsonObject level) {
+		String[] lowerTile = FileUtil.fileRead(baseio.getStream(level.get(
+				"lowerFilename").getAsString()));
+		String[] upperTile = FileUtil.fileRead(baseio.getStream(level.get(
+				"upperFilename").getAsString()));
 
+		SpriteGroup scenery = new SpriteGroup("scenery");
 
-    private void setSceneryLayer (int type, Location loc, SpriteGroup scenery) {
-        if (type == -1) return;
-        scenery.add(new Sprite(chipsetF.image[type], loc.getX(), loc.getY()));
-    }
+		for (int j = 0; j < layer1[0].length; j++) {
+			StringTokenizer lowerToken = new StringTokenizer(lowerTile[j]);
+			StringTokenizer upperToken = new StringTokenizer(upperTile[j]);
+			for (int i = 0; i < layer1.length; i++) {
+				layer1[i][j] = Integer.parseInt(lowerToken.nextToken());
 
+				Location loc = new Location(TILE_WIDTH * i, TILE_HEIGHT * j);
+				int type = Integer.parseInt(upperToken.nextToken());
+				setSceneryLayer(type, loc, scenery);
+			}
+			game.getField().addGroup(scenery);
+		}
+	}
 
-    public void nextLevel (String next) {
+	private void setSceneryLayer(int type, Location loc, SpriteGroup scenery) {
+		if (type == -1)
+			return;
+		scenery.add(new Sprite(chipsetF.image[type], loc.getX(), loc.getY()));
+	}
 
-    }
+	public void nextLevel(String next) {
 
+	}
 
-    public void setStartText (String text) {
-        startText = text;
-    }
+	public void setStartText(String text) {
+		startText = text;
+	}
 
+	public void setNextLevel(String nextLevel) {
+		nextLevelName = nextLevel;
+	}
 
-    public void setNextLevel (String nextLevel) {
-        nextLevelName = nextLevel;
-    }
+	public void render(Graphics2D g) {
+		for (int i = 0; i < layer1.length; i++) {
+			for (int j = 0; j < layer1[0].length; j++) {
+				renderTile(g, i, j, TILE_WIDTH * i, TILE_HEIGHT * j);
+			}
+		}
 
+		GameCharacter player = game.getPlayer().getCharacter();
+		setToCenter((int) player.getX(), (int) player.getY(),
+				player.getWidth(), player.getHeight());
 
-    public void render (Graphics2D g) {
-        for (int i = 0; i < layer1.length; i++) {
-            for (int j = 0; j < layer1[0].length; j++) {
-                renderTile(g, i, j, TILE_WIDTH * i, TILE_HEIGHT * j);
-            }
-        }
+		super.render(g);
+	}
 
-        GameCharacter player = game.getPlayer().getCharacter();
-        setToCenter((int) player.getX(),
-                    (int) player.getY(),
-                    player.getWidth(),
-                    player.getHeight());
+	public void renderTile(Graphics2D g, int tileX, int tileY, int x, int y) {
+		// render layer 1
+		int tilenum = layer1[tileX][tileY];
 
-        super.render(g);
-    }
+		if (tilenum < chipsetE.image.length)
+			g.drawImage(chipsetE.image[tilenum], x, y, null);
+		else if (tilenum >= chipsetE.image.length) {
+			BufferedImage image = chipset[tilenum - chipsetE.image.length].image[2];
+			g.drawImage(image, x, y, null);
+		}
+	}
 
+	// chipset is only a pack of images
+	class Chipset {
+		BufferedImage[] image;
 
-    public void renderTile (Graphics2D g, int tileX, int tileY, int x, int y) {
-        // render layer 1
-        int tilenum = layer1[tileX][tileY];
+		public Chipset(BufferedImage[] image) {
+			this.image = image;
+		}
 
-        if (tilenum < chipsetE.image.length) g.drawImage(chipsetE.image[tilenum],
-                                                         x,
-                                                         y,
-                                                         null);
-        else if (tilenum >= chipsetE.image.length) {
-            BufferedImage image =
-                chipset[tilenum - chipsetE.image.length].image[2];
-            g.drawImage(image, x, y, null);
-        }
-    }
-
-    // chipset is only a pack of images
-    class Chipset {
-        BufferedImage[] image;
-
-
-        public Chipset (BufferedImage[] image) {
-            this.image = image;
-        }
-
-    }
+	}
 }

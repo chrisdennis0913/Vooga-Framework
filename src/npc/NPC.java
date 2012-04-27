@@ -6,6 +6,7 @@ import gameCharacter.GameCharacter;
 import java.util.ArrayList;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
@@ -28,6 +29,11 @@ public abstract class NPC extends CharacterDecorator{
 	private State currentState;
 
 	private static ArrayList<NPCFactory> NPCs = new ArrayList<NPCFactory>();
+	
+	static{
+		NPCs.add(new NPCTest1.NPCTest1Factory());
+		NPCs.add(new StoreManagerNPC.StoreManager());
+	}
 
 	/**
 	 * constructs a non-player character based on the information at the
@@ -42,19 +48,25 @@ public abstract class NPC extends CharacterDecorator{
 		character.setDecorator(this);
 	}
 
-	public static NPC createNPC(String npcName, GameCharacter gameChar) {
-		NPCs.add(new NPCTest1.NPCTest1Factory());
-		NPCs.add(new StoreManagerNPC.StoreManager());
+	public static NPC createNPC(String npcName, GameCharacter gameChar, JsonElement jsonMovement) {
+
 		for (NPCFactory npcFactory : NPCs) {
 			if (npcFactory.isThisType(npcName)){
-				return npcFactory.constructNPC(gameChar);
+				return npcFactory.constructNPC(gameChar, jsonMovement);
 			}
 		}
 		throw new RuntimeException("Given name of NPC not recognized");
 	}
 
-	public void setDialogue(AbstractDialogue dialogue) {
+	public void setDialogue(AbstractDialogue dialogue) 
+	{
 		this.dialogue = dialogue;
+	}
+
+	public String getTalk() {
+		if (dialogue == null)
+			return null;
+		return dialogue.getCurrentLine();
 	}
 
 	public abstract String getTalk(SimpleDialogueObject simpleDialogueObject);

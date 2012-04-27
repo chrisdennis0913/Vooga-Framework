@@ -13,11 +13,18 @@ public interface EquipItemInterface {
     void drop ();
 
 
+    void setDroppable (boolean drop);
+
+
+    boolean isDroppable ();
+
+
     boolean isEquipped ();
 
 
     boolean canBeEquipped ();
-    
-    void setEquippable(boolean equippable);
-    
+
+
+    void setEquippable (boolean equippable);
+
 }

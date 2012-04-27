@@ -39,8 +39,10 @@ public class NPC extends CharacterDecorator {
 		NPCs.add(new NPCTest1.NPCTest1Factory());
 		NPCs.add(new StoreManagerNPC.StoreManager());
 		for (NPCFactory npcFactory : NPCs) {
-			if (npcFactory.isThisType(npcName))
+			if (npcFactory.isThisType(npcName)){
+				System.out.println(npcFactory.getClass().getSimpleName());
 				return npcFactory.constructNPC(gameChar);
+			}
 		}
 		throw new RuntimeException("Given name of NPC not recognized");
 	}

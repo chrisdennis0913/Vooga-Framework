@@ -183,8 +183,8 @@ public class Level extends AbstractTileBackground implements Evented {
 			
 			Location loc = new Location(new int[] {
 					jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
-			NPC npc = new NPCTest1(new GameCharacter(game, loc, jNPC.get(
-					"directions").getAsString()));
+			String npcName = jNPC.get("name").getAsString();
+			NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC.get("directions").getAsString()));
 			group.add(npc.getCharacter());
 
 		}

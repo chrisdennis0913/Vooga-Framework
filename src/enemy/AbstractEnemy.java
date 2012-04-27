@@ -51,14 +51,11 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		initAttacks();
 		getCharacter().getCounters().add("health",
 				new EnemyHealth(getCharacter().getCounters(), 2));
-		initAI();
+		initAI(null);
 	}
 
 	
-	public void initAI()
-	{
-		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
-	}
+	public abstract void initAI(String Json);
 
 	protected abstract void initAttacks();
 	

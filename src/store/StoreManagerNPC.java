@@ -77,5 +77,11 @@ public class StoreManagerNPC extends NPC{
 		return null;
 	}
 
+	@Override
+	public JsonObject getJsonAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

@@ -50,8 +50,7 @@ public class MapEditor extends Game {
 	int 	tilenum;
 	int		tilemode;
 	int 	charnum;
-	BufferedImage player;
-	BufferedImage enemy;
+	BufferedImage player, enemy, item, npc;
 	RPGame game = new RPGame(new Main(null), null);
 	
 	// add 
@@ -65,6 +64,8 @@ public class MapEditor extends Game {
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
 		player = getImage("rsc/player/playerstart.png", false);
+		enemy = getImage("rsc/enemy/question.png", false);
+		item = getImage("rsc/item/question.png",false);
 	}
 
 
@@ -145,16 +146,17 @@ public class MapEditor extends Game {
 							
 						case 1:
 							//item
-							JsonObject item = new JsonObject();
-							item.add("name", new JsonPrimitive("bow"));
+							JsonObject jItem = new JsonObject();
+							String itemName = JOptionPane.showInputDialog("Item name:");
+							jItem.add("name", new JsonPrimitive(itemName));
 							JsonArray jLoc = new JsonArray();
 							jLoc.add(new JsonPrimitive(getMouseX()));
 							jLoc.add(new JsonPrimitive(getMouseY()));
-							item.add("location", jLoc);
-							item.add("image", new JsonPrimitive("rsc/items/bow.png"));
-							item.add("quantity", new JsonPrimitive(1));
-							item.add("price", new JsonPrimitive(450));
-							jItems.add(item.toJson());
+							jItem.add("location", jLoc);
+							jItem.add("image", new JsonPrimitive("rsc/items/"+itemName+".png"));
+							jItem.add("quantity", new JsonPrimitive(JOptionPane.showInputDialog("Quantity:")));
+							jItem.add("price", new JsonPrimitive(JOptionPane.showInputDialog("Price:")));
+							jItems.add(jItem);
 							
 						case 2:
 							//enemy
@@ -279,6 +281,29 @@ public class MapEditor extends Game {
 
 		return null;
 	}
+	
+	private BufferedImage getCharacter() {
+		if (charnum == -1) {
+			return null;
+		}
+
+		switch (charnum) {
+
+		case 0:
+			return player;
+			
+		case 1:
+			return item;
+			
+		case 2:
+			return enemy;
+
+		case 3: 
+			return npc;
+		}
+
+		return null;
+	}
 
 
 	// get tiles
@@ -301,7 +326,7 @@ public class MapEditor extends Game {
 			g.drawImage(getChipsetImage(tilenum), 600, 40, null);
 		}
 		else
-			g.drawImage(player, getMouseX(), getMouseY(), null);
+			g.drawImage(getCharacter(), getMouseX(), getMouseY(), null);
 		
 		if (tilemode == 1 || tilemode == 0) {
 			g.setColor(Color.BLACK);

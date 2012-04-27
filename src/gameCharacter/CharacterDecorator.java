@@ -11,7 +11,6 @@ import java.awt.Graphics2D;
 public class CharacterDecorator implements CharacterInterface 
 {
 	
-	
 	protected GameCharacter character;
 
 	public CharacterDecorator(GameCharacter character) {

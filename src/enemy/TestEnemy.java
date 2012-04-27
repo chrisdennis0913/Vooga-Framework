@@ -1,18 +1,13 @@
 package enemy;
 
+
+
 import gameCharacter.Attackable;
 import gameCharacter.GameCharacter;
-
-import java.util.HashMap;
-
-import state.State;
-
-import com.golden.gamedev.Game;
-
-import ai.GreedyPathFindingAI;
-import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.ShootingAttack;
+
+import com.google.gson.JsonObject;
 
 /**
  * GameCharacter decorated with attacks and actions.
@@ -22,23 +17,19 @@ import attacks.ShootingAttack;
  */
 public class TestEnemy extends AbstractEnemy implements Attackable{
 
+	private static final int DEFAULT_MONEY_VALUE = 10;
+
 	public TestEnemy(RPGame game, GameCharacter character, String configURL) {
-		super(character);
+		super(character, "TestEnemy");
 		this.configURL = configURL;
 		this.game = game;
 		initResources();
-		moneyValue = 10;
+		moneyValue = DEFAULT_MONEY_VALUE;
 	}
 
 	@Override
 	protected void initAttacks() {
 		attacks.put("shooting",new ShootingAttack(game,this,"shooting"));
-	}
-
-	@Override
-	protected void initActions(String json) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public static class TestEnemyFactory extends EnemyFactory{
@@ -56,8 +47,12 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 	}
 
 	@Override
-	public void uponDeath() {
-		//getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
+	public JsonObject getJsonAttributes() {
+		JsonObject attrib = new JsonObject();
+		/*
+		 * Add any subclass-specific variables here
+		 */
+		return attrib;
 	}
 
 }

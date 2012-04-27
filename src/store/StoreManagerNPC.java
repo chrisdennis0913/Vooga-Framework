@@ -2,11 +2,14 @@ package store;
 
 import java.awt.Graphics2D;
 
+import com.google.gson.JsonObject;
+
 import state.State;
 import state.TalkingState;
 
-import dialogue.AbstractDialogue.DialogueObject;
+import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 import gameCharacter.GameCharacter;
 import npc.NPC;
@@ -35,14 +38,19 @@ public class StoreManagerNPC extends NPC{
 		myStore.render(g);
 	}
 	
-	public String getTalk(DialogueObject choice){
+	@Override
+	public String getTalk(SimpleDialogueObject dialogueObject){
 		if (!hasTalked){
 			hasTalked = true;
 			}
-//			else{
-//			dialogue.goToNextLine(new SimpleDialogue("").new SimpleDialogueObject());
-//			}
+			else{
+			dialogue.goToNextLine(dialogueObject);
+			}
 			return dialogue.getCurrentLine();
+	}
+	
+	public void openStore() {
+		myStore.openStore();
 	}
 	
 	public ItemStore getStore(){
@@ -61,6 +69,12 @@ public class StoreManagerNPC extends NPC{
 			return new StoreManagerNPC(gameChar);
 		}
 		
+	}
+
+	@Override
+	public JsonObject toJson() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

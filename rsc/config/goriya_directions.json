@@ -1,0 +1,22 @@
+{
+	"frames": 2,
+	"delay": 125,
+	"directions": [
+	{
+		"direction": "DIR_DOWN",
+		"image": "rsc/enemy/goriya_down.png"
+	},
+	{
+		"direction": "DIR_UP",
+		"image": "rsc/enemy/goriya_up.png"
+	},
+	{
+		"direction": "DIR_RIGHT",
+		"image": "rsc/enemy/goriya_right.png"
+	},
+	{
+		"direction": "DIR_LEFT",
+		"image": "rsc/enemy/goriya_left.png"
+	}
+	]
+}

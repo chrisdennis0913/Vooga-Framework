@@ -3,12 +3,17 @@ package enemy;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import counters.EnemyHealth;
 
 import state.State;
-import state.TalkingState;
 
 import state.MovingAttackingState;
+import utils.JsonUtil;
+import utils.Jsonable;
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
 
@@ -18,7 +23,7 @@ import gameCharacter.Attackable;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 
-public abstract class AbstractEnemy extends CharacterDecorator implements Attackable{
+public abstract class AbstractEnemy extends CharacterDecorator implements Attackable, Jsonable{
 
 	protected HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
 	public static ArrayList<EnemyFactory> enemyFactories = new ArrayList<EnemyFactory>();
@@ -28,9 +33,11 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 
 	private State currentState;
 	protected int moneyValue;
+	private String name;
 
-	public AbstractEnemy(GameCharacter character) {
+	public AbstractEnemy(GameCharacter character, String name) {
 		super(character);
+		this.name = name;
 		character.setDecorator(this);
 	}
 	
@@ -39,8 +46,8 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 
 	public void initResources() {
-		//String json = JsonUtil.getJSON(configURL);
-		//initActions(json);
+		//JsonObject json = JsonUtil.getJSON(configURL);
+		//initAttacks(json);
 		initAttacks();
 		getCharacter().getCounters().add("health",
 				new EnemyHealth(getCharacter().getCounters(), 2));
@@ -54,7 +61,11 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 
 	protected abstract void initAttacks();
-	protected abstract void initActions(String json);
+	
+	protected void initAttacks(JsonObject json){
+		//TODO: implement HashMap of attacks
+		//json.get("attacks")
+	}
 
 	public void update(long elapsedTime) {
 		currentState.update(elapsedTime, this);
@@ -103,5 +114,29 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		//TODO: enable when money item is ready
 		//getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
 	}
-
+	
+	@Override
+	public JsonObject toJson() {
+		JsonObject json = getJsonAttributes();
+		json.add("name", new JsonPrimitive(name));
+		JsonArray jsonAttacks = new JsonArray();
+		for(AbstractAttack at : this.attacks.values()){
+			jsonAttacks.add(new JsonPrimitive(at.getName()));
+		}
+		json.add("attacks", jsonAttacks);
+		JsonArray location = new JsonArray();
+		location.add(new JsonPrimitive(getCharacter().getX()));
+		location.add(new JsonPrimitive(getCharacter().getY()));
+		json.add("location", location);
+		json.add("directionsURL", new JsonPrimitive(configURL));
+		json.add("actionsURL", new JsonPrimitive("rsc/config/player_direction.json"));		
+		return json;
+	}
+	
+	/**
+	 * Get attributes of implementation-specific subclass
+	 * of the enemy
+	 * @return JsonObject with subclass-specific attributes
+	 */
+	public abstract JsonObject getJsonAttributes();
 }

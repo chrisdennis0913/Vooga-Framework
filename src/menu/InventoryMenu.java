@@ -28,9 +28,11 @@ public class InventoryMenu extends Menu {
 
 
     public void initResources () {
-        
+
     }
-    public void updateInventory(Inventory inv){
+
+
+    public void updateInventory (Inventory inv) {
         inventory = inv;
         numOptions = inv.getSize();
     }
@@ -40,7 +42,7 @@ public class InventoryMenu extends Menu {
         if (blinkTimer.action(elapsedTime)) {
             blink = !blink;
         }
-        
+
         numOptions = inventory.getSize();
 
         switch (game.bsInput.getKeyPressed()) {
@@ -82,8 +84,11 @@ public class InventoryMenu extends Menu {
         for (Item itm : inventory) {
             font.drawString(g, itm.getName().toUpperCase(), 30, 40 + count * 20);
             count++;
-            if (itm.isEquipped()) g.drawImage(emphasisBullet, 4, 17 + count * 20, null);
+            if (itm.isEquipped()) {
+                g.drawImage(emphasisBullet, 4, 17 + count * 20, null);
+            }
             if (firstTime) optionsList.add(itm);
+
         }
         firstTime = false;
 

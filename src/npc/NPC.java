@@ -5,14 +5,17 @@ import gameCharacter.GameCharacter;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import state.State;
 import store.StoreManagerNPC;
 import utils.Jsonable;
 import dialogue.AbstractDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-public abstract class NPC extends CharacterDecorator implements Jsonable{
+public abstract class NPC extends CharacterDecorator{
 	/**
 	 * Computer-generated serial ID number
 	 */
@@ -20,6 +23,7 @@ public abstract class NPC extends CharacterDecorator implements Jsonable{
 	private static final long serialVersionUID = -5360689062786017503L;
 	protected AbstractDialogue dialogue;
 	private boolean alive;
+	protected String name;
 
 	private State currentState;
 
@@ -53,9 +57,7 @@ public abstract class NPC extends CharacterDecorator implements Jsonable{
 		this.dialogue = dialogue;
 	}
 
-	public String getTalk() {
-		return dialogue.getCurrentLine();
-	}
+	public abstract String getTalk(SimpleDialogueObject simpleDialogueObject);
 
 	public void setAlive(boolean alive) {
 		this.alive = alive;
@@ -87,5 +89,21 @@ public abstract class NPC extends CharacterDecorator implements Jsonable{
 	}
 
 	@Override
-	public abstract JsonObject toJson();
+	public JsonObject toJson(){
+		JsonObject json = getJsonAttributes();
+		json.add("name", new JsonPrimitive(name));
+		JsonArray location = new JsonArray();
+		location.add(new JsonPrimitive(getCharacter().getX()));
+		location.add(new JsonPrimitive(getCharacter().getY()));
+		json.add("location", location);
+		json.add("directions", new JsonPrimitive("rsc/config/payer_directions.json"));
+		return json;		
+	}
+	
+	/** 
+	 * Get attributes of implementation-specific subclass of NPC
+	 * 
+	 * @return JsonObject with subclass specific attributes
+	 */
+	public abstract JsonObject getJsonAttributes();
 }

@@ -4,6 +4,15 @@
 
 package quest;
 
+import gameCharacter.GameCharacter;
+import inventory.ConcreteItem;
+import app.RPGame;
+
+import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.object.SpriteGroup;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import enemy.AbstractEnemy;
 
 public class DestroyTask extends Task
@@ -20,6 +29,48 @@ public class DestroyTask extends Task
 	{
 		isComplete = (recipient.getHealth() <= 0);
 		return isComplete;
+	}
+	
+	public static class DestroyTaskFactory extends TaskFactory
+	{
+		public boolean isThisType(String taskName)
+		{
+			return "Destroy Task".equals(taskName);
+		}
+
+		public Task constructTask(RPGame game, GameCharacter gC, JsonObject jTask) 
+		{
+		SpriteGroup group = game.getField().getGroup("enemies");
+		
+		AbstractEnemy en = null;
+		
+		for (Sprite s: group.getSprites())
+		{
+			if (s instanceof GameCharacter)
+			{
+				String name = ((GameCharacter) s).getDecorator().getName();
+				
+				if (name.equals(jTask.getAsJsonObject("enemy")))
+				{
+					en = (AbstractEnemy) ((GameCharacter) s).getDecorator();
+				}
+			}
+		}
+		
+		if (en == null)
+		{
+			throw new RuntimeException("Enemy is not available");
+		}
+			return new DestroyTask(jTask.getAsString(), en);
+		}
+	}
+
+	public JsonObject getJsonAttributes() 
+	{
+		JsonObject json = new JsonObject();
+		json.add("recipient", new JsonPrimitive(recipient.getName()));
+		
+		return json;
 	}
 
 }

@@ -20,12 +20,24 @@ import com.google.gson.JsonPrimitive;
 
 import counters.EnemyHealth;
 
+import state.State;
+
+import utils.Jsonable;
+
+import app.RPGame;
+import attacks.AbstractAttack;
+import gameCharacter.Attackable;
+import gameCharacter.CharacterDecorator;
+import gameCharacter.GameCharacter;
+
+
 /**
  * GameCharacter decorated with attacks and actions.
  * Can use pluggable AI algorithms to behave automatically.
  * @author jameshong
  *
  */
+
 public abstract class AbstractEnemy extends CharacterDecorator implements Attackable, Jsonable{
 
 	protected HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
@@ -35,7 +47,6 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	
 	private StateManager states;
 	protected int moneyValue;
-	private String name;
 
 	public AbstractEnemy(RPGame game, GameCharacter character, String name, JsonObject jEnemy) {
 		super(character);
@@ -64,6 +75,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 				new EnemyHealth(getCharacter().getCounters(), 2));
 		initAI(null);
 	}
+
 
 	public abstract void initAI(String Json);
 	

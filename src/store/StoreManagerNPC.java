@@ -14,6 +14,11 @@ import com.google.gson.JsonObject;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
+import gameCharacter.CharacterDecorator;
+import gameCharacter.GameCharacter;
+import npc.NPC;
+import npc.NPCFactory;
+
 /**
  * Handles opening the store
  * 
@@ -70,9 +75,17 @@ public class StoreManagerNPC extends NPC{
 			return npcName.equals("StoreManagerNPC");
 		}
 
-		@Override
+		//public CharacterDecorator constructNPC(GameCharacter gameChar) 
+
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
+
 			return new StoreManagerNPC(gameChar);
+		}
+
+		@Override
+		public CharacterDecorator constructNPC(GameCharacter gameChar) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 

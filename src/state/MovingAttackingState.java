@@ -1,3 +1,5 @@
+
+
 package state;
 
 import gameCharacter.CharacterDecorator;
@@ -34,5 +36,4 @@ public class MovingAttackingState implements State{
 	public boolean wantsActive() {
 		return heuristic.getHeuristicBool();
 	}
-
 }

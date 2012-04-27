@@ -1,0 +1,1 @@
+{"nextLevel":"rsc/savedmaps/level2.json.json","upperFilename":"rsc/level/upper.upr.upr","lowerFilename":"rsc/level/lower.lwr.lwr","player":{},"enemies":[],"npcs":[{"location":[295,326],"name":"oldman","directions":"rsc/config/oldman_directions.json"}],"inventory":{"items":[{"name":"bow","location":[159,314],"image":"rsc/items/bow.png","quantity":"1","price":"450"}]}}

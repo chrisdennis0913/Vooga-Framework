@@ -42,6 +42,13 @@
 			"image": "rsc/items/bow.png",
 			"quantity": 1,
 			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [200, 120],
+			"image": "rsc/items/coin.gif",
+			"quantity": 500,
+			"price": 1
 		}
 		]
 	}

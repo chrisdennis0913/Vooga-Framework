@@ -1,0 +1,10 @@
+{
+	"frames": 1,
+	"delay": 1,
+	"directions": [
+	{
+		"direction": "DIR_DOWN",
+		"image": "demoGame/store/store.gif"
+	}
+	]
+}

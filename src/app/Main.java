@@ -1,14 +1,10 @@
 package app;
 
 import java.awt.Dimension;
-
 import utils.JsonUtil;
-
-
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 

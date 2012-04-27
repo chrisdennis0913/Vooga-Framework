@@ -41,7 +41,7 @@
 	],
 	"enemies": [
 		{
-			"location": [250, 250],
+			"location": [800, 300],
 			"name": "TestEnemy",
 			"directions": "rsc/config/goriya_directions.json",
 			"attacks":[
@@ -67,9 +67,9 @@
 			"price": 450
 		},
 		{
-			"name": "superSwordAccessory",
+			"name": "superBowSwordAccessory",
 			"location": [200, 200],
-			"image": "demoGame/items/sword.png",
+			"image": "rsc/items/sword.gif",
 			"quantity": 1,
 			"price": 950
 		}

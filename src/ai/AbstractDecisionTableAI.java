@@ -45,13 +45,15 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 		HashMap<String, AbstractAttack> attackMap = character.getAttacks();
 		PriorityQueue<AbstractAttack> attackQ = new PriorityQueue<AbstractAttack>(10,new DecisionTable.AttackComparator(dTable));
 		for(String attackName : dTable.getAttackNames()){
-			if(attackMap.containsKey(attackName))
+			if(attackMap.containsKey(attackName)){
 				attackQ.add(attackMap.get(attackName));
+			}
 		}
 		AbstractAttack choice;
 		while((choice = attackQ.poll()) != null){
-			if(choice.isActive())
+			if(choice.isActive()){
 				return choice;
+			}
 		}
 		return null;
 	}

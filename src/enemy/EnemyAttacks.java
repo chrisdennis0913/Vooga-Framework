@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.AttackFactory;
+import attacks.PoisoningRangeAttack;
 import attacks.ShootingAttack;
 
 public class EnemyAttacks {
@@ -13,6 +14,7 @@ public class EnemyAttacks {
 	
 	static{
 		attacks.add(new ShootingAttack.ShootingAttackFactory());
+		attacks.add(new PoisoningRangeAttack.PoisoningRangeAttackFactory());
 	}
 	
 	public static AbstractAttack createAttack(String attackName, RPGame game, AbstractEnemy enemy){

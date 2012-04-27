@@ -2,9 +2,11 @@ package enemy;
 
 import gameCharacter.GameCharacter;
 import state.GuardState;
+import state.MovingAttackingState;
 import state.MovingState;
 import ai.BoolDistanceFromTargetHeuristic;
 import ai.GreedyPathFindingAI;
+import ai.SimpleDecisionTableAI;
 import app.RPGame;
 
 import com.google.gson.JsonObject;
@@ -22,7 +24,8 @@ public class GuardEnemy extends AbstractEnemy{
 	}
 	
 	public void initAI(String json) {
-		addState(new MovingState(new GreedyPathFindingAI(game, character),
+		addState(new MovingAttackingState(new GreedyPathFindingAI(game, character), 
+				new SimpleDecisionTableAI(game, (AbstractEnemy)character.getDecorator()),
 				new BoolDistanceFromTargetHeuristic(game,character,DIST_THRESHOLD,true)));
 		addState(new GuardState(new BoolDistanceFromTargetHeuristic(game,character,DIST_THRESHOLD,false)));
 	}

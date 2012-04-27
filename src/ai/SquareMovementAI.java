@@ -28,12 +28,6 @@ public class SquareMovementAI extends AbstractMovementAI{
 			character.setVelocity(0.05);
 		}
 	}
-
-	@Override
-	public void initResources() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public static class Factory extends AbstractMovementAIFactory{
 

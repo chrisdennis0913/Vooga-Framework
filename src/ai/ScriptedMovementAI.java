@@ -75,10 +75,5 @@ public class ScriptedMovementAI extends AbstractMovementAI{
 		
 	}
 
-	@Override
-	public void initResources() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

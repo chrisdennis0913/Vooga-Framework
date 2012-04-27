@@ -4,9 +4,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+
+import player.Player;
+
+import menu.InventoryMenu;
+
+import utils.Location;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.font.SystemFont;
+import com.golden.gamedev.util.ImageUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import evented.EventedWrapper;
 
@@ -15,31 +28,45 @@ import inventory.Inventory;
 import inventory.Item;
 import gameCharacter.GameCharacter;
 
-
 /**
  * Creates the store with it's own inventory
  * 
  * @author zahavaalston
- *
+ * 
  */
-public class ItemStore extends EventedWrapper<Item>{
+public class ItemStore extends EventedWrapper<Item> {
+	
+	
+	private Inventory myInventory;
+	private boolean storeOpen = true;
+	private RPGame game;
+	private JsonObject item;
+	protected int price;
+	private BufferedImage image;
+	private StoreManagerNPC manager;
+	private Player player;
 	
 	public ItemStore(GameCharacter character, RPGame game) {
 		super(character);
 		this.game = game;
+		myInventory = new Inventory(player.getCharacter());
+		
 	}
-
-	private Inventory myInventory;
-	private boolean storeOpen = false;
-	private RPGame game;
-//	private Item item;
 	
 	public void update(long elapsedTime) {
 		if (game.keyPressed(KeyEvent.VK_S)) {
 			game.unPauseGameForStore();
 			storeOpen = false;
 		}
-		
+
+	}
+
+	public void initResources() {
+		price = item.get("price").getAsInt();
+		image = game.getImage(item.get("image").getAsString());
+		setImage(image);
+		setLocation(image, 10, 10);
+		list = new HashMap<String, Item>();
 	}
 
 	private void drawBoxes(Graphics2D g) {
@@ -68,20 +95,13 @@ public class ItemStore extends EventedWrapper<Item>{
 	}
 
 	public void openStore() {
-		storeOpen = true;
 		game.pauseGameForStore();
+		storeOpen = true;
 		System.out.println("Calling store");
 	}
 
-	public void renderStore(Graphics2D g) {
-		showStore(g);
-		SystemFont font2 = new SystemFont(new Font("Arial", Font.BOLD, 12),
-				new Color(255, 255, 255));
-		font2.drawText(g, "Inventory", SystemFont.LEFT, 15, 220, 70, 2, 0);
-		System.out.println("Store rendering");
-	}
-	
-	public void showStore(Graphics2D g) {
+	public void render(Graphics2D g) {
+		System.out.println(" store open " + storeOpen);
 		if (!storeOpen)
 			return;
 		SystemFont font = new SystemFont(new Font("Arial", Font.BOLD, 12),
@@ -100,7 +120,8 @@ public class ItemStore extends EventedWrapper<Item>{
 			}
 			font.drawText(g, currentItemName, SystemFont.LEFT, (x * 80) + 10,
 					(y * 60) + 10, 70, 2, 0);
-			Sprite itemSprite = new Sprite(currentItem.getImage(), x * 80 + 10, y * 60 + 10);
+			Sprite itemSprite = new Sprite(currentItem.getImage(), x * 80 + 10,
+					y * 60 + 10);
 			itemSprite.render(g);
 			x++;
 			if (x >= 5) {
@@ -108,15 +129,38 @@ public class ItemStore extends EventedWrapper<Item>{
 				y++;
 			}
 		}
+		System.out.println("Show store");
+		SystemFont font2 = new SystemFont(new Font("Arial", Font.BOLD, 12),
+				new Color(255, 255, 255));
+		font2.drawText(g, "Inventory", SystemFont.LEFT, 15, 220, 70, 2, 0);
+		System.out.println("Store rendering");
+	}
+	public void setLocation(BufferedImage image, int x, int y){
+		for (; x < 360; x += 90) {
+			setLocation(image, x, 10);
+		}
+		y += 90;
+		
+	}
+	public BufferedImage getImage(){
+		return image;
 	}
 	
-//	public int buy (Item item){
-//		int price = item.getPrice();
-//		if (game.keyPressed(KeyEvent.VK_ENTER)){
-//			character.getInventory().get("money");
-//		}
-//		return price;
-//		
-//	}
+	public void setImage(BufferedImage image2){
+		getImage();
+	}
+	
+	public Inventory getInventory(){
+		return myInventory;
+	}
+
+	// public int buy (Item item){
+	// int price = item.getPrice();
+	// if (game.keyPressed(KeyEvent.VK_ENTER)){
+	// character.getInventory().get("money");
+	// }
+	// return price;
+	//
+	// }
 
 }

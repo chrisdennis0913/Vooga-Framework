@@ -70,6 +70,7 @@ public class Level extends AbstractTileBackground implements Evented {
         this.levelname = levelname;
         this.baseio = bsIO;
         this.bsloader = bsLoader;
+        this.store = new ItemStore(null, game);
 
         initResources();
     }
@@ -87,6 +88,7 @@ public class Level extends AbstractTileBackground implements Evented {
         setNpcs(level);
         setItems(level);
         setEnemies(level);
+        setStore(level);
 
         setCollisions();
     }
@@ -145,6 +147,10 @@ public class Level extends AbstractTileBackground implements Evented {
     public LevelInventory<Item> getInventory () {
         return inventory;
     }
+    
+    public ItemStore getStore(){
+    	return store;
+    }
 
 
     private void setLevelTimer () {
@@ -190,6 +196,23 @@ public class Level extends AbstractTileBackground implements Evented {
 			if (it.get("name").getAsString().contains("money")){
 			    item.setEquippable(false);
 			}
+			group.add(item);
+		}
+		game.getField().addGroup(group);
+	}
+    
+    private void setStore(JsonObject level) {
+		JsonObject store = level.getAsJsonObject("store");
+		JsonArray storeItems = store.getAsJsonArray("storeItems");
+		SpriteGroup group = new SpriteGroup("storeItems");
+
+		for (int i = 0; i < storeItems.size(); i++) {
+			JsonObject it = storeItems.get(i).getAsJsonObject();
+			Item item = null;
+			item = new ConcreteItem(game, it);
+//			if (it.get("name").getAsString().contains("money")){
+//			    item.setEquippable(false);
+//			}
 			group.add(item);
 		}
 		game.getField().addGroup(group);

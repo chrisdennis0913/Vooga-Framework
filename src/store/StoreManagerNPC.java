@@ -29,12 +29,12 @@ public class StoreManagerNPC extends NPC{
 	
 	public void update (long elapsed){
 		super.update(elapsed);
-		myStore.update(elapsed);
+		//myStore.update(elapsed);
 	}
 	
 	public void render(Graphics2D g){
 		super.render(g);
-		myStore.renderStore(g);
+		//myStore.render(g);
 	}
 	
 	@Override
@@ -58,22 +58,14 @@ public class StoreManagerNPC extends NPC{
 	
 	public static class StoreManager extends NPCFactory{
 
-		@Override
 		public boolean isThisType(String npcName) {
 			return npcName.equals("StoreManagerNPC");
 		}
 
-		@Override
 		public NPC constructNPC(GameCharacter gameChar) {
 			return new StoreManagerNPC(gameChar);
 		}
 		
-	}
-
-	@Override
-	public JsonObject toJson() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

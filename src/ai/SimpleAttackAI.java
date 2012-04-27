@@ -36,20 +36,4 @@ public class SimpleAttackAI extends AbstractAttackAI{
 		
 	}
 
-	@Override
-	public AbstractAttack getCurrentAttack() {
-		return character.getAttacks().values().iterator().next();
-	}
-
-	@Override
-	public boolean isAttacking() {
-		return false;
-	}
-
-	@Override
-	public void initResources() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

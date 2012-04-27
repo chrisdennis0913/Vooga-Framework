@@ -2,10 +2,9 @@ package inventory;
 
 public interface Weapon {
     /**
-     * Class for items that do damage. Has instance variable myDamage to
-     * represent base damage value Weapons are in the form of
-     * "Name, weapon, boolean forSale, int Price, int Damage" for example:
-     * "Dagger, Weapon, true, 100, 55" or "Sword, Weapon, false, 85"
+     * Interface for items that do damage. Often requires instance variable
+     * myDamage to represent base damage value. Should be equippable and often
+     * distinguishable by type in order to use different attacks
      * 
      * @author Chris Dennis
      */

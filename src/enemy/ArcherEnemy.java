@@ -5,7 +5,7 @@ import state.MovingAttackingState;
 import state.MovingState;
 import ai.BoolDistanceFromTargetHeuristic;
 import ai.GreedyPathFindingAI;
-import ai.TestDecisionTableAI;
+import ai.SimpleDecisionTableAI;
 import app.RPGame;
 
 import com.google.gson.JsonObject;
@@ -28,7 +28,7 @@ public class ArcherEnemy extends AbstractEnemy{
 		addState(new DiscoveryState(new BoolDistanceFromTargetHeuristic(game,character,DISCOVERY_THRESHOLD,true)));
 		addState(new MovingState(new GreedyPathFindingAI(game, character), 
 				new BoolDistanceFromTargetHeuristic(game,character,DIST_THRESHOLD,false)));
-		addState(new MovingAttackingState(new GreedyPathFindingAI(game, character), new TestDecisionTableAI(game, this),
+		addState(new MovingAttackingState(new GreedyPathFindingAI(game, character), new SimpleDecisionTableAI(game, this),
 				new BoolDistanceFromTargetHeuristic(game,character,DIST_THRESHOLD,true)));
 	}
 

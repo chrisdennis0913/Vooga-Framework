@@ -10,16 +10,18 @@ import app.RPGame;
  * @author jameshong
  *
  */
-public abstract class BehaviorModifyingAttack extends AbstractAttack{
+public abstract class BehaviorModifyingRangeAttack extends AbstractRangeAttack{
 
 	private AbstractBehaviorModifier bm;
 	
-	public BehaviorModifyingAttack(RPGame game, GameCharacter attacker, String name) {
-		super(game, attacker, name);
+	public BehaviorModifyingRangeAttack(RPGame game, GameCharacter attacker, String name, int minDistance, 
+			AbstractBehaviorModifier bm, String... targetGroups) {
+		super(game, attacker, name, minDistance, targetGroups);
+		this.bm = bm;
 	}
 
 	@Override
-	public void performAttack(long elapsedTime) {
+	public void performAttackIndividual(long elapsedTime) {
 		target.getBehaviorModifiers().addFirst(bm);
 	}
 	

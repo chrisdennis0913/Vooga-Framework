@@ -12,7 +12,11 @@ public class SuperAccessory extends ConcreteItem {
 
 
     /**
-     * Great example for super Item
+     * Super example for Item. Appears on map, can be picked up and used to heal
+     * and attack, attaches to character to modify his appearance, stats, and
+     * his actions
+     * 
+     * @author Chris Dennis
      */
 
     public SuperAccessory (EventedWrapper<Item> wrapper, JsonObject item) {
@@ -48,7 +52,7 @@ public class SuperAccessory extends ConcreteItem {
         setActive(true);
         setLayer(10);
         setLocation(game.getPlayer().getCharacter().getX() + relX,
-                             game.getPlayer().getCharacter().getY() + relY);
+                    game.getPlayer().getCharacter().getY() + relY);
     }
 
 

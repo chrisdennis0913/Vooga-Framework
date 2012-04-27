@@ -29,4 +29,10 @@ public class WalkingState implements State
 		return null;
 	}
 
+	@Override
+	public boolean wantsActive() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

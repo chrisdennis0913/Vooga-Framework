@@ -15,6 +15,7 @@ import utils.Jsonable;
 public abstract class CharacterDecorator implements CharacterInterface, Jsonable 
 {
 	protected GameCharacter character;
+	protected String name;
 
 	public CharacterDecorator(GameCharacter character) {
 		this.character = character;
@@ -53,7 +54,9 @@ public abstract class CharacterDecorator implements CharacterInterface, Jsonable
 		character.setCurrentDirection(direction);
 	}
 
-	@Override
 	public abstract JsonObject toJson();
 
+	public String getName() {
+		return name;
+	}
 }

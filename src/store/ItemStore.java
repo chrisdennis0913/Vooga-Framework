@@ -5,13 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.font.SystemFont;
-
-import com.google.gson.JsonObject;
 
 import evented.EventedWrapper;
 
@@ -32,33 +27,32 @@ public class ItemStore extends EventedWrapper<Item> {
 	private Inventory myInventory;
 	private boolean storeOpen = true;
 	private RPGame game;
-	private JsonObject item;
 	protected int price;
 	private BufferedImage image;
+	int numOptions;
 	
 	public ItemStore(StoreManagerNPC manager, RPGame game) {
 		super(manager.getCharacter());
 		this.game = game;
 		myInventory = new Inventory(manager.getCharacter());
-		
 	}
 	
 	public void update(long elapsedTime) {
 		if (game.keyPressed(KeyEvent.VK_Q)) {
 			game.unPauseGameFor(Pausable.STORE);
 			storeOpen = false;
-		}
+        }
 		
 	}
-
-	public void initResources() {
-		price = item.get("price").getAsInt();
-		image = game.getImage(item.get("image").getAsString());
-		setImage(image);
-		setLocation(image, 10, 10);
-		list = new HashMap<String, Item>();
-
-	}
+//
+//	public void initResources() {
+//		price = item.get("price").getAsInt();
+//		image = game.getImage(item.get("image").getAsString());
+//		setImage(image);
+//		setLocation(image, 10, 10);
+//		list = new HashMap<String, Item>();
+//
+//	}
 
 	private void drawBoxes(Graphics2D g) {
 		g.setColor(Color.DARK_GRAY);
@@ -109,9 +103,9 @@ public class ItemStore extends EventedWrapper<Item> {
 			}
 			font.drawText(g, currentItemName, SystemFont.LEFT, (x * 80) + 10,
 					(y * 60) + 10, 70, 2, 0);
-			Sprite itemSprite = new Sprite(currentItem.getImage(), x * 80 + 10,
-					y * 60 + 10);
-			itemSprite.render(g);
+			//Sprite itemSprite = new Sprite(currentItem.getImage(), x * 80 + 10,
+			//		y * 60 + 10);
+			//itemSprite.render(g);
 			x++;
 			if (x >= 5) {
 				x = 0;
@@ -140,14 +134,14 @@ public class ItemStore extends EventedWrapper<Item> {
 	public Inventory getInventory(){
 		return myInventory;
 	}
-
-	// public int buy (Item item){
-	// int price = item.getPrice();
-	// if (game.keyPressed(KeyEvent.VK_ENTER)){
-	// character.getInventory().get("money");
-	// }
-	// return price;
-	//
-	// }
+//
+//	 public int buy (Item item){
+//	 int price = item.getPrice();
+//	 if (game.keyPressed(KeyEvent.VK_ENTER)){
+//	 character.getInventory().get("money");
+//	 }
+//	 return price;
+//	
+//	 }
 
 }

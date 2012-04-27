@@ -65,8 +65,16 @@ public class StdAttack extends ActionDecorator {
 
 		attk.directions = Arrays.asList(tempDirections);
 	}
+	
+	public boolean isProjectile() {
+		if (type.toLowerCase().contains("bow"))
+			return true;
+		return false;
+	}
 
 	public int getDamage(AbstractEnemy enemy) {
+		if (type.toLowerCase().contains("bow"))
+			return 0;
 		return calculator.calculate();
 	}
 	

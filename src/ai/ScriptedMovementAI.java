@@ -1,9 +1,16 @@
 package ai;
 
 import gameCharacter.GameCharacter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import utils.JsonUtil;
 import app.RPGame;
 
 import com.golden.gamedev.object.Timer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 public class ScriptedMovementAI extends AbstractMovementAI{
 	
@@ -39,6 +46,33 @@ public class ScriptedMovementAI extends AbstractMovementAI{
 				timer = new Timer(actions[actionsIndex][1]);
 			}
 		}
+	}
+	
+	public static class Factory extends AbstractMovementAIFactory{
+
+		@Override
+		public boolean isThisType(String movementName) {
+			// TODO Auto-generated method stub
+			return movementName.equals("ScriptedMovementAI");
+		}
+		
+		@Override
+		public AbstractMovementAI constructMovement(RPGame game, GameCharacter gameChar, JsonElement jsonMovement) {
+			JsonArray actionsOuter = jsonMovement.getAsJsonObject().getAsJsonArray("actions");
+			List<int[]> actionsList = new ArrayList<int[]>();
+			
+			for(int i=0; i<actionsOuter.size(); i++){
+				JsonArray actionsInner = actionsOuter.get(i).getAsJsonArray();
+				actionsList.add(JsonUtil.JsonArrayToIntArray(actionsInner));
+			}
+			
+			int[][] actions = new int[actionsList.size()][];
+			for(int i=0; i<actionsList.size(); i++){
+				actions[i] = actionsList.get(i);
+			}			
+			return new ScriptedMovementAI(game, gameChar, actions);
+		}	
+		
 	}
 
 	@Override

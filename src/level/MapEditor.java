@@ -145,6 +145,16 @@ public class MapEditor extends Game {
 							
 						case 1:
 							//item
+							JsonObject item = new JsonObject();
+							item.add("name", new JsonPrimitive("bow"));
+							JsonArray jLoc = new JsonArray();
+							jLoc.add(new JsonPrimitive(getMouseX()));
+							jLoc.add(new JsonPrimitive(getMouseY()));
+							item.add("location", jLoc);
+							item.add("image", new JsonPrimitive("rsc/items/bow.png"));
+							item.add("quantity", new JsonPrimitive(1));
+							item.add("price", new JsonPrimitive(450));
+							jItems.add(item.toJson());
 							
 						case 2:
 							//enemy

@@ -11,9 +11,15 @@ import state.TalkingState;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
+
+/**
+ * Handles opening the store
+ * 
+ * @author zahavaalston
+ *
+ */
 
 public class StoreManagerNPC extends NPC{
 	ItemStore myStore;
@@ -22,7 +28,7 @@ public class StoreManagerNPC extends NPC{
 
 	public StoreManagerNPC(GameCharacter character) {
 		super(character);
-		myStore = new ItemStore(this.getCharacter(), this.getCharacter().getGame());
+		myStore = new ItemStore(this, this.getCharacter().getGame());
 		dialogue = new SimpleDialogue("rsc/store/storeSpeech.txt");
 		State s = new TalkingState();
 		this.setCurrentState(s);
@@ -30,12 +36,13 @@ public class StoreManagerNPC extends NPC{
 	
 	public void update (long elapsed){
 		super.update(elapsed);
-		myStore.update(elapsed);
 	}
 	
+	/* (non-Javadoc)
+	 * @see gameCharacter.CharacterDecorator#render(java.awt.Graphics2D)
+	 */
 	public void render(Graphics2D g){
 		super.render(g);
-		myStore.render(g);
 	}
 	
 	@Override
@@ -59,7 +66,6 @@ public class StoreManagerNPC extends NPC{
 	
 	public static class StoreManager extends NPCFactory{
 
-		@Override
 		public boolean isThisType(String npcName) {
 			return npcName.equals("StoreManagerNPC");
 		}
@@ -68,7 +74,6 @@ public class StoreManagerNPC extends NPC{
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
 			return new StoreManagerNPC(gameChar);
 		}
-		
 	}
 
 	/**

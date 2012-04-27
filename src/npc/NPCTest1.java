@@ -1,15 +1,13 @@
 package npc;
 
+import state.MovingState;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import gameCharacter.GameCharacter;
-import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 import dialogue.SimpleDialogue;
-import dialogue.SimpleDialogue.SimpleDialogueObject;
-
-import state.MovingAttackingState;
 
 import ai.AbstractMovementAI;
 import ai.SquareMovementAI;
@@ -32,7 +30,7 @@ public class NPCTest1 extends NPC {
 		AbstractMovementAI movement = AbstractMovementAI.getAbstractMovementAI(this.character.getGame(), this.getCharacter(), jsonMovement);
 		
 		//SquareMovementAI sq = new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300);
-		this.setCurrentState(new MovingAttackingState(movement, null));
+		this.setCurrentState(new MovingState(movement,null));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 

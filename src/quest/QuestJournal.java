@@ -1,5 +1,7 @@
 package quest;
 
+import gameCharacter.GameCharacter;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -19,13 +21,13 @@ public class QuestJournal
 	public static final int INDENT = 10;
 	public static final Color journalColor = Color.darkGray;
 	private static final int journalSlots = 9;
-	private RPGame game;
+	private GameCharacter gC;
 	
-	public QuestJournal(RPGame game)
+	public QuestJournal(GameCharacter gC)
 	{
 		myCurrentQuests = new ArrayList<Quest>();
 		myCompletedQuests = new ArrayList<Quest>();
-		this.game = game;
+		this.gC = gC;
 	}
 	
 	public void addQuest(Quest qu, QuestGiver qg)
@@ -41,19 +43,16 @@ public class QuestJournal
 
 	public void update(long elapsed) 
 	{
-		System.out.println("updating");
-		if (game.keyPressed(KeyEvent.VK_J))
+		if (gC.getGame().keyPressed(java.awt.event.KeyEvent.VK_J))
 		{
-			if (game.isPausedFor(Pausable.JOURNAL))
+			if (gC.getGame().isPausedFor(Pausable.JOURNAL))
 			{
-				System.out.println("unpausingggggggggggggggggggggggggggggg");
-				game.unPauseGameFor(Pausable.JOURNAL);
+				gC.getGame().unPauseGameFor(Pausable.JOURNAL);
 				showJournal = false;
 			}
 			else
 			{
-				System.out.println("pausingggggggggggggggggggggggggggggggg");
-				game.pauseGameFor(Pausable.JOURNAL);
+				gC.getGame().pauseGameFor(Pausable.JOURNAL);
 				showJournal = true;
 			}
 		}

@@ -46,7 +46,6 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
             equippedItem = null;
         }
         remove(itm.getName());
-//        itm.removeAll();
     }
 
 
@@ -71,13 +70,16 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
 
     public void setEquipped (Item itm) {
-        if (contains(itm)) {
+        if (contains(itm) & itm.canBeEquipped()) {
             equippedItem = itm;
         }
     }
-    
-    public void removeEquipped(Item itm){
-        if (equippedItem == itm){
+
+    public void removeEquipped(){
+        equippedItem = null;
+    }
+    public void removeEquipped (Item itm) {
+        if (equippedItem == itm) {
             equippedItem = null;
         }
     }
@@ -87,10 +89,10 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         return equippedItem == itm;
     }
 
-    public boolean isEquipped(String itmName){
-    	if (equippedItem == null)
-    		return false;
-    	String name = equippedItem.getName().toLowerCase();
+
+    public boolean isEquipped (String itmName) {
+        if (equippedItem == null) return false;
+        String name = equippedItem.getName().toLowerCase();
         return name.contains(itmName.toLowerCase());
     }
 
@@ -111,10 +113,10 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         if (character.getGame().isPausedFor(Pausable.INV)) invMenu.render(g);
     }
 
-
     @Override
     public void update (long elapsed) {
-        if (character.getGame().keyPressed(java.awt.event.KeyEvent.VK_I)) {
+        if (character.getGame().keyPressed(java.awt.event.KeyEvent.VK_I)) 
+        {
             character.getGame().pauseGameFor(Pausable.INV);
             invMenu.updateInventory(this);
         }

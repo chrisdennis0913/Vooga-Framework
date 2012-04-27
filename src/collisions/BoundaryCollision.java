@@ -11,8 +11,7 @@ public class BoundaryCollision extends CollisionBounds {
 	}
 
 	public void collided(Sprite character) {
-		character.setX(character.getOldX());
-		character.setY(character.getOldY());
+		revertPosition1();
 	}
 
 }

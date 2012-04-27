@@ -1,8 +1,11 @@
 package npc;
 
+import com.google.gson.JsonObject;
+
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 import state.MovingAttackingState;
 
@@ -20,8 +23,9 @@ public class NPCTest1 extends NPC {
 
 	public NPCTest1(GameCharacter character) {
 		super(character);
-
-		int[][] testArray = new int[][] { { 1, 2100 }, { 2, 2000 } };
+		
+		name = "NPCTest1";
+		
 		this.setCurrentState(new MovingAttackingState(new SquareMovementAI(
 				this.character.getGame(), this.getCharacter(), 300), null));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
@@ -51,6 +55,18 @@ public class NPCTest1 extends NPC {
 			return new NPCTest1(gameChar);
 		}
 
+	}
+
+	@Override
+	public JsonObject getJsonAttributes() {
+		// TODO Auto-generated method stub
+		return new JsonObject();
+	}
+
+	@Override
+	public String getTalk(SimpleDialogueObject simpleDialogueObject) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

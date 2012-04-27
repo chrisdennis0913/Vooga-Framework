@@ -11,7 +11,6 @@ import level.Level;
 import player.Player;
 import quest.Quest;
 import quest.QuestGiver;
-import quest.QuestJournal;
 import utils.JsonUtil;
 
 import com.golden.gamedev.GameEngine;
@@ -23,13 +22,14 @@ import com.google.gson.JsonObject;
 
 public class RPGame extends GameObject {
 
-	static String gameURL;
+	protected static String gameURL;
 
 	public PlayField field = new PlayField();
 
 	private Set<Pausable> paused;
 	private Player player;
-	private Level level;
+	protected Level level;
+
 	String lower, upper;
 
 	public RPGame(GameEngine parent, String configURL) {
@@ -67,10 +67,6 @@ public class RPGame extends GameObject {
 	    	  player.getCharacter().getJournal().render(g);
 	    	  return;
 	      }
-	      if (isPausedFor(Pausable.STORE))
-	      {
-	    	  
-	      }
 	}
 
 	public void update(long elapsed) 
@@ -80,11 +76,7 @@ public class RPGame extends GameObject {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
 	    }
-	    if (isPausedFor(Pausable.JOURNAL))
-	    {
-	    	player.getCharacter().getJournal().update(elapsed);
-	    	return;
-	    }
+	    player.getCharacter().getJournal().update(elapsed);
 	    
 		field.update(elapsed);
 		player.update(elapsed);
@@ -126,11 +118,6 @@ public class RPGame extends GameObject {
 		return paused.contains(pau);
 	}
 	
-	public boolean isPaused()
-	{
-		return paused.size() > 0;
-	}
-
 	public enum Pausable
 	{
 		INV, STORE, JOURNAL;

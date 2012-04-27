@@ -6,10 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
-
 import quest.QuestJournal;
 
-import level.Level;
 import level.Level;
 
 import utils.Direction;
@@ -55,7 +53,7 @@ public class GameCharacter extends AnimatedSprite implements
 
 	private int curDirection = 0;
 
-	private Velocity velocity = new Velocity(0.07);
+	private Velocity velocity = new Velocity(0.1);
 
 	private List<Direction> directions;
 
@@ -90,7 +88,7 @@ public class GameCharacter extends AnimatedSprite implements
 		constructDirections(directions);
 		stop();
 		inventory = new Inventory(this);
-		myJournal = new QuestJournal(game);
+		myJournal = new QuestJournal(this);
 	}
 
 	public void render(Graphics2D g) {
@@ -98,7 +96,6 @@ public class GameCharacter extends AnimatedSprite implements
 		counters.render(g);
 		actions.render(g);
 		inventory.render(g);
-		myJournal.render(g);
 	}
 	
 	public QuestJournal getJournal()
@@ -119,7 +116,6 @@ public class GameCharacter extends AnimatedSprite implements
 		counters.update(elapsed);
 		actions.update(elapsed);
 		inventory.update(elapsed);
-		myJournal.update(elapsed);
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
@@ -209,7 +205,6 @@ public class GameCharacter extends AnimatedSprite implements
 	}
 
 	public BehaviorModifierContainer getBehaviorModifiers() {
-
 		return behaviorModifiers;
 	}
 	

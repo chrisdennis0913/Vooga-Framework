@@ -5,11 +5,17 @@ import gameCharacter.GameCharacter;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import state.State;
 import store.StoreManagerNPC;
+import utils.Jsonable;
 import dialogue.AbstractDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-public class NPC extends CharacterDecorator {
+public abstract class NPC extends CharacterDecorator{
 	/**
 	 * Computer-generated serial ID number
 	 */
@@ -17,6 +23,7 @@ public class NPC extends CharacterDecorator {
 	private static final long serialVersionUID = -5360689062786017503L;
 	protected AbstractDialogue dialogue;
 	private boolean alive;
+	protected String name;
 
 	private State currentState;
 
@@ -40,7 +47,6 @@ public class NPC extends CharacterDecorator {
 		NPCs.add(new StoreManagerNPC.StoreManager());
 		for (NPCFactory npcFactory : NPCs) {
 			if (npcFactory.isThisType(npcName)){
-				System.out.println(npcFactory.getClass().getSimpleName());
 				return npcFactory.constructNPC(gameChar);
 			}
 		}
@@ -57,6 +63,8 @@ public class NPC extends CharacterDecorator {
 			return null;
 		return dialogue.getCurrentLine();
 	}
+
+	public abstract String getTalk(SimpleDialogueObject simpleDialogueObject);
 
 	public void setAlive(boolean alive) {
 		this.alive = alive;
@@ -86,4 +94,23 @@ public class NPC extends CharacterDecorator {
 	public boolean hasDialogue() {
 		return (dialogue != null);
 	}
+
+	@Override
+	public JsonObject toJson(){
+		JsonObject json = getJsonAttributes();
+		json.add("name", new JsonPrimitive(name));
+		JsonArray location = new JsonArray();
+		location.add(new JsonPrimitive(getCharacter().getX()));
+		location.add(new JsonPrimitive(getCharacter().getY()));
+		json.add("location", location);
+		json.add("directions", new JsonPrimitive("rsc/config/payer_directions.json"));
+		return json;		
+	}
+	
+	/** 
+	 * Get attributes of implementation-specific subclass of NPC
+	 * 
+	 * @return JsonObject with subclass specific attributes
+	 */
+	public abstract JsonObject getJsonAttributes();
 }

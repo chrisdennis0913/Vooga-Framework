@@ -2,8 +2,9 @@ package gameCharacter;
 
 import java.awt.Graphics2D;
 
-import state.State;
-import state.TalkingState;
+import com.google.gson.JsonObject;
+
+import utils.Jsonable;
 
 /**
  * Decorator class for GameCharacter;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
@@ -11,10 +12,8 @@ import state.TalkingState;
  * @author Kirill Klimuk
  */
 
-public class CharacterDecorator implements CharacterInterface 
+public abstract class CharacterDecorator implements CharacterInterface, Jsonable 
 {
-	
-	
 	protected GameCharacter character;
 
 	public CharacterDecorator(GameCharacter character) {
@@ -25,13 +24,9 @@ public class CharacterDecorator implements CharacterInterface
 		character.initResources();
 	}
 
-	public void render(Graphics2D g) {
-		character.render(g);
-	}
+	public void render(Graphics2D g) {}
 
-	public void update(long elapsed) {
-		character.update(elapsed);
-	}
+	public void update(long elapsed) {}
 
 	
 	public boolean isCurrentDirection(int direction) {
@@ -57,4 +52,8 @@ public class CharacterDecorator implements CharacterInterface
 	public void setCurrentDirection(int direction) {
 		character.setCurrentDirection(direction);
 	}
+
+	@Override
+	public abstract JsonObject toJson();
+
 }

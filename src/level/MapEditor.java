@@ -1,5 +1,7 @@
 package level;
 
+import enemy.AbstractEnemy;
+import enemy.TestEnemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.Color;
@@ -14,6 +16,8 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import npc.NPC;
+
 import player.Player;
 import utils.Location;
 import app.Main;
@@ -22,6 +26,7 @@ import app.RPGame;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.util.FileUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -30,22 +35,22 @@ import com.google.gson.JsonPrimitive;
 /**
  * Arrow key	: navigate
  * Space		: switch lower/upper tile
- * Page down	: next tile
- * Page up		: prev tile
- * End			: fast next tile
- * Home			: fast prev tile
+ * A			: next tile
+ * D			: prev tile
+ * W			: fast next tile
+ * S			: fast prev tile
  * Right click	: select tile
  * Click		: put tile
  * Ctrl + S		: save
  */
+
 public class MapEditor extends Game {
 
 	Map 	map;
 	int 	tilenum;
 	int		tilemode;
 	int 	charnum;
-	BufferedImage player;
-	BufferedImage enemy;
+	BufferedImage player, enemy, item, npc;
 	RPGame game = new RPGame(new Main(null), null);
 	
 	// add 
@@ -59,6 +64,8 @@ public class MapEditor extends Game {
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
 		player = getImage("rsc/player/playerstart.png", false);
+		enemy = getImage("rsc/enemy/question.png", false);
+		item = getImage("rsc/item/question.png",false);
 	}
 
 
@@ -78,8 +85,7 @@ public class MapEditor extends Game {
 		if (keyDown(KeyEvent.VK_DOWN)) {
 			map.move(0, 0.2*elapsedTime);
 		}
-		
-		
+			
 
 		// switch lower/upper tile
 		if (keyPressed(KeyEvent.VK_SPACE)) {
@@ -93,12 +99,12 @@ public class MapEditor extends Game {
 		}
 
 		// next/prev tile
-		if (keyPressed(KeyEvent.VK_PAGE_DOWN) || keyDown(KeyEvent.VK_END)) {
+		if (keyPressed(KeyEvent.VK_A) || keyDown(KeyEvent.VK_D)) {
 			if (++tilenum > getChipsetLength()) {
 				tilenum = getChipsetLength();
 			}
 		}
-		if (keyPressed(KeyEvent.VK_PAGE_UP) || keyDown(KeyEvent.VK_HOME)) {
+		if (keyPressed(KeyEvent.VK_W) || keyDown(KeyEvent.VK_S)) {
 			if (--tilenum < 0) {
 				tilenum = 0;
 			}
@@ -122,7 +128,8 @@ public class MapEditor extends Game {
 			// put tile
 			if (bsInput.isMouseDown(MouseEvent.BUTTON1)) {
 				if(tilemode == 2) {
-					// place picture of character
+					
+					Location loc = new Location(new int[]{getMouseX(), getMouseY()});
 					switch (charnum) {
 						case 0:
 							//player
@@ -131,18 +138,37 @@ public class MapEditor extends Game {
 							String att2;
 							att2 = JOptionPane.showInputDialog("Attribute2:");
 							//save sprite
-							Location loc = new Location(new int[]{getMouseX(), getMouseY()});
 							game.bsLoader = bsLoader;
 							Player player = new Player(new GameCharacter(game, loc,
 									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
 							jPlayer = player.toJson();
 							
+							
 						case 1:
 							//item
+							JsonObject jItem = new JsonObject();
+							String itemName = JOptionPane.showInputDialog("Item name:");
+							jItem.add("name", new JsonPrimitive(itemName));
+							JsonArray jLoc = new JsonArray();
+							jLoc.add(new JsonPrimitive(getMouseX()));
+							jLoc.add(new JsonPrimitive(getMouseY()));
+							
+							jItem.add("location", jLoc);
+							jItem.add("image", new JsonPrimitive("rsc/items/"+itemName+".png"));
+							jItem.add("quantity", new JsonPrimitive(JOptionPane.showInputDialog("Quantity:")));
+							jItem.add("price", new JsonPrimitive(JOptionPane.showInputDialog("Price:")));
+							jItems.add(jItem);
+							
 						case 2:
 							//enemy
+//							AbstractEnemy enemy = AbstractEnemy.createEnemy("TestEnemy", game, 
+//									new GameCharacter(game, loc, "rsc/config/player_directions.json"), "doesntmatter");
+							//jEnemies.add(enemy.toJson());
 						case 3:
 							//npc
+//							NPC npc = NPC.createNPC("npcName", new GameCharacter(game, loc,
+//									"rsc/config/npc_directions.json"));
+//							jNPCs.add(npc.toJson());
 							
 					}
 					
@@ -174,8 +200,12 @@ public class MapEditor extends Game {
 				if (upperTile[j] == null) upperTile[j] = "";
 				upperTile[j] += String.valueOf(map.layer2[i][j])+" ";
 			}
-			FileUtil.fileWrite(lowerTile, bsIO.setFile("rsc/level/map00.lwr"));
-			FileUtil.fileWrite(upperTile, bsIO.setFile("rsc/level/map00.upr"));
+			
+			String lwrLevel = JOptionPane.showInputDialog("Lower Layer:");
+			String uprLevel = JOptionPane.showInputDialog("Upper Layer:");
+			
+			FileUtil.fileWrite(lowerTile, bsIO.setFile(uprLevel));
+			FileUtil.fileWrite(upperTile, bsIO.setFile(lwrLevel));
 			
 			String nextLevel = JOptionPane.showInputDialog("Next file name:");
 			jLevel.add("nextLevel", new JsonPrimitive("rsc/savedmaps/"+nextLevel+".json"));
@@ -191,8 +221,10 @@ public class MapEditor extends Game {
 			jLevel.add("inventory", jInventory);
 			
 			String file = JOptionPane.showInputDialog("File name:");
+			Gson gson = new Gson();
 			try {
 				FileWriter f1 = new FileWriter(file); 
+				System.out.println(gson.toJson(jLevel));
 				f1.write(jLevel.toString());
 				f1.close();
 			} catch (IOException e) {
@@ -220,7 +252,7 @@ public class MapEditor extends Game {
 		switch (tilemode) {
 			case 0: return map.chipsetE.image.length + map.chipset.length - 2;	// lower mode
 			case 1: return map.chipsetF.image.length - 1;	// upper mode
-			case 2: return 1; // sprite mode
+			case 2: return 3; // sprite mode
 		}
 		return 0;
 	}
@@ -245,7 +277,30 @@ public class MapEditor extends Game {
 			
 		// sprite mode - return chipset
 		case 2:
+			return null;
+		}
+
+		return null;
+	}
+	
+	private BufferedImage getCharacter() {
+		if (charnum == -1) {
+			return null;
+		}
+
+		switch (charnum) {
+
+		case 0:
 			return player;
+			
+		case 1:
+			return item;
+			
+		case 2:
+			return enemy;
+
+		case 3: 
+			return npc;
 		}
 
 		return null;
@@ -271,6 +326,8 @@ public class MapEditor extends Game {
 		if (getChipsetImage(tilenum) != null) {
 			g.drawImage(getChipsetImage(tilenum), 600, 40, null);
 		}
+		else
+			g.drawImage(getCharacter(), getMouseX(), getMouseY(), null);
 		
 		if (tilemode == 1 || tilemode == 0) {
 			g.setColor(Color.BLACK);

@@ -107,11 +107,11 @@ public class ItemStore extends EventedWrapper<Item>{
 			}
 		}
 	}
-//	
+	
 //	public int buy (Item item){
 //		int price = item.getPrice();
-//		if (){
-//			
+//		if (game.keyPressed(KeyEvent.VK_ENTER)){
+//			character.getInventory().get("money");
 //		}
 //		return price;
 //		

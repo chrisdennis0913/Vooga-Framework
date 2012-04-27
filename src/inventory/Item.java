@@ -16,7 +16,7 @@ import evented.EventedItem;
 import evented.EventedWrapper;
 
 public abstract class Item extends EventedItem<Item> implements Sellable,
-		EquipItemInterface // Potion, Accessory, Weapon
+		EquipItemInterface, Potion, Accessory, Weapon
 {
 
 	/**

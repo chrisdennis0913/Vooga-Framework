@@ -4,13 +4,13 @@
 
 package quest;
 
-import enemy.TestEnemy;
+import enemy.AbstractEnemy;
 
 public class DestroyTask extends Task
 {
-	private TestEnemy recipient;
+	private AbstractEnemy recipient;
 
-	public DestroyTask(String description, TestEnemy recipient) 
+	public DestroyTask(String description, AbstractEnemy recipient) 
 	{
 		super(description);
 		this.recipient = recipient;

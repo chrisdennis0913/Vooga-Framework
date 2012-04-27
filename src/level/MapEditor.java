@@ -46,7 +46,7 @@ public class MapEditor extends Game {
 	int 	charnum;
 	BufferedImage player;
 	BufferedImage enemy;
-	RPGame game = new RPGame(new Main());
+	RPGame game = new RPGame(new Main(null), null);
 	
 	// add 
 	JsonObject jLevel = new JsonObject();
@@ -136,6 +136,7 @@ public class MapEditor extends Game {
 							Player player = new Player(new GameCharacter(game, loc,
 									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
 							jPlayer = player.toJson();
+							
 						case 1:
 							//item
 						case 2:

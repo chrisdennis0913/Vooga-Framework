@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
@@ -27,16 +28,17 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 
 	protected HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
 	public static ArrayList<EnemyFactory> enemyFactories = new ArrayList<EnemyFactory>();
-	protected String configURL;
 	private boolean alive = true;
 	protected RPGame game;
-
+	protected JsonObject jEnemy;
+	
 	private State currentState;
 	protected int moneyValue;
 	private String name;
 
-	public AbstractEnemy(GameCharacter character, String name) {
+	public AbstractEnemy(GameCharacter character, String name, JsonObject jEnemy) {
 		super(character);
+		this.jEnemy = jEnemy;
 		this.name = name;
 		character.setDecorator(this);
 	}
@@ -46,9 +48,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 
 	public void initResources() {
-		//JsonObject json = JsonUtil.getJSON(configURL);
-		//initAttacks(json);
-		initAttacks();
+		initAttacks(jEnemy);
 		getCharacter().getCounters().add("health",
 				new EnemyHealth(getCharacter().getCounters(), 2));
 		initAI();
@@ -59,12 +59,12 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	{
 		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
 	}
-
-	protected abstract void initAttacks();
 	
 	protected void initAttacks(JsonObject json){
-		//TODO: implement HashMap of attacks
-		//json.get("attacks")
+		for(JsonElement e: json.get("attacks").getAsJsonArray()){
+			String attackName = e.getAsString();
+			attacks.put(attackName, EnemyAttacks.createAttack(attackName, game, this));
+		}
 	}
 
 	public void update(long elapsedTime) {
@@ -91,11 +91,11 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 			alive = false;
 	}
 	
-	public static AbstractEnemy createEnemy(String enemyName, RPGame game, GameCharacter gameChar, String configURL){
+	public static AbstractEnemy createEnemy(String enemyName, RPGame game, GameCharacter gameChar, JsonObject jEnemy){
 
 		for (EnemyFactory fac : enemyFactories){
 			if (fac.isThisType(enemyName))
-				return fac.constructEnemy(game,gameChar,configURL);
+				return fac.constructEnemy(game,gameChar,jEnemy);
 		}
 		throw new RuntimeException("Given name of NPC not recognized");
 	}
@@ -111,8 +111,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 
 	public void uponDeath() {
-		//TODO: enable when money item is ready
-		//getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
+		getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
 	}
 	
 	@Override
@@ -128,8 +127,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		location.add(new JsonPrimitive(getCharacter().getX()));
 		location.add(new JsonPrimitive(getCharacter().getY()));
 		json.add("location", location);
-		json.add("directionsURL", new JsonPrimitive("rsc/config/player_directions.json"));
-		json.add("actionsURL", new JsonPrimitive("rsc/config/player_direction.json"));		
+		json.add("directionsURL", new JsonPrimitive("rsc/config/enemy_directions.json"));
 		return json;
 	}
 	

@@ -235,8 +235,8 @@ public class Level extends AbstractTileBackground implements Evented {
                                           game,
                                           new GameCharacter(game,
                                                             loc,
-                                                            "rsc/config/player_directions.json"),
-                                          "doesntmatter");
+                                                            jEnemy.get("directions").getAsString()),
+                                                            jEnemy);
             group.add(enemy.getCharacter());
         }
 

@@ -5,11 +5,14 @@ import gameCharacter.GameCharacter;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import state.State;
 import store.StoreManagerNPC;
+import utils.Jsonable;
 import dialogue.AbstractDialogue;
 
-public class NPC extends CharacterDecorator {
+public abstract class NPC extends CharacterDecorator implements Jsonable{
 	/**
 	 * Computer-generated serial ID number
 	 */
@@ -82,4 +85,7 @@ public class NPC extends CharacterDecorator {
 	public boolean hasDialogue() {
 		return (dialogue != null);
 	}
+
+	@Override
+	public abstract JsonObject toJson();
 }

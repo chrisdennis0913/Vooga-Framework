@@ -44,7 +44,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements
 		initAttackAI();
 		initMovementAI();
 		getCharacter().getCounters().add("health",
-				new EnemyHealth(getCharacter().getCounters(), 5));
+				new EnemyHealth(getCharacter().getCounters(), 2));
 	}
 
 	protected abstract void initMovementAI();

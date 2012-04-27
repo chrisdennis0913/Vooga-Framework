@@ -22,6 +22,7 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 		this.configURL = configURL;
 		this.game = game;
 		initResources();
+		moneyValue = 10;
 	}
 
 	@Override
@@ -58,6 +59,11 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 			return new TestEnemy(game, gameChar, configURL);
 		}
 		
+	}
+
+	@Override
+	public void uponDeath() {
+		getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
 	}
 
 }

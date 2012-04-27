@@ -54,4 +54,5 @@ public class CharacterDecorator implements CharacterInterface
 	public void setCurrentDirection(int direction) {
 		character.setCurrentDirection(direction);
 	}
+
 }

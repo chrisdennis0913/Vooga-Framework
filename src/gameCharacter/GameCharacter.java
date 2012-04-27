@@ -197,7 +197,6 @@ public class GameCharacter extends AnimatedSprite implements
 	}
 
 	public BehaviorModifierContainer getBehaviorModifiers() {
-
 		return behaviorModifiers;
 	}
 	

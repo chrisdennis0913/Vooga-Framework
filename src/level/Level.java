@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
+import state.TalkingState;
 import store.ItemStore;
 import store.StoreManagerNPC;
 import utils.JsonUtil;
@@ -255,7 +256,6 @@ public class Level extends AbstractTileBackground implements Evented {
 			NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
 					.get("directions").getAsString()), jNPC
 					.getAsJsonObject("movement"));
-
 			group.add(npc.getCharacter());
 
 		}

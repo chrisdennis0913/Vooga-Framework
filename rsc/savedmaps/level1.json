@@ -24,7 +24,7 @@
 		"items": [
 		{
 			"name": "sword",
-			"location": [120, 200],
+			"location": [120, 100],
 			"image": "rsc/items/sword.gif",
 			"quantity": 1,
 			"price": 250
@@ -37,16 +37,32 @@
 			"price": 450
 		},
 		{
-			"name": "money",
-			"location": [480, 640],
+			"name": "superBowAccessory",
+			"location": [140, 175],
 			"image": "rsc/items/money.png",
-			"quantity": 500,
-			"price": 1
+			"quantity": 1,
+			"price": 900
 		}
 		]
 	},
     "npcs": [
-		{
+		
+    {
+	  	
+      "location": [200, 200],
+	  	
+      "name": "NPCTest1",
+	  	
+      "directions": "rsc/config/oldman_directions.json",
+	  	
+      "movement" : {
+	  	
+        "type" : "SquareMovementAI",
+	  	
+       "timeToTurn" : 300	  	
+      }
+	  	
+   },{
 			"location": [480, 640],
 			"name": "StoreManagerNPC",
 			"directions": "rsc/config/store_directions.json",
@@ -92,7 +108,7 @@
 			]
 		},
 		{
-			"location": [400, 400],
+			"location": [415, 180],
 			"name": "ArcherEnemy",
 			"directions": "rsc/config/goriya_directions.json",
 			"attacks":[

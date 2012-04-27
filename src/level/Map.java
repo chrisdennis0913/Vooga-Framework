@@ -28,8 +28,8 @@ public class Map extends AbstractTileBackground {
 		layer1 = new int[40][25];
 		layer2 = new int[40][25];
 
-		String[] lowerTile = FileUtil.fileRead(bsIO.getStream("rsc/level/lower.lwr"));
-		String[] upperTile = FileUtil.fileRead(bsIO.getStream("rsc/level/upper.upr"));
+		String[] lowerTile = FileUtil.fileRead(bsIO.getStream("rsc/level/upper.upr"));
+		String[] upperTile = FileUtil.fileRead(bsIO.getStream("rsc/level/lower.lwr"));
 		for (int j=0;j < layer1[0].length;j++) {
 			StringTokenizer lowerToken = new StringTokenizer(lowerTile[j]);
 			StringTokenizer upperToken = new StringTokenizer(upperTile[j]);

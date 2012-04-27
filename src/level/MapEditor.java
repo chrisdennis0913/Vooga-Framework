@@ -65,7 +65,8 @@ public class MapEditor extends Game {
 		map = new Map(bsLoader, bsIO);
 		player = getImage("rsc/player/playerstart.png", false);
 		enemy = getImage("rsc/enemy/question.png", false);
-		item = getImage("rsc/item/question.png",false);
+		item = getImage("rsc/items/question.png",false);
+		npc = getImage("rsc/npc/question.png", false);
 	}
 
 

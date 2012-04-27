@@ -16,10 +16,8 @@ public class MovingState implements State
 		myAI.update(elapsedTime);
 	}
 
-	
 	public String getStatus()
 	{
 		return "Moving";
 	}
-
 }

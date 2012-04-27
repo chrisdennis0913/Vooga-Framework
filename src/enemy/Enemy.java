@@ -7,16 +7,23 @@ import gameCharacter.GameCharacter;
 import java.util.HashMap;
 
 import state.AttackingState;
+import state.MovingAttackingState;
 import state.State;
 import state.TalkingState;
 import state.MovingState;
 
-import ai.PathFindingAI;
+import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
 
+/**
+ * GameCharacter decorated with attacks and actions.
+ * Can use pluggable AI algorithms to behave automatically.
+ * @author jameshong
+ *
+ */
 public class Enemy extends CharacterDecorator implements Attackable{
 
 	private HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
@@ -24,10 +31,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	private String configURL;
 	private boolean alive = true;
 	private RPGame game;
-	private AttackingState atkState;
-	private TalkingState talkState;
-	private MovingState walkState;
-	
+
 	private State currentState;
 	
 	public Enemy(RPGame game, GameCharacter character, String configURL) {
@@ -41,8 +45,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		//String json = JsonUtil.getJSON(configURL);
 		//constructActions(json);
 		initAttacks();
-		initAttackAI();
-		initMovementAI();
+		initAI();
 	}
 	
 	private void constructActions(String json) {
@@ -54,18 +57,15 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		attacks.put("shooting",new ShootingAttack(game,this,"shooting"));
 	}
 	
-	//move to json
-	private void initAttackAI(){
-		setCurrentState(new AttackingState(new SimpleAttackAI(game,this)));
+	public void initAI()
+	{
+		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
 	}
 	
-
 	public void update(long elapsedTime)
 	{
+		System.out.println("I'm updating in Enemy");
 		currentState.update(elapsedTime);
-	}
-	private void initMovementAI(){
-		setCurrentState(new MovingState(new PathFindingAI(game, this.getCharacter())));
 	}
 	
 	public HashMap<String, AbstractAttack> getAttacks() {

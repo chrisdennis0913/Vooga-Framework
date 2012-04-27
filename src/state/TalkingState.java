@@ -3,6 +3,7 @@ package state;
 
 public class TalkingState implements State
 {
+
 	private boolean canTalk = true;
 
 	public void update(long elapsedTime) 

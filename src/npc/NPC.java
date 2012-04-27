@@ -7,6 +7,7 @@ import state.AttackingState;
 import state.State;
 import state.TalkingState;
 import state.MovingState;
+import store.StoreManagerNPC;
 import dialogue.AbstractDialogue;
 
 public class NPC extends CharacterDecorator{
@@ -14,10 +15,10 @@ public class NPC extends CharacterDecorator{
 	/**
 	 * Computer-generated serial ID number
 	 */
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -5360689062786017503L;
 	protected AbstractDialogue dialogue;
 	private boolean alive;
-	private boolean canDie;
 	
 
 	private AttackingState atkState;
@@ -43,18 +44,9 @@ public class NPC extends CharacterDecorator{
 		currentStates = new ArrayList<State>();
 	}
 	
-	private void constructActions(String json) {
-//		Gson gson = new Gson();
-//		JsonUtil.JSONNpcActions actions = gson.fromJson(json,
-//				JsonUtil.JSONNpcActions.class);
-//		if (actions.talking == null)
-//			this.dialogue = new NullDialogue();
-//		this.getActions().add("talking",
-//				new Talking(new Talk(this.getActions(), actions.talking)));
-	}
-	
 	public static NPC createNPC(String npcName, GameCharacter gameChar){
 		NPCs.add(new NPCTest1.NPCTest1Factory());
+		NPCs.add(new StoreManagerNPC.StoreManager());
 		for (NPCFactory npcFactory: NPCs){
 			if (npcFactory.isThisType(npcName))
 				return npcFactory.constructNPC(gameChar);
@@ -101,4 +93,10 @@ public class NPC extends CharacterDecorator{
 	{
 		return currentState;
 	}
+
+	public boolean hasDialogue(){
+		return (dialogue != null);
+	}
+
+
 }

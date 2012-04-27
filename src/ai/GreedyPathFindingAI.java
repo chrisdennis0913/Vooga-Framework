@@ -12,7 +12,13 @@ import utils.Location;
 import gameCharacter.GameCharacter;
 import app.RPGame;
 
-public class PathFindingAI extends AbstractMovementAI{
+/**
+ * Path finder that chooses and executes the action
+ * that brings the enemy closer to the player.
+ * @author jameshong
+ *
+ */
+public class GreedyPathFindingAI extends AbstractMovementAI{
 
 	public static final int TILE_WIDTH = 10;
 	public static final int TILE_HEIGHT = 10;
@@ -22,7 +28,7 @@ public class PathFindingAI extends AbstractMovementAI{
 	Player player;
 	Timer calcInterval;
 	
-	public PathFindingAI(RPGame game, GameCharacter character) {
+	public GreedyPathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);
 		this.player = game.getPlayer();
 		calcInterval = new Timer(CALCULATION_INTERVAL);

@@ -1,21 +1,27 @@
 package store;
 
+import gameCharacter.GameCharacter;
+
 import java.awt.Graphics2D;
 
-import com.google.gson.JsonObject;
-
+import npc.NPC;
+import npc.NPCFactory;
 import state.State;
 import state.TalkingState;
 
-import dialogue.AbstractDialogue;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
+<<<<<<< HEAD
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import npc.NPC;
 import npc.NPCFactory;
 
+=======
+>>>>>>> 97d7a60b6fcbd986b6f8c53d01355e84e44a694f
 public class StoreManagerNPC extends NPC{
 	ItemStore myStore;
 	SimpleDialogue dialogue;
@@ -23,7 +29,7 @@ public class StoreManagerNPC extends NPC{
 
 	public StoreManagerNPC(GameCharacter character) {
 		super(character);
-		myStore = new ItemStore(this.getCharacter(), this.getCharacter().getGame());
+		myStore = new ItemStore(this, this.getCharacter().getGame());
 		dialogue = new SimpleDialogue("rsc/store/storeSpeech.txt");
 		State s = new TalkingState();
 		this.setCurrentState(s);
@@ -31,12 +37,10 @@ public class StoreManagerNPC extends NPC{
 	
 	public void update (long elapsed){
 		super.update(elapsed);
-		myStore.update(elapsed);
 	}
 	
 	public void render(Graphics2D g){
 		super.render(g);
-		myStore.render(g);
 	}
 	
 	@Override
@@ -60,29 +64,29 @@ public class StoreManagerNPC extends NPC{
 	
 	public static class StoreManager extends NPCFactory{
 
-		@Override
 		public boolean isThisType(String npcName) {
 			return npcName.equals("StoreManagerNPC");
 		}
 
 		@Override
+<<<<<<< HEAD
 		public CharacterDecorator constructNPC(GameCharacter gameChar) {
+=======
+		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
+>>>>>>> 97d7a60b6fcbd986b6f8c53d01355e84e44a694f
 			return new StoreManagerNPC(gameChar);
 		}
-		
 	}
 
-	@Override
-	public JsonObject toJson() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	/**
+	 * 
+	 * @return a JsonObject containing the attributes specific to this subclass of
+	 * NPC
+	 */
 	@Override
 	public JsonObject getJsonAttributes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

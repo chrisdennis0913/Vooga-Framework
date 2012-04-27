@@ -14,17 +14,17 @@ import app.RPGame;
 public class ConcreteItem extends Item {
 
     private static final long serialVersionUID = -4599650031278387506L;
-    private boolean isForSale;
+    protected boolean isForSale;
     private boolean quantifiable;
     private boolean equippable = true;
-    private boolean equipped;
-    private int healValue;
-    private int statChange;
-    private int damage;
-    private int relX;
-    private int relY;
-    private String weaponType;
-    private String statCategory;
+    protected boolean equipped;
+    protected int healValue;
+    protected int statChange;
+    protected int damage;
+    protected int relX;
+    protected int relY;
+    protected String weaponType;
+    protected String statCategory;
     private boolean canDrop = true;
 
 
@@ -160,7 +160,6 @@ public class ConcreteItem extends Item {
     @Override
     public void setWeaponType (String type) {
         weaponType = type;
-
     }
 
 

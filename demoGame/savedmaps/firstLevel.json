@@ -1,11 +1,23 @@
 {
-	"nextLevel": "demoGame/savedmaps/firstLevel.json",	
+	"nextLevel": "demoGame/savedmaps/level1.json",	
 	"upperFilename": "demoGame/level/map00.upr",
 	"lowerFilename": "demoGame/level/map00.lwr",
 	"player": {
-		"location": [100,100],
+		"location": [200,100],
 		"directionsURL": "demoGame/config/player_directions.json",
-		"actionsURL": "demoGame/config/player_actions.json"
+		"actionsURL": "demoGame/config/player_actions.json",
+		"playerInventory": {
+			"type": "game",
+			"items": [
+		   		{
+			        "name": "money",
+	        		"location": [-40, -40],
+				"image": "demoGame/items/coin.gif",
+			"quantity": 250,
+			"price": 1
+			}
+			]
+		}
 	},
 	"npcs": [
 		{
@@ -38,17 +50,17 @@
 		},
 		{
 			"name": "bow",
-			"location": [280, 120],
+			"location": [100, 120],
 			"image": "demoGame/items/bow.png",
 			"quantity": 1,
 			"price": 450
 		},
 		{
-			"name": "super",
-			"location": [300, 150],
-			"image": "demoGame/items/bow.png",
+			"name": "superSwordAccessory",
+			"location": [200, 200],
+			"image": "demoGame/items/sword.png",
 			"quantity": 1,
-			"price": 350
+			"price": 950
 		}
 		]
 	}

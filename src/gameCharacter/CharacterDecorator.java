@@ -54,7 +54,6 @@ public abstract class CharacterDecorator implements CharacterInterface, Jsonable
 		character.setCurrentDirection(direction);
 	}
 
-	@Override
 	public abstract JsonObject toJson();
 
 	public String getName() {

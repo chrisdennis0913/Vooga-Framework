@@ -2,7 +2,6 @@ package quest;
 
 import enemy.AbstractEnemy;
 import enemy.EnemyFactory;
-import enemy.TestEnemy;
 import gameCharacter.GameCharacter;
 import inventory.*;
 

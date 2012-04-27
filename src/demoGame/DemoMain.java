@@ -1,6 +1,7 @@
 package demoGame;
 
 import java.awt.Dimension;
+import app.RPGame;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;
@@ -25,7 +26,7 @@ public class DemoMain extends GameEngine{
     }
     public GameObject getGame(int GameID) {
         switch (GameID) {
-            case GAME_MODE : return new DemoRPGame(this, configURL);
+            case GAME_MODE : return new RPGame(this, configURL);
         }
         return null;
     }

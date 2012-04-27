@@ -1,7 +1,17 @@
 package enemy;
 
+import gameCharacter.Attackable;
+import gameCharacter.CharacterDecorator;
+import gameCharacter.GameCharacter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import state.State;
+import state.StateManager;
+import utils.Jsonable;
+import app.RPGame;
+import attacks.AbstractAttack;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,30 +30,47 @@ import gameCharacter.Attackable;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 
+
+/**
+ * GameCharacter decorated with attacks and actions.
+ * Can use pluggable AI algorithms to behave automatically.
+ * @author jameshong
+ *
+ */
+
 public abstract class AbstractEnemy extends CharacterDecorator implements Attackable, Jsonable{
 
 	protected HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
 	public static ArrayList<EnemyFactory> enemyFactories = new ArrayList<EnemyFactory>();
 	private boolean alive = true;
 	protected RPGame game;
-	protected JsonObject jEnemy;
 	
-	private State currentState;
+	private StateManager states;
 	protected int moneyValue;
 
-	public AbstractEnemy(GameCharacter character, String name, JsonObject jEnemy) {
+	public AbstractEnemy(RPGame game, GameCharacter character, String name, JsonObject jEnemy) {
 		super(character);
-		this.jEnemy = jEnemy;
+		this.game = game;
 		this.name = name;
+		this.states = new StateManager();
+		initAttacks(jEnemy);
+		character.setDecorator(this);
+	}
+	
+	public AbstractEnemy(RPGame game, GameCharacter character, String name, String[] attacks) {
+		super(character);
+		this.game = game;
+		this.name = name;
+		initAttacks(attacks);
 		character.setDecorator(this);
 	}
 	
 	static{
-		enemyFactories.add(new TestEnemy.TestEnemyFactory());
+		enemyFactories.add(new GuardEnemy.GuardEnemyFactory());
+		enemyFactories.add(new ArcherEnemy.ArcherEnemyFactory());
 	}
 
 	public void initResources() {
-		initAttacks(jEnemy);
 		getCharacter().getCounters().add("health",
 				new EnemyHealth(getCharacter().getCounters(), 2));
 		initAI(null);
@@ -58,17 +85,27 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 			attacks.put(attackName, EnemyAttacks.createAttack(attackName, game, this));
 		}
 	}
-
-	public void update(long elapsedTime) {
-		currentState.update(elapsedTime, this);
+	
+	protected void initAttacks(String[] attackNames){
+		for(String at:attackNames){
+			attacks.put(at, EnemyAttacks.createAttack(at, game, this));
+		}
 	}
 
-	public HashMap<String, AbstractAttack> getAttacks() {
-		return attacks;
+	public void update(long elapsedTime) {
+		states.update(elapsedTime, this);
 	}
 
 	public void setCurrentState(State s) {
-		currentState = s;
+		states.setState(s);
+	}
+	
+	public void addState(State s){
+		states.addState(s);
+	}
+	
+	public HashMap<String, AbstractAttack> getAttacks() {
+		return attacks;
 	}
 
 	@Override

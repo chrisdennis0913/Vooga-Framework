@@ -2,9 +2,8 @@ package enemy;
 
 import com.google.gson.JsonObject;
 
-import app.RPGame;
-import npc.NPC;
 import gameCharacter.GameCharacter;
+import app.RPGame;
 
 public abstract class EnemyFactory {
 	

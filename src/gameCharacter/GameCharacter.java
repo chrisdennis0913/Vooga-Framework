@@ -10,6 +10,7 @@ import quest.QuestJournal;
 
 import level.Level;
 
+import store.StoreManagerNPC;
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -60,6 +61,7 @@ public class GameCharacter extends AnimatedSprite implements
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
 	protected QuestJournal myJournal;
+	protected StoreManagerNPC manager;
 
 	private String configURL;
 

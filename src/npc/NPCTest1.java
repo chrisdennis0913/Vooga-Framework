@@ -1,15 +1,18 @@
 package npc;
 
+import state.MovingState;
+
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-import state.MovingAttackingState;
-
+import ai.AbstractMovementAI;
 import ai.SquareMovementAI;
 
 public class NPCTest1 extends NPC {
@@ -22,13 +25,15 @@ public class NPCTest1 extends NPC {
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 4483591744499315422L;
 
-	public NPCTest1(GameCharacter character) {
+	public NPCTest1(GameCharacter character, JsonElement jsonMovement) {
 		super(character);
 		
 		name = "NPCTest1";
 		
-		this.setCurrentState(new MovingAttackingState(new SquareMovementAI(
-				this.character.getGame(), this.getCharacter(), 300), null));
+		AbstractMovementAI movement = AbstractMovementAI.getAbstractMovementAI(this.character.getGame(), this.getCharacter(), jsonMovement);
+		
+		//SquareMovementAI sq = new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300);
+		this.setCurrentState(new MovingState(movement,null));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 
@@ -36,7 +41,8 @@ public class NPCTest1 extends NPC {
 	 * 
 	 * @return
 	 */
-	public String getTalk(DialogueObject choice) {
+	@Override
+	public String getTalk(SimpleDialogueObject choice) {
 		dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
 		return dialogue.getCurrentLine();
 	}
@@ -51,9 +57,11 @@ public class NPCTest1 extends NPC {
 			return npcName.equals("NPCTest1");
 		}
 
-		@Override
 		public CharacterDecorator constructNPC(GameCharacter gameChar) {
-			return new NPCTest1(gameChar);
+			return new NPCTest1(gameChar);}
+
+		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
+			return new NPCTest1(gameChar, jsonMovement);
 		}
 
 	}
@@ -64,10 +72,5 @@ public class NPCTest1 extends NPC {
 		return new JsonObject();
 	}
 
-	@Override
-	public String getTalk(SimpleDialogueObject simpleDialogueObject) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

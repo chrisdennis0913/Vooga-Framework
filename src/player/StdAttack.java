@@ -10,6 +10,7 @@ import utils.Direction;
 import actions.ActionDecorator;
 import actions.Attack;
 import calculators.DamageCalculator;
+import calculators.UnitCalculator;
 
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
@@ -20,7 +21,7 @@ public class StdAttack extends ActionDecorator {
 	private static final long serialVersionUID = 1L;
 
 	private String type;
-	private DamageCalculator calculator = new DamageCalculator(null, null);
+	private DamageCalculator calculator = new UnitCalculator(null, null);
 
 	public StdAttack(Attack attack) {
 		super(attack);
@@ -64,8 +65,16 @@ public class StdAttack extends ActionDecorator {
 
 		attk.directions = Arrays.asList(tempDirections);
 	}
+	
+	public boolean isProjectile() {
+		if (type.toLowerCase().contains("bow"))
+			return true;
+		return false;
+	}
 
 	public int getDamage(AbstractEnemy enemy) {
+		if (type.toLowerCase().contains("bow"))
+			return 0;
 		return calculator.calculate();
 	}
 	

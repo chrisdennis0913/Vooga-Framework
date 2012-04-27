@@ -26,7 +26,6 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 	 * @author chrisdennis0913
 	 */
 	private static final long serialVersionUID = 6760280693009697161L;
-	protected static RPGame game;
 	protected BufferedImage image;
 	protected Sprite mySprite;
 	protected SpriteGroup myGroup;
@@ -42,10 +41,6 @@ public abstract class Item extends EventedItem<Item> implements Sellable,
 	public Item(RPGame game, JsonObject item) {
 		super(game);
 		this.item = item;
-	}
-
-	public Item(RPGame game) {
-		super(game);
 	}
 
 	public Item(EventedWrapper<Item> wrapper, JsonObject item) {

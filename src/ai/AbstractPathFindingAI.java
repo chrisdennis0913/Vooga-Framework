@@ -1,22 +1,22 @@
 package ai;
 
+import gameCharacter.GameCharacter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import level.Level;
 import player.Player;
 import utils.Location;
+import app.RPGame;
 
 import com.golden.gamedev.object.Timer;
-
-import gameCharacter.GameCharacter;
-import app.RPGame;
 
 public abstract class AbstractPathFindingAI extends AbstractMovementAI {
 
 	public static final int TILE_WIDTH = 10;
 	public static final int TILE_HEIGHT = 10;
-	public static final int CALCULATION_INTERVAL = 100;
+	public static final int CALCULATION_INTERVAL = 50;
 
 	protected Player player;
 	protected Timer calcInterval;

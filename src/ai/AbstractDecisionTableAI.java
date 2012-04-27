@@ -1,12 +1,11 @@
 package ai;
 
-import app.RPGame;
-import attacks.AbstractAttack;
-
-import enemy.AbstractEnemy;
-
 import java.util.HashMap;
 import java.util.PriorityQueue;
+
+import app.RPGame;
+import attacks.AbstractAttack;
+import enemy.AbstractEnemy;
 
 /**
  * Attack chooser that uses a decision table to determine
@@ -22,15 +21,18 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 	
 	public AbstractDecisionTableAI(RPGame game, AbstractEnemy character) {
 		super(game, character);
+		constructTable();
 	}
 
+	public abstract void constructTable();
+	
 	@Override
 	public void update(long elapsedTime) {
-		if(character.isAlive()){
+		//if(character.isAlive()){
 			AbstractAttack choice = pickBestAttack();
 			if(choice != null)
 				choice.performAttack(elapsedTime);
-		}
+		//}
 	}
 
 	@Override
@@ -47,9 +49,10 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 				attackQ.add(attackMap.get(attackName));
 		}
 		AbstractAttack choice;
-		while((choice = attackQ.poll()) != null)
-			if(choice.isActive() && choice.isAvailable(0))
+		while((choice = attackQ.poll()) != null){
+			if(choice.isActive())
 				return choice;
+		}
 		return null;
 	}
 	

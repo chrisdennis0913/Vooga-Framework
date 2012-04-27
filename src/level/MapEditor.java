@@ -154,7 +154,7 @@ public class MapEditor extends Game {
 							item.add("image", new JsonPrimitive("rsc/items/bow.png"));
 							item.add("quantity", new JsonPrimitive(1));
 							item.add("price", new JsonPrimitive(450));
-							jItems.add(item.toJson());
+							jItems.add(item);
 							
 						case 2:
 							//enemy

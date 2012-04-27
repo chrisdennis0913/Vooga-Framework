@@ -2,10 +2,14 @@ package app;
 
 import java.awt.Dimension;
 
+import utils.JsonUtil;
+
 
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.GameObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
 public class Main extends GameEngine {
@@ -19,14 +23,15 @@ public class Main extends GameEngine {
 	}
 	
 	public void initResources() {
-		nextGameID = GAME_MODE;
-		//nextGameID = TITLE;
+		//nextGameID = GAME_MODE;
+		nextGameID = TITLE;
 	}
 	
 	public GameObject getGame(int GameID) {
+		JsonObject json = JsonUtil.getJSON(configURL);
 		switch (GameID) {
 			case GAME_MODE : return new RPGame(this, configURL);
-			case TITLE : return new Title(this);
+			case TITLE : return new Title(this, json.get("background").getAsString());
 		}
 		return null;
 	}

@@ -1,0 +1,22 @@
+{
+	"frames": 7,
+	"delay": 125,
+	"directions": [
+	{
+		"direction": "DIR_DOWN",
+		"image": "rsc/enemy/walk_down.png"
+	},
+	{
+		"direction": "DIR_UP",
+		"image": "rsc/enemy/walk_up.png"
+	},
+	{
+		"direction": "DIR_RIGHT",
+		"image": "rsc/enemy/walk_right.png"
+	},
+	{
+		"direction": "DIR_LEFT",
+		"image": "rsc/enemy/walk_left.png"
+	}
+	]
+}

@@ -18,8 +18,8 @@ import com.golden.gamedev.object.Timer;
  *
  */
 public class GreedyPathFindingAI extends AbstractPathFindingAI{
-
-	private static final double MINIMUM_DISTANCE = 50;
+	
+	private static int MINIMUM_DISTANCE = 20;
 	
 	public GreedyPathFindingAI(RPGame game, GameCharacter character) {
 		super(game, character);
@@ -33,7 +33,7 @@ public class GreedyPathFindingAI extends AbstractPathFindingAI{
 		Location playerTile = player.getCharacter().getLocation();
 		List<ActionTransition> adjActions = getAdjacentActions(currTile,playerTile);
 				
-		if(adjActions.get(0) != null && adjActions.get(0).distToGoal() > MINIMUM_DISTANCE){
+		if(adjActions.get(0) != null && adjActions.get(0).intermTile.distance(playerTile) > MINIMUM_DISTANCE){
 			return adjActions.get(0).direction;
 		}
 		else return -1;

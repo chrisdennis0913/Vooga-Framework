@@ -22,6 +22,7 @@ import app.RPGame;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.util.FileUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -79,8 +80,7 @@ public class MapEditor extends Game {
 		if (keyDown(KeyEvent.VK_DOWN)) {
 			map.move(0, 0.2*elapsedTime);
 		}
-		
-		
+			
 
 		// switch lower/upper tile
 		if (keyPressed(KeyEvent.VK_SPACE)) {
@@ -192,8 +192,10 @@ public class MapEditor extends Game {
 			jLevel.add("inventory", jInventory);
 			
 			String file = JOptionPane.showInputDialog("File name:");
+			Gson gson = new Gson();
 			try {
 				FileWriter f1 = new FileWriter(file); 
+				System.out.println(gson.toJson(jLevel));
 				f1.write(jLevel.toString());
 				f1.close();
 			} catch (IOException e) {

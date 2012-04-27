@@ -22,7 +22,6 @@ public class StoreManagerNPC extends NPC{
 		myStore = new ItemStore(this.getCharacter(), this.getCharacter().getGame());
 		dialogue = new SimpleDialogue("rsc/store/storeSpeech.txt");
 		State s = new TalkingState();
-		System.out.println("This is s: " + s);
 		this.setCurrentState(s);
 	}
 	

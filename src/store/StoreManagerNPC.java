@@ -6,6 +6,7 @@ import state.State;
 import state.TalkingState;
 
 import dialogue.AbstractDialogue.DialogueObject;
+import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue;
 
 import gameCharacter.GameCharacter;
@@ -35,7 +36,9 @@ public class StoreManagerNPC extends NPC{
 		myStore.render(g);
 	}
 	
-	public String getTalk(DialogueObject choice){
+	@Override
+	public String getTalk(AbstractDialogue dialogue)
+	{
 		if (!hasTalked){
 			hasTalked = true;
 			}
@@ -44,6 +47,8 @@ public class StoreManagerNPC extends NPC{
 //			}
 			return dialogue.getCurrentLine();
 	}
+	
+	
 	
 	public ItemStore getStore(){
 		return myStore;

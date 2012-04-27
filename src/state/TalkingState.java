@@ -16,4 +16,10 @@ public class TalkingState implements State
 	{
 		return "Talking";
 	}
+
+	@Override
+	public boolean wantsActive() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

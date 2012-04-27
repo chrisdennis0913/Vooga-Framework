@@ -56,15 +56,15 @@ public class ItemStore extends EventedWrapper<Item> {
         }
 		
 	}
-
-	public void initResources() {
-		price = item.get("price").getAsInt();
-		image = game.getImage(item.get("image").getAsString());
-		setImage(image);
-		setLocation(image, 10, 10);
-		list = new HashMap<String, Item>();
-
-	}
+//
+//	public void initResources() {
+//		price = item.get("price").getAsInt();
+//		image = game.getImage(item.get("image").getAsString());
+//		setImage(image);
+//		setLocation(image, 10, 10);
+//		list = new HashMap<String, Item>();
+//
+//	}
 
 	private void drawBoxes(Graphics2D g) {
 		g.setColor(Color.DARK_GRAY);
@@ -146,14 +146,14 @@ public class ItemStore extends EventedWrapper<Item> {
 	public Inventory getInventory(){
 		return myInventory;
 	}
-
-	 public int buy (Item item){
-	 int price = item.getPrice();
-	 if (game.keyPressed(KeyEvent.VK_ENTER)){
-	 character.getInventory().get("money");
-	 }
-	 return price;
-	
-	 }
+//
+//	 public int buy (Item item){
+//	 int price = item.getPrice();
+//	 if (game.keyPressed(KeyEvent.VK_ENTER)){
+//	 character.getInventory().get("money");
+//	 }
+//	 return price;
+//	
+//	 }
 
 }

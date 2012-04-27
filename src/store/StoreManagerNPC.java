@@ -83,5 +83,4 @@ public class StoreManagerNPC extends NPC{
 		return null;
 	}
 
-
 }

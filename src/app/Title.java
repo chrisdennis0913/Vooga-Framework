@@ -10,16 +10,21 @@ import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.Timer;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import utils.*;
 
 
-public class Title extends GameObject {
+public class Title extends GameObject implements Jsonable{
 
 
 	GameFont		font;
 
 	BufferedImage	title;
 	BufferedImage	arrow;
+	String titleImage;
 
 	int				option;
 
@@ -27,16 +32,17 @@ public class Title extends GameObject {
 	Timer			blinkTimer = new Timer(400);
 
 
-	public Title(GameEngine main) {
+	public Title(GameEngine main, String titleImage) {
 		super(main);
+		this.titleImage = titleImage;
 	}
 
 
 	public void initResources() {
-		title = getImage("Title.png", false);
-		arrow = getImage("Arrow.png");
+		title = getImage(titleImage, false);
+		arrow = getImage("rsc/title/Arrow.png");
 
-		font = fontManager.getFont(getImage("BitmapFont.png"));
+		font = fontManager.getFont(getImage("rsc/title/BitmapFont.png"));
 	}
 
 
@@ -118,14 +124,29 @@ public class Title extends GameObject {
 
 	public void render(Graphics2D g) {
 		g.drawImage(title, 0, 0, null);
-		font.drawString(g, "START", 325, 300);
-		font.drawString(g, "LOAD", 325, 320);
-		font.drawString(g, "END", 325, 340);
+		font.drawString(g, "START", 450, 300);
+		font.drawString(g, "LOAD", 450, 320);
+		font.drawString(g, "END", 450, 340);
 
 		if (!blink) {
-			g.drawImage(arrow, 309, 297+(option*20), null);
+			g.drawImage(arrow, 434, 297+(option*20), null);
 		}
 	}
+
+// code to make the first background in the level file
+	@Override
+	public JsonObject toJson() {
+		JsonObject json = new JsonObject();
+		json.add("background", new JsonPrimitive("rsc/title/Title.png"));
+		
+		return json;
+	}
+	
+//	public void main (String args[]) {
+//		this.toJson();
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(this.toJson()));
+//	}
 
 }
 

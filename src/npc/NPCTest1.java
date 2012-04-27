@@ -7,6 +7,7 @@ import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 import dialogue.SimpleDialogue;
+import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 import state.MovingAttackingState;
 
@@ -67,5 +68,6 @@ public class NPCTest1 extends NPC {
 		// TODO Auto-generated method stub
 		return new JsonObject();
 	}
+
 
 }

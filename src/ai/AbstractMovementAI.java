@@ -5,9 +5,10 @@ import gameCharacter.GameCharacter;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.RPGame;
+
 import com.google.gson.JsonElement;
 
-import app.RPGame;
 import controllers.MotionController;
 
 public abstract class AbstractMovementAI extends MotionController{

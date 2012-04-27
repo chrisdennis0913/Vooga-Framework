@@ -1,13 +1,13 @@
 package attacks;
 
+import gameCharacter.GameCharacter;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import com.golden.gamedev.object.Sprite;
-
-import gameCharacter.GameCharacter;
 import app.RPGame;
+
+import com.golden.gamedev.object.Sprite;
 
 public abstract class AbstractRangeAttack extends AbstractAttack{
 	

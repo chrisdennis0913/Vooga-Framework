@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import com.golden.gamedev.object.Sprite;
+
+import app.RPGame.Pausable;
 
 
 public class InventoryMenu extends Menu {
@@ -49,12 +52,21 @@ public class InventoryMenu extends Menu {
             case KeyEvent.VK_ENTER:
                 if (option == 0) {
                     // Back to main game screen.
-                    game.unPauseGameForInventory();
+                    game.unPauseGameFor(Pausable.INV);
                 }
                 else {
                     Item currentItem = optionsList.get(option - 1);
                     currentItem.use();
                     currentItem.removeWhenUsed(1);
+                }
+                optionsList = new ArrayList<Item>();
+                firstTime = true;
+                break;
+            case KeyEvent.VK_D:
+                if (option != 0) {
+                    Item currentItem = optionsList.get(option - 1);
+                    currentItem.drop();
+                    option = 0;
                 }
                 optionsList = new ArrayList<Item>();
                 firstTime = true;
@@ -79,13 +91,15 @@ public class InventoryMenu extends Menu {
 
     public void render (Graphics2D g) {
         g.drawImage(menuBackground, 0, 0, null);
-        font.drawString(g, "BACK TO GAME", 30, 20);
+        font.drawString(g, "BACK TO GAME", 80, 20);
         int count = 0;
         for (Item itm : inventory) {
-            font.drawString(g, itm.getName().toUpperCase(), 30, 40 + count * 20);
+            font.drawString(g, itm.getName().toUpperCase(), 90, 50 + count * 30);
             count++;
+            Sprite itemSprite = new Sprite(itm.getImage(), 44, 18 + count *30);
+            itemSprite.render(g);
             if (itm.isEquipped()) {
-                g.drawImage(emphasisBullet, 4, 17 + count * 20, null);
+                g.drawImage(emphasisBullet, 4, 17 + count * 30, null);
             }
             if (firstTime) optionsList.add(itm);
 
@@ -93,7 +107,7 @@ public class InventoryMenu extends Menu {
         firstTime = false;
 
         if (!blink) {
-            g.drawImage(cursor, 14, 17 + (option * 20), null);
+            g.drawImage(cursor, 25, 17 + (option * 30), null);
         }
     }
 

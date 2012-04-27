@@ -5,16 +5,28 @@
 	"player": {
 		"location": [100,100],
 		"directionsURL": "rsc/config/player_directions.json",
-		"actionsURL": "rsc/config/player_actions.json"
+		"actionsURL": "rsc/config/player_actions.json",
+		"playerInventory": {
+			"type": "game",
+			"items": [
+		   		{
+			    "name": "money",
+        		"location": [-40, -40],
+				"image": "rsc/items/money.png",
+				"quantity": 250,
+				"price": 1
+			}
+			]
+		}
 	},
 	"npcs": [
 		{
 			"location": [200, 200],
 			"name": "NPCTest1",
-			"directions": "rsc/config/player_directions.json",
+			"directions": "rsc/config/oldman_directions.json",
 			"movement" : {
-				"type" : "ScriptedMovementAI",
-				"actions" : [[0,800],[3,200]]
+				"type" : "SquareMovementAI",
+				"timeToTurn" : 300
 			}
 		},
 		{
@@ -31,7 +43,10 @@
 		{
 			"location": [250, 250],
 			"name": "TestEnemy",
-			"directions": "rsc/config/player_directions.json"
+			"directions": "rsc/config/goriya_directions.json",
+			"attacks":[
+				"shooting"
+			]
 		}
 	],
 	"inventory": {
@@ -40,21 +55,21 @@
 		{
 			"name": "sword",
 			"location": [380, 140],
-			"image": "rsc/items/sword.png",
+			"image": "rsc/items/sword.gif",
 			"quantity": 1,
 			"price": 250
 		},
 		{
 			"name": "bow",
-			"location": [280, 120],
-			"image": "rsc/items/bow.png",
+			"location": [450, 120],
+			"image": "rsc/items/bow.gif",
 			"quantity": 1,
 			"price": 450
 		},
 		{
 			"name": "money",
 			"location": [200, 120],
-			"image": "rsc/items/coin.gif",
+			"image": "rsc/items/money.png",
 			"quantity": 500,
 			"price": 1
 		}

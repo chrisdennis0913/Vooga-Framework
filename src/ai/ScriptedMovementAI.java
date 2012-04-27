@@ -1,13 +1,11 @@
 package ai;
 
-
 import gameCharacter.GameCharacter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import utils.JsonUtil;
-
 import app.RPGame;
 
 import com.golden.gamedev.object.Timer;

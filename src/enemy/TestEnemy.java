@@ -2,20 +2,11 @@ package enemy;
 
 import gameCharacter.Attackable;
 import gameCharacter.GameCharacter;
-
-import java.util.HashMap;
-
 import state.AttackingState;
-import state.State;
 import state.WalkingState;
-
-
-import com.golden.gamedev.Game;
-
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
 import app.RPGame;
-import attacks.AbstractAttack;
 import attacks.ShootingAttack;
 
 /**

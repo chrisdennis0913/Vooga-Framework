@@ -1,24 +1,22 @@
 package enemy;
 
+import gameCharacter.Attackable;
+import gameCharacter.CharacterDecorator;
+import gameCharacter.GameCharacter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import npc.NPC;
-import npc.NPCFactory;
-import npc.NPCTest1;
 
 import state.AttackingState;
 import state.State;
 import state.TalkingState;
 import state.WalkingState;
-import store.StoreManagerNPC;
 import app.RPGame;
 import attacks.AbstractAttack;
-import gameCharacter.Attackable;
-import gameCharacter.CharacterDecorator;
-import gameCharacter.GameCharacter;
+import counters.EnemyHealth;
 
-public abstract class AbstractEnemy extends CharacterDecorator implements Attackable{
+public abstract class AbstractEnemy extends CharacterDecorator implements
+		Attackable {
 
 	protected HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
 	public static ArrayList<EnemyFactory> enemyFactories = new ArrayList<EnemyFactory>();
@@ -34,22 +32,27 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		super(character);
 		character.setDecorator(this);
 	}
-	
-	static{
+
+	static {
 		enemyFactories.add(new TestEnemy.TestEnemyFactory());
 	}
 
 	public void initResources() {
-		//String json = JsonUtil.getJSON(configURL);
-		//initActions(json);
+		// String json = JsonUtil.getJSON(configURL);
+		// initActions(json);
 		initAttacks();
 		initAttackAI();
 		initMovementAI();
+		getCharacter().getCounters().add("health",
+				new EnemyHealth(getCharacter().getCounters(), 5));
 	}
 
 	protected abstract void initMovementAI();
+
 	protected abstract void initAttackAI();
+
 	protected abstract void initAttacks();
+
 	protected abstract void initActions(String json);
 
 	public void update(long elapsedTime) {
@@ -72,17 +75,19 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	@Override
 	public void addToHealth(int delta) {
 		character.getCounters().get("health").increase(delta);
-		if(character.getCounters().get("health").isEmpty())
+		if (character.getCounters().get("health").isEmpty())
 			alive = false;
 	}
-	
-	public static AbstractEnemy createEnemy(String enemyName, RPGame game, GameCharacter gameChar, String configURL){
 
-		for (EnemyFactory fac : enemyFactories){
+	public static AbstractEnemy createEnemy(String enemyName, RPGame game,
+			GameCharacter gameChar, String configURL) {
+
+		for (EnemyFactory fac : enemyFactories) {
 			if (fac.isThisType(enemyName))
-				return fac.constructEnemy(game,gameChar,configURL);
+				return fac.constructEnemy(game, gameChar, configURL);
 		}
 		throw new RuntimeException("Given name of NPC not recognized");
+
 	}
 
 	@Override

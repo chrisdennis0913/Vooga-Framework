@@ -12,7 +12,9 @@ import npc.NPC;
 import player.Player;
 import quest.Quest;
 import quest.QuestJournal;
+import quest.Task;
 import player.Projectile;
+import state.TalkingState;
 import store.ItemStore;
 import store.StoreManagerNPC;
 import utils.JsonUtil;
@@ -167,8 +169,18 @@ public class Level extends AbstractTileBackground implements Evented {
         levelStartTime = levelTimer.getTime();
     }
     
-    private Quest parseQuest(JsonElement jO, JsonObject level)
+    private Task[] parseQuest(JsonObject jO, JsonObject level)
     {
+    	JsonArray jArray = jO.getAsJsonArray("tasks");
+    	
+    	
+    	for (int i = 0; i<jArray.size(); i++)
+    	{
+    		JsonObject task = jArray.get(i).getAsJsonObject();
+    		String description = task.getAsJsonObject("name").getAsString();
+    		
+    		//Quest qu = new Quest(description);
+    	}
     	
     	return null;
     }
@@ -188,8 +200,21 @@ public class Level extends AbstractTileBackground implements Evented {
     		JsonObject quest = jArray.get(i).getAsJsonObject();
     		String description = quest.getAsJsonObject("name").getAsString();
     		
-    		//Quest qu = new Quest(description);
+    		ArrayList<Task> tasks = new ArrayList<Task>();
+    		
+    		JsonArray jArr = quest.getAsJsonArray("tasks");
+    		
+    		for (int k = 0; k < jArr.size(); k++)
+    		{
+    			tasks.add(Task.createTask(jArr.get(i).getAsString(), game, gC, jArr.get(i).getAsJsonObject()));
+    		}
+    		
+    		Task[] taskings = (Task[]) tasks.toArray();
+    		
+    		quests.add(Quest.createQuest(description, game, taskings, quest));
     	}
+    	
+    	myJournal.setQuests(quests);
     	
     	gC.setJournal(myJournal);
     }
@@ -491,6 +516,7 @@ public class Level extends AbstractTileBackground implements Evented {
 			NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
 					.get("directions").getAsString()), jNPC
 					.getAsJsonObject("movement"));
+			npc.setCurrentState(new TalkingState());
 
 			group.add(npc.getCharacter());
 

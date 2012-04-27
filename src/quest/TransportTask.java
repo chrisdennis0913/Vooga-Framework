@@ -1,10 +1,18 @@
 package quest;
 
+import npc.NPC;
+import app.RPGame;
+
+import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.object.SpriteGroup;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import enemy.AbstractEnemy;
+
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
+import inventory.ConcreteItem;
 import inventory.Inventory;
 import inventory.Item;
 
@@ -37,6 +45,40 @@ public class TransportTask extends Task
 	{
 		isComplete = inv.contains(item);
 		return isComplete;
+	}
+	
+	public static class DestroyTaskFactory extends TaskFactory
+	{
+		public boolean isThisType(String taskName)
+		{
+			return "Transport Task".equals(taskName);
+		}
+
+		public Task constructTask(RPGame game, GameCharacter gC, JsonObject jTask) 
+		{
+		SpriteGroup group = game.getField().getGroup("npcs");
+		
+		NPC npc = null;
+		
+		for (Sprite s: group.getSprites())
+		{
+			if (s instanceof GameCharacter)
+			{
+				String name = ((GameCharacter) s).getDecorator().getName();
+				
+				if (name.equals(jTask.getAsJsonObject("recipient")))
+				{
+					npc = (NPC) ((GameCharacter) s).getDecorator();
+				}
+			}
+		}
+		
+		if (npc == null)
+		{
+			throw new RuntimeException("NPC is not available");
+		}
+			return new TransportTask(gC, jTask.getAsString(), new ConcreteItem(game, jTask.getAsJsonObject("item")) ,npc);
+		}
 	}
 
 	public JsonObject getJsonAttributes() 

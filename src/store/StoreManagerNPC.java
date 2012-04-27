@@ -75,11 +75,17 @@ public class StoreManagerNPC extends NPC{
 			return npcName.equals("StoreManagerNPC");
 		}
 
-		public CharacterDecorator constructNPC(GameCharacter gameChar) {
+		//public CharacterDecorator constructNPC(GameCharacter gameChar) 
 
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
 
 			return new StoreManagerNPC(gameChar);
+		}
+
+		@Override
+		public CharacterDecorator constructNPC(GameCharacter gameChar) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 

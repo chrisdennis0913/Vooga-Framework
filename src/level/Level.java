@@ -39,7 +39,7 @@ public class Level extends AbstractTileBackground implements Evented {
 
     private static final long serialVersionUID = 1L;
 
-    private final String levelname;
+    private String levelname;
     private BaseIO baseio;
     private BaseLoader bsloader;
 
@@ -313,7 +313,7 @@ public class Level extends AbstractTileBackground implements Evented {
 	}
 
 	public void nextLevel(String next) {
-
+		this.levelname = next;
 	}
 
 	public void setStartText(String text) {

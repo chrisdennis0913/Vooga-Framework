@@ -1,1 +1,103 @@
-{"nextLevel":"rsc/savedmaps/level02.json","upperFilename":"rsc/level/map02.upr","lowerFilename":"rsc/level/map02.lwr","player":{"directionsURL":"rsc/config/player_directions.json","actionsURL":"rsc/config/player_direction.json"},"enemies":[{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]},{"location":[320,289],"name":"TestEnemy","directions":"rsc/config/enemy_directions.json","attacks":["shooting"]}],"npcs":[{"location":[193,384],"name":"NPCTest1","directions":"rsc/config/oldman_directions.json"}],"inventory":{"items":[{"name":"bow","location":[385,322],"image":"rsc/items/bow.png","quantity":"1","price":"450"}]}}
+{
+    "nextLevel": "rsc/savedmaps/level0001.json",
+    "upperFilename": "rsc/level/map01.upr",
+    "lowerFilename": "rsc/level/map01.lwr",
+    "player": {
+		"location": [100,100],
+		"directionsURL": "rsc/config/player_directions.json",
+		"actionsURL": "rsc/config/player_actions.json",
+		"playerInventory": {
+			"type": "game",
+			"items": [
+		   		{
+			    "name": "money",
+        		"location": [-40, -40],
+				"image": "rsc/items/money.png",
+				"quantity": 250,
+				"price": 1
+			}
+			]
+		}
+	},
+	"inventory": {
+		"type": "game",
+		"items": [
+		{
+			"name": "sword",
+			"location": [120, 200],
+			"image": "rsc/items/sword.gif",
+			"quantity": 1,
+			"price": 250
+		},
+		{
+			"name": "bow",
+			"location": [480, 60],
+			"image": "rsc/items/bow.gif",
+			"quantity": 1,
+			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [480, 640],
+			"image": "rsc/items/money.png",
+			"quantity": 500,
+			"price": 1
+		}
+		]
+	},
+    "npcs": [
+		{
+			"location": [480, 640],
+			"name": "StoreManagerNPC",
+			"directions": "rsc/config/store_directions.json",
+			"movement" : {
+				"type" : "SquareMovementAI",
+				"timeToTurn" : 500 
+			}
+		}
+    ],
+    "store": {
+		"type": "game",
+		"storeItems": [
+		{
+			"name": "sword",
+			"location": [680, 680],
+			"image": "rsc/items/sword.gif",
+			"quantity": 1,
+			"price": 250
+		},
+		{
+			"name": "bow",
+			"location": [680, 680],
+			"image": "rsc/items/bow.gif",
+			"quantity": 1,
+			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [680, 680],
+			"image": "rsc/items/money.png",
+			"quantity": 500,
+			"price": 1
+		}
+		]
+	},
+	"enemies": [
+		{
+			"location": [160, 500],
+			"name": "GuardEnemy",
+			"directions": "rsc/config/goriya_directions.json",
+			"attacks":[
+				"poisoning","shooting"
+			]
+		},
+		{
+			"location": [400, 400],
+			"name": "ArcherEnemy",
+			"directions": "rsc/config/goriya_directions.json",
+			"attacks":[
+				"shooting"
+			]
+		}
+	]
+}

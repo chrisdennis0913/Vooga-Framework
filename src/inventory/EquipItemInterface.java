@@ -17,4 +17,7 @@ public interface EquipItemInterface {
 
 
     boolean canBeEquipped ();
+    
+    void setEquippable(boolean equippable);
+    
 }

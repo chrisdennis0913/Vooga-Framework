@@ -1,0 +1,22 @@
+{
+	"frames": 7,
+	"delay": 125,
+	"directions": [
+	{
+		"direction": "DIR_DOWN",
+		"image": "demoGame/player/walk_down.png"
+	},
+	{
+		"direction": "DIR_UP",
+		"image": "demoGame/player/walk_up.png"
+	},
+	{
+		"direction": "DIR_RIGHT",
+		"image": "demoGame/player/walk_right.png"
+	},
+	{
+		"direction": "DIR_LEFT",
+		"image": "demoGame/player/walk_left.png"
+	}
+	]
+}

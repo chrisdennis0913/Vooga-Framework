@@ -1,0 +1,69 @@
+{
+	"walking": {
+		"up": [38],
+		"down": [40],
+		"left": [37],
+		"right": [39]
+	},
+	"attacking": {
+		"keys": [32],
+		"attacks": [
+			{
+			"type": "sword",
+			"directions": {
+				"frames": 6,
+				"delay": 60,
+				"directions": [
+					{
+						"direction": "DIR_DOWN",
+						"image": "demoGame/player/attack_down.png"
+					},
+					{
+						"direction": "DIR_UP",
+						"image": "demoGame/player/attack_up.png"
+					},
+					{
+						"direction": "DIR_RIGHT",
+						"image": "demoGame/player/attack_right.png"
+					},
+					{
+						"direction": "DIR_LEFT",
+						"image": "demoGame/player/attack_left.png"
+					}
+					]
+				}
+			},
+			{
+			"type": "bow",
+			"directions": {
+				"frames": 6,
+				"delay": 60,
+				"directions": [
+					{
+						"direction": "DIR_DOWN",
+						"image": "demoGame/player/attack_down.png"
+					},
+					{
+						"direction": "DIR_UP",
+						"image": "demoGame/player/attack_up.png"
+					},
+					{
+						"direction": "DIR_RIGHT",
+						"image": "demoGame/player/attack_right.png"
+					},
+					{
+						"direction": "DIR_LEFT",
+						"image": "demoGame/player/attack_left.png"
+					}
+					]
+				}
+			}
+		]
+	},
+	"talking": {
+		"keys": [10]
+	},
+	"grabbing": {
+		"keys": [10]
+	}
+}

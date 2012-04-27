@@ -15,7 +15,7 @@ import utils.Jsonable;
 import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-public abstract class NPC extends CharacterDecorator implements Jsonable{
+public abstract class NPC extends CharacterDecorator{
 	/**
 	 * Computer-generated serial ID number
 	 */

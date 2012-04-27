@@ -152,6 +152,7 @@ public class MapEditor extends Game {
 							JsonArray jLoc = new JsonArray();
 							jLoc.add(new JsonPrimitive(getMouseX()));
 							jLoc.add(new JsonPrimitive(getMouseY()));
+							
 							jItem.add("location", jLoc);
 							jItem.add("image", new JsonPrimitive("rsc/items/"+itemName+".png"));
 							jItem.add("quantity", new JsonPrimitive(JOptionPane.showInputDialog("Quantity:")));

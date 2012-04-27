@@ -239,7 +239,6 @@ public class MapEditor extends Game {
 				f1.write(jLevel.toString());
 				f1.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}   		
 			

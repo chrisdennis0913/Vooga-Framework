@@ -14,6 +14,13 @@ import com.google.gson.JsonObject;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
+/**
+ * Handles opening the store
+ * 
+ * @author zahavaalston
+ *
+ */
+
 public class StoreManagerNPC extends NPC{
 	ItemStore myStore;
 	SimpleDialogue dialogue;
@@ -31,6 +38,9 @@ public class StoreManagerNPC extends NPC{
 		super.update(elapsed);
 	}
 	
+	/* (non-Javadoc)
+	 * @see gameCharacter.CharacterDecorator#render(java.awt.Graphics2D)
+	 */
 	public void render(Graphics2D g){
 		super.render(g);
 	}

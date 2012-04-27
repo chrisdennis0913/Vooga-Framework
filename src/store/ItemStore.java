@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.golden.gamedev.object.Sprite;
@@ -43,10 +44,11 @@ public class ItemStore extends EventedWrapper<Item> {
 	}
 	
 	public void update(long elapsedTime) {
-		if (game.keyPressed(KeyEvent.VK_S)) {
+		if (game.keyPressed(KeyEvent.VK_Q)) {
 			game.unPauseGameFor(Pausable.STORE);
 			storeOpen = false;
 		}
+		
 	}
 
 	public void initResources() {

@@ -153,5 +153,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	 * of the enemy
 	 * @return JsonObject with subclass-specific attributes
 	 */
-	public abstract JsonObject getJsonAttributes();
+	public JsonObject getJsonAttributes(){
+		return new JsonObject();
+	}
 }

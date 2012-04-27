@@ -1,5 +1,11 @@
 package store;
 
+/**
+ * The interface allowing items to be bought and sold
+ * 
+ * @author zahavaalston
+ *
+ */
 public interface Sellable {
 	
 	public void setPrice(int price);

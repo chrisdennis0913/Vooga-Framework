@@ -1,103 +1,117 @@
 package level;
 
 import inventory.Item;
-
 import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import app.RPGame;
 import evented.Evented;
 
+
 /**
- * Keeps track of quantity of Items Given to every game character
+ * Keeps track of the variety of Items kept and equipped by each game level
+ * Different from regular inventory. Takes game in constructor instead of the
+ * game character and also does not extend the eventedWrapper
  * 
  * @author chrisdennis0913
  */
 public class LevelInventory<T extends Item> implements Evented, Iterable<T> {
-	protected HashMap<String, T> list = new HashMap<String, T>();
-	private RPGame game;
+    protected HashMap<String, T> list = new HashMap<String, T>();
+    private RPGame game;
 
-	public LevelInventory(RPGame game) {
-		this.game = game;
-	}
 
-	public RPGame getGame() {
-		return game;
-	}
+    public LevelInventory (RPGame game) {
+        this.game = game;
+    }
 
-	public void add(String itemName, T item) {
-		list.put(itemName, item);
-	}
 
-	@SuppressWarnings("unchecked")
-	public void add(Item itm) {
-		if (!contains(itm))
-			add(itm.getName(), (T) itm);
-	}
+    public RPGame getGame () {
+        return game;
+    }
 
-	public void add(Item itm, int quantity) {
-		add(itm);
-		itm.add(quantity);
-	}
 
-	public void remove(String itemName) {
-		if (contains(itemName))
-			list.remove(itemName);
-	}
+    public void add (String itemName, T item) {
+        list.put(itemName, item);
+    }
 
-	public void remove(Item itm) {
-		remove(itm.getName());
-	}
 
-	public void remove(Item itm, int quantity) {
-		itm.remove(quantity);
-	}
+    @SuppressWarnings("unchecked")
+    public void add (Item itm) {
+        if (!contains(itm)) add(itm.getName(), (T) itm);
+    }
 
-	public boolean contains(Item itm) {
-		return contains(itm.getName());
-	}
 
-	public Integer getCount(Item itm) {
-		return itm.getQuantity();
-	}
+    public void add (Item itm, int quantity) {
+        add(itm);
+        itm.add(quantity);
+    }
 
-	public T get(String itemName) {
-		itemName = itemName.toLowerCase();
-		return list.get(itemName);
-	}
 
-	public boolean contains(String itemName) {
-		return list.containsKey(itemName);
-	}
+    public void remove (String itemName) {
+        if (contains(itemName)) list.remove(itemName);
+    }
 
-	public int getSize() {
-		return list.size();
-	}
 
-	public boolean isEmpty() {
-		return list.isEmpty();
-	}
+    public void remove (Item itm) {
+        remove(itm.getName());
+    }
 
-	public Iterator<T> iterator() {
-		return list.values().iterator();
-	}
 
-	public void initResources() {
-	}
+    public void remove (Item itm, int quantity) {
+        itm.remove(quantity);
+    }
 
-	public void render(Graphics2D g) {
-		if (!list.isEmpty())
-			for (Item itm : list.values()) {
-				itm.render(g);
-			}
-	}
 
-	public void update(long elapsed) {
-		if (!list.isEmpty())
-			for (Item itm : list.values()) {
-				itm.update(elapsed);
-			}
-	}
+    public boolean contains (Item itm) {
+        return contains(itm.getName());
+    }
+
+
+    public Integer getCount (Item itm) {
+        return itm.getQuantity();
+    }
+
+
+    public T get (String itemName) {
+        itemName = itemName.toLowerCase();
+        return list.get(itemName);
+    }
+
+
+    public boolean contains (String itemName) {
+        return list.containsKey(itemName);
+    }
+
+
+    public int getSize () {
+        return list.size();
+    }
+
+
+    public boolean isEmpty () {
+        return list.isEmpty();
+    }
+
+
+    public Iterator<T> iterator () {
+        return list.values().iterator();
+    }
+
+
+    public void initResources () {}
+
+
+    public void render (Graphics2D g) {
+        if (!list.isEmpty()) for (Item itm : list.values()) {
+            itm.render(g);
+        }
+    }
+
+
+    public void update (long elapsed) {
+        if (!list.isEmpty()) for (Item itm : list.values()) {
+            itm.update(elapsed);
+        }
+    }
 
 }

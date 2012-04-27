@@ -2,7 +2,6 @@ package inventory;
 
 import java.awt.Graphics2D;
 import java.util.HashMap;
-
 import app.RPGame.Pausable;
 import menu.InventoryMenu;
 import evented.EventedWrapper;
@@ -10,7 +9,7 @@ import gameCharacter.GameCharacter;
 
 
 /**
- * Keeps track of quantity of Items Given to every game character
+ * Keeps track of the variety of Items kept and equipped by each game character
  * 
  * @author chrisdennis0913
  */
@@ -75,9 +74,12 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         }
     }
 
-    public void removeEquipped(){
+
+    public void removeEquipped () {
         equippedItem = null;
     }
+
+
     public void removeEquipped (Item itm) {
         if (equippedItem == itm) {
             equippedItem = null;
@@ -113,10 +115,10 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         if (character.getGame().isPausedFor(Pausable.INV)) invMenu.render(g);
     }
 
+
     @Override
     public void update (long elapsed) {
-        if (character.getGame().keyPressed(java.awt.event.KeyEvent.VK_I)) 
-        {
+        if (character.getGame().keyPressed(java.awt.event.KeyEvent.VK_I)) {
             character.getGame().pauseGameFor(Pausable.INV);
             invMenu.updateInventory(this);
         }

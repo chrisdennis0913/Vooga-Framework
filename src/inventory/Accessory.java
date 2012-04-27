@@ -4,7 +4,7 @@ public interface Accessory {
     /**
      * Interface for items that attach to the hero and contribute to his stats.
      * Accessories require variables such as
-     * "Name, gifName, accessory, statToChange, valueOfChange"
+     * Name, positionRelativeToPlayer, statToChange, valueOfChange
      * 
      * @author Chris Dennis
      */

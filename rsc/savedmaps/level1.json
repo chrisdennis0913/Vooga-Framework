@@ -3,7 +3,7 @@
 	"upperFilename": "rsc/level/map00.upr",
 	"lowerFilename": "rsc/level/map00.lwr",
 	"player": {
-		"location": [100,100],
+		"location": [200,100],
 		"directionsURL": "rsc/config/player_directions.json",
 		"actionsURL": "rsc/config/player_actions.json",
 		"playerInventory": {
@@ -61,17 +61,17 @@
 		},
 		{
 			"name": "bow",
-			"location": [450, 120],
+			"location": [100, 120],
 			"image": "rsc/items/bow.gif",
 			"quantity": 1,
 			"price": 450
 		},
 		{
-			"name": "money",
-			"location": [200, 120],
-			"image": "rsc/items/money.png",
-			"quantity": 500,
-			"price": 1
+			"name": "superSwordAccessory",
+			"location": [200, 200],
+			"image": "demoGame/items/sword.png",
+			"quantity": 1,
+			"price": 950
 		}
 		]
 	},

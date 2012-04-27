@@ -1,8 +1,6 @@
-package demoGame;
+package inventory;
 
-import inventory.ConcreteItem;
-import inventory.Inventory;
-import inventory.Item;
+import java.awt.Graphics2D;
 import app.RPGame;
 import com.google.gson.JsonObject;
 import evented.EventedWrapper;
@@ -25,7 +23,6 @@ public class SuperAccessory extends ConcreteItem {
 
     public SuperAccessory (RPGame game, JsonObject item) {
         super(game, item);
-        System.out.println("calling this method");
         initMyResources();
     }
 
@@ -42,6 +39,16 @@ public class SuperAccessory extends ConcreteItem {
         relX = 0;
         relY = 0;
         timesToHeal = 5;
+    }
+
+
+    public void render (Graphics2D g) {
+        super.render(g);
+        if (!isEquipped()) return;
+        setActive(true);
+        setLayer(10);
+        setLocation(game.getPlayer().getCharacter().getX() + relX,
+                             game.getPlayer().getCharacter().getY() + relY);
     }
 
 

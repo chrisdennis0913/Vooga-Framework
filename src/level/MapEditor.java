@@ -219,14 +219,14 @@ public class MapEditor extends Game {
 			String lwrLevel = JOptionPane.showInputDialog("Lower Layer:");
 			String uprLevel = JOptionPane.showInputDialog("Upper Layer:");
 			
-			FileUtil.fileWrite(lowerTile, bsIO.setFile(uprLevel));
-			FileUtil.fileWrite(upperTile, bsIO.setFile(lwrLevel));
+			FileUtil.fileWrite(lowerTile, bsIO.setFile("rsc/level/"+uprLevel+".upr"));
+			FileUtil.fileWrite(upperTile, bsIO.setFile("rsc/level/"+lwrLevel+".lwr"));
 			
 			String nextLevel = JOptionPane.showInputDialog("Next file name:");
 			jLevel.add("nextLevel", new JsonPrimitive("rsc/savedmaps/"+nextLevel+".json"));
 			
-			jLevel.add("upperFilename", new JsonPrimitive("rsc/level/map00.upr"));
-			jLevel.add("lowerFilename", new JsonPrimitive("rsc/level/map00.lwr"));
+			jLevel.add("upperFilename", new JsonPrimitive("rsc/level/"+uprLevel+".upr"));
+			jLevel.add("lowerFilename", new JsonPrimitive("rsc/level/"+lwrLevel+".lwr"));
 			
 			jLevel.add("player", jPlayer);
 			jLevel.add("enemies", jEnemies);

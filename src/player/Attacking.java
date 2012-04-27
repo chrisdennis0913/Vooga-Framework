@@ -76,6 +76,15 @@ public class Attacking extends ActionDecorator {
 		return false;
 	}
 
+	public boolean isProjectile() {
+		for (ActionDecorator attack : attacks) {
+			StdAttack attk = (StdAttack) attack;
+			if (attk.isProjectile() && attack.isEnabled())
+				return true;
+		}
+		return false;
+	}
+	
 	public void update(long elapsed) {
 		if (isEnabled()) {
 			super.update(elapsed);
@@ -89,6 +98,11 @@ public class Attacking extends ActionDecorator {
 					timer.setActive(true);
 					character.stop();
 					setActiveDirection(character.getCurrentDirection());
+					
+					if (isProjectile()) {
+						new Projectile(getWrapper().getCharacter());
+					}
+					
 					getWrapper().get("walking").setEnabled(false, true);
 				}
 			} else if (!getWrapper().get("walking").isEnabled())

@@ -1,7 +1,5 @@
 package enemy;
 
-
-
 import gameCharacter.GameCharacter;
 import state.MovingAttackingState;
 import ai.GreedyPathFindingAI;

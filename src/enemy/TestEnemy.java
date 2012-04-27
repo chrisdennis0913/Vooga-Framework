@@ -1,26 +1,12 @@
 package enemy;
 
-
-
-import gameCharacter.Attackable;
 import gameCharacter.GameCharacter;
-
-import java.util.HashMap;
-
 import state.MovingAttackingState;
-import state.State;
-
-import com.golden.gamedev.Game;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
-
 import app.RPGame;
-import attacks.AbstractAttack;
-import attacks.ShootingAttack;
+
+import com.google.gson.JsonObject;
 
 /**
  * GameCharacter decorated with attacks and actions.

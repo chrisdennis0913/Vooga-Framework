@@ -1,14 +1,15 @@
 package ai;
 
+import gameCharacter.GameCharacter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.golden.gamedev.object.Timer;
-
 import utils.Location;
-import gameCharacter.GameCharacter;
 import app.RPGame;
+
+import com.golden.gamedev.object.Timer;
 
 /**
  * Path finder that chooses and executes the action

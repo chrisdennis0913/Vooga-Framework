@@ -12,11 +12,7 @@ import counters.EnemyHealth;
 
 import state.State;
 
-import state.MovingAttackingState;
-import utils.JsonUtil;
 import utils.Jsonable;
-import ai.GreedyPathFindingAI;
-import ai.SimpleAttackAI;
 
 import app.RPGame;
 import attacks.AbstractAttack;

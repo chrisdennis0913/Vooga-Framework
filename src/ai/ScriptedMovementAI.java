@@ -1,9 +1,9 @@
 package ai;
 
-import com.golden.gamedev.object.Timer;
-
 import gameCharacter.GameCharacter;
 import app.RPGame;
+
+import com.golden.gamedev.object.Timer;
 
 public class ScriptedMovementAI extends AbstractMovementAI{
 	

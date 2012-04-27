@@ -49,7 +49,7 @@ public class Talking extends ActionDecorator {
 	public void update(long elapsed) {
 		super.update(elapsed);
 
-		if (isEnabled()) {
+		if (isEnabled() && getNPC().getCurrentState().getStatus() == "Talking") {
 			int status = keys.checkKeys();
 
 			if (status != -1) {;

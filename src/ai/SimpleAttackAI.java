@@ -1,5 +1,6 @@
 package ai;
 
+import enemy.AbstractEnemy;
 import enemy.TestEnemy;
 import app.RPGame;
 import attacks.AbstractAttack;
@@ -7,7 +8,7 @@ import attacks.AbstractAttack;
 
 public class SimpleAttackAI extends AbstractAttackAI{
 
-	public SimpleAttackAI(RPGame game, TestEnemy character) {
+	public SimpleAttackAI(RPGame game, AbstractEnemy character) {
 		super(game, character);
 	}
 

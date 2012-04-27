@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 
 public class RPGame extends GameObject {
 
-	private final String gameURL = "rsc/config/game.json";
+	static String gameURL = "rsc/config/game.json";
 
 	public PlayField field = new PlayField();
 

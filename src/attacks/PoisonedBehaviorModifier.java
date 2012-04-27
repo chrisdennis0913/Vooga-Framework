@@ -1,4 +1,5 @@
-package enemy;
+package attacks;
+
 
 import counters.Counter;
 import app.RPGame;

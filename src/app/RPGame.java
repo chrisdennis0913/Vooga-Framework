@@ -6,11 +6,12 @@ import java.awt.Graphics2D;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-
 import level.Level;
 import player.Player;
 import quest.Quest;
 import quest.QuestGiver;
+import quest.QuestJournal;
+import store.StoreManagerNPC;
 import utils.JsonUtil;
 
 import com.golden.gamedev.GameEngine;
@@ -31,6 +32,10 @@ public class RPGame extends GameObject {
 	protected Level level;
 
 	String lower, upper;
+	boolean pausedForInventory = false;
+	boolean pausedForStore = false;
+	private StoreManagerNPC manager;
+
 
 	public RPGame(GameEngine parent, String configURL) {
 		super(parent);
@@ -41,7 +46,8 @@ public class RPGame extends GameObject {
 		JsonObject gameJson = JsonUtil.getJSON(gameURL);
 		
 		level = new Level(bsLoader, bsIO, this, gameJson.get("level").getAsString());
-
+		manager = new StoreManagerNPC(player.getCharacter());
+		
 		field.setComparator(new Comparator<Sprite>() {
 			public int compare(Sprite o1, Sprite o2) {
 				if (o1 instanceof Item)
@@ -61,12 +67,18 @@ public class RPGame extends GameObject {
 	      {
 	            player.getCharacter().getInventory().render(g);
 	            return;
-	       }
+	            }
 	      if (isPausedFor(Pausable.JOURNAL))
 	      {
 	    	  player.getCharacter().getJournal().render(g);
 	    	  return;
 	      }
+	      if (isPausedFor(Pausable.STORE))
+	      {
+	    	  manager.getStore().render(g);
+	    	  return;
+	      }
+
 	}
 
 	public void update(long elapsed) 
@@ -75,8 +87,15 @@ public class RPGame extends GameObject {
 	    {
 	        player.getCharacter().getInventory().update(elapsed);
 	        return;
-	    }
+	        }
+	    if (isPausedFor(Pausable.STORE))
+	    {
+	        manager.getStore().update(elapsed);
+	        return;
+	        }
+
 	    player.getCharacter().getJournal().update(elapsed);
+
 	    
 		field.update(elapsed);
 		player.update(elapsed);

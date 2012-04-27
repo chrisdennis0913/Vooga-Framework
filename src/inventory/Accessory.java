@@ -31,32 +31,4 @@ public interface Accessory {
 
 
     int[] getRelPosition ();
-//    public void render (Graphics2D g) {
-//        if (!showsOnScreen) return;
-//        mySprite.setActive(true);
-//        mySprite.setLayer(10);
-//        mySprite.setLocation(game.getPlayer().getCharacter().getX() + relX,
-//                             game.getPlayer().getCharacter().getY() + relY);
-//        mySprite.render(g);
-//    }
-//
-//
-//    public void equip () {
-//        wrapper.getCharacter().getInventory().equipAcc(this);
-//        wrapper.getCharacter().getCounters().get(statisticalCategory).boostTotal(statChange);
-//        wrapper.getCharacter().getCounters().get(statisticalCategory).decrease(1);
-//        wrapper.getCharacter().getCounters().get(statisticalCategory).increase(statChange + 1);
-//    }
-//
-//
-//    public void unequip () {
-//        wrapper.getCharacter().getInventory().unEquipAcc(this);
-//        wrapper.getCharacter().getCounters().get(statisticalCategory).boostTotal(-statChange);
-//        wrapper.getCharacter().getCounters().get("health").decrease(statChange);
-//    }
-//
-//
-//    public boolean isEquipped () {
-//        return wrapper.getCharacter().getInventory().isEquipped(this);
-//    }
 }

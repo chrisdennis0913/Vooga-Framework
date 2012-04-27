@@ -16,7 +16,7 @@ public abstract class AbstractPathFindingAI extends AbstractMovementAI {
 
 	public static final int TILE_WIDTH = 10;
 	public static final int TILE_HEIGHT = 10;
-	public static final int CALCULATION_INTERVAL = 100;
+	public static final int CALCULATION_INTERVAL = 50;
 
 	protected Player player;
 	protected Timer calcInterval;

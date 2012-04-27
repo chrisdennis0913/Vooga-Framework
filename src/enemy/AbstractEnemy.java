@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import state.State;
+import state.StateManager;
 import utils.Jsonable;
 import app.RPGame;
 import attacks.AbstractAttack;
@@ -19,6 +20,12 @@ import com.google.gson.JsonPrimitive;
 
 import counters.EnemyHealth;
 
+/**
+ * GameCharacter decorated with attacks and actions.
+ * Can use pluggable AI algorithms to behave automatically.
+ * @author jameshong
+ *
+ */
 public abstract class AbstractEnemy extends CharacterDecorator implements Attackable, Jsonable{
 
 	protected HashMap<String, AbstractAttack> attacks = new HashMap<String, AbstractAttack>();
@@ -26,7 +33,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	private boolean alive = true;
 	protected RPGame game;
 	
-	private State currentState;
+	private StateManager states;
 	protected int moneyValue;
 	private String name;
 
@@ -34,6 +41,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		super(character);
 		this.game = game;
 		this.name = name;
+		this.states = new StateManager();
 		initAttacks(jEnemy);
 		character.setDecorator(this);
 	}
@@ -47,7 +55,8 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 	
 	static{
-		enemyFactories.add(new TestEnemy.TestEnemyFactory());
+		enemyFactories.add(new GuardEnemy.GuardEnemyFactory());
+		enemyFactories.add(new ArcherEnemy.ArcherEnemyFactory());
 	}
 
 	public void initResources() {
@@ -72,15 +81,19 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 
 	public void update(long elapsedTime) {
-		currentState.update(elapsedTime, this);
-	}
-
-	public HashMap<String, AbstractAttack> getAttacks() {
-		return attacks;
+		states.update(elapsedTime, this);
 	}
 
 	public void setCurrentState(State s) {
-		currentState = s;
+		states.setState(s);
+	}
+	
+	public void addState(State s){
+		states.addState(s);
+	}
+	
+	public HashMap<String, AbstractAttack> getAttacks() {
+		return attacks;
 	}
 
 	@Override
@@ -140,5 +153,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	 * of the enemy
 	 * @return JsonObject with subclass-specific attributes
 	 */
-	public abstract JsonObject getJsonAttributes();
+	public JsonObject getJsonAttributes(){
+		return new JsonObject();
+	}
 }

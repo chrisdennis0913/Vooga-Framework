@@ -42,7 +42,15 @@
 	"enemies": [
 		{
 			"location": [250, 250],
-			"name": "TestEnemy",
+			"name": "GuardEnemy",
+			"directions": "rsc/config/goriya_directions.json",
+			"attacks":[
+				"shooting"
+			]
+		},
+		{
+			"location": [400, 400],
+			"name": "ArcherEnemy",
 			"directions": "rsc/config/goriya_directions.json",
 			"attacks":[
 				"shooting"

@@ -157,7 +157,6 @@ public class Level extends AbstractTileBackground implements Evented {
     private void setPlayer (JsonObject level) {
         JsonObject jPlayer = level.getAsJsonObject("player");
         JsonArray jLocation = jPlayer.getAsJsonArray("location");
-
         SpriteGroup group = new SpriteGroup("player");
         int[] location =
             new int[] {
@@ -172,31 +171,44 @@ public class Level extends AbstractTileBackground implements Evented {
                                                 .getAsString()),
                        jPlayer.get("actionsURL").getAsString());
 
+        JsonObject inventory = jPlayer.getAsJsonObject("playerInventory");
+        JsonArray items = inventory.getAsJsonArray("items");
+
+        for (int i = 0; i < items.size(); i++) {
+            JsonObject it = items.get(i).getAsJsonObject();
+            Item item = null;
+            item = new ConcreteItem(game, it);
+            if (it.get("name").getAsString().contains("money")) {
+                item.setEquippable(false);
+            }
+            player.getCharacter().getInventory().add(item, item.getQuantity());
+        }
+
         game.setPlayer(player);
         group.add(player.getCharacter());
         game.getField().addGroup(group);
     }
 
 
-    private void setItems(JsonObject level) {
-		JsonObject inventory = level.getAsJsonObject("inventory");
-		JsonArray items = inventory.getAsJsonArray("items");
-		SpriteGroup group = new SpriteGroup("items");
+    private void setItems (JsonObject level) {
+        JsonObject inventory = level.getAsJsonObject("inventory");
+        JsonArray items = inventory.getAsJsonArray("items");
+        SpriteGroup group = new SpriteGroup("items");
 
-		for (int i = 0; i < items.size(); i++) {
-			JsonObject it = items.get(i).getAsJsonObject();
-			Item item = null;
-			item = new ConcreteItem(game, it);
-			if (it.get("name").getAsString().contains("money")){
-			    item.setEquippable(false);
-			}
-			group.add(item);
-		}
-		game.getField().addGroup(group);
-	}
+        for (int i = 0; i < items.size(); i++) {
+            JsonObject it = items.get(i).getAsJsonObject();
+            Item item = null;
+            item = new ConcreteItem(game, it);
+            if (it.get("name").getAsString().contains("money")) {
+                item.setEquippable(false);
+            }
+            group.add(item);
+        }
+        game.getField().addGroup(group);
+    }
 
 
-    private void setNpcs(JsonObject level) {
+    private void setNpcs (JsonObject level) {
         JsonArray npcs = level.getAsJsonArray("npcs");
         SpriteGroup group = new SpriteGroup("npcs");
 
@@ -204,11 +216,17 @@ public class Level extends AbstractTileBackground implements Evented {
             JsonObject jNPC = npcs.get(i).getAsJsonObject();
             JsonArray jLocation = jNPC.get("location").getAsJsonArray();
 
-            Location loc = new Location(new int[] {
-                    jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
+            Location loc =
+                new Location(new int[] {
+                        jLocation.get(0).getAsInt(),
+                        jLocation.get(1).getAsInt() });
             String npcName = jNPC.get("name").getAsString();
-            NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
-                    .get("directions").getAsString()));
+            NPC npc =
+                NPC.createNPC(npcName,
+                              new GameCharacter(game,
+                                                loc,
+                                                jNPC.get("directions")
+                                                    .getAsString()));
             group.add(npc.getCharacter());
 
         }

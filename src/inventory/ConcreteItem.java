@@ -94,7 +94,9 @@ public class ConcreteItem extends Item {
                     .add(this);
         setLocation(getWrapper().getCharacter().getX(),
                     getWrapper().getCharacter().getY());
+        getWrapper().getCharacter().getGame().getField().getGroup("items").add(this);
         setActive(true);
+        
     }
 
 

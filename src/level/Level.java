@@ -3,11 +3,10 @@ package level;
 import gameCharacter.GameCharacter;
 import inventory.ConcreteItem;
 import inventory.Item;
-
+import inventory.SuperAccessory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
-
 import npc.NPC;
 import npc.NPCTest1;
 import player.Player;
@@ -15,12 +14,12 @@ import store.ItemStore;
 import utils.JsonUtil;
 import utils.Location;
 import app.RPGame;
+import collisions.AutomatedCharCollision;
 import collisions.BoundaryCollision;
 import collisions.EnemyCollision;
 import collisions.ItemCollision;
 import collisions.NPCCollision;
 import collisions.SceneryCollision;
-
 import com.golden.gamedev.engine.BaseIO;
 import com.golden.gamedev.engine.BaseLoader;
 import com.golden.gamedev.engine.timer.SystemTimer;
@@ -32,7 +31,6 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import enemy.AbstractEnemy;
 import enemy.TestEnemy;
 import evented.Evented;
@@ -171,6 +169,7 @@ public class Level extends AbstractTileBackground implements Evented {
 			group.add(item);
 			System.out.println("Added concrete item to sprite group");
 		}
+//		Item item = new SuperAccessory(game);
 		game.getField().addGroup(group);
 	}
 

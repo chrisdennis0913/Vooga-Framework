@@ -56,12 +56,6 @@ public class LevelEditor extends Game {
 		}
 		if (keyDown(KeyEvent.VK_DOWN)) {
 			map.move(0, 0.2*elapsedTime);
-			String att1;
-			att1 = JOptionPane.showInputDialog("Attribute1:");
-			String att2;
-			att2 = JOptionPane.showInputDialog("Attribute2:");
-			System.exit(0);
-			System.out.println(att1 + att2);
 		}
 		
 		

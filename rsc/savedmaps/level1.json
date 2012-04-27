@@ -1,9 +1,9 @@
 {
-	"nextLevel": "rsc/savedmaps/level1.json",	
-	"upperFilename": "rsc/level/map00.upr",
-	"lowerFilename": "rsc/level/map00.lwr",
-	"player": {
-		"location": [200,100],
+    "nextLevel": "rsc/savedmaps/level1.json",
+    "upperFilename": "rsc/level/upper.upr",
+    "lowerFilename": "rsc/level/lower.lwr",
+    "player": {
+		"location": [100,100],
 		"directionsURL": "rsc/config/player_directions.json",
 		"actionsURL": "rsc/config/player_actions.json",
 		"playerInventory": {
@@ -19,18 +19,9 @@
 			]
 		}
 	},
-	"npcs": [
+    "npcs": [
 		{
-			"location": [200, 200],
-			"name": "NPCTest1",
-			"directions": "rsc/config/oldman_directions.json",
-			"movement" : {
-				"type" : "SquareMovementAI",
-				"timeToTurn" : 300
-			}
-		},
-		{
-			"location": [500, 400],
+			"location": [480, 640],
 			"name": "StoreManagerNPC",
 			"directions": "rsc/config/store_directions.json",
 			"movement" : {
@@ -38,10 +29,36 @@
 				"timeToTurn" : 500 
 			}
 		}
-	],
+    ],
+    "store": {
+		"type": "game",
+		"storeItems": [
+		{
+			"name": "sword",
+			"location": [120, 200],
+			"image": "rsc/items/sword.png",
+			"quantity": 1,
+			"price": 250
+		},
+		{
+			"name": "bow",
+			"location": [280, 120],
+			"image": "rsc/items/bow.png",
+			"quantity": 1,
+			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [200, 120],
+			"image": "rsc/items/coin.gif",
+			"quantity": 500,
+			"price": 1
+		}
+		]
+	},
 	"enemies": [
 		{
-			"location": [250, 250],
+			"location": [160, 500],
 			"name": "GuardEnemy",
 			"directions": "rsc/config/goriya_directions.json",
 			"attacks":[
@@ -69,41 +86,15 @@
 		},
 		{
 			"name": "bow",
-			"location": [100, 120],
+			"location": [450, 120],
 			"image": "rsc/items/bow.gif",
-			"quantity": 1,
-			"price": 450
-		},
-		{
-			"name": "superSwordAccessory",
-			"location": [200, 200],
-			"image": "demoGame/items/sword.png",
-			"quantity": 1,
-			"price": 950
-		}
-		]
-	},
-	"store": {
-		"type": "game",
-		"storeItems": [
-		{
-			"name": "sword",
-			"location": [380, 140],
-			"image": "rsc/items/sword.png",
-			"quantity": 1,
-			"price": 250
-		},
-		{
-			"name": "bow",
-			"location": [280, 120],
-			"image": "rsc/items/bow.png",
 			"quantity": 1,
 			"price": 450
 		},
 		{
 			"name": "money",
 			"location": [200, 120],
-			"image": "rsc/items/coin.gif",
+			"image": "rsc/items/money.png",
 			"quantity": 500,
 			"price": 1
 		}

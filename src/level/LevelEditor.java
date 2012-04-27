@@ -2,29 +2,26 @@ package level;
 
 
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import com.golden.gamedev.*;
-import com.golden.gamedev.object.*;
-import com.golden.gamedev.object.background.*;
-import com.golden.gamedev.util.*;
+import com.golden.gamedev.Game;
+import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.util.FileUtil;
 
 
 /**
  * Arrow key	: navigate
  * Space		: switch lower/upper tile
- * Page down	: next tile
- * Page up		: prev tile
- * End			: fast next tile
- * Home			: fast prev tile
+ * D			: next tile
+ * A			: prev tile
+ * W			: fast next tile
+ * S			: fast prev tile
  * Right click	: select tile
  * Click		: put tile
  * Ctrl + S		: save
@@ -73,12 +70,12 @@ public class LevelEditor extends Game {
 		}
 
 		// next/prev tile
-		if (keyPressed(KeyEvent.VK_PAGE_DOWN) || keyDown(KeyEvent.VK_END)) {
+		if (keyPressed(KeyEvent.VK_A) || keyDown(KeyEvent.VK_Q)) {
 			if (++tilenum > getChipsetLength()) {
 				tilenum = getChipsetLength();
 			}
 		}
-		if (keyPressed(KeyEvent.VK_PAGE_UP) || keyDown(KeyEvent.VK_HOME)) {
+		if (keyPressed(KeyEvent.VK_D) || keyDown(KeyEvent.VK_E)) {
 			if (--tilenum < 0) {
 				tilenum = 0;
 			}
@@ -112,9 +109,11 @@ public class LevelEditor extends Game {
 				if (upperTile[j] == null) upperTile[j] = "";
 				upperTile[j] += String.valueOf(map.layer2[i][j])+" ";
 			}
-			FileUtil.fileWrite(lowerTile, bsIO.setFile("map02.lwr"));
-			FileUtil.fileWrite(upperTile, bsIO.setFile("map02.upr"));
+			FileUtil.fileWrite(lowerTile, bsIO.setFile("map01.lwr"));
+			FileUtil.fileWrite(upperTile, bsIO.setFile("map01.upr"));
 		}
+		
+		
 	}
 
 

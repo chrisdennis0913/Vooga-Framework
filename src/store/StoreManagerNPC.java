@@ -14,14 +14,18 @@ import com.google.gson.JsonObject;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-<<<<<<< HEAD
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import npc.NPC;
 import npc.NPCFactory;
 
-=======
->>>>>>> 97d7a60b6fcbd986b6f8c53d01355e84e44a694f
+/**
+ * Handles opening the store
+ * 
+ * @author zahavaalston
+ *
+ */
+
 public class StoreManagerNPC extends NPC{
 	ItemStore myStore;
 	SimpleDialogue dialogue;
@@ -39,6 +43,9 @@ public class StoreManagerNPC extends NPC{
 		super.update(elapsed);
 	}
 	
+	/* (non-Javadoc)
+	 * @see gameCharacter.CharacterDecorator#render(java.awt.Graphics2D)
+	 */
 	public void render(Graphics2D g){
 		super.render(g);
 	}
@@ -68,12 +75,10 @@ public class StoreManagerNPC extends NPC{
 			return npcName.equals("StoreManagerNPC");
 		}
 
-		@Override
-<<<<<<< HEAD
 		public CharacterDecorator constructNPC(GameCharacter gameChar) {
-=======
+
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
->>>>>>> 97d7a60b6fcbd986b6f8c53d01355e84e44a694f
+
 			return new StoreManagerNPC(gameChar);
 		}
 	}

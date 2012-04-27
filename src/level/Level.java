@@ -96,7 +96,7 @@ public class Level extends AbstractTileBackground implements Evented {
         setNpcs(level);
         setItems(level);
         setEnemies(level);
-        setStore(level);
+        //setStore(level);
 
         setCollisions();
     }
@@ -108,6 +108,7 @@ public class Level extends AbstractTileBackground implements Evented {
         NPCCollision collision = new NPCCollision();
         EnemyCollision enCol = new EnemyCollision();
         BoundaryCollision boundCol = new BoundaryCollision(this);
+        PlayerProjectileCollision pCol = new PlayerProjectileCollision();
 
         PlayField field = game.getField();
         SpriteGroup player = field.getGroup("player");
@@ -125,6 +126,9 @@ public class Level extends AbstractTileBackground implements Evented {
                                           field.getGroup("enemies"),
                                           enCol);
         game.getField().addCollisionGroup(player, null, boundCol);
+        game.getField().addCollisionGroup(field.getGroup("enemies"),
+        		field.getGroup("projectiles"),
+                enCol);
     }
 
 

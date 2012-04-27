@@ -27,6 +27,9 @@ public class SuperAccessory extends Item implements Accessory, Weapon, Potion {
         super(wrapper, item);
         initResources();
     }
+    public SuperAccessory(RPGame game){
+        super(game);
+    }
 
 
     public SuperAccessory (RPGame game, JsonObject item) {
@@ -36,7 +39,7 @@ public class SuperAccessory extends Item implements Accessory, Weapon, Potion {
 
 
     public void initResources () {
-        super.initResources();
+        image = game.getImage("rsc/items/bow.png");
         cost = 0;
         isForSale = true;
         equipped = false;

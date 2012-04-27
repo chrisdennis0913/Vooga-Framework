@@ -3,19 +3,14 @@ package player;
 import gameCharacter.GameCharacter;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-
-import utils.Direction;
 import utils.JsonUtil;
 import utils.KeyHandle;
 import actions.ActionDecorator;
 import actions.Attack;
 
 import com.golden.gamedev.object.Timer;
-import com.golden.gamedev.util.ImageUtil;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 

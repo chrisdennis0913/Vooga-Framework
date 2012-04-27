@@ -34,13 +34,19 @@ public abstract class Item extends EventedItem<Item>
     protected String myName;
     protected String category;
     protected int quantity = 1; // make sure this gets instantiated properly
-    private final JsonObject item;
+    private JsonObject item;
 
     // Can subclass to create other instance variables
     // such as weight
+
+    
     public Item (RPGame game, JsonObject item) {
         super(game);
         this.item = item;
+    }
+    public Item (RPGame game){
+        super(game);
+        
     }
 
 

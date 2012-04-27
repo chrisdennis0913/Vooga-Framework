@@ -193,10 +193,10 @@ public class Level extends AbstractTileBackground implements Evented {
 
 		game.setPlayer(player);
 		group.add(player.getCharacter());
-		
+
 		SpriteGroup projectiles = new SpriteGroup("projectiles");
 		game.getField().addGroup(projectiles);
-		
+
 		game.getField().addGroup(group);
 	}
     

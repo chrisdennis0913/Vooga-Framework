@@ -108,8 +108,8 @@ public class LevelEditor extends Game {
 				if (upperTile[j] == null) upperTile[j] = "";
 				upperTile[j] += String.valueOf(map.layer2[i][j])+" ";
 			}
-			FileUtil.fileWrite(lowerTile, bsIO.setFile("map01.lwr"));
-			FileUtil.fileWrite(upperTile, bsIO.setFile("map01.upr"));
+			FileUtil.fileWrite(lowerTile, bsIO.setFile("rsc/level/map01.lwr"));
+			FileUtil.fileWrite(upperTile, bsIO.setFile("rsc/level/map01.upr"));
 		}
 		
 		

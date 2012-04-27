@@ -5,7 +5,7 @@ package quest;
 
 public interface Observable 
 {
-	 public void addObserver(QuestGiver qu);
+	 public void addObserver(QuestObserver qu);
 	 
-	 public void removeObserver(QuestGiver qu);
+	 public void removeObserver(QuestObserver qu);
 }

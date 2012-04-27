@@ -5,6 +5,7 @@ import state.MovingState;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 import dialogue.SimpleDialogue;
@@ -54,7 +55,9 @@ public class NPCTest1 extends NPC {
 			return npcName.equals("NPCTest1");
 		}
 
-		@Override
+		public CharacterDecorator constructNPC(GameCharacter gameChar) {
+			return new NPCTest1(gameChar);}
+
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
 			return new NPCTest1(gameChar, jsonMovement);
 		}

@@ -77,21 +77,21 @@
 		"storeItems": [
 		{
 			"name": "sword",
-			"location": [120, 200],
+			"location": [680, 680],
 			"image": "rsc/items/sword.gif",
 			"quantity": 1,
 			"price": 250
 		},
 		{
 			"name": "bow",
-			"location": [280, 120],
+			"location": [680, 680],
 			"image": "rsc/items/bow.gif",
 			"quantity": 1,
 			"price": 450
 		},
 		{
 			"name": "money",
-			"location": [200, 120],
+			"location": [680, 680],
 			"image": "rsc/items/money.png",
 			"quantity": 500,
 			"price": 1

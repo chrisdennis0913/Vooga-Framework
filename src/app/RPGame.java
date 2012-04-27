@@ -7,9 +7,17 @@ import java.util.HashSet;
 import java.util.Set;
 import level.Level;
 import player.Player;
+<<<<<<< HEAD
 import quest.Quest;
 import quest.QuestGiver;
 import store.StoreManagerNPC;
+=======
+import quest.Quest;
+import quest.QuestObserver;
+import quest.QuestJournal;
+import store.StoreManagerNPC;
+
+>>>>>>> origin/master
 import utils.JsonUtil;
 import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
@@ -23,9 +31,9 @@ public class RPGame extends GameObject {
 	protected static String gameURL;
 
 	public PlayField field = new PlayField();
+	private Player player;
 
 	private Set<Pausable> paused;
-	private Player player;
 	protected Level level;
 
 	String lower, upper;
@@ -89,7 +97,7 @@ public class RPGame extends GameObject {
 	    {
 	        manager.getStore().update(elapsed);
 	        return;
-	        }
+	    }
 
 	    player.getCharacter().getJournal().update(elapsed);
 
@@ -110,7 +118,7 @@ public class RPGame extends GameObject {
 		this.player = player;
 	}
 	
-	public void addQuest(Quest qu, QuestGiver qg) 
+	public void addQuest(Quest qu, QuestObserver qg) 
 	{
 		player.getCharacter().getJournal().addQuest(qu, qg);
 	}

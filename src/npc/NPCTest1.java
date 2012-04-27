@@ -5,9 +5,6 @@ import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
 
 import state.MovingAttackingState;
-import state.TalkingState;
-import utils.Location;
-import ai.ScriptedMovementAI;
 
 import ai.SquareMovementAI;
 

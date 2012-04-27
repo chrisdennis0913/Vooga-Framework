@@ -10,6 +10,8 @@ import com.golden.gamedev.object.Timer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import dialogue.SimpleDialogue;
+
 public class Talking extends ActionDecorator {
 
 	private static final long serialVersionUID = 1L;
@@ -51,12 +53,12 @@ public class Talking extends ActionDecorator {
 
 		if (isEnabled() && getNPC().getCurrentState().getStatus() == "Talking") {
 			int status = keys.checkKeys();
-
+			
 			if (status != -1) {;
 				if (!isActive()) {
 					timer.setActive(true);
 					setActive(true);
-					talk.setMessage(getNPC().getTalk());
+					talk.setMessage(getNPC().getTalk(new SimpleDialogue.SimpleDialogueObject()));
 					getNPC().stop();
 				}
 				else reactToTimer(elapsed);

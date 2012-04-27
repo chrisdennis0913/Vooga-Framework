@@ -3,11 +3,12 @@ package actions;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import utils.Direction;
+import calculators.DamageCalculator;
+
 import com.google.gson.JsonObject;
 
-import utils.Direction;
-import utils.Jsonable;
-import calculators.DamageCalculator;
+import enemy.AbstractEnemy;
 import evented.EventedWrapper;
 
 public class Attack extends Action {
@@ -24,7 +25,7 @@ public class Attack extends Action {
 		initResources();
 	}
 
-	public int getDamage() {
+	public int getDamage(AbstractEnemy enemy) {
 		return calculator.calculate();
 	}
 

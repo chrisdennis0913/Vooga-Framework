@@ -30,22 +30,25 @@ public class Health extends Counter {
 	}
 
 	public void drawMeter(Graphics2D g) {
-		int bgWidth = (int) getWrapper().getCharacter().getGame().getLevel()
-				.getClip().getHeight() / 2;
-		int bgHeight = 15;
-		
-		int status = (int) ((double) getCount()/getInitial()*100);
-		
-		Color color;
-		if (status > 66)
-			color = new Color(0, 255, 0);
-		else if (status > 33) 
-			color = new Color(255, 255, 0);
-		else
-			color = new Color(255, 0, 0);
-		
-		meter.show(g, new Location(10, 10), new Dimension(bgWidth, bgHeight), color);
-		
+		if (meter != null) {
+			int bgWidth = (int) getWrapper().getCharacter().getGame()
+					.getLevel().getClip().getHeight() / 2;
+			int bgHeight = 15;
+
+			int status = (int) ((double) getCount() / getInitial() * 100);
+
+			Color color;
+			if (status > 66)
+				color = new Color(0, 255, 0);
+			else if (status > 33)
+				color = new Color(255, 255, 0);
+			else
+				color = new Color(255, 0, 0);
+
+			meter.show(g, new Location(10, 10),
+					new Dimension(bgWidth, bgHeight), color);
+		}
+
 	}
 
 }

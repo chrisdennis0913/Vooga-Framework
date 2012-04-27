@@ -5,7 +5,7 @@ import calculators.DamageCalculator;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.Timer;
 
-import enemy.Enemy;
+import enemy.AbstractEnemy;
 import gameCharacter.GameCharacter;
 
 import app.RPGame;
@@ -16,7 +16,7 @@ public class ShootingAttack extends AbstractVectorAttack{
 	private Timer timer;
 	private DamageCalculator calculator;
 	
-	public ShootingAttack(RPGame game, Enemy enemy, String name) {
+	public ShootingAttack(RPGame game, AbstractEnemy enemy, String name) {
 		super(game, enemy.getCharacter(), name);
 		timer = new Timer(1000);
 		vectorSpeedX = 0.1;

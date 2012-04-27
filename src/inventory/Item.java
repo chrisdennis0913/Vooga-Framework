@@ -78,21 +78,7 @@ public abstract class Item extends EventedItem<Item>
         mySprite.setLayer(layer);
         myGroup.add(mySprite);
     }
-
-
-// public void generate () {
-// game.getField().addGroup(myGroup);
-// setCollision();
-// }
-//
-//
-// public void setCollision () {
-// ItemCollision collision =
-// new ItemCollision(game, myName, this, mySprite);
-// game.getField().addCollisionGroup(game.getPlayer().getGroup(),
-// getGroup(),
-// collision);
-// }
+    
 
     public SpriteGroup getGroup () {
         return myGroup;
@@ -169,6 +155,10 @@ public abstract class Item extends EventedItem<Item>
 
     public void setQuantity (int quanity) {
         this.quantity = quanity;
+    }
+    
+    public int getPrice(){
+    	return price;
     }
 
 

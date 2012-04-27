@@ -16,9 +16,7 @@ public class NPC extends CharacterDecorator{
 	private static final long serialVersionUID = -5360689062786017503L;
 	protected AbstractDialogue dialogue;
 	private boolean alive;
-	
-	private TalkingState talkingState;
-	
+
 	private State currentState;
 
 	private static ArrayList<NPCFactory> NPCs = new ArrayList<NPCFactory>();
@@ -61,10 +59,9 @@ public class NPC extends CharacterDecorator{
 		return alive;
 	}
 
-	public void update(long elapsed){
+	public void update(long elapsed)
+	{	
 		currentState.update(elapsed, null);
-		if (currentState.getStatus() == "Talking State");
-			talkingState = (TalkingState) currentState;
 	}
 	
 	public NPC setCharacter(GameCharacter character){
@@ -85,6 +82,4 @@ public class NPC extends CharacterDecorator{
 	public boolean hasDialogue(){
 		return (dialogue != null);
 	}
-
-
 }

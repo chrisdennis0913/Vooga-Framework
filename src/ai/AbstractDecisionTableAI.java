@@ -3,7 +3,8 @@ package ai;
 import app.RPGame;
 import attacks.AbstractAttack;
 
-import enemy.Enemy;
+import enemy.AbstractEnemy;
+import enemy.TestEnemy;
 
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -20,7 +21,7 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 
 	DecisionTable dTable = new DecisionTable();
 	
-	public AbstractDecisionTableAI(RPGame game, Enemy character) {
+	public AbstractDecisionTableAI(RPGame game, AbstractEnemy character) {
 		super(game, character);
 	}
 

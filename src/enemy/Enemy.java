@@ -43,7 +43,6 @@ public class Enemy extends CharacterDecorator implements Attackable{
 		//String json = JsonUtil.getJSON(configURL);
 		//constructActions(json);
 		initAttacks();
-		initAI();
 	}
 	
 	private void constructActions(String json) {
@@ -54,11 +53,7 @@ public class Enemy extends CharacterDecorator implements Attackable{
 	public void initAttacks() {
 		attacks.put("shooting",new ShootingAttack(game,this,"shooting"));
 	}
-	
-	public void initAI()
-	{
-		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
-	}
+
 	
 	public void update(long elapsedTime)
 	{

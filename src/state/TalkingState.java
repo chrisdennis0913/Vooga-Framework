@@ -1,8 +1,6 @@
 package state;
 
 import gameCharacter.CharacterDecorator;
-import dialogue.AbstractDialogue;
-
 
 public class TalkingState implements State
 {

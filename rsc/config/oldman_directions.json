@@ -1,0 +1,22 @@
+{
+	"frames": 1,
+	"delay": 0,
+	"directions": [
+	{
+		"direction": "DIR_DOWN",
+		"image": "rsc/npc/oldman_down.gif"
+	},
+	{
+		"direction": "DIR_UP",
+		"image": "rsc/npc/oldman_up.png"
+	},
+	{
+		"direction": "DIR_RIGHT",
+		"image": "rsc/npc/oldman_right.png"
+	},
+	{
+		"direction": "DIR_LEFT",
+		"image": "rsc/npc/oldman_left.png"
+	}
+	]
+}

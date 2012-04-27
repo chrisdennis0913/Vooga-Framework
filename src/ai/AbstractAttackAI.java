@@ -1,10 +1,9 @@
 package ai;
 
-import calculators.DamageCalculator;
-import controllers.AttackController;
-import enemy.AbstractEnemy;
 import app.RPGame;
 import attacks.AbstractAttack;
+import controllers.AttackController;
+import enemy.AbstractEnemy;
 
 /**
  * Smart attack controller that chooses attacks based on an algorithm

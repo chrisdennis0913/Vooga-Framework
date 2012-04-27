@@ -1,12 +1,9 @@
 package attacks;
 
 import gameCharacter.GameCharacter;
-
-import calculators.DamageCalculator;
+import app.RPGame;
 
 import com.golden.gamedev.object.Timer;
-
-import app.RPGame;
 
 /**
  * Defines a standard attack between two GameCharacters.
@@ -72,4 +69,5 @@ public abstract class AbstractAttack {
 	
 	public abstract int calculateDamage();
 
+	
 }

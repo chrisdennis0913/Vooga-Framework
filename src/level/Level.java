@@ -123,7 +123,7 @@ public class Level extends AbstractTileBackground implements Evented {
         game.getField().addCollisionGroup(player, null, boundCol);
         game.getField().addCollisionGroup(field.getGroup("enemies"),
         		field.getGroup("projectiles"),
-                enCol);
+                pCol);
     }
 
 

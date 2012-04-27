@@ -25,6 +25,7 @@ import app.RPGame;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.util.FileUtil;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -33,14 +34,15 @@ import com.google.gson.JsonPrimitive;
 /**
  * Arrow key	: navigate
  * Space		: switch lower/upper tile
- * Page down	: next tile
- * Page up		: prev tile
- * End			: fast next tile
- * Home			: fast prev tile
+ * A			: next tile
+ * D			: prev tile
+ * W			: fast next tile
+ * S			: fast prev tile
  * Right click	: select tile
  * Click		: put tile
  * Ctrl + S		: save
  */
+
 public class MapEditor extends Game {
 
 	Map 	map;
@@ -81,8 +83,7 @@ public class MapEditor extends Game {
 		if (keyDown(KeyEvent.VK_DOWN)) {
 			map.move(0, 0.2*elapsedTime);
 		}
-		
-		
+			
 
 		// switch lower/upper tile
 		if (keyPressed(KeyEvent.VK_SPACE)) {
@@ -96,12 +97,12 @@ public class MapEditor extends Game {
 		}
 
 		// next/prev tile
-		if (keyPressed(KeyEvent.VK_PAGE_DOWN) || keyDown(KeyEvent.VK_END)) {
+		if (keyPressed(KeyEvent.VK_A) || keyDown(KeyEvent.VK_D)) {
 			if (++tilenum > getChipsetLength()) {
 				tilenum = getChipsetLength();
 			}
 		}
-		if (keyPressed(KeyEvent.VK_PAGE_UP) || keyDown(KeyEvent.VK_HOME)) {
+		if (keyPressed(KeyEvent.VK_W) || keyDown(KeyEvent.VK_S)) {
 			if (--tilenum < 0) {
 				tilenum = 0;
 			}
@@ -206,8 +207,10 @@ public class MapEditor extends Game {
 			jLevel.add("inventory", jInventory);
 			
 			String file = JOptionPane.showInputDialog("File name:");
+			Gson gson = new Gson();
 			try {
 				FileWriter f1 = new FileWriter(file); 
+				System.out.println(gson.toJson(jLevel));
 				f1.write(jLevel.toString());
 				f1.close();
 			} catch (IOException e) {

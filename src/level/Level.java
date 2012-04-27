@@ -98,12 +98,12 @@ public class Level extends AbstractTileBackground implements Evented {
 		PlayField field = game.getField();
 		SpriteGroup player = field.getGroup("player");
 
+		game.getField().addCollisionGroup(player, field.getGroup("scenery"),
+				sceneCol);
 		game.getField().addCollisionGroup(player, field.getGroup("npcs"),
 				collision);
 		game.getField().addCollisionGroup(player, field.getGroup("items"),
 				itCol);
-		game.getField().addCollisionGroup(player, field.getGroup("scenery"),
-				sceneCol);
 		game.getField().addCollisionGroup(player, field.getGroup("enemies"),
 				enCol);
 		game.getField().addCollisionGroup(player, null, boundCol);
@@ -207,8 +207,7 @@ public class Level extends AbstractTileBackground implements Evented {
 							"rsc/config/player_directions.json"),
 					"doesntmatter");
 			group.add(enemy.getCharacter());
-		}
-
+		}		
 		game.getField().addGroup(group);
 	}
 

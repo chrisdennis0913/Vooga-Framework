@@ -1,9 +1,9 @@
 package collisions;
 
 import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.collision.BasicCollisionGroup;
+import com.golden.gamedev.object.collision.CollisionGroup;
 
-public class SceneryCollision extends BasicCollisionGroup {
+public class SceneryCollision extends CollisionGroup {
 
 	public void collided(Sprite character, Sprite scenery) {
 		pixelPerfectCollision = true;
@@ -13,9 +13,7 @@ public class SceneryCollision extends BasicCollisionGroup {
 				- getCollisionShape1(character).getHeight())/2;
 		
 		if (ySeparation <= maxsep) {
-			character.setX(character.getOldX());
-			character.setY(character.getOldY());
+			revertPosition1();
 		}
 	}
-
 }

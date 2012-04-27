@@ -10,7 +10,9 @@ import com.golden.gamedev.GameEngine;
 import com.golden.gamedev.GameObject;
 import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.Timer;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import utils.*;
 
@@ -22,6 +24,7 @@ public class Title extends GameObject implements Jsonable{
 
 	BufferedImage	title;
 	BufferedImage	arrow;
+	String titleImage;
 
 	int				option;
 
@@ -29,13 +32,14 @@ public class Title extends GameObject implements Jsonable{
 	Timer			blinkTimer = new Timer(400);
 
 
-	public Title(GameEngine main) {
+	public Title(GameEngine main, String titleImage) {
 		super(main);
+		this.titleImage = titleImage;
 	}
 
 
 	public void initResources() {
-		title = getImage("rsc/title/Title.png", false);
+		title = getImage(titleImage, false);
 		arrow = getImage("rsc/title/Arrow.png");
 
 		font = fontManager.getFont(getImage("rsc/title/BitmapFont.png"));
@@ -129,13 +133,20 @@ public class Title extends GameObject implements Jsonable{
 		}
 	}
 
-
+// code to make the first background in the level file
 	@Override
 	public JsonObject toJson() {
 		JsonObject json = new JsonObject();
+		json.add("background", new JsonPrimitive("rsc/title/Title.png"));
 		
-		return null;
+		return json;
 	}
+	
+//	public void main (String args[]) {
+//		this.toJson();
+//		Gson gson = new Gson();
+//		System.out.println(gson.toJson(this.toJson()));
+//	}
 
 }
 

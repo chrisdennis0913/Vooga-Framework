@@ -4,19 +4,19 @@
 	"directions": [
 	{
 		"direction": "DIR_DOWN",
-		"image": "rsc/player/walk_down.png"
+		"image": "rsc/enemy/goriya_down.png"
 	},
 	{
 		"direction": "DIR_UP",
-		"image": "rsc/player/walk_up.png"
+		"image": "rsc/enemy/goriya_up.png"
 	},
 	{
 		"direction": "DIR_RIGHT",
-		"image": "rsc/player/walk_right.png"
+		"image": "rsc/enemy/goriya_right.png"
 	},
 	{
 		"direction": "DIR_LEFT",
-		"image": "rsc/player/walk_left.png"
+		"image": "rsc/enemy/goriya_left.png"
 	}
 	]
 }

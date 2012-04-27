@@ -36,10 +36,7 @@ public class EnemyCollision extends BasicCollisionGroup {
 					.get("health")
 					.decrease(attacking.getDamage((AbstractEnemy) enemy.getDecorator()));
 			attacking.setActive(false);
-		}
-		
-		
-		if (!realTimer.isActive()) {
+		} else if (!realTimer.isActive()) {
 			realTimer.setActive(true);
 			
 			int damage = 1;

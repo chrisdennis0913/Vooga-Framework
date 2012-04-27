@@ -23,7 +23,7 @@
 		{
 			"location": [200, 200],
 			"name": "NPCTest1",
-			"directions": "rsc/config/player_directions.json"
+			"directions": "rsc/config/oldman_directions.json"
 		},
 		{
 			"location": [500, 400],
@@ -47,16 +47,23 @@
 		{
 			"name": "sword",
 			"location": [380, 140],
-			"image": "rsc/items/sword.png",
+			"image": "rsc/items/sword.gif",
 			"quantity": 1,
 			"price": 250
 		},
 		{
 			"name": "bow",
-			"location": [200, 120],
-			"image": "rsc/items/bow.png",
+			"location": [450, 120],
+			"image": "rsc/items/bow.gif",
 			"quantity": 1,
 			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [200, 120],
+			"image": "rsc/items/money.png",
+			"quantity": 500,
+			"price": 1
 		}
 		]
 	}

@@ -1,7 +1,16 @@
 package enemy;
 
+import gameCharacter.Attackable;
+import gameCharacter.CharacterDecorator;
+import gameCharacter.GameCharacter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import state.State;
+import utils.Jsonable;
+import app.RPGame;
+import attacks.AbstractAttack;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -9,20 +18,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import counters.EnemyHealth;
-
-import state.State;
-
-import state.MovingAttackingState;
-import utils.JsonUtil;
-import utils.Jsonable;
-import ai.GreedyPathFindingAI;
-import ai.SimpleAttackAI;
-
-import app.RPGame;
-import attacks.AbstractAttack;
-import gameCharacter.Attackable;
-import gameCharacter.CharacterDecorator;
-import gameCharacter.GameCharacter;
 
 public abstract class AbstractEnemy extends CharacterDecorator implements Attackable, Jsonable{
 

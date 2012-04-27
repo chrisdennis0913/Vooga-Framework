@@ -1,8 +1,7 @@
 package attacks;
 
-import enemy.AbstractEnemy;
-import gameCharacter.GameCharacter;
 import app.RPGame;
+import enemy.AbstractEnemy;
 
 public abstract class AttackFactory {
 

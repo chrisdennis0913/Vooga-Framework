@@ -1,5 +1,6 @@
 package state;
 
+import gameCharacter.CharacterDecorator;
 import ai.AbstractMovementAI;
 
 public class WalkingState implements State
@@ -14,6 +15,18 @@ public class WalkingState implements State
 	public void update(long elapsedTime) 
 	{
 		myAI.update(elapsedTime);
+	}
+
+	@Override
+	public void update(long elapsedTime, CharacterDecorator cD) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getStatus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

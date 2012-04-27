@@ -25,7 +25,6 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
 
 
     public void add (Item itm) {
-        System.out.println(itm.getName());
         if (!contains(itm)) add(itm.getName(), itm);
         if (equippedItem == null & itm.canBeEquipped()) {
             itm.equip();

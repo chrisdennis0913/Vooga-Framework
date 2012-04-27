@@ -4,6 +4,9 @@
 
 package quest;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import enemy.AbstractEnemy;
 
 public class DestroyTask extends Task
@@ -20,6 +23,14 @@ public class DestroyTask extends Task
 	{
 		isComplete = (recipient.getHealth() <= 0);
 		return isComplete;
+	}
+
+	public JsonObject getJsonAttributes() 
+	{
+		JsonObject json = new JsonObject();
+		json.add("recipient", new JsonPrimitive(recipient.getName()));
+		
+		return json;
 	}
 
 }

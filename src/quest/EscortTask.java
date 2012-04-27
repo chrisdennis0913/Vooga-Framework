@@ -4,15 +4,20 @@
 
 package quest;
 
+import gameCharacter.CharacterDecorator;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import utils.Location;
-import npc.NPC;
 
 public class EscortTask extends Task
 {
 	private Location loc;
-	private NPC recipient;
+	private CharacterDecorator recipient;
 
-	public EscortTask(String description, NPC recipient, Location loc) 
+	public EscortTask(String description, CharacterDecorator recipient, Location loc) 
 	{
 		super(description);
 		this.loc = loc;
@@ -29,4 +34,16 @@ public class EscortTask extends Task
 		return isComplete;
 	}
 
+	public JsonObject getJsonAttributes() 
+	{
+		JsonObject json = new JsonObject();
+		json.add("recipient", new JsonPrimitive(recipient.getName()));
+		JsonArray location = new JsonArray();
+		location.add(new JsonPrimitive(loc.getX()));
+		location.add(new JsonPrimitive(loc.getY()));
+		
+		json.add("location", location);
+		
+		return json;
+	}
 }

@@ -23,7 +23,6 @@ public abstract class NPC extends CharacterDecorator{
 	private static final long serialVersionUID = -5360689062786017503L;
 	protected AbstractDialogue dialogue;
 	private boolean alive;
-	protected String name;
 
 	private State currentState;
 
@@ -42,7 +41,7 @@ public abstract class NPC extends CharacterDecorator{
 		character.setDecorator(this);
 	}
 
-	public static NPC createNPC(String npcName, GameCharacter gameChar) {
+	public static CharacterDecorator createNPC(String npcName, GameCharacter gameChar) {
 		NPCs.add(new NPCTest1.NPCTest1Factory());
 		NPCs.add(new StoreManagerNPC.StoreManager());
 		for (NPCFactory npcFactory : NPCs) {
@@ -78,7 +77,7 @@ public abstract class NPC extends CharacterDecorator{
 		currentState.update(elapsed, this);
 	}
 
-	public NPC setCharacter(GameCharacter character) {
+	public CharacterDecorator setCharacter(GameCharacter character) {
 		this.character = character;
 		return this;
 	}
@@ -94,7 +93,7 @@ public abstract class NPC extends CharacterDecorator{
 	public boolean hasDialogue() {
 		return (dialogue != null);
 	}
-
+	
 	@Override
 	public JsonObject toJson(){
 		JsonObject json = getJsonAttributes();

@@ -5,13 +5,13 @@ import gameCharacter.GameCharacter;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
-import app.RPGame;
 import app.RPGame.Pausable;
 
 import com.golden.gamedev.object.font.SystemFont;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class QuestJournal
 {
@@ -30,7 +30,7 @@ public class QuestJournal
 		this.gC = gC;
 	}
 	
-	public void addQuest(Quest qu, QuestGiver qg)
+	public void addQuest(Quest qu, QuestObserver qg)
 	{
 		myCurrentQuests.add(qu);
 		qu.addObserver(qg);
@@ -38,7 +38,7 @@ public class QuestJournal
 	
 	public void completeQuest(Quest qu)
 	{
-		qu.completeQuest(gC.getGame());
+		qu.completeQuest(gC);
 		myCurrentQuests.remove(qu);
 		myCompletedQuests.add(qu);
 	}
@@ -65,6 +65,11 @@ public class QuestJournal
 		}
 	}
 	
+	public void setQuests(ArrayList<Quest> quests)
+	{
+		myCurrentQuests = quests;
+	}
+	
 	public void render(Graphics2D g)
 	{
 		if (!showJournal)
@@ -87,6 +92,25 @@ public class QuestJournal
 			 font.drawString(g, myCurrentQuests.get(i).getDescription(), SystemFont.LEFT, INDENT, 65+25*i, 70);
 		 }
 	}
+	
+	public JsonObject toJson()
+	{
+		JsonObject json = new JsonObject();
+		
+		json.add("character", new JsonPrimitive(gC.getName()));
+		
+		JsonArray jArray = new JsonArray();
+		
+		for (Quest qu: myCurrentQuests)
+		{
+			jArray.add(qu.toJson());
+		}
+		
+		json.add("quests", jArray);
+		
+		return json;
+	}
+	
 	
     private void drawQuestSlots (Graphics2D g) 
     {	

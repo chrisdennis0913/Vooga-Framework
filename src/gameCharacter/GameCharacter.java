@@ -98,9 +98,19 @@ public class GameCharacter extends AnimatedSprite implements
 		inventory.render(g);
 	}
 	
+	public String getName()
+	{
+		return getDecorator().getName();
+	}
+	
 	public QuestJournal getJournal()
 	{
 		return myJournal;
+	}
+	
+	public void setJournal(QuestJournal journal)
+	{
+		myJournal = journal;
 	}
 
 	public Location getLocation() {

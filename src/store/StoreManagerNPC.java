@@ -11,6 +11,7 @@ import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import npc.NPC;
 import npc.NPCFactory;
@@ -65,7 +66,7 @@ public class StoreManagerNPC extends NPC{
 		}
 
 		@Override
-		public NPC constructNPC(GameCharacter gameChar) {
+		public CharacterDecorator constructNPC(GameCharacter gameChar) {
 			return new StoreManagerNPC(gameChar);
 		}
 		

@@ -2,6 +2,7 @@ package npc;
 
 import com.google.gson.JsonObject;
 
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
@@ -51,7 +52,7 @@ public class NPCTest1 extends NPC {
 		}
 
 		@Override
-		public NPC constructNPC(GameCharacter gameChar) {
+		public CharacterDecorator constructNPC(GameCharacter gameChar) {
 			return new NPCTest1(gameChar);
 		}
 

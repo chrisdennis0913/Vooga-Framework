@@ -10,7 +10,7 @@ import java.util.Set;
 import level.Level;
 import player.Player;
 import quest.Quest;
-import quest.QuestGiver;
+import quest.QuestObserver;
 import utils.JsonUtil;
 
 import com.golden.gamedev.GameEngine;
@@ -95,7 +95,7 @@ public class RPGame extends GameObject {
 		this.player = player;
 	}
 	
-	public void addQuest(Quest qu, QuestGiver qg) 
+	public void addQuest(Quest qu, QuestObserver qg) 
 	{
 		player.getCharacter().getJournal().addQuest(qu, qg);
 	}

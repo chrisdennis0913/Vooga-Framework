@@ -12,11 +12,7 @@ import counters.EnemyHealth;
 
 import state.State;
 
-import state.MovingAttackingState;
-import utils.JsonUtil;
 import utils.Jsonable;
-import ai.GreedyPathFindingAI;
-import ai.SimpleAttackAI;
 
 import app.RPGame;
 import attacks.AbstractAttack;
@@ -34,7 +30,6 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	
 	private State currentState;
 	protected int moneyValue;
-	private String name;
 
 	public AbstractEnemy(GameCharacter character, String name, JsonObject jEnemy) {
 		super(character);
@@ -53,6 +48,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 				new EnemyHealth(getCharacter().getCounters(), 2));
 		initAI(null);
 	}
+
 
 	public abstract void initAI(String Json);
 	

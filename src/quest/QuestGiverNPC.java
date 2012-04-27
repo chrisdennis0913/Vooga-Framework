@@ -3,7 +3,7 @@ package quest;
 import gameCharacter.GameCharacter;
 import npc.NPC;
 
-public abstract class QuestGiverNPC extends NPC implements QuestGiver
+public abstract class QuestGiverNPC extends NPC implements QuestObserver
 {
 
 	private GameCharacter gC;

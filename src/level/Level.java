@@ -1,5 +1,6 @@
 package level;
 
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import inventory.ConcreteItem;
 import inventory.Item;
@@ -8,7 +9,8 @@ import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
-import store.ItemStore;
+import quest.Quest;
+import quest.QuestJournal;
 import utils.JsonUtil;
 import utils.Location;
 import app.RPGame;
@@ -27,9 +29,11 @@ import com.golden.gamedev.object.background.abstraction.AbstractTileBackground;
 import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import enemy.AbstractEnemy;
 import evented.Evented;
+import java.util.*;
 
 
 public class Level extends AbstractTileBackground implements Evented {
@@ -56,8 +60,7 @@ public class Level extends AbstractTileBackground implements Evented {
 
     protected RPGame game;
     private LevelInventory<Item> inventory;
-    private ItemStore store;
-
+    private GameCharacter gC;
 
     public Level (BaseLoader bsLoader,
                   BaseIO bsIO,
@@ -146,13 +149,39 @@ public class Level extends AbstractTileBackground implements Evented {
         return inventory;
     }
 
-
-    private void setLevelTimer () {
+    private void setLevelTimer () 
+    {
         levelTimer.setFPS(100);
         levelTimer.startTimer();
         levelStartTime = levelTimer.getTime();
     }
-
+    
+    private Quest parseQuest(JsonElement jO, JsonObject level)
+    {
+    	
+    	return null;
+    }
+    
+    private void setQuests(JsonObject level)
+    {
+    	JsonObject obj = level.getAsJsonObject("quest journal");
+    	
+    	QuestJournal myJournal = new QuestJournal(gC);
+    	
+    	JsonArray jArray = obj.getAsJsonArray("quests");
+    	
+    	ArrayList<Quest> quests = new ArrayList<Quest>();
+    	
+    	for (int i = 0; i<jArray.size(); i++)
+    	{
+    		JsonObject quest = jArray.get(i).getAsJsonObject();
+    		String description = quest.getAsJsonObject("name").getAsString();
+    		
+    		Quest qu = new Quest(description);
+    	}
+    	
+    	gC.setJournal(myJournal);
+    }
 
     private void setPlayer (JsonObject level) {
         JsonObject jPlayer = level.getAsJsonObject("player");
@@ -164,12 +193,10 @@ public class Level extends AbstractTileBackground implements Evented {
                     jLocation.get(1).getAsInt() };
 
         Location playerLoc = new Location(location);
+        
+        gC = new GameCharacter(game, playerLoc, jPlayer.get("directionsURL").getAsString());
         Player player =
-            new Player(new GameCharacter(game,
-                                         playerLoc,
-                                         jPlayer.get("directionsURL")
-                                                .getAsString()),
-                       jPlayer.get("actionsURL").getAsString());
+            new Player(gC,jPlayer.get("actionsURL").getAsString());
 
         JsonObject inventory = jPlayer.getAsJsonObject("playerInventory");
         JsonArray items = inventory.getAsJsonArray("items");
@@ -223,7 +250,7 @@ public class Level extends AbstractTileBackground implements Evented {
                         jLocation.get(0).getAsInt(),
                         jLocation.get(1).getAsInt() });
             String npcName = jNPC.get("name").getAsString();
-            NPC npc =
+            CharacterDecorator npc =
                 NPC.createNPC(npcName,
                               new GameCharacter(game,
                                                 loc,

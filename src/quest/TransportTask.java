@@ -1,27 +1,30 @@
 package quest;
 
-import app.RPGame;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import inventory.Inventory;
 import inventory.Item;
-import npc.NPC;
 
 /*
  * Type of task where the player transports an item from point A to point B
  */
 
 public class TransportTask extends Task
-{
-	
+{	
 	private Item item;
-	private NPC recipient;
+	private CharacterDecorator recipient;
 	private Inventory inv;
+	private GameCharacter gC;
 	
-	public TransportTask(GameCharacter ch, String description, Item item, NPC recipient)
+	public TransportTask(GameCharacter ch, String description, Item item, CharacterDecorator recipient)
 	{
 		super(description);
 		this.item = item;
 		this.recipient = recipient;
+		gC = ch;
 		inv = ch.getInventory();
 	}
 
@@ -36,4 +39,14 @@ public class TransportTask extends Task
 		return isComplete;
 	}
 
+	public JsonObject getJsonAttributes() 
+	{
+		JsonObject json = new JsonObject();
+		json.add("recipient", new JsonPrimitive(recipient.getName()));
+		json.add("item", new JsonPrimitive(item.getName()));
+		
+		json.add("character", new JsonPrimitive(gC.getName()));
+		
+		return json;
+	}
 }

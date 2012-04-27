@@ -7,10 +7,10 @@ package quest;
 
 import java.util.HashMap;
 
-import app.RPGame;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
-import npc.NPC;
-
+import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import inventory.Inventory;
 import inventory.Item;
@@ -19,14 +19,16 @@ public class FetchTask extends Task
 {
 
 	private HashMap<Item,Integer> itemsToFetch;
-	private NPC recipient;
+	private CharacterDecorator recipient;
 	private Inventory inv;
+	private GameCharacter gC;
 	
-	public FetchTask(GameCharacter ch, String description, NPC recipient, HashMap<Item, Integer> itemsToFetch) 
+	public FetchTask(GameCharacter ch, String description, CharacterDecorator recipient, HashMap<Item, Integer> itemsToFetch) 
 	{
 		super(description);
 		this.itemsToFetch = itemsToFetch;
 		this.recipient = recipient;
+		gC = ch;
 		inv = ch.getInventory();
 	}
 	
@@ -68,6 +70,12 @@ public class FetchTask extends Task
 		return isComplete;
 	}
 
-
-	
+	public JsonObject getJsonAttributes() 
+	{
+		JsonObject json = new JsonObject();
+		json.add("recipient", new JsonPrimitive(recipient.getName()));
+		json.add("character", new JsonPrimitive(gC.getName()));
+		
+		return json;
+	}
 }

@@ -10,6 +10,7 @@ import utils.Direction;
 import actions.ActionDecorator;
 import actions.Attack;
 import calculators.DamageCalculator;
+import calculators.UnitCalculator;
 
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
@@ -20,7 +21,7 @@ public class StdAttack extends ActionDecorator {
 	private static final long serialVersionUID = 1L;
 
 	private String type;
-	private DamageCalculator calculator = new DamageCalculator(null, null);
+	private DamageCalculator calculator = new UnitCalculator(null, null);
 
 	public StdAttack(Attack attack) {
 		super(attack);

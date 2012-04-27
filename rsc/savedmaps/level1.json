@@ -19,19 +19,9 @@
 			]
 		}
 	},
-    "enemies": [],
     "npcs": [
 		{
-			"location": [200, 200],
-			"name": "NPCTest1",
-			"directions": "rsc/config/oldman_directions.json",
-			"movement" : {
-				"type" : "SquareMovementAI",
-				"timeToTurn" : 500
-			}
-		},
-		{
-			"location": [500, 400],
+			"location": [480, 640],
 			"name": "StoreManagerNPC",
 			"directions": "rsc/config/store_directions.json",
 			"movement" : {
@@ -40,7 +30,51 @@
 			}
 		}
     ],
-    "inventory": {
+    "store": {
+		"type": "game",
+		"storeItems": [
+		{
+			"name": "sword",
+			"location": [120, 200],
+			"image": "rsc/items/sword.png",
+			"quantity": 1,
+			"price": 250
+		},
+		{
+			"name": "bow",
+			"location": [280, 120],
+			"image": "rsc/items/bow.png",
+			"quantity": 1,
+			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [200, 120],
+			"image": "rsc/items/coin.gif",
+			"quantity": 500,
+			"price": 1
+		}
+		]
+	},
+	"enemies": [
+		{
+			"location": [160, 500],
+			"name": "GuardEnemy",
+			"directions": "rsc/config/goriya_directions.json",
+			"attacks":[
+				"shooting"
+			]
+		},
+		{
+			"location": [400, 400],
+			"name": "ArcherEnemy",
+			"directions": "rsc/config/goriya_directions.json",
+			"attacks":[
+				"shooting"
+			]
+		}
+	],
+	"inventory": {
 		"type": "game",
 		"items": [
 		{

@@ -55,8 +55,6 @@ public class NPCTest1 extends NPC {
 			return npcName.equals("NPCTest1");
 		}
 
-		public CharacterDecorator constructNPC(GameCharacter gameChar) {
-			return new NPCTest1(gameChar);}
 
 		public NPC constructNPC(GameCharacter gameChar, JsonElement jsonMovement) {
 			return new NPCTest1(gameChar, jsonMovement);

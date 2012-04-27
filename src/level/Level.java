@@ -114,7 +114,7 @@ public class Level extends AbstractTileBackground implements Evented {
 				24, false));
 		chipsetF = new Chipset(bsloader.getImages("rsc/level/ChipSet3.png", 6,
 				24));
-		chipsetG = new Chipset(bsloader.getImages("rsc/player/player.png", 6,
+		chipsetG = new Chipset(bsloader.getImages("rsc/player/playerstart.png", 6,
 				24));
 
 		chipset = new Chipset[16];

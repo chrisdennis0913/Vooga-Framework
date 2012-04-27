@@ -32,14 +32,14 @@
 		{
 			"name": "sword",
 			"location": [380, 140],
-			"image": "rsc/items/sword.png",
+			"image": "rsc/items/sword.gif",
 			"quantity": 1,
 			"price": 250
 		},
 		{
 			"name": "bow",
-			"location": [280, 120],
-			"image": "rsc/items/bow.png",
+			"location": [450, 120],
+			"image": "rsc/items/bow.gif",
 			"quantity": 1,
 			"price": 450
 		}

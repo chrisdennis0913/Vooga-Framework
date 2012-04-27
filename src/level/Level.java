@@ -3,7 +3,6 @@ package level;
 import gameCharacter.GameCharacter;
 import inventory.ConcreteItem;
 import inventory.Item;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
@@ -208,8 +207,7 @@ public class Level extends AbstractTileBackground implements Evented {
 							"rsc/config/player_directions.json"),
 					"doesntmatter");
 			group.add(enemy.getCharacter());
-		}
-
+		}		
 		game.getField().addGroup(group);
 	}
 

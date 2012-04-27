@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import app.RPGame;
 import com.golden.gamedev.object.GameFont;
+import com.golden.gamedev.object.GameFontManager;
 import com.golden.gamedev.object.Timer;
 
 
@@ -25,6 +26,7 @@ public abstract class Menu {
         game = game1;
         cursor = game.getImage("rsc/menu/Arrow.png");
         menuBackground = game.getImage(menuBackgroundImage, false);
+        game.fontManager = new GameFontManager();
         font = game.fontManager.getFont(game.getImage(fontImage));
         option = 0;
     }

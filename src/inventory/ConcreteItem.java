@@ -15,7 +15,6 @@ import app.RPGame;
 public class ConcreteItem extends Item {
 
     private static final long serialVersionUID = -4599650031278387506L;
-    private int cost;
     private boolean isForSale;
     private boolean quantifiable;
     private boolean equipped;
@@ -24,26 +23,17 @@ public class ConcreteItem extends Item {
     public ConcreteItem (RPGame game, JsonObject item) {
         super(game, item);
         initResources();
-        cost = 0;
     }
 
 
     public ConcreteItem (EventedWrapper<Item> wrapper, JsonObject item) {
         super(wrapper, item);
         initResources();
-        cost = 0;
     }
 
 
     @Override
     public void setPrice (int price) {
-        cost = price;
-    }
-
-
-    @Override
-    public int getPrice () {
-        return cost;
     }
 
 

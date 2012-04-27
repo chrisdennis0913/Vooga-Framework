@@ -138,7 +138,7 @@ public class MapEditor extends Game {
 							Player player = new Player(new GameCharacter(game, loc,
 									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
 							jPlayer = player.toJson();
-							
+							break;
 							
 						case 1:
 							//item
@@ -154,6 +154,8 @@ public class MapEditor extends Game {
 							jItem.add("quantity", new JsonPrimitive(JOptionPane.showInputDialog("Quantity:")));
 							jItem.add("price", new JsonPrimitive(JOptionPane.showInputDialog("Price:")));
 							jItems.add(jItem);
+							break;
+							
 							
 						case 2:
 							//enemy
@@ -170,6 +172,7 @@ public class MapEditor extends Game {
 							jAttack.add(new JsonPrimitive("shooting"));
 							jEnemy.add("attacks", jAttack);
 							jEnemies.add(jEnemy);
+							break;
 							
 						case 3:
 							//npc
@@ -181,7 +184,7 @@ public class MapEditor extends Game {
 							jNPC.add("name", new JsonPrimitive(JOptionPane.showInputDialog("Type:")));
 							jNPC.add("directions", new JsonPrimitive("rsc/config/oldman_directions.json"));
 							jNPCs.add(jNPC);
-							
+							break;
 					}
 					
 					//swing code to take attributes of sprite

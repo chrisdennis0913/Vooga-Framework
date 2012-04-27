@@ -6,10 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import gameCharacter.GameCharacter;
-import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 import dialogue.SimpleDialogue;
-import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 import ai.AbstractMovementAI;
 import ai.SquareMovementAI;

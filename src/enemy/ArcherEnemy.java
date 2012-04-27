@@ -1,7 +1,7 @@
 package enemy;
 
-import state.AttackingState;
 import state.DiscoveryState;
+import state.MovingAttackingState;
 import state.MovingState;
 import ai.BoolDistanceFromTargetHeuristic;
 import ai.GreedyPathFindingAI;
@@ -24,20 +24,11 @@ public class ArcherEnemy extends AbstractEnemy{
 		moneyValue = DEFAULT_MONEY_VALUE;
 	}
 	
-	@Override
-	public JsonObject getJsonAttributes() {
-		JsonObject attrib = new JsonObject();
-		/*
-		 * Add any subclass-specific variables here
-		 */
-		return attrib;
-	}
-	
 	public void initAI(String json) {
 		addState(new DiscoveryState(new BoolDistanceFromTargetHeuristic(game,character,DISCOVERY_THRESHOLD,true)));
 		addState(new MovingState(new GreedyPathFindingAI(game, character), 
 				new BoolDistanceFromTargetHeuristic(game,character,DIST_THRESHOLD,false)));
-		addState(new AttackingState(new TestDecisionTableAI(game, this),
+		addState(new MovingAttackingState(new GreedyPathFindingAI(game, character), new TestDecisionTableAI(game, this),
 				new BoolDistanceFromTargetHeuristic(game,character,DIST_THRESHOLD,true)));
 	}
 

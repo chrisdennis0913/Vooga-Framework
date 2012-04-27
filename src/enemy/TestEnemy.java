@@ -57,7 +57,7 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 
 	@Override
 	public void uponDeath() {
-		getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
+		//getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
 	}
 
 }

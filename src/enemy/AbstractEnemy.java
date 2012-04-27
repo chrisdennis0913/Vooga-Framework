@@ -99,7 +99,9 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 		return alive;
 	}
 
-	public abstract void uponDeath();
-	
+	public void uponDeath() {
+		//TODO: enable when money item is ready
+		//getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
+	}
 
 }

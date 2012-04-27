@@ -9,18 +9,11 @@ public class SceneryCollision extends CollisionGroup {
 		pixelPerfectCollision = true;
 
 		double ySeparation = Math.abs(character.getY() - (scenery.getY()));
+		double xSeparation = Math.abs(character.getX() - (scenery.getX()));
 		double maxYsep = Math.abs(getCollisionShape2(scenery).getHeight()*1.25
 				- getCollisionShape1(character).getHeight())/2;
 		
-		if (ySeparation <= maxYsep) {
-			revertPosition1();
-		}
-		
-		double xSeparation = Math.abs(character.getX() - (scenery.getX()));
-		double maxXsep = Math.abs(getCollisionShape2(scenery).getHeight()*1.25
-				- getCollisionShape1(character).getHeight())/2;
-		
-		if (xSeparation <= maxXsep) {
+		if (ySeparation <= maxYsep || xSeparation <= 12) {
 			revertPosition1();
 		}
 	}

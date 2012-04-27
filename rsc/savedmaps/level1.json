@@ -1,1 +1,69 @@
-{"nextLevel":"rsc/savedmaps/level1.json","upperFilename":"rsc/level/upper.upr","lowerFilename":"rsc/level/lower.lwr","player":{},"enemies":[],"npcs":[],"inventory":{"items":[]}}
+{
+    "nextLevel": "rsc/savedmaps/level1.json",
+    "upperFilename": "rsc/level/upper.upr",
+    "lowerFilename": "rsc/level/lower.lwr",
+    "player": {
+		"location": [100,100],
+		"directionsURL": "rsc/config/player_directions.json",
+		"actionsURL": "rsc/config/player_actions.json",
+		"playerInventory": {
+			"type": "game",
+			"items": [
+		   		{
+			    "name": "money",
+        		"location": [-40, -40],
+				"image": "rsc/items/money.png",
+				"quantity": 250,
+				"price": 1
+			}
+			]
+		}
+	},
+    "enemies": [],
+    "npcs": [
+		{
+			"location": [200, 200],
+			"name": "NPCTest1",
+			"directions": "rsc/config/oldman_directions.json",
+			"movement" : {
+				"type" : "SquareMovementAI",
+				"timeToTurn" : 500
+			}
+		},
+		{
+			"location": [500, 400],
+			"name": "StoreManagerNPC",
+			"directions": "rsc/config/store_directions.json",
+			"movement" : {
+				"type" : "SquareMovementAI",
+				"timeToTurn" : 500 
+			}
+		}
+    ],
+    "inventory": {
+		"type": "game",
+		"items": [
+		{
+			"name": "sword",
+			"location": [380, 140],
+			"image": "rsc/items/sword.gif",
+			"quantity": 1,
+			"price": 250
+		},
+		{
+			"name": "bow",
+			"location": [450, 120],
+			"image": "rsc/items/bow.gif",
+			"quantity": 1,
+			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [200, 120],
+			"image": "rsc/items/money.png",
+			"quantity": 500,
+			"price": 1
+		}
+		]
+	}
+}

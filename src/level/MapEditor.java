@@ -1,5 +1,6 @@
 package level;
 
+import enemy.TestEnemy;
 import gameCharacter.GameCharacter;
 
 import java.awt.Color;
@@ -13,6 +14,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
+
+import npc.NPC;
 
 import player.Player;
 import utils.Location;
@@ -123,6 +126,7 @@ public class MapEditor extends Game {
 			if (bsInput.isMouseDown(MouseEvent.BUTTON1)) {
 				if(tilemode == 2) {
 					// place picture of character
+					Location loc = new Location(new int[]{getMouseX(), getMouseY()});
 					switch (charnum) {
 						case 0:
 							//player
@@ -131,7 +135,7 @@ public class MapEditor extends Game {
 							String att2;
 							att2 = JOptionPane.showInputDialog("Attribute2:");
 							//save sprite
-							Location loc = new Location(new int[]{getMouseX(), getMouseY()});
+							
 							game.bsLoader = bsLoader;
 							Player player = new Player(new GameCharacter(game, loc,
 									"rsc/config/player_directions.json"), "rsc/config/player_actions.json");
@@ -139,10 +143,17 @@ public class MapEditor extends Game {
 							
 						case 1:
 							//item
+							
 						case 2:
 							//enemy
+							TestEnemy enemy = new TestEnemy(game, new GameCharacter(game, loc,
+									"rsc/config/enemy_directions.json"), "rsc/config/enemy_actions.json");
+							jEnemies.add(enemy.toJson());
 						case 3:
 							//npc
+							NPC npc = NPC.createNPC("npcName", new GameCharacter(game, loc,
+									"rsc/config/npc_directions.json"));
+							jNPCs.add(npc.toJson());
 							
 					}
 					
@@ -174,8 +185,12 @@ public class MapEditor extends Game {
 				if (upperTile[j] == null) upperTile[j] = "";
 				upperTile[j] += String.valueOf(map.layer2[i][j])+" ";
 			}
-			FileUtil.fileWrite(lowerTile, bsIO.setFile("rsc/level/map00.lwr"));
-			FileUtil.fileWrite(upperTile, bsIO.setFile("rsc/level/map00.upr"));
+			
+			String lwrLevel = JOptionPane.showInputDialog("Lower Layer:");
+			String uprLevel = JOptionPane.showInputDialog("Upper Layer:");
+			
+			FileUtil.fileWrite(lowerTile, bsIO.setFile(uprLevel));
+			FileUtil.fileWrite(upperTile, bsIO.setFile(lwrLevel));
 			
 			String nextLevel = JOptionPane.showInputDialog("Next file name:");
 			jLevel.add("nextLevel", new JsonPrimitive("rsc/savedmaps/"+nextLevel+".json"));

@@ -64,8 +64,9 @@ public class MapEditor extends Game {
 	public void initResources() {
 		map = new Map(bsLoader, bsIO);
 		player = getImage("rsc/player/playerstart.png", false);
-		enemy = getImage("rsc/enemy/question.png", false);
-		item = getImage("rsc/item/question.png",false);
+		enemy = getImage("rsc/enemy/reddot.png", false);
+		item = getImage("rsc/items/greendot.png",false);
+		npc = getImage("rsc/npc/bluedot.png", false);
 	}
 
 
@@ -152,6 +153,7 @@ public class MapEditor extends Game {
 							JsonArray jLoc = new JsonArray();
 							jLoc.add(new JsonPrimitive(getMouseX()));
 							jLoc.add(new JsonPrimitive(getMouseY()));
+							
 							jItem.add("location", jLoc);
 							jItem.add("image", new JsonPrimitive("rsc/items/"+itemName+".png"));
 							jItem.add("quantity", new JsonPrimitive(JOptionPane.showInputDialog("Quantity:")));

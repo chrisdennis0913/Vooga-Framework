@@ -7,6 +7,7 @@ import gameCharacter.GameCharacter;
 
 import java.util.HashMap;
 
+import state.MovingAttackingState;
 import state.State;
 
 import com.golden.gamedev.Game;
@@ -16,6 +17,7 @@ import com.google.gson.JsonPrimitive;
 
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;
+
 import app.RPGame;
 import attacks.AbstractAttack;
 import attacks.ShootingAttack;
@@ -44,8 +46,8 @@ public class TestEnemy extends AbstractEnemy implements Attackable{
 	}
 
 	@Override
-	protected void initActions(String json) {
-		// TODO Auto-generated method stub
+	public void initAI(String json) {
+		setCurrentState(new MovingAttackingState(new GreedyPathFindingAI(game, this.getCharacter()), new SimpleAttackAI(game,this)));
 	}
 	
 	public static class TestEnemyFactory extends EnemyFactory{

@@ -2,15 +2,18 @@ package gameCharacter;
 
 import java.awt.Graphics2D;
 
+import com.google.gson.JsonObject;
+
+import utils.Jsonable;
+
 /**
  * Decorator class for GameCharacter;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
  * 
  * @author Kirill Klimuk
  */
 
-public class CharacterDecorator implements CharacterInterface 
+public abstract class CharacterDecorator implements CharacterInterface, Jsonable 
 {
-	
 	protected GameCharacter character;
 
 	public CharacterDecorator(GameCharacter character) {
@@ -49,5 +52,8 @@ public class CharacterDecorator implements CharacterInterface
 	public void setCurrentDirection(int direction) {
 		character.setCurrentDirection(direction);
 	}
+
+	@Override
+	public abstract JsonObject toJson();
 
 }

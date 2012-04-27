@@ -15,7 +15,7 @@ import utils.Jsonable;
 import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-public abstract class NPC extends CharacterDecorator implements Jsonable{
+public abstract class NPC extends CharacterDecorator{
 	/**
 	 * Computer-generated serial ID number
 	 */
@@ -53,8 +53,15 @@ public abstract class NPC extends CharacterDecorator implements Jsonable{
 		throw new RuntimeException("Given name of NPC not recognized");
 	}
 
-	public void setDialogue(AbstractDialogue dialogue) {
+	public void setDialogue(AbstractDialogue dialogue) 
+	{
 		this.dialogue = dialogue;
+	}
+
+	public String getTalk() {
+		if (dialogue == null)
+			return null;
+		return dialogue.getCurrentLine();
 	}
 
 	public abstract String getTalk(SimpleDialogueObject simpleDialogueObject);

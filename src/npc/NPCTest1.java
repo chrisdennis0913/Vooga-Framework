@@ -1,5 +1,7 @@
 package npc;
 
+import com.google.gson.JsonObject;
+
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
@@ -51,6 +53,12 @@ public class NPCTest1 extends NPC {
 			return new NPCTest1(gameChar);
 		}
 
+	}
+
+	@Override
+	public JsonObject toJson() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

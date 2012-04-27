@@ -19,6 +19,32 @@
 			]
 		}
 	},
+	"inventory": {
+		"type": "game",
+		"items": [
+		{
+			"name": "sword",
+			"location": [120, 200],
+			"image": "rsc/items/sword.gif",
+			"quantity": 1,
+			"price": 250
+		},
+		{
+			"name": "bow",
+			"location": [480, 60],
+			"image": "rsc/items/bow.gif",
+			"quantity": 1,
+			"price": 450
+		},
+		{
+			"name": "money",
+			"location": [480, 640],
+			"image": "rsc/items/money.png",
+			"quantity": 500,
+			"price": 1
+		}
+		]
+	},
     "npcs": [
 		{
 			"location": [480, 640],
@@ -73,31 +99,5 @@
 				"shooting"
 			]
 		}
-	],
-	"inventory": {
-		"type": "game",
-		"items": [
-		{
-			"name": "sword",
-			"location": [380, 140],
-			"image": "rsc/items/sword.gif",
-			"quantity": 1,
-			"price": 250
-		},
-		{
-			"name": "bow",
-			"location": [450, 120],
-			"image": "rsc/items/bow.gif",
-			"quantity": 1,
-			"price": 450
-		},
-		{
-			"name": "money",
-			"location": [200, 120],
-			"image": "rsc/items/money.png",
-			"quantity": 500,
-			"price": 1
-		}
-		]
-	}
+	]
 }

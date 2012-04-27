@@ -32,6 +32,5 @@ public class StateManager{
 			active = states.get(0);
 		}
 		active.update(elapsedTime, cD);
-		System.err.println(active.getStatus());
 	}
 }

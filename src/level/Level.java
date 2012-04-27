@@ -28,6 +28,7 @@ import com.golden.gamedev.util.FileUtil;
 import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import demoGame.SuperAccessory;
 import enemy.AbstractEnemy;
 import evented.Evented;
 
@@ -64,7 +65,6 @@ public class Level extends AbstractTileBackground implements Evented {
                   RPGame game,
                   String levelname) {
         super(0, 0, TILE_WIDTH, TILE_HEIGHT);
-
         this.game = game;
         this.inventory = new LevelInventory<Item>(game);
         this.levelname = levelname;
@@ -173,11 +173,9 @@ public class Level extends AbstractTileBackground implements Evented {
 
         JsonObject inventory = jPlayer.getAsJsonObject("playerInventory");
         JsonArray items = inventory.getAsJsonArray("items");
-
         for (int i = 0; i < items.size(); i++) {
             JsonObject it = items.get(i).getAsJsonObject();
-            Item item = null;
-            item = new ConcreteItem(game, it);
+            Item item = new ConcreteItem(game, it);
             if (it.get("name").getAsString().contains("money")) {
                 item.setEquippable(false);
                 item.setDroppable(false);
@@ -199,12 +197,20 @@ public class Level extends AbstractTileBackground implements Evented {
 
         for (int i = 0; i < items.size(); i++) {
             JsonObject it = items.get(i).getAsJsonObject();
-            Item item = null;
-            item = new ConcreteItem(game, it);
-            if (it.get("name").getAsString().contains("money")) {
-                item.setEquippable(false);
+
+            if (it.get("name").getAsString().contains("super")) {
+                Item item = new SuperAccessory(game, it);
+                group.add(item);
             }
-            group.add(item);
+            else {
+                Item item = new ConcreteItem(game, it);
+
+                if (it.get("name").getAsString().contains("money")) {
+                    item.setEquippable(false);
+                    
+                }
+                group.add(item);
+            }
         }
         game.getField().addGroup(group);
     }
@@ -223,12 +229,9 @@ public class Level extends AbstractTileBackground implements Evented {
                         jLocation.get(0).getAsInt(),
                         jLocation.get(1).getAsInt() });
             String npcName = jNPC.get("name").getAsString();
-            NPC npc =
-                NPC.createNPC(npcName,
-                              new GameCharacter(game,
-                                                loc,
-                                                jNPC.get("directions")
-                                                    .getAsString()));
+            JsonObject move = jNPC.getAsJsonObject("movement");
+            NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC.get("directions").getAsString()), jNPC.getAsJsonObject("movement"));
+
             group.add(npc.getCharacter());
 
         }

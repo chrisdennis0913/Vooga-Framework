@@ -5,7 +5,7 @@ import app.RPGame;
 
 public class DistanceFromTargetHeuristic extends AbstractGameHeuristic {
 	
-	public DistanceFromTargetHeuristic(RPGame game, GameCharacter character, double threshold){
+	public DistanceFromTargetHeuristic(RPGame game, GameCharacter character){
 		super(game, character, "distanceFromTarget");
 	}
 

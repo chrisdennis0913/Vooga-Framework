@@ -33,8 +33,8 @@ public abstract class AbstractVectorAttack extends AbstractAttack {
 				new AttackVectorCollision(this));
 	}
 
-	public final void launchVector(){
-		launchVector(getAttackerX(),getAttackerY(), vectorSpeedX, vectorSpeedY);
+	public final void launchVector(double speedX, double speedY){
+		launchVector(getAttackerX(),getAttackerY(), speedX, speedY);
 	}
 	
 	public void setSpeed(double speedX, double speedY){

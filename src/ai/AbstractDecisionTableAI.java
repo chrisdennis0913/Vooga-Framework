@@ -21,8 +21,11 @@ public abstract class AbstractDecisionTableAI extends AbstractAttackAI{
 	
 	public AbstractDecisionTableAI(RPGame game, AbstractEnemy character) {
 		super(game, character);
+		constructTable();
 	}
 
+	public abstract void constructTable();
+	
 	@Override
 	public void update(long elapsedTime) {
 		if(character.isAlive()){

@@ -1,7 +1,7 @@
 package ai;
 
 import enemy.AbstractEnemy;
-import enemy.TestEnemy;
+
 import app.RPGame;
 import attacks.AbstractAttack;
 

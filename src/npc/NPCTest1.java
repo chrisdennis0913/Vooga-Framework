@@ -4,7 +4,7 @@ import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
 
-import state.MovingState;
+import state.MovingAttackingState;
 import utils.Location;
 import ai.ScriptedMovementAI;
 
@@ -24,7 +24,7 @@ public class NPCTest1 extends NPC{
 		super(character);
 
 		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
-		this.setCurrentState(new MovingState(new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300)));
+		this.setCurrentState(new MovingAttackingState(new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300), null));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 	

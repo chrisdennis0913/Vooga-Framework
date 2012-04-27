@@ -16,12 +16,10 @@ public class MovingAttackingState implements State
 	
 	public void update(long elapsedTime) 
 	{
-		if (myMovement == null)
-			throw new RuntimeException("No movement defined");
-		if (myAttack == null)
-			throw new RuntimeException("No attack defined");
+		if (myMovement != null)
+			myMovement.update(elapsedTime);
 		
-		myMovement.update(elapsedTime);
+		if (myAttack != null)
 		myAttack.update(elapsedTime);
 	}
 

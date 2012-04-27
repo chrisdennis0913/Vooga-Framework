@@ -1,14 +1,20 @@
 package state;
 
+import dialogue.AbstractDialogue;
+
 
 public class TalkingState implements State
 {
-
 	private boolean canTalk = true;
+	private AbstractDialogue myDialogue;
+	
+	public TalkingState(AbstractDialogue dialog)
+	{
+		myDialogue = dialog;
+	}
 
 	public void update(long elapsedTime) 
 	{
-		
 	}
 
 	public boolean talkable() {

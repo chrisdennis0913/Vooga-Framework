@@ -6,11 +6,9 @@ import gameCharacter.GameCharacter;
 
 import java.util.HashMap;
 
-import state.AttackingState;
 import state.MovingAttackingState;
 import state.State;
 import state.TalkingState;
-import state.MovingState;
 
 import ai.GreedyPathFindingAI;
 import ai.SimpleAttackAI;

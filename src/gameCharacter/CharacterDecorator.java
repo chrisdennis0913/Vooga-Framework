@@ -2,13 +2,20 @@ package gameCharacter;
 
 import java.awt.Graphics2D;
 
+import state.AttackingState;
+import state.State;
+import state.TalkingState;
+import state.WalkingState;
+
 /**
  * Decorator class for GameCharacter;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
  * 
  * @author Kirill Klimuk
  */
 
-public class CharacterDecorator implements CharacterInterface {
+public class CharacterDecorator implements CharacterInterface 
+{
+	
 	
 	protected GameCharacter character;
 
@@ -27,6 +34,7 @@ public class CharacterDecorator implements CharacterInterface {
 	public void update(long elapsed) {
 		character.update(elapsed);
 	}
+
 	
 	public boolean isCurrentDirection(int direction) {
 		return character.isCurrentDirection(direction);
@@ -51,6 +59,4 @@ public class CharacterDecorator implements CharacterInterface {
 	public void setCurrentDirection(int direction) {
 		character.setCurrentDirection(direction);
 	}
-	
-	
 }

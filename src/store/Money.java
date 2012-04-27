@@ -13,6 +13,10 @@ import evented.EventedWrapper;
 
 public class Money extends Counter {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Integer init = Integer.MAX_VALUE;
 	private int startCash;
 	private Inventory myInventory;

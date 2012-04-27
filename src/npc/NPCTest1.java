@@ -3,7 +3,8 @@ package npc;
 import gameCharacter.GameCharacter;
 import dialogue.AbstractDialogue.DialogueObject;
 import dialogue.SimpleDialogue;
-import ai.ScriptedMovementAI;
+import state.WalkingState;
+import ai.SquareMovementAI;
 
 public class NPCTest1 extends NPC{
 	
@@ -17,8 +18,7 @@ public class NPCTest1 extends NPC{
 
 	public NPCTest1(GameCharacter character) {
 		super(character);
-		int[][] testArray= new int[][] {{1, 2100}, {2, 2000}};
-		this.getCharacter().getControllers().add("ScriptedMovementAI",  new ScriptedMovementAI(this.character.getGame(), this.getCharacter(), testArray));
+		this.setCurrentState(new WalkingState(new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300)));
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 	
@@ -31,7 +31,7 @@ public class NPCTest1 extends NPC{
 			hasTalked = true;
 		}
 		else{
-			dialogue.goToNextLine(new SimpleDialogue("").new SimpleDialogueObject());
+			dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
 		}
 		return dialogue.getCurrentLine();
 	}

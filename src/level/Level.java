@@ -11,13 +11,14 @@ import java.util.StringTokenizer;
 import npc.NPC;
 import npc.NPCTest1;
 import player.Player;
+import store.ItemStore;
 import utils.JsonUtil;
 import utils.Location;
 import app.RPGame;
-import collisions.EnemyCollision;
-import collisions.NPCCollision;
 import collisions.BoundaryCollision;
+import collisions.EnemyCollision;
 import collisions.ItemCollision;
+import collisions.NPCCollision;
 import collisions.SceneryCollision;
 
 import com.golden.gamedev.engine.BaseIO;
@@ -59,6 +60,7 @@ public class Level extends AbstractTileBackground implements Evented {
 
 	private RPGame game;
 	private LevelInventory<Item> inventory;
+	private ItemStore store;
 
 	public Level(BaseLoader bsLoader, BaseIO bsIO, RPGame game, String levelname) {
 		super(0, 0, TILE_WIDTH, TILE_HEIGHT);
@@ -83,7 +85,7 @@ public class Level extends AbstractTileBackground implements Evented {
 		setPlayer(level);
 		setNpcs(level);
 		setItems(level);
-		setEnemies();
+		setEnemies(level);
 
 		setCollisions();
 	}
@@ -184,16 +186,23 @@ public class Level extends AbstractTileBackground implements Evented {
 			NPC npc = new NPCTest1(new GameCharacter(game, loc, jNPC.get(
 					"directions").getAsString()));
 			group.add(npc.getCharacter());
+
 		}
 		game.getField().addGroup(group);
 	}
-
-	private void setEnemies() {
+	
+	private void setEnemies(JsonObject level){
+		JsonArray enemies = level.getAsJsonArray("enemies");
 		SpriteGroup group = new SpriteGroup("enemies");
 		
-		Enemy enemy = new Enemy(new GameCharacter(game, new Location(250,
-				250), "rsc/config/player_directions.json"), "doesntmatter");
-		
+		for (int i = 0; i < enemies.size(); i++){
+			JsonObject jEnemy = enemies.get(i).getAsJsonObject();
+			JsonArray jLocation = jEnemy.get("location").getAsJsonArray();
+			
+			Location loc = new Location(new int[]{jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt()});
+			String aiName = jEnemy.get("ai").getAsString();
+		}
+		Enemy enemy = new Enemy(game,new GameCharacter(game, new Location(250,250), "rsc/config/player_directions.json"),"doesntmatter");
 		group.add(enemy.getCharacter());
 		game.getField().addGroup(group);
 	}

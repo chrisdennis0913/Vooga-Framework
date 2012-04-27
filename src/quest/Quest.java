@@ -1,7 +1,5 @@
 package quest;
 
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +36,14 @@ public abstract class Quest implements Observable
 	public boolean isActive()
 	{
 		return isActive;
+	}
+	
+	public String getStatus()
+	{
+		int completed = done.size();
+		int left = toDo.size();
+		
+		return "You have completed: " + completed + " out of " + (completed + left) + " tasks." ;
 	}
 	
 	public boolean checkComplete()

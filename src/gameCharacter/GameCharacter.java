@@ -4,7 +4,13 @@ import inventory.Inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+
 import java.util.List;
+
+import level.Level;
+
+import java.util.List;
+
 import utils.Direction;
 import utils.JsonUtil;
 import utils.Location;
@@ -35,8 +41,10 @@ import evented.EventedWrapper;
  * @author Kirill Klimuk
  */
 
+
 public class GameCharacter extends AnimatedSprite implements
 		CharacterInterface, Evented {
+
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,17 +52,21 @@ public class GameCharacter extends AnimatedSprite implements
 	private CharacterDecorator decorator;
 
 	private int curDirection = 0;
+
+	private Velocity velocity = new Velocity(0.07);
+
 	private List<Direction> directions;
-	private Velocity velocity = new Velocity(0.05);
+
 	private Velocity curVelocity = new Velocity(0.0);
 	protected Inventory inventory;
 
 	private String configURL;
 
+	Level level;
+
+
 	private EventedWrapper<Counter> counters = new EventedWrapper<Counter>(this);
 	private EventedWrapper<ActionInterface> actions = new EventedWrapper<ActionInterface>(
-			this);
-	private EventedWrapper<Controller> controllers = new EventedWrapper<Controller>(
 			this);
 	private BehaviorModifierContainer behaviorModifiers = new BehaviorModifierContainer();
 
@@ -83,7 +95,6 @@ public class GameCharacter extends AnimatedSprite implements
 		counters.render(g);
 		actions.render(g);
 		inventory.render(g);
-		controllers.render(g);
 	}
 
 	public Location getLocation() {
@@ -92,10 +103,12 @@ public class GameCharacter extends AnimatedSprite implements
 
 	public void update(long elapsed) {
 		behaviorModifiers.setUpAll(elapsed);
+		
+		if (getDecorator() != null)
+			getDecorator().update(elapsed);
 
 		counters.update(elapsed);
 		actions.update(elapsed);
-		controllers.update(elapsed);
 		inventory.update(elapsed);
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
@@ -159,10 +172,6 @@ public class GameCharacter extends AnimatedSprite implements
 		return counters;
 	}
 
-	public EventedWrapper<Controller> getControllers() {
-		return controllers;
-	}
-
 	public boolean isCurrentDirection(int direction) {
 		return direction == curDirection;
 	}
@@ -190,6 +199,7 @@ public class GameCharacter extends AnimatedSprite implements
 	}
 
 	public BehaviorModifierContainer getBehaviorModifiers() {
+
 		return behaviorModifiers;
 	}
 	

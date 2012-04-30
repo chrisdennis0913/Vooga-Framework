@@ -6,9 +6,17 @@ import inventory.Item;
 import inventory.SuperAccessory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
+import quest.DestroyTask;
+import quest.FetchTask;
+import quest.Quest;
+import quest.QuestGiverNPC;
+import quest.QuestJournal;
+import quest.RewardQuest;
+import quest.Task;
 import state.TalkingState;
 import store.ItemStore;
 import store.StoreManagerNPC;
@@ -61,6 +69,9 @@ public class Level extends AbstractTileBackground implements Evented {
     private LevelInventory<Item> inventory;
     private ItemStore store;
     private StoreManagerNPC manager;
+    private QuestGiverNPC qgn;
+    private GameCharacter myPlayer;
+    private AbstractEnemy myEnemy;
 
 
     public Level (BaseLoader bsLoader,
@@ -92,6 +103,7 @@ public class Level extends AbstractTileBackground implements Evented {
         setItems(level);
         setEnemies(level);
         setStore(level);
+        setQuest(level);
 
         setCollisions();
     }
@@ -124,6 +136,25 @@ public class Level extends AbstractTileBackground implements Evented {
         game.getField().addCollisionGroup(field.getGroup("enemies"),
         		field.getGroup("projectiles"),
                 pCol);
+    }
+    
+    public void setQuest(JsonObject level)
+    {
+    	SpriteGroup items = game.getField().getGroup("items");
+    	JsonObject coin = level.getAsJsonObject("questMoney");
+    	Item money = new ConcreteItem(game, coin);
+    	money.setEquippable(false);
+		money.setDroppable(false);
+    	
+    	items.add(money);
+    	
+    	Task task = new DestroyTask("Destroy the Enemy", myEnemy);
+    	 	
+    	Quest qu = new RewardQuest(money, "Destroy Quest", task);
+    	
+    	QuestJournal qj = new QuestJournal(myPlayer);
+    	
+    	qj.addQuest(qu, qgn);
     }
 
 
@@ -174,8 +205,9 @@ public class Level extends AbstractTileBackground implements Evented {
 				jLocation.get(1).getAsInt() };
 
 		Location playerLoc = new Location(location);
-		Player player = new Player(new GameCharacter(game, playerLoc, jPlayer
-				.get("directionsURL").getAsString()), jPlayer.get("actionsURL")
+		myPlayer = new GameCharacter(game, playerLoc, jPlayer
+				.get("directionsURL").getAsString());
+		Player player = new Player(myPlayer, jPlayer.get("actionsURL")
 				.getAsString());
 
 		JsonObject inventory = jPlayer.getAsJsonObject("playerInventory");
@@ -188,9 +220,8 @@ public class Level extends AbstractTileBackground implements Evented {
 				item.setDroppable(false);
 			}
 			item.setWrapper(player.getCharacter().getInventory());
-			player.getCharacter().getInventory().add(item, item.getQuantity());
 		}
-
+	
 		game.setPlayer(player);
 		group.add(player.getCharacter());
 
@@ -217,12 +248,14 @@ public class Level extends AbstractTileBackground implements Evented {
 		game.getField().addGroup(group);
 	}
 
-	private void setItems(JsonObject level) {
+	private void setItems(JsonObject level)
+	{
 		JsonObject inventory = level.getAsJsonObject("inventory");
 		JsonArray items = inventory.getAsJsonArray("items");
 		SpriteGroup group = new SpriteGroup("items");
 
-		for (int i = 0; i < items.size(); i++) {
+		for (int i = 0; i < items.size(); i++) 
+		{
 			JsonObject it = items.get(i).getAsJsonObject();
 
 			if (it.get("name").getAsString().contains("super")) {
@@ -257,6 +290,9 @@ public class Level extends AbstractTileBackground implements Evented {
 					.get("directions").getAsString()), jNPC
 					.getAsJsonObject("movement"));
 			group.add(npc.getCharacter());
+			
+				if (npcName.equals("NPCTest1"))
+						qgn = (QuestGiverNPC) npc;
 
 		}
 		game.getField().addGroup(group);
@@ -277,6 +313,7 @@ public class Level extends AbstractTileBackground implements Evented {
 			AbstractEnemy enemy = AbstractEnemy.createEnemy(enemyName, game,
 					new GameCharacter(game, loc, jEnemy.get("directions")
 							.getAsString()), jEnemy);
+			myEnemy = enemy;
 			group.add(enemy.getCharacter());
 		}
 

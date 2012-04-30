@@ -28,6 +28,7 @@ public class QuestJournal
 		myCurrentQuests = new ArrayList<Quest>();
 		myCompletedQuests = new ArrayList<Quest>();
 		this.gC = gC;
+		gC.setJournal(this);
 	}
 	
 	public void addQuest(Quest qu, QuestObserver qg)
@@ -50,6 +51,13 @@ public class QuestJournal
 
 	public void update(long elapsed) 
 	{
+		if (myCurrentQuests.size() > 0)
+		{
+			myCurrentQuests.get(0).update();
+			if(myCurrentQuests.get(0).checkComplete())
+				completeQuest(myCurrentQuests.get(0));
+		}
+	
 		if (gC.getGame().keyPressed(java.awt.event.KeyEvent.VK_J))
 		{
 			if (gC.getGame().isPausedFor(Pausable.JOURNAL))

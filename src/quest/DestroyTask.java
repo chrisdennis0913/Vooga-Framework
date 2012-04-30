@@ -27,7 +27,7 @@ public class DestroyTask extends Task
 
 	public boolean checkComplete()
 	{
-		isComplete = (recipient.getHealth() <= 0);
+		isComplete = !recipient.isAlive();
 		return isComplete;
 	}
 	

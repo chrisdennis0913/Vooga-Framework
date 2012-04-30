@@ -1,6 +1,7 @@
 package gameCharacter;
 
 import inventory.Inventory;
+import inventory.Item;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -131,6 +132,12 @@ public class GameCharacter extends AnimatedSprite implements
 		double[] velocity = curVelocity.get(getCurrentDirection());
 		setSpeed(velocity[0], velocity[1]);
 		super.update(elapsed);
+		
+		for (Item it: inventory)
+		{
+			if (it.getName().equals("money"))
+			System.out.println(it);
+		}
 		
 		behaviorModifiers.unsetUpAll(elapsed);
 	}

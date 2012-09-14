@@ -79,7 +79,9 @@ public abstract class Quest implements Observable
 		for (Task t: toDo)
 		{
 			if(t.checkComplete())
+			{
 				done.add(t);
+			}
 		}	
 		return done.size() == toDo.size();
 	}

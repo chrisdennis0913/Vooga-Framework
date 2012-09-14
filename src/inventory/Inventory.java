@@ -30,7 +30,7 @@ public class Inventory extends EventedWrapper<Item> implements Iterable<Item> {
         if (equippedItem == null & itm.canBeEquipped()) {
             itm.equip();
         }
-        itm.add(1);
+        itm.add(1); 
     }
 
 

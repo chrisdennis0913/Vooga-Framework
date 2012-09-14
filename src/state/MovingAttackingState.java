@@ -22,7 +22,9 @@ public class MovingAttackingState implements State{
 	public void update(long elapsedTime, CharacterDecorator cD) 
 	{
 		if (myMovement != null)
+		{
 			myMovement.update(elapsedTime);
+		}
 		if (myAttack != null)
 			myAttack.update(elapsedTime);
 	}

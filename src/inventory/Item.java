@@ -32,7 +32,7 @@ public abstract class Item extends EventedItem<Item>
     protected SpriteGroup myGroup;
     protected String myName;
     protected String category;
-    protected int quantity = 1; // make sure this gets instantiated properly
+    protected int quantity = 0; // make sure this gets instantiated properly
     private JsonObject item;
     protected int price;
 

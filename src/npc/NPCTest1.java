@@ -1,30 +1,30 @@
 package npc;
 
 import gameCharacter.GameCharacter;
-import state.MovingState;
-import ai.AbstractMovementAI;
+import quest.QuestGiverNPC;
+import state.MovingAttackingState;
+import state.TalkingState;
+import ai.SquareMovementAI;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 
-public class NPCTest1 extends NPC {
-
+public class NPCTest1 extends QuestGiverNPC
+{
 	/**
 	 * Computer-generated serial ID number
 	 */
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 4483591744499315422L;
+	private boolean timeToChange = false;
 
 	public NPCTest1(GameCharacter character, JsonElement jsonMovement) {
 		super(character);
-		
+
 		name = "NPCTest1";
 		
-		AbstractMovementAI movement = AbstractMovementAI.getAbstractMovementAI(this.character.getGame(), this.getCharacter(), jsonMovement);
-		
-		//SquareMovementAI sq = new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300);
-		this.setCurrentState(new MovingState(movement,null));
+		this.setCurrentState(new TalkingState());
 		dialogue = new SimpleDialogue("rsc/savedmaps/npc1.txt");
 	}
 
@@ -33,8 +33,14 @@ public class NPCTest1 extends NPC {
 	 * @return
 	 */
 	@Override
-	public String getTalk(SimpleDialogueObject choice) {
-		dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
+	public String getTalk(SimpleDialogueObject choice)
+	{
+		if (questComplete)
+			dialogue.goToNextLine(new SimpleDialogue.SimpleDialogueObject());
+		if(dialogue.isDone())
+		{
+			timeToChange = true;
+		}
 		return dialogue.getCurrentLine();
 	}
 
@@ -60,6 +66,15 @@ public class NPCTest1 extends NPC {
 		// TODO Auto-generated method stub
 		return new JsonObject();
 	}
-
+	
+	public void changeState()
+	{
+		if (timeToChange)
+		{
+			SquareMovementAI movement = new SquareMovementAI(this.character.getGame(), this.getCharacter(), 300);
+			setCurrentState(new MovingAttackingState(movement,null,null));
+			timeToChange = false;
+		}
+	}
 
 }

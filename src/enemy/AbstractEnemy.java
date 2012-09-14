@@ -126,7 +126,7 @@ public abstract class AbstractEnemy extends CharacterDecorator implements Attack
 	}
 
 	public void uponDeath() {
-		getCharacter().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
+		//getCharacte	r().getGame().getPlayer().getCharacter().getInventory().get("money").add(moneyValue);
 	}
 	
 	@Override

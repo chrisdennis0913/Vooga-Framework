@@ -1,14 +1,9 @@
 package attacks;
 
-import calculators.DamageCalculator;
-import calculators.RandomCalculator;
-
-import com.golden.gamedev.object.Timer;
-
-import enemy.AbstractEnemy;
-
 import app.RPGame;
-import attacks.AbstractVectorAttack;
+import calculators.RandomCalculator;
+import com.golden.gamedev.object.Timer;
+import enemy.AbstractEnemy;
 
 public class ShootingAttack extends AbstractVectorAttack{
 

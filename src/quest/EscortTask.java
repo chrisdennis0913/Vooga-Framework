@@ -4,20 +4,16 @@
 
 package quest;
 
-import npc.NPC;
-import enemy.AbstractEnemy;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
-
+import npc.NPC;
+import utils.Location;
 import app.RPGame;
-
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import utils.Location;
 
 public class EscortTask extends Task
 {

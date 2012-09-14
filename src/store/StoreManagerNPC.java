@@ -1,23 +1,15 @@
 package store;
 
 import gameCharacter.GameCharacter;
-
 import java.awt.Graphics2D;
-
 import npc.NPC;
 import npc.NPCFactory;
 import state.State;
 import state.TalkingState;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dialogue.SimpleDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
-
-import gameCharacter.CharacterDecorator;
-import gameCharacter.GameCharacter;
-import npc.NPC;
-import npc.NPCFactory;
 
 /**
  * Handles opening the store

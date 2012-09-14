@@ -3,12 +3,10 @@ package enemy;
 import gameCharacter.GameCharacter;
 import state.GuardState;
 import state.MovingAttackingState;
-import state.MovingState;
 import ai.BoolDistanceFromTargetHeuristic;
 import ai.GreedyPathFindingAI;
 import ai.SimpleDecisionTableAI;
 import app.RPGame;
-
 import com.google.gson.JsonObject;
 
 

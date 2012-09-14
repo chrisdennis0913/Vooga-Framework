@@ -1,9 +1,7 @@
 package npc;
 
-import gameCharacter.CharacterDecorator;
-import com.google.gson.JsonElement;
-
 import gameCharacter.GameCharacter;
+import com.google.gson.JsonElement;
 
 public abstract class NPCFactory {
 	

@@ -3,32 +3,18 @@ package enemy;
 import gameCharacter.Attackable;
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import state.State;
 import state.StateManager;
 import utils.Jsonable;
 import app.RPGame;
 import attacks.AbstractAttack;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
 import counters.EnemyHealth;
-
-import state.State;
-
-import utils.Jsonable;
-
-import app.RPGame;
-import attacks.AbstractAttack;
-import gameCharacter.Attackable;
-import gameCharacter.CharacterDecorator;
-import gameCharacter.GameCharacter;
 
 
 /**

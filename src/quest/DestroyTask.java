@@ -4,16 +4,13 @@
 
 package quest;
 
-import gameCharacter.GameCharacter;
-import inventory.ConcreteItem;
 import app.RPGame;
-
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
 import enemy.AbstractEnemy;
+import gameCharacter.GameCharacter;
 
 public class DestroyTask extends Task
 {

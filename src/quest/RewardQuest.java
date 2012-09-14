@@ -1,12 +1,9 @@
 package quest;
 
-import enemy.AbstractEnemy;
-import enemy.EnemyFactory;
 import gameCharacter.GameCharacter;
-import inventory.*;
-
+import inventory.ConcreteItem;
+import inventory.Item;
 import app.RPGame;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 

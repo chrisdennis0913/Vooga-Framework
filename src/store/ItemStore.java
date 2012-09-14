@@ -1,19 +1,16 @@
 package store;
 
+import inventory.Inventory;
+import inventory.Item;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.font.SystemFont;
-
-import evented.EventedWrapper;
-
 import app.RPGame;
 import app.RPGame.Pausable;
-import inventory.Inventory;
-import inventory.Item;
+import com.golden.gamedev.object.font.SystemFont;
+import evented.EventedWrapper;
 
 /**
  * Creates the store with it's own inventory

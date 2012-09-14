@@ -1,20 +1,16 @@
 package quest;
 
-import npc.NPC;
-import app.RPGame;
-
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.SpriteGroup;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
-import enemy.AbstractEnemy;
-
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
 import inventory.ConcreteItem;
 import inventory.Inventory;
 import inventory.Item;
+import npc.NPC;
+import app.RPGame;
+import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.object.SpriteGroup;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 /*
  * Type of task where the player transports an item from point A to point B

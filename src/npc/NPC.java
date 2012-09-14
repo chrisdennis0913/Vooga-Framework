@@ -2,17 +2,13 @@ package npc;
 
 import gameCharacter.CharacterDecorator;
 import gameCharacter.GameCharacter;
-
 import java.util.ArrayList;
-
+import state.State;
+import store.StoreManagerNPC;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import state.State;
-import store.StoreManagerNPC;
-import utils.Jsonable;
 import dialogue.AbstractDialogue;
 import dialogue.SimpleDialogue.SimpleDialogueObject;
 

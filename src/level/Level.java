@@ -9,9 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 import npc.NPC;
 import player.Player;
-import state.TalkingState;
 import store.ItemStore;
-import store.StoreManagerNPC;
 import utils.JsonUtil;
 import utils.Location;
 import app.RPGame;
@@ -60,9 +58,6 @@ public class Level extends AbstractTileBackground implements Evented {
     protected RPGame game;
     private LevelInventory<Item> inventory;
     private ItemStore store;
-    private StoreManagerNPC manager;
-
-
     public Level (BaseLoader bsLoader,
                   BaseIO bsIO,
                   RPGame game,
@@ -252,7 +247,6 @@ public class Level extends AbstractTileBackground implements Evented {
 			Location loc = new Location(new int[] {
 					jLocation.get(0).getAsInt(), jLocation.get(1).getAsInt() });
 			String npcName = jNPC.get("name").getAsString();
-			JsonObject move = jNPC.getAsJsonObject("movement");
 			NPC npc = NPC.createNPC(npcName, new GameCharacter(game, loc, jNPC
 					.get("directions").getAsString()), jNPC
 					.getAsJsonObject("movement"));

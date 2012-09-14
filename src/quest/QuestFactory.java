@@ -1,9 +1,6 @@
 package quest;
 
-import enemy.AbstractEnemy;
-import gameCharacter.GameCharacter;
 import app.RPGame;
-
 import com.google.gson.JsonObject;
 
 public abstract class QuestFactory

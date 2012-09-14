@@ -10,8 +10,6 @@ import dialogue.SimpleDialogue.SimpleDialogueObject;
 
 public class NPCTest1 extends NPC {
 
-	private boolean hasTalked;
-
 	/**
 	 * Computer-generated serial ID number
 	 */

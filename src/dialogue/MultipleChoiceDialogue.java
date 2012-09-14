@@ -8,7 +8,6 @@ public class MultipleChoiceDialogue extends AbstractDialogue{
 	private int count;
 
 	public MultipleChoiceDialogue(String url){
-		int count = 0;
 		String[] lines = readFile(url);
 		currentNode = generateTree(lines);
 	}
